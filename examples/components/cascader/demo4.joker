@@ -1,0 +1,13 @@
+<template>
+    <jk-field>
+        <jk-cascader options="@options" showAllLevels="@false"></jk-cascader>
+    </jk-field>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { mock } from "./mock";
+export default class extends Component {
+    options = mock();
+}
+</script>
+

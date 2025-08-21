@@ -1,0 +1,26 @@
+<template>
+    <jk-button @click="open">Open the prompt</jk-button>
+    <jk-button @click="open1">Open multiple times in the same sequence, only show one</jk-button>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Message } from "../../../src";
+export default class extends Component {
+    open() {
+        Message({
+            center: true,
+            message: "This is a prompt"
+        });
+    }
+
+    open1() {
+        for (let i = 0; i < 10; i++) {
+            Message({
+                id: "test",
+                center: true,
+                message: "This is a prompt"
+            });
+        }
+    }
+}
+</script>

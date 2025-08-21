@@ -1,0 +1,51 @@
+<template>
+    <jk-cell>
+        <jk-button fullWidth type="primary" @click="handleOpen('ref1')">Click Me</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth type="primary" @click="handleOpen('ref2')">Range Picker</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth type="primary" @click="handleOpen('ref3')">With Confirm</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth type="primary" @click="handleOpen('ref4')">With Switch Button</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth type="primary" @click="handleOpen('ref5')">With Validate</jk-button>
+    </jk-cell>
+    <jk-calendar-picker title="日历" ref="ref1" @pick="handlePick" />
+    <jk-calendar-picker title="日历" ref="ref2" range @pick="handleRangePick" />
+    <jk-calendar-picker title="日历" ref="ref3" range @pick="handleRangePick" show-confirm />
+    <jk-calendar-picker title="日历" ref="ref4" range @pick="handleRangePick" show-confirm show-switch-button />
+    <jk-calendar-picker title="日历" ref="ref5" range @pick="handleRangePick" validate="@validateRange" />
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+import dayjs from "dayjs";
+
+export default class extends Component {
+    handleOpen(e: VNode.Event, ref: string) {
+        this.$getRef(ref)?.component.open();
+    }
+    handlePick(e: VNode.Event<Date>) {
+        Toast(`${e.data.getFullYear()} - ${e.data.getMonth() + 1} - ${e.data.getDate()}`);
+    }
+    handleRangePick(e: VNode.Event<[Date, Date]>) {
+        let startDate = `${e.data[0].getFullYear()}/${e.data[0].getMonth() + 1}/${e.data[0].getDate()}`;
+
+        let endDate = `${e.data[1].getFullYear()}/${e.data[1].getMonth() + 1}/${e.data[1].getDate()}`;
+        Toast(`${startDate} - ${endDate}`);
+    }
+    validateRange(dates: [Date, Date]) {
+        let diff = dayjs(dates[1]).diff(dayjs(dates[0]), "day");
+
+        if (diff > 3) {
+            Toast("最多选择3天");
+
+            return false;
+        }
+    }
+}
+</script>

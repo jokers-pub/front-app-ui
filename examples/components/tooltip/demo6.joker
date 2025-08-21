@@ -1,0 +1,46 @@
+<template>
+    <jk-cell>
+        <jk-tooltip content="Default theme" placement="top">
+            <jk-button>Default</jk-button>
+        </jk-tooltip>
+        <jk-tooltip content="Light theme" effect="light">
+            <jk-button>Default</jk-button>
+        </jk-tooltip>
+        <jk-tooltip content="Error theme" effect="error">
+            <jk-button>Default</jk-button>
+        </jk-tooltip>
+    </jk-cell>
+    <jk-cell>
+        <jk-tooltip content="Default theme" placement="top" size="medium">
+            <jk-button>medium</jk-button>
+        </jk-tooltip>
+        <jk-tooltip content="Light theme" effect="light" size="medium">
+            <jk-button>medium</jk-button>
+        </jk-tooltip>
+        <jk-tooltip content="Error theme" effect="error" size="medium">
+            <jk-button>medium</jk-button>
+        </jk-tooltip>
+    </jk-cell>
+    <jk-cell>
+        <jk-tooltip content="Default theme" placement="top" size="small">
+            <jk-button>small</jk-button>
+        </jk-tooltip>
+        <jk-tooltip content="Light theme" effect="light" size="small">
+            <jk-button>small</jk-button>
+        </jk-tooltip>
+        <jk-tooltip content="Error theme" effect="error" size="small">
+            <jk-button>small</jk-button>
+        </jk-tooltip>
+    </jk-cell>
+    <jk-cell>
+        <jk-tooltip content="Default theme" placement="top" size="mini">
+            <jk-button>mini</jk-button>
+        </jk-tooltip>
+        <jk-tooltip content="Light theme" effect="light" size="mini">
+            <jk-button>mini</jk-button>
+        </jk-tooltip>
+        <jk-tooltip content="Error theme" effect="error" size="mini">
+            <jk-button>mini</jk-button>
+        </jk-tooltip>
+    </jk-cell>
+</template>

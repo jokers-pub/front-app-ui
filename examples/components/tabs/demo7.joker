@@ -1,0 +1,36 @@
+<template>
+    <jk-tabs @change="handleChange">
+        <jk-tab-panel label="Home" name="Home">
+            <div class="demo-content">Home</div>
+        </jk-tab-panel>
+        <jk-tab-panel label="Issues" name="Issues">
+            <div class="demo-content">Issues</div>
+        </jk-tab-panel>
+        <jk-tab-panel label="Repository" name="Repository">
+            <div class="demo-content">Repository</div>
+        </jk-tab-panel>
+        <jk-tab-panel label="Settings" name="Settings">
+            <div class="demo-content">Settings</div>
+        </jk-tab-panel>
+    </jk-tabs>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleChange(e: VNode.Event<any>) {
+        Toast(e.data.name);
+        //其他数据
+        //Toast(e.data.component.props.label)
+    }
+}
+</script>
+<style>
+.demo-content {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px 10px;
+    color: var(--jk-color-text-secondary);
+}
+</style>

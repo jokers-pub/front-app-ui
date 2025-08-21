@@ -1,0 +1,3 @@
+<template>
+    <jk-cell title="Cell title" value="Content" center arrow description="Description" size="large" />
+</template>

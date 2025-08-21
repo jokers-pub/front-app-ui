@@ -1,0 +1,40 @@
+<template>
+    <div class="@(['jk-tabbar', props.class])">
+        @RenderSection()
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { componentName } from "../utils";
+
+export default class extends Component<{
+    class: any;
+    value: any;
+}> {
+    model = {
+        value: undefined
+    };
+    created() {
+        this.$syncProp("value");
+    }
+    name = componentName("tabbar");
+
+    select(name: any) {
+        if (this.model.value !== name) {
+            this.model.value = name;
+
+            this.$trigger("change", name);
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-tabbar {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 50px;
+    background-color: var(--jk-background-color-default);
+}
+</style>

@@ -1,0 +1,29 @@
+<template>
+    <jk-cell-group title="Default (Light)">
+        <jk-cell>
+            <jk-tag closable>Tag 1</jk-tag>
+            <jk-tag type="success" closable>Tag 2</jk-tag>
+            <jk-tag type="info" closable>Tag 3</jk-tag>
+            <jk-tag type="warning" closable>Tag 4</jk-tag>
+            <jk-tag type="danger" closable>Tag 5</jk-tag>
+        </jk-cell>
+    </jk-cell-group>
+    <jk-cell-group title="Dark">
+        <jk-cell>
+            <jk-tag effect="dark" closable>Tag 1</jk-tag>
+            <jk-tag effect="dark" type="success" closable>Tag 2</jk-tag>
+            <jk-tag effect="dark" type="info" closable>Tag 3</jk-tag>
+            <jk-tag effect="dark" type="warning" closable>Tag 4</jk-tag>
+            <jk-tag effect="dark" type="danger" closable>Tag 5</jk-tag>
+        </jk-cell>
+    </jk-cell-group>
+    <jk-cell-group title="Plain">
+        <jk-cell>
+            <jk-tag effect="plain" closable>Tag 1</jk-tag>
+            <jk-tag effect="plain" type="success" closable>Tag 2</jk-tag>
+            <jk-tag effect="plain" type="info" closable>Tag 3</jk-tag>
+            <jk-tag effect="plain" type="warning" closable>Tag 4</jk-tag>
+            <jk-tag effect="plain" type="danger" closable>Tag 5</jk-tag>
+        </jk-cell>
+    </jk-cell-group>
+</template>

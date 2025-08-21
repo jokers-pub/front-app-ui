@@ -1,0 +1,26 @@
+<template>
+    <jk-picker
+        title="选择地区"
+        columns="@(['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华'])"
+        @confirm="handleConfirm"
+        @cancel="handleCancel"
+        @change="handleChange"
+    />
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event<string[]>) {
+        Toast(`confirm:${e.data.join("-")}`);
+    }
+    handleCancel(e: VNode.Event<string[]>) {
+        Toast(`cancel:${e.data.join("-")}`);
+    }
+    handleChange(e: VNode.Event<string[]>) {
+        Toast(`change:${e.data.join("-")}`);
+    }
+}
+</script>
+

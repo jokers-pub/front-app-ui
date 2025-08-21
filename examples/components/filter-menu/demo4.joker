@@ -1,0 +1,19 @@
+<template>
+    <jk-filter-menu disabled>
+        <jk-filter-item
+            options="@([
+                { label: '全部商品', value: '' },
+                { label: '新款商品', value: '1' },
+                { label: '活动商品', value: '2' }
+            ])"
+        />
+        <jk-filter-item
+            value="2"
+            options="@([
+                { label: '默认排序', value: '' },
+                { label: '好评排序', value: '1' },
+                { label: '销量排序', value: '2' }
+            ])"
+        />
+    </jk-filter-menu>
+</template>

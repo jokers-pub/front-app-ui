@@ -1,0 +1,18 @@
+<template>
+    <jk-popconfirm title="Are you sure you want to delete this data?" @cancel="cancel" @confirm="confirm">
+        <jk-button>Delete</jk-button>
+    </jk-popconfirm>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Message } from "../../../src";
+
+export default class extends Component {
+    cancel() {
+        Message.warning("Cancelled");
+    }
+    confirm() {
+        Message.success("Confirmed");
+    }
+}
+</script>

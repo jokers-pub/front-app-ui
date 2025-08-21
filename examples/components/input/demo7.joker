@@ -1,0 +1,5 @@
+<template>
+    <jk-field>
+        <jk-input placeholder="Please enter" maxlength="10" show-word-limit />
+    </jk-field>
+</template>

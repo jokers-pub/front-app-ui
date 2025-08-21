@@ -1,0 +1,11 @@
+node_modules
+.DS_Store
+yarn-error.log
+yarn.lock
+dist
+dist_lowcode
+types
+.npmrc
+build/algoliasearch.ts
+build/translate.ts
+pnpm-lock.yaml

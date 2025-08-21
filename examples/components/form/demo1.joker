@@ -1,0 +1,72 @@
+<template>
+    <jk-form ref="form" @submit="handleFormSubmit">
+        <jk-cell-group>
+            <jk-field label="Name" tip="Test data, please understand">
+                <jk-input name="name" placeholder="Please enter the event name" />
+            </jk-field>
+            <jk-field
+                label="Area"
+                tip="Test data, please understand. Super long text test. Test data, please understand. Super long text test. Test data, please understand. Super long text test. Test data, please understand. Super long text test. Test data, please understand. Super long text test">
+                <jk-select name="area" data="@(['Shandong', 'Beijing'])" />
+            </jk-field>
+            <jk-field label="Area">
+                <jk-cascader name="area1" data="@cascaderMock"></jk-cascader>
+            </jk-field>
+            <jk-field label="Event Time">
+                <jk-date name="date" type="date" placeholder="Select Date" />
+            </jk-field>
+            <jk-field label="Promotion">
+                <jk-switch name="promotion" />
+            </jk-field>
+            <jk-field label="Event Nature">
+                <jk-checkbox-group name="type" direction="vertical">
+                    <jk-checkbox value="1" label="Food/Restaurant"></jk-checkbox>
+                    <jk-checkbox value="2" label="Offline event"></jk-checkbox>
+                    <jk-checkbox value="3" label="Self-driving tour"></jk-checkbox>
+                    <jk-checkbox value="4" label="Press conference"></jk-checkbox>
+                    <jk-checkbox value="5" label="Group tour"></jk-checkbox>
+                </jk-checkbox-group>
+            </jk-field>
+            <jk-field label="Funding Source">
+                <jk-radio-group name="source" direction="vertical">
+                    <jk-radio value="1">Sponsored</jk-radio>
+                    <jk-radio value="2">Free</jk-radio>
+                    <jk-radio value="3">Cost sharing</jk-radio>
+                </jk-radio-group>
+            </jk-field>
+            <jk-field label="Funding Ratio">
+                <jk-slider name="sourcePic" value="30"></jk-slider>
+            </jk-field>
+            <jk-field label="Event Rules">
+                <jk-textarea name="note" placeholder="Please enter the content" rows="2"></jk-textarea>
+            </jk-field>
+        </jk-cell-group>
+        <jk-cell-group title="Other">
+            <jk-field label="Rate">
+                <jk-rate name="rate" />
+            </jk-field>
+            <jk-field label="Password">
+                <jk-password name="password" placeholder="Enter Password" />
+            </jk-field>
+            <jk-field label="Number">
+                <jk-number name="number" placeholder="Enter Number" />
+            </jk-field>
+            <jk-field label="Number">
+                <jk-number name="number" value="0" show-controls />
+            </jk-field>
+            <jk-field>
+                <jk-button type="primary" fullWidth>Submit</jk-button>
+            </jk-field>
+        </jk-cell-group>
+    </jk-form>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { mock } from "../cascader/mock";
+export default class extends Component {
+    cascaderMock = mock();
+    handleFormSubmit(e: VNode.Event<any>) {
+        console.log(e.data);
+    }
+}
+</script>

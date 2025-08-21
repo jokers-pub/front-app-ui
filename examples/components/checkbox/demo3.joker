@@ -1,0 +1,21 @@
+<template>
+    <jk-checkbox-group value="@model.checkList" @change="handleCheckboxChange" direction="vertical">
+        <jk-checkbox value="1" label="Checkbox A"></jk-checkbox>
+        <jk-checkbox value="2" label="Checkbox B"></jk-checkbox>
+        <jk-checkbox value="3" label="Checkbox C"></jk-checkbox>
+        <jk-checkbox value="4" label="Disabled" disabled></jk-checkbox>
+        <jk-checkbox value="5" label="Selected and Disabled" disabled></jk-checkbox>
+    </jk-checkbox-group>
+</template>
+
+<script>
+import { Component, VNode } from "@joker.front/core";
+export default class extends Component {
+    model = {
+        checkList: ["5", "1"]
+    };
+    handleCheckboxChange(e: VNode.Event<string>) {
+        console.log(e.data);
+    }
+}
+</script>

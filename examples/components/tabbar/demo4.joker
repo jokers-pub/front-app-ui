@@ -1,0 +1,25 @@
+<template>
+    <template>
+        <jk-tabbar value="home" @change="handleChange">
+            <jk-tabbar-item title="首页" icon="jk-icon-house" name="home" />
+            <jk-tabbar-item title="统计" icon="jk-icon-pie-chart" name="chart" badge="99+" />
+            <jk-tabbar-item title="我的" icon="jk-icon-user" name="user" dot @click="handleClick" />
+        </jk-tabbar>
+    </template>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+import { Message } from "../../../src";
+
+export default class extends Component {
+    handleChange(e: VNode.Event<string>) {
+        Toast(`切换至：${e.data}`);
+    }
+
+    handleClick(e: VNode.Event<{ title: string }>) {
+        Message("点击了" + e.data.title);
+    }
+}
+</script>
+

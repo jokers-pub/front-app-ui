@@ -1,0 +1,25 @@
+<template>
+    <jk-button @click="handleClick" fullWidth type="primary">Click Me</jk-button>
+    <jk-share-sheet
+        ref="shareSheet"
+        title="分享给你的朋友"
+        description="分享美好"
+        options="@([
+            { label: '用户', icon: 'jk-icon-user' },
+            { label: '微博', icon: 'weibo' },
+            {
+                label: '好兄弟',
+                icon: 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=360'
+            }
+        ])"
+    />
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef("shareSheet")?.component.open();
+    }
+}
+</script>

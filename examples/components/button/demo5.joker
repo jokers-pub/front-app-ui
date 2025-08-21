@@ -1,0 +1,27 @@
+<template>
+    <DemoRow>
+        <jk-button-group>
+            <jk-button type="primary" icon="jk-icon-arrow-left">Previous Page</jk-button>
+            <jk-button type="primary">
+                Next Page
+                <i class="jk-icon-arrow-right"></i>
+            </jk-button>
+        </jk-button-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-button-group>
+            <jk-button type="primary" icon="jk-icon-edit"></jk-button>
+            <jk-button type="primary" icon="jk-icon-share"></jk-button>
+            <jk-button type="primary" icon="jk-icon-delete"></jk-button>
+        </jk-button-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-button-group full-width>
+            <jk-button type="primary" icon="jk-icon-arrow-left">Previous Page</jk-button>
+            <jk-button type="primary">
+                Next Page
+                <i class="jk-icon-arrow-right"></i>
+            </jk-button>
+        </jk-button-group>
+    </DemoRow>
+</template>

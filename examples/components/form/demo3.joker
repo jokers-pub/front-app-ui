@@ -1,0 +1,39 @@
+<template>
+    <DemoRow>
+        <jk-radio-group value="@model.labelPosition" @change="handleRadioChange">
+            <jk-radio-button value="left">Left</jk-radio-button>
+            <jk-radio-button value="right">Right</jk-radio-button>
+            <jk-radio-button value="top">Top</jk-radio-button>
+        </jk-radio-group>
+    </DemoRow>
+    <jk-form label-position="@model.labelPosition">
+        <jk-field label="Name" required>
+            <jk-input name="name" placeholder="Please enter the event name" />
+        </jk-field>
+        <jk-field label="Area">
+            <jk-select name="area" placeholder="Please select the event area">
+                <jk-option label="Shandong" value="shandong" />
+                <jk-option label="Beijing" value="beijing" />
+            </jk-select>
+        </jk-field>
+        <jk-field label="Time">
+            <jk-date type="date" name="date" placeholder="Select Date"></jk-date>
+        </jk-field>
+        <jk-field>
+            <jk-button type="primary" fullWidth>Query</jk-button>
+        </jk-field>
+    </jk-form>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        labelPosition: "left"
+    };
+
+    handleRadioChange(e: VNode.Event<string>) {
+        this.model.labelPosition = e.data;
+    }
+}
+</script>

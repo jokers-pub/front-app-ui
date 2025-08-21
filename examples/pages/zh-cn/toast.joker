@@ -1,0 +1,352 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Toast 轻提示</h2>
+        <p>在页面中间弹出黑色半透明提示，用于消息通知、加载提示、操作结果提示等场景。</p>
+        <h3>文本提示</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick&quot;&gt;Click Me&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        Toast(&quot;Hello World&quot;);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>带状态的提示</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;info&quot; @click=&quot;handleClick('info')&quot;&gt;Info&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;success&quot; @click=&quot;handleClick('success')&quot;&gt;Success&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;warning&quot; @click=&quot;handleClick('warning')&quot;&gt;Warning&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;danger&quot; @click=&quot;handleClick('error')&quot;&gt;Error&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick(e: VNode.Event, type: string) {
+        if (type === &quot;info&quot;) {
+            Toast.info(&quot;Hello World&quot;);
+        } else if (type === &quot;success&quot;) {
+            Toast.success(&quot;Hello World&quot;);
+        } else if (type === &quot;warning&quot;) {
+            Toast.warning(&quot;Hello World&quot;);
+        } else if (type === &quot;error&quot;) {
+            Toast.error(&quot;Hello World&quot;);
+        }
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>等待提示</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick2&quot;&gt;Loading With Overlay&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        Toast.loading(&quot;Hello World&quot;);
+    }
+
+    handleClick2() {
+        Toast.loading({
+            message: &quot;Hello World&quot;,
+            forbidClick: true
+        });
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>展示位置</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleTopClick&quot;&gt;Top&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleBottomClick&quot;&gt;Bottom&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleTopClick() {
+        Toast({
+            message: &quot;Hello World&quot;,
+            position: &quot;top&quot;
+        });
+    }
+
+    handleBottomClick() {
+        Toast({
+            message: &quot;Hello World&quot;,
+            position: &quot;bottom&quot;
+        });
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>自定义图标</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick&quot;&gt;Custom Icon&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick2&quot;&gt;Custom Image&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        Toast({
+            icon: &quot;jk-icon-star-on&quot;,
+            message: &quot;Hello World&quot;
+        });
+    }
+
+    handleClick2() {
+        Toast({
+            message: &quot;Hello World&quot;,
+            icon: &quot;https://static.jokers.pub/joker.png&quot;
+        });
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>动态更新内容</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick&quot;&gt;Click Me&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        let toast = Toast.loading({
+            duration: 0,
+            forbidClick: true,
+            message: &quot;倒计时 3 秒&quot;
+        });
+
+        let second = 3;
+        const timer = setInterval(() =&gt; {
+            second--;
+            if (second) {
+                toast.setMessage(`倒计时 ${second} 秒`);
+            } else {
+                clearInterval(timer);
+                toast.close();
+            }
+        }, 1000);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>
+                Toast 提供
+                <code>close</code>
+                方法，用于在无法获取弹窗操作对象时关闭当前弹窗。
+            </p>
+        </blockquote>
+        <h3>Options</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>message</td>
+                    <td>消息文字</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>主题</td>
+                    <td>string</td>
+                    <td>success/warning/info/error</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>
+                        自定义图标的类名，会覆盖
+                        <code>type</code>
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>customClass</td>
+                    <td>自定义类名</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>duration</td>
+                    <td>显示时间, 毫秒。设为 0 则不会自动关闭</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>3000</td>
+                </tr>
+                <tr>
+                    <td>id</td>
+                    <td>窗口ID，可用于频繁弹窗时限制相同业务同时只能触发一次</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>forbidClick</td>
+                    <td>是否不允许点击弹窗下方内容，设置为true则会全局展示透明蒙版，防止穿透点击</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>position</td>
+                    <td>Toast 展示位置，默认展示在屏幕中间</td>
+                    <td>
+                        <code>top</code>
+                        /
+                        <code>bottom</code>
+                    </td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Methods</h3>
+        <p>
+            调用
+            <code>Toast</code>
+            会返回当前 Toast 的实例。如果需要手动关闭实例，可以调用它的
+            <code>close</code>
+            方法。
+        </p>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>方法名</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>close</td>
+                    <td>关闭当前的 Toast</td>
+                </tr>
+                <tr>
+                    <td>setMessage</td>
+                    <td>可动态修改提示信息</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>close</td>
+                    <td>关闭 Toast 时触发</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo6 from "../../components/toast/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/toast/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/toast/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/toast/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/toast/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/toast/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

@@ -1,0 +1,9 @@
+<template>
+    <jk-cell>
+        <jk-grid column-num="3">
+            @for(let i = 0; i < 8; i++) {
+                <jk-grid-item title="菜单" icon="jk-icon-picture-outline" />
+            }
+        </jk-grid>
+    </jk-cell>
+</template>

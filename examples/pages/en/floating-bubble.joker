@@ -1,0 +1,102 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Floating Bubble</h2>
+        <p>A clickable bubble that floats at the edge of the page.</p>
+        <h3>Basic Usage</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    请查看文件右下角
+    &lt;jk-floating-bubble icon=&quot;jk-icon-s-comment&quot; /&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Accepted Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>icon</strong>
+                    </td>
+                    <td>Icon displayed inside the bubble, typically accepts icon class names</td>
+                    <td>string</td>
+                    <td>Any valid icon class name/identifier</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>class</strong>
+                    </td>
+                    <td>Custom CSS classes for the floating bubble to override default styles</td>
+                    <td>any</td>
+                    <td>Single class string, array of classes, or object</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>Click event</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Slots</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Slot Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>Custom content</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo1 from "../../components/floating-bubble/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

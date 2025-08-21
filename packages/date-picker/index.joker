@@ -1,0 +1,196 @@
+<template>
+    <div
+        class="@(['jk-date-editor', props.type, props.class, props.disabled && 'is-disabled', isError && 'is-error'])"
+        type="@props.type">
+        <JokerInput
+            readonly
+            disabled="@props.disabled"
+            size="@sizeClass"
+            placeholder="@props.placeholder"
+            value="@displayValue"
+            clearable="@props.clearable"
+            align="@props.align"
+            forceShowClearable="@(!(this.props.disabled || this.props.readonly))"
+            @focus.prevent.stop="handleShowPick"
+            error="@isError">
+            @section("suffix") {
+                <i class="@triggerClass" @click.stop="handleShowPick"></i>
+            }
+        </JokerInput>
+        @if(props.type === "time-select") {
+            <JokerTimeSelectPanel
+                ref="panel"
+                @pick="handlePick"
+                value="@value"
+                start="@props.start"
+                title="@props.placeholder"
+                format="@props.valueFormat"
+                end="@props.end"
+                step="@props.step"
+                defaultValue="@props.defaultValue"
+                maxTime="@props.maxTime"
+                minTime="@props.minTime"
+            />
+        }
+        else if(props.type === "time") {
+            <JokerTimePanel
+                ref="panel"
+                @pick="handlePick"
+                format="@props.valueFormat"
+                title="@props.placeholder"
+                value="@value"
+                labelFormat="@props.labelFormat"
+                defaultValue="@props.defaultValue"
+                selectableRange="@props.selectableRange"
+            />
+        }
+        else if(props.type === "date" || props.type === "year-month" || props.type === "month" || props.type === "year" || props.type === "week") {
+            <JokerDatePanel
+                ref="panel"
+                format="@props.valueFormat"
+                type="@props.type"
+                disabledDate="@props.disabledDate"
+                title="@props.placeholder"
+                labelFormat="@props.labelFormat"
+                @pick="handlePick"
+                value="@value"
+                defaultValue="@props.defaultValue"
+            />
+        }
+        else if(props.type === "calendar") {
+            <JokerCalendarPanel
+                ref="panel"
+                @pick="handlePick"
+                value="@parsedValue"
+                maxTime="@props.maxTime"
+                minTime="@props.minTime"
+                title="@props.placeholder"
+                defaultValue="@props.defaultValue"
+                formatter="@props.cellFormatter"
+                showWeekNumber="@props.showWeekNumber"
+                showSwitchButton="@props.showSwitchButton"
+                showConfirm="@props.showConfirm"
+                confirmText="@props.confirmText"
+                validate="@props.pickValidate"
+                size="@props.panelSize"
+                range="@props.range"
+            />
+        }
+    </div>
+</template>
+<script>
+import { VNode } from "@joker.front/core";
+import { FormCtrl } from "../form/form-ctrl";
+import JokerInput from "../input/index.joker";
+import { formatAsFormatAndType, parseAsFormatAndType } from "../utils/date";
+import { componentName, valueEquals } from "../utils";
+import JokerTimeSelectPanel from "./picker/time-select.joker";
+import JokerTimePanel from "./picker/time.joker";
+import JokerDatePanel from "./picker/date.joker";
+import JokerCalendarPanel from "../calendar/picker.joker";
+
+import { getValueByLang } from "../utils/lang";
+
+export default class extends FormCtrl<{
+    type: string;
+    format: string;
+    class: string;
+    defaultValue: string;
+    valueFormat: string;
+    placeholder: string;
+    prefixIcon: string;
+    clearable: boolean;
+    align: string;
+    selectableRange: Array<string[] | string>;
+
+    rangeSeparator: string; //calendar
+    range: boolean; //calendar
+}> {
+    propsOption = {
+        clearable: true,
+        rangeSeparator: " - ",
+        placeholder: getValueByLang("selectPlaceholder"),
+        startPlaceholder: getValueByLang("start"),
+        endPlaceholder: getValueByLang("end")
+    };
+
+    components = {
+        JokerInput,
+        JokerTimeSelectPanel,
+        JokerTimePanel,
+        JokerDatePanel,
+        JokerCalendarPanel
+    };
+
+    name = componentName("date-picker");
+
+    get displayValue() {
+        let formattedValue = formatAsFormatAndType(this.parsedValue, this.props.format, this.props.type!);
+        if (this.props.range && Array.isArray(formattedValue)) {
+            return formattedValue.join(this.props.rangeSeparator);
+        }
+        return formattedValue;
+    }
+
+    get triggerClass() {
+        return this.props.prefixIcon || (this.props.type?.includes("time") ? "jk-icon-time" : "jk-icon-date");
+    }
+
+    get parsedValue() {
+        if (!this.value) return undefined;
+
+        return parseAsFormatAndType(this.value, this.props.valueFormat, this.props.type!, this.props.rangeSeparator);
+    }
+
+    get panel() {
+        return this.$getRef("panel");
+    }
+
+    clear() {
+        this.triggerChange(undefined);
+    }
+
+    triggerInput(val: any) {
+        let formatted = this.formatToValue(val);
+
+        if (valueEquals(this.value, formatted) === false) {
+            this.value = formatted;
+        }
+    }
+
+    triggerChange(val: any) {
+        let formatted = this.formatToValue(val);
+
+        if (valueEquals(this.value, formatted) === false) {
+            this.value = formatted;
+            this.$trigger("change", this.value);
+            this.triggerValidate();
+        }
+    }
+
+    handleShowPick(e: VNode.Event) {
+        if (this.props.disabled || this.props.readonly) return;
+
+        this.panel?.component.open();
+    }
+
+    handlePick(e: VNode.Event<any>) {
+        this.triggerChange(e.data);
+    }
+
+    formatToValue(val: any) {
+        return formatAsFormatAndType(val, this.props.valueFormat, this.props.type!);
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.jk-date-editor {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    &.is-disabled {
+        cursor: not-allowed;
+    }
+}
+</style>

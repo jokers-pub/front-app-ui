@@ -1,0 +1,295 @@
+<template>
+    <div
+        class="@([
+            'jk-tabs',
+            props.fullHeight && 'is-full-height',
+            props.card && 'card',
+            props.sticky && 'sticky',
+            props.shrink && 'shrink',
+            props.class
+        ])">
+        <ScrollBar ref="titleScrollbar" class="jk-tabs-wrapper @(scrollable?'scrollable':'')" viewClass="jk-tabs-list">
+            @for(let item of model.tabs) {
+                <div
+                    ref="item"
+                    class="item @(model.showName ===item.name?'selected':'')"
+                    @click="handleSelectTab(item)">
+                    @if(item.component.props.label) {
+                        @item.component.props.label
+                    }
+                    else if(item.component.$sections.label) {
+                        @RenderSection(item.component.$sections.label)
+                    }
+                </div>
+            }
+            @if(!props.card) {
+                <div class="bottom-line" style="@model.bottomLineStyle"></div>
+            }
+        </ScrollBar>
+        <div class="content">
+            @if(props.fullHeight) {
+                <ScrollBar>
+                    @RenderSection()
+                </ScrollBar>
+            }
+            else {
+                @RenderSection()
+            }
+        </div>
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { componentName } from "../utils";
+import { debounce, removeFilter } from "@joker.front/shared";
+import ScrollBar from "../scrollbar/index.joker";
+
+export default class extends Component<{
+    value: string;
+    shrink: boolean;
+    card: boolean;
+    class: string;
+    swipeThreshold: number;
+    sticky?: boolean;
+    animated?: boolean;
+    fullHeight?: boolean;
+}> {
+    propsOption = {
+        swipeThreshold: 5
+    };
+
+    get scrollable() {
+        return this.model.tabs.length > this.props.swipeThreshold;
+    }
+    model = {
+        showName: undefined,
+        tabs: [] as Array<{ name: string; component: Component<any> }>,
+        bottomLineStyle: undefined as any
+    };
+    name = componentName("tabs");
+    components = {
+        ScrollBar
+    };
+    created() {
+        this.$watch(
+            () => this.props.value,
+            () => {
+                this.setShowName();
+            }
+        );
+        this.$watch(
+            () => [this.model.showName],
+            () => {
+                this.refreshBottomLineStyle();
+            }
+        );
+    }
+
+    mounted() {
+        this.setShowName();
+        this.debounceRefreshBottomLine();
+    }
+
+    debounceRefreshBottomLine = debounce(200, this.refreshBottomLineStyle.bind(this));
+
+    setShowName() {
+        if (this.props.value && this.model.tabs.some((n) => n.name === this.props.value)) {
+            this.model.showName = this.props.value;
+        } else {
+            this.model.showName = this.model.tabs[0]?.name;
+        }
+    }
+
+    refreshBottomLineStyle() {
+        let index = this.model.tabs.findIndex((n) => n.name === this.model.showName);
+
+        if (index !== -1) {
+            let output = this.$getRefs("item")[index].output as HTMLElement;
+
+            if (output) {
+                let clientRect = output.getBoundingClientRect();
+
+                this.model.bottomLineStyle = {
+                    transform: `translateX(${output.offsetLeft + clientRect.width / 2 - 15}px)`
+                };
+
+                if (this.scrollable) {
+                    const parentElement = output.parentElement;
+                    const parentRect = parentElement.getBoundingClientRect();
+
+                    // 计算基础参数
+                    const childWidth = clientRect.width;
+                    const childLeftRelative = clientRect.left - parentRect.left;
+
+                    // 滚动条参数
+                    let scrollbar = this.$getRef("titleScrollbar").component;
+                    const scrollWidth = scrollbar.scrollWidth;
+                    const parentWidth = parentRect.width;
+
+                    // 计算目标元素的中心点
+                    const childCenter = childLeftRelative + childWidth / 2;
+
+                    // 计算父容器视口的中心点
+                    const parentCenter = parentWidth / 2;
+
+                    // 计算需要滚动的距离
+                    let targetScrollLeft = childCenter - parentCenter;
+
+                    // 边界检查
+                    targetScrollLeft = Math.max(0, Math.min(targetScrollLeft, scrollWidth - parentWidth));
+
+                    scrollbar.scrollTo({
+                        top: 0,
+                        left: targetScrollLeft,
+                        behavior: "smooth"
+                    });
+                }
+            }
+
+            return;
+        }
+
+        this.model.bottomLineStyle = undefined;
+    }
+
+    registerTab(name: string, component: Component<any>) {
+        this.unRegisterTab(name);
+        this.model.tabs.push({ name, component });
+
+        this.$nextUpdatedRender(() => {
+            this.debounceRefreshBottomLine();
+        });
+    }
+    unRegisterTab(name: string) {
+        let itemIndex = -1;
+        if (this.model.showName === name) {
+            itemIndex = this.model.tabs.findIndex((n) => n.name === name);
+        }
+        removeFilter(this.model.tabs, (n) => n.name === name);
+
+        this.$nextUpdatedRender(() => {
+            if (itemIndex > 0) {
+                this.handleSelectTab(undefined, this.model.tabs[itemIndex - 1], true);
+            }
+            this.debounceRefreshBottomLine();
+        });
+    }
+    handleSelectTab(e: any, item: any, notClick?: boolean) {
+        if (this.model.showName !== item.name) {
+            this.model.showName = item.name;
+
+            this.$trigger("change", item);
+        }
+        !notClick && this.$trigger("click", item);
+    }
+}
+</script>
+
+<style scoped lang="scss">
+@use "../../theme/var.scss";
+.jk-tabs {
+    display: flex;
+    background: var(--jk-background-color-default);
+    flex-direction: column;
+    :deep(> .jk-tabs-wrapper) {
+        height: auto;
+        padding: 0 8px;
+        .jk-tabs-list {
+            background: var(--jk-background-color-default);
+            display: flex;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        &.scrollable {
+            .jk-tabs-list {
+                > .item {
+                    padding: 0 12px;
+                    flex: 1 0 auto;
+                }
+            }
+        }
+    }
+
+    .item {
+        padding: 0 5px;
+        height: 44px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 14px;
+        flex: 1;
+        color: var(--jk-color-text-regular);
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        &.selected {
+            font-weight: 600;
+            color: var(--jk-color-text-primary);
+        }
+    }
+
+    &.shrink {
+        .item {
+            flex: none;
+            padding: 0 8px;
+        }
+    }
+
+    &.sticky {
+        :deep(> .jk-tabs-wrapper) {
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+    }
+
+    .bottom-line {
+        position: absolute;
+        background-color: var(--jk-color-primary);
+        z-index: 1;
+        transition: transform 0.3s var.$transition;
+        bottom: 3px;
+        left: 0;
+        width: 30px;
+        height: 3px;
+    }
+
+    &.card {
+        border: solid 1px var(--jk-border-color-light);
+        :deep(> .jk-tabs-wrapper) {
+            padding: 0;
+            .jk-tabs-list {
+                background: var(--jk-background-color-base);
+                border: none;
+                .item {
+                    border-left: solid 1px transparent;
+                    border-right: solid 1px transparent;
+                    &:first-child {
+                        border-left: none;
+                    }
+                    &.selected {
+                        background: var(--jk-background-color-default);
+                        border-color: var(--jk-border-color-light);
+                    }
+                }
+            }
+        }
+    }
+
+    .content {
+        margin-top: 15px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    &.is-full-height {
+        height: 100%;
+        .content {
+            flex: 1;
+        }
+    }
+}
+</style>

@@ -1,0 +1,208 @@
+<template>
+    @if(model.show) {
+        <div
+            class="jk-popover jk-popper"
+            append-to="@props.appendTo"
+            ref="popper"
+            id="@id"
+            role="tooltip"
+            style="@({ width: props.width })"
+            @click.outside="handlePopoverOutsideClick"
+            transition-name="jk-fade-in">
+            @if(props.title) {
+                <div class="title">
+                    @props.title
+                </div>
+            }
+            @if($sections.default) {
+                @RenderSection()
+            }
+            else {
+                @props.content
+            }
+        </div>
+    }
+    <template ref="content">
+        @RenderSection("reference")
+    </template>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { debounce, guid, logger } from "@joker.front/shared";
+import { LOGTAG } from "../config";
+import { Popper } from "../utils/popper";
+
+export default class extends Component<{
+    trigger: string;
+    title: string;
+    content: string;
+    openDelay: number;
+    closeDelay: number;
+    disabled: boolean;
+    placement: string;
+    offset: number;
+    width: string;
+    appendTo?: string;
+}> {
+    propsOption = {
+        closeDelay: 200,
+        trigger: "click",
+        openDelay: {
+            type: Number,
+            default: 0
+        },
+        placement: "top",
+        appendTo: "body",
+        offset: {
+            type: Number,
+            default: 0
+        }
+    };
+    model = {
+        expectedState: false,
+        show: false
+    };
+
+    id = `jk-popover-${guid(4)}`;
+    timeout?: any;
+    popperHandler?: Popper;
+    firstElement?: HTMLElement;
+
+    debounceClose = debounce(this.props.closeDelay!, () => this.hidePopover());
+
+    mounted() {
+        this.firstElement = this.$getRef("content")?.firstElement?.output;
+
+        if (this.firstElement === undefined) {
+            logger.error(LOGTAG, "[popover] The reference Element was not found.");
+
+            return;
+        }
+
+        this.firstElement.setAttribute("aria-describedby", this.id);
+
+        //手动
+        if (this.props.trigger === "manual") return;
+
+        if (this.props.trigger === "click") {
+            this.firstElement.addEventListener("click", this.show, false);
+        }
+    }
+
+    async show(e: any) {
+        if (this.props.disabled) return;
+
+        this.setShowState(true);
+
+        this.showPopover();
+
+        this.popperHandler?.update();
+
+        if (e) {
+            e.stopPropagation();
+        }
+    }
+
+    delayHide() {
+        this.setShowState(false);
+        this.debounceClose();
+    }
+
+    hide() {
+        this.setShowState(false);
+        this.hidePopover();
+    }
+
+    handleReferenceClick(e: Event) {
+        this.setShowState(true);
+
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    handlePopoverOutsideClick() {
+        if (this.props.trigger === "manual") return;
+
+        this.delayHide();
+    }
+
+    setShowState(val: boolean) {
+        this.model.expectedState = val;
+    }
+
+    showPopover() {
+        if (!this.model.expectedState) return;
+
+        clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(async () => {
+            this.model.show = true;
+            //等待组件加载
+            await this.$nextUpdatedRender();
+
+            let popperEl = this.$getRef("popper")?.output;
+            if (this.firstElement && popperEl && !this.popperHandler) {
+                this.popperHandler = new Popper(this.firstElement, popperEl, {
+                    placement: this.props.placement,
+                    offset: this.props.offset
+                });
+
+                this.$trigger("show");
+            }
+        }, this.props.openDelay);
+    }
+
+    updatePosition() {
+        this.model.show && this.popperHandler?.update();
+    }
+
+    hidePopover() {
+        if (this.model.expectedState) return;
+
+        clearTimeout(this.timeout);
+
+        this.model.show = false;
+
+        this.popperHandler?.destroy();
+        this.popperHandler = undefined;
+
+        this.$trigger("hide");
+    }
+
+    beforeDestroy() {
+        this.popperHandler?.destroy();
+        if (this.props.trigger === "click") {
+            this.firstElement?.removeEventListener("click", this.handleReferenceClick);
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@use "../../theme/var.scss";
+
+.jk-popover {
+    position: absolute;
+    border-radius: 4px;
+    padding: 12px;
+    z-index: var.$index-popper;
+    line-height: 1.4;
+    min-width: 150px;
+
+    background: var(--jk-background-color-default);
+    font-size: 14px;
+    color: var(--jk-color-text-regular);
+    box-shadow: var(--jk-box-shadow-light);
+    border: solid 1px var(--jk-border-lighter);
+    .title {
+        color: var(--jk-color-text-primary);
+        font-size: 16px;
+        line-height: 1;
+        margin-bottom: 12px;
+    }
+
+    &:focus:hover {
+        outline-width: 0;
+    }
+}
+</style>

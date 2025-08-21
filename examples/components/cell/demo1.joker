@@ -1,0 +1,4 @@
+<template>
+    <jk-cell title="Cell title" value="Content" />
+    <jk-cell title="Cell title" value="Content" description="Description" />
+</template>

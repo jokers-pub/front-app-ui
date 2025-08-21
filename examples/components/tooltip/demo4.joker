@@ -1,0 +1,10 @@
+<template>
+    <jk-tooltip placement="top">
+        <jk-button>More content</jk-button>
+        @section("content") {
+            Hahaha
+            <br />
+            hahahahahaha
+        }
+    </jk-tooltip>
+</template>

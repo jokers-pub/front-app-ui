@@ -1,0 +1,49 @@
+<template>
+    <jk-cell>
+        <jk-button fullWidth @click="open1">Top right</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth @click="open2">Bottom right</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth @click="open3">Bottom left</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth @click="open4">Top left</jk-button>
+    </jk-cell>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Notification } from "../../../src";
+export default class extends Component {
+    open1() {
+        Notification({
+            // Default
+            position: "top-right",
+            title: "Prompt",
+            message: "I'm a prompt"
+        });
+    }
+    open2() {
+        Notification({
+            position: "bottom-right",
+            title: "Prompt",
+            message: "I'm a prompt"
+        });
+    }
+    open3() {
+        Notification({
+            position: "bottom-left",
+            title: "Prompt",
+            message: "I'm a prompt"
+        });
+    }
+    open4() {
+        Notification({
+            position: "top-left",
+            title: "Prompt",
+            message: "I'm a prompt"
+        });
+    }
+}
+</script>

@@ -1,0 +1,529 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Tooltip</h2>
+        <p>Commonly used to display hover-over tooltip information.</p>
+        <h3>Basic Usage</h3>
+        <p>
+            Here we provide 9 different directional display modes. You can understand and select the desired effect through the following complete examples.
+        </p>
+        <p>
+            Use the
+            <code>content</code>
+            property to define the tooltip information shown on hover. The display effect is determined by the
+            <code>placement</code>
+            property:
+        </p>
+        <ul>
+            <li>
+                The
+                <code>placement</code>
+                property value follows the format:
+                <code>direction-alignment</code>
+                .
+            </li>
+            <li>
+                Four directions:
+                <code>top</code>
+                ,
+                <code>left</code>
+                ,
+                <code>right</code>
+                ,
+                <code>bottom</code>
+                .
+            </li>
+            <li>
+                Three alignment positions:
+                <code>start</code>
+                ,
+                <code>end</code>
+                (default is aligned to
+                <code>bottom</code>
+                ).
+                <br />
+                For example,
+                <code>placement=&quot;left-end&quot;</code>
+                means the tooltip appears to the left of the target element, with the tooltip's bottom aligned to the target element's bottom.
+            </li>
+        </ul>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;box&quot;&gt;
+        &lt;div class=&quot;top&quot;&gt;
+            &lt;jk-tooltip content=&quot;Top Left Tooltip Text&quot; placement=&quot;top-start&quot;&gt;
+                &lt;jk-button&gt;Top Left&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+            &lt;jk-tooltip content=&quot;Top Center Tooltip Text&quot; placement=&quot;top&quot;&gt;
+                &lt;jk-button&gt;Top&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+            &lt;jk-tooltip content=&quot;Top Right Tooltip Text&quot; placement=&quot;top-end&quot;&gt;
+                &lt;jk-button&gt;Top Right&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;left&quot;&gt;
+            &lt;jk-tooltip content=&quot;Left Top Tooltip Text&quot; placement=&quot;left-start&quot;&gt;
+                &lt;jk-button&gt;Left Top&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+            &lt;jk-tooltip content=&quot;Left Center Tooltip Text&quot; placement=&quot;left&quot;&gt;
+                &lt;jk-button&gt;Left&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+            &lt;jk-tooltip content=&quot;Left Bottom Tooltip Text&quot; placement=&quot;left-end&quot;&gt;
+                &lt;jk-button&gt;Left Bottom&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;right&quot;&gt;
+            &lt;jk-tooltip content=&quot;Right Top Tooltip Text&quot; placement=&quot;right-start&quot;&gt;
+                &lt;jk-button&gt;Right Top&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+            &lt;jk-tooltip content=&quot;Right Center Tooltip Text&quot; placement=&quot;right&quot;&gt;
+                &lt;jk-button&gt;Right&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+            &lt;jk-tooltip content=&quot;Right Bottom Tooltip Text&quot; placement=&quot;right-end&quot;&gt;
+                &lt;jk-button&gt;Right Bottom&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;bottom&quot;&gt;
+            &lt;jk-tooltip content=&quot;Bottom Left Tooltip Text&quot; placement=&quot;bottom-start&quot;&gt;
+                &lt;jk-button&gt;Bottom Left&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+            &lt;jk-tooltip content=&quot;Bottom Center Tooltip Text&quot; placement=&quot;bottom&quot;&gt;
+                &lt;jk-button&gt;Bottom&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+            &lt;jk-tooltip content=&quot;Bottom Right Tooltip Text&quot; placement=&quot;bottom-end&quot;&gt;
+                &lt;jk-button&gt;Bottom Right&lt;/jk-button&gt;
+            &lt;/jk-tooltip&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.box {
+    width: 300px;
+
+    .top {
+        text-align: center;
+    }
+
+    .left {
+        float: left;
+        width: 60px;
+    }
+
+    .right {
+        float: right;
+        width: 60px;
+    }
+
+    .bottom {
+        clear: both;
+        text-align: center;
+    }
+
+    :deep(.jk-button) {
+        margin: 4px;
+    }
+
+    .left .el-tooltip__popper,
+    .right .el-tooltip__popper {
+        padding: 8px 10px;
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Themes</h3>
+        <p>
+            The Tooltip component provides two themes:
+            <code>dark</code>
+            and
+            <code>light</code>
+            .
+        </p>
+        <p>
+            Change the theme by setting the
+            <code>effect</code>
+            property, which defaults to
+            <code>dark</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-tooltip content=&quot;Default theme&quot; placement=&quot;top&quot;&gt;
+        &lt;jk-button&gt;Default theme&lt;/jk-button&gt;
+    &lt;/jk-tooltip&gt;
+    &lt;jk-tooltip content=&quot;Light theme&quot; effect=&quot;light&quot;&gt;
+        &lt;jk-button&gt;Light&lt;/jk-button&gt;
+    &lt;/jk-tooltip&gt;
+    &lt;jk-tooltip content=&quot;Error theme&quot; effect=&quot;error&quot;&gt;
+        &lt;jk-button&gt;Error&lt;/jk-button&gt;
+    &lt;/jk-tooltip&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Manual Control</h3>
+        <p>
+            Control activation manually via the
+            <code>manual</code>
+            property, then freely operate the tooltip using the component's
+            <code>show</code>
+            and
+            <code>hide</code>
+            methods.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-tooltip content=&quot;Default theme&quot; placement=&quot;top&quot; manual effect=&quot;light&quot; ref=&quot;tooltip&quot;&gt;
+        &lt;jk-button @click=&quot;handleClick&quot;&gt;
+            Click to @(model.show ? &quot;Close&quot; : &quot;Open&quot;)
+        &lt;/jk-button&gt;
+    &lt;/jk-tooltip&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        show: false
+    };
+
+    handleClick() {
+        let tooltip = this.$getRef(&quot;tooltip&quot;)?.component;
+        if (this.model.show) {
+            tooltip?.hide();
+        } else {
+            tooltip?.show();
+        }
+
+        this.model.show = !this.model.show;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Rich Content</h3>
+        <p>Display multiline text or formatted content.</p>
+        <p>
+            Use a named slot (
+            <code>slot=&quot;content&quot;</code>
+            ) to distribute content, replacing the
+            <code>content</code>
+            attribute in
+            <code>tooltip</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-tooltip placement=&quot;top&quot;&gt;
+        &lt;jk-button&gt;More content&lt;/jk-button&gt;
+        @section(&quot;content&quot;) {
+            Hahaha
+            &lt;br /&gt;
+            hahahahahaha
+        }
+    &lt;/jk-tooltip&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Disabled</h3>
+        <p>
+            Set the disabled state of the tooltip by configuring the
+            <code>disabled</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-tooltip content=&quot;Default theme&quot; placement=&quot;top&quot;&gt;
+        &lt;jk-button&gt;Default theme&lt;/jk-button&gt;
+    &lt;/jk-tooltip&gt;
+    &lt;jk-tooltip content=&quot;Default theme&quot; placement=&quot;top&quot; disabled&gt;
+        &lt;jk-button&gt;Disabled&lt;/jk-button&gt;
+    &lt;/jk-tooltip&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Sizing</h3>
+        <p>
+            Configure the tooltip's size using the
+            <code>size</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-tooltip content=&quot;Default theme&quot; placement=&quot;top&quot;&gt;
+            &lt;jk-button&gt;Default&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+        &lt;jk-tooltip content=&quot;Light theme&quot; effect=&quot;light&quot;&gt;
+            &lt;jk-button&gt;Default&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+        &lt;jk-tooltip content=&quot;Error theme&quot; effect=&quot;error&quot;&gt;
+            &lt;jk-button&gt;Default&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-tooltip content=&quot;Default theme&quot; placement=&quot;top&quot; size=&quot;medium&quot;&gt;
+            &lt;jk-button&gt;medium&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+        &lt;jk-tooltip content=&quot;Light theme&quot; effect=&quot;light&quot; size=&quot;medium&quot;&gt;
+            &lt;jk-button&gt;medium&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+        &lt;jk-tooltip content=&quot;Error theme&quot; effect=&quot;error&quot; size=&quot;medium&quot;&gt;
+            &lt;jk-button&gt;medium&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-tooltip content=&quot;Default theme&quot; placement=&quot;top&quot; size=&quot;small&quot;&gt;
+            &lt;jk-button&gt;small&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+        &lt;jk-tooltip content=&quot;Light theme&quot; effect=&quot;light&quot; size=&quot;small&quot;&gt;
+            &lt;jk-button&gt;small&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+        &lt;jk-tooltip content=&quot;Error theme&quot; effect=&quot;error&quot; size=&quot;small&quot;&gt;
+            &lt;jk-button&gt;small&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-tooltip content=&quot;Default theme&quot; placement=&quot;top&quot; size=&quot;mini&quot;&gt;
+            &lt;jk-button&gt;mini&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+        &lt;jk-tooltip content=&quot;Light theme&quot; effect=&quot;light&quot; size=&quot;mini&quot;&gt;
+            &lt;jk-button&gt;mini&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+        &lt;jk-tooltip content=&quot;Error theme&quot; effect=&quot;error&quot; size=&quot;mini&quot;&gt;
+            &lt;jk-button&gt;mini&lt;/jk-button&gt;
+        &lt;/jk-tooltip&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Max Width</h3>
+        <p>
+            If the content is too long, set the
+            <code>maxWidth</code>
+            property to define a maximum width for multiline display.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-tooltip
+        content=&quot;Extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content&quot;
+        maxWidth=&quot;150px&quot;
+        placement=&quot;top&quot;&gt;
+        &lt;jk-button&gt;Extremely long content&lt;/jk-button&gt;
+    &lt;/jk-tooltip&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Accepted Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <code>effect</code>
+                    </td>
+                    <td>Default theme</td>
+                    <td>String</td>
+                    <td>
+                        <code>dark</code>
+                        /
+                        <code>light</code>
+                        /
+                        <code>error</code>
+                    </td>
+                    <td>
+                        <code>dark</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>content</code>
+                    </td>
+                    <td>
+                        Displayed content (can also be passed via slot
+                        <code>content</code>
+                        as DOM)
+                    </td>
+                    <td>String</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>placement</code>
+                    </td>
+                    <td>Tooltip's display position</td>
+                    <td>String</td>
+                    <td>
+                        <code>top</code>
+                        ,
+                        <code>top-start</code>
+                        ,
+                        <code>top-end</code>
+                        ,
+                        <code>bottom</code>
+                        ,
+                        <code>bottom-start</code>
+                        ,
+                        <code>bottom-end</code>
+                        ,
+                        <code>left</code>
+                        ,
+                        <code>left-start</code>
+                        ,
+                        <code>left-end</code>
+                        ,
+                        <code>right</code>
+                        ,
+                        <code>right-start</code>
+                        ,
+                        <code>right-end</code>
+                    </td>
+                    <td>
+                        <code>bottom</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>disabled</code>
+                    </td>
+                    <td>Whether Tooltip is disabled</td>
+                    <td>Boolean</td>
+                    <td>—</td>
+                    <td>
+                        <code>false</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>offset</code>
+                    </td>
+                    <td>Offset for the display position</td>
+                    <td>Number</td>
+                    <td>—</td>
+                    <td>
+                        <code>0</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>transition</code>
+                    </td>
+                    <td>Transition animation</td>
+                    <td>String</td>
+                    <td>—</td>
+                    <td>
+                        <code>jk-fade-in</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>open-delay</code>
+                    </td>
+                    <td>Delay before appearance (milliseconds)</td>
+                    <td>Number</td>
+                    <td>—</td>
+                    <td>
+                        <code>0</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>close-delay</code>
+                    </td>
+                    <td>Delay before hiding (debounce, milliseconds)</td>
+                    <td>Number</td>
+                    <td>—</td>
+                    <td>
+                        <code>200</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>manual</code>
+                    </td>
+                    <td>
+                        Manual control mode. If
+                        <code>true</code>
+                        ,
+                        <code>mouseenter</code>
+                        and
+                        <code>mouseleave</code>
+                        events are ignored
+                    </td>
+                    <td>Boolean</td>
+                    <td>—</td>
+                    <td>
+                        <code>false</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>size</code>
+                    </td>
+                    <td>Configuration for size</td>
+                    <td>String</td>
+                    <td>
+                        <code>medium</code>
+                        ,
+                        <code>small</code>
+                        ,
+                        <code>mini</code>
+                    </td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>maxWidth</code>
+                    </td>
+                    <td>Maximum width</td>
+                    <td>String</td>
+                    <td>—</td>
+                    <td>
+                        <code>300px</code>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo7 from "../../components/tooltip/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/tooltip/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/tooltip/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/tooltip/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/tooltip/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/tooltip/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/tooltip/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

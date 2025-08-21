@@ -1,0 +1,44 @@
+<template>
+    <div class="@(['jk-index-bar-panel', props.class])">
+        <div class="anchor">
+            @(props.title || props.index)
+        </div>
+        @RenderSection()
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { componentName } from "../utils";
+
+export default class extends Component<{
+    class: any;
+    title: string;
+    index: string;
+}> {
+    model = {};
+
+    indexBar?: any;
+    created() {
+        this.indexBar = this.$root.closest(
+            (n) => n instanceof VNode.Component && n.component.name === componentName("index-bar")
+        )?.component;
+    }
+    mounted() {
+        this.indexBar?.registerPanel(this);
+    }
+    beforeDestroy() {
+        this.indexBar?.unRegisterPanel(this);
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-index-bar-panel {
+    .anchor {
+        padding: 0 16px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 32px;
+    }
+}
+</style>

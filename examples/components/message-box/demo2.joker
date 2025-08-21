@@ -1,0 +1,83 @@
+<template>
+    <DemoRow>
+        <jk-link type="primary" @click="open">Click to open the message pop-up window</jk-link>
+    </DemoRow>
+    <DemoRow>
+        <jk-link type="primary" @click="open1">Click to open the warning pop-up window</jk-link>
+    </DemoRow>
+    <DemoRow>
+        <jk-link type="primary" @click="open2">Click to open the success pop-up window</jk-link>
+    </DemoRow>
+    <DemoRow>
+        <jk-link type="primary" @click="open3">Click to open the error pop-up window</jk-link>
+    </DemoRow>
+    <DemoRow>
+        <jk-link type="primary" @click="open4">Click to open the custom icon pop-up window</jk-link>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { MessageBox, Message } from "../../../src";
+
+export default class extends Component {
+    open() {
+        MessageBox.confirm("I'm a confirm prompt box", "Friendly reminder", {
+            confirmButtonText: "I'm OK",
+            callback: (action) => {
+                Message({
+                    type: "info",
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+    open1() {
+        MessageBox.confirm("I'm a confirm prompt box", "Friendly reminder", {
+            confirmButtonText: "I'm OK",
+            type: "warning",
+            callback: (action) => {
+                Message({
+                    type: "info",
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+    open2() {
+        MessageBox.confirm("I'm a confirm prompt box", "Friendly reminder", {
+            confirmButtonText: "I'm OK",
+            type: "success",
+            callback: (action) => {
+                Message({
+                    type: "info",
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+    open3() {
+        MessageBox.confirm("I'm a confirm prompt box", "Friendly reminder", {
+            confirmButtonText: "I'm OK",
+            type: "error",
+            callback: (action) => {
+                Message({
+                    type: "info",
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+    open4() {
+        MessageBox.confirm("I'm a confirm prompt box", "Friendly reminder", {
+            confirmButtonText: "I'm OK",
+            iconClass: "jk-icon-message",
+            callback: (action) => {
+                Message({
+                    type: "info",
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+}
+</script>

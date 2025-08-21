@@ -1,0 +1,774 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Calendar</h2>
+        <p>The calendar component is used to select dates or date ranges.</p>
+        <h3>Default Display</h3>
+        <p>
+            Use the
+            <code>jk-calendar</code>
+            component to implement calendar display.
+        </p>
+        <p>
+            When
+            <code>showSwitchButton</code>
+            is enabled, users can only switch months/years via toggle buttons. When disabled, swiping gestures can be used to navigate months/years.
+        </p>
+        <p>
+            <strong>Note</strong>
+            : When
+            <code>showSwitchButton</code>
+            is disabled, the panel height must be explicitly configured (default is 100% height).
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-calendar title=&quot;日历&quot; showSwitchButton @pick=&quot;handlePick&quot; /&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;div class=&quot;demo&quot;&gt;
+            &lt;jk-calendar title=&quot;日历&quot; @pick=&quot;handlePick&quot; /&gt;
+        &lt;/div&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handlePick(e: VNode.Event&lt;Date&gt;) {
+        Toast(`${e.data.getFullYear()} - ${e.data.getMonth() + 1} - ${e.data.getDate()}`);
+    }
+}
+&lt;/script&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo {
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+&lt;/style&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Range Selection</h3>
+        <p>
+            Enable
+            <code>range</code>
+            to select date ranges.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-calendar title=&quot;日历&quot; showSwitchButton range @pick=&quot;handlePick&quot; /&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;div class=&quot;demo&quot;&gt;
+            &lt;jk-calendar title=&quot;日历&quot; range @pick=&quot;handlePick&quot; /&gt;
+        &lt;/div&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handlePick(e: VNode.Event&lt;[Date, Date]&gt;) {
+        let startDate = `${e.data[0].getFullYear()}/${e.data[0].getMonth() + 1}/${e.data[0].getDate()}`;
+
+        let endDate = `${e.data[1].getFullYear()}/${e.data[1].getMonth() + 1}/${e.data[1].getDate()}`;
+        Toast(`${startDate} - ${endDate}`);
+    }
+}
+&lt;/script&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo {
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+&lt;/style&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Restricted Selection Range</h3>
+        <p>
+            Configure
+            <code>minDate</code>
+            and
+            <code>maxDate</code>
+            to set selectable date boundaries.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-calendar title=&quot;日历&quot; showSwitchButton minDate=&quot;@(new Date(2025, 8, 10))&quot; range @pick=&quot;handlePick&quot; /&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;div class=&quot;demo&quot;&gt;
+            &lt;jk-calendar
+                title=&quot;日历&quot;
+                minDate=&quot;@(new Date(2025, 8, 10))&quot;
+                maxDate=&quot;@(new Date(2025, 10, 10))&quot;
+                range
+                @pick=&quot;handlePick&quot;
+            /&gt;
+        &lt;/div&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handlePick(e: VNode.Event&lt;[Date, Date]&gt;) {
+        let startDate = `${e.data[0].getFullYear()}/${e.data[0].getMonth() + 1}/${e.data[0].getDate()}`;
+
+        let endDate = `${e.data[1].getFullYear()}/${e.data[1].getMonth() + 1}/${e.data[1].getDate()}`;
+        Toast(`${startDate} - ${endDate}`);
+    }
+}
+&lt;/script&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo {
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+&lt;/style&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Custom Cell Rendering</h3>
+        <p>
+            Use the
+            <code>formatter</code>
+            property to modify cell content dynamically.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;div class=&quot;demo&quot;&gt;
+            &lt;jk-calendar
+                title=&quot;日历&quot;
+                minDate=&quot;@(new Date(2025, 8, 10))&quot;
+                maxDate=&quot;@(new Date(2025, 10, 10))&quot;
+                range
+                value=&quot;@([new Date(2025, 9, 12), new Date(2025, 9, 15)])&quot;
+                @pick=&quot;handlePick&quot;
+                formatter=&quot;@formatter&quot;
+            /&gt;
+        &lt;/div&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+import { CalendarCellDataType } from &quot;../../../packages/calendar/type&quot;;
+
+export default class extends Component {
+    handlePick(e: VNode.Event&lt;[Date, Date]&gt;) {
+        let startDate = `${e.data[0].getFullYear()}/${e.data[0].getMonth() + 1}/${e.data[0].getDate()}`;
+
+        let endDate = `${e.data[1].getFullYear()}/${e.data[1].getMonth() + 1}/${e.data[1].getDate()}`;
+        Toast(`${startDate} - ${endDate}`);
+    }
+    formatter(cell: CalendarCellDataType) {
+        if (cell.start) {
+            cell.tip = &quot;入店&quot;;
+        }
+
+        if (cell.end) {
+            cell.tip = &quot;离店&quot;;
+        }
+
+        if (cell.type === &quot;normal&quot; &amp;&amp; cell.date.getMonth() + 1 === 10 &amp;&amp; cell.date.getDate() === 1) {
+            cell.topTip = &quot;庆祝&quot;;
+            cell.text = &quot;国庆节&quot;;
+            cell.tip = &quot;放假喽&quot;;
+            cell.customClass = &quot;custom-class&quot;;
+        }
+    }
+}
+&lt;/script&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo {
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+
+    :deep(.custom-class) {
+        background: red;
+        color: #fff;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+}
+&lt;/style&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Date Picker Panel</h3>
+        <p>
+            Use
+            <code>jk-calendar-picker</code>
+            to display the date selection panel.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref1')&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref2')&quot;&gt;Range Picker&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref3')&quot;&gt;With Confirm&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref4')&quot;&gt;With Switch Button&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref5')&quot;&gt;With Validate&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref1&quot; @pick=&quot;handlePick&quot; /&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref2&quot; range @pick=&quot;handleRangePick&quot; /&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref3&quot; range @pick=&quot;handleRangePick&quot; show-confirm /&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref4&quot; range @pick=&quot;handleRangePick&quot; show-confirm show-switch-button /&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref5&quot; range @pick=&quot;handleRangePick&quot; validate=&quot;@validateRange&quot; /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+import dayjs from &quot;dayjs&quot;;
+
+export default class extends Component {
+    handleOpen(e: VNode.Event, ref: string) {
+        this.$getRef(ref)?.component.open();
+    }
+    handlePick(e: VNode.Event&lt;Date&gt;) {
+        Toast(`${e.data.getFullYear()} - ${e.data.getMonth() + 1} - ${e.data.getDate()}`);
+    }
+    handleRangePick(e: VNode.Event&lt;[Date, Date]&gt;) {
+        let startDate = `${e.data[0].getFullYear()}/${e.data[0].getMonth() + 1}/${e.data[0].getDate()}`;
+
+        let endDate = `${e.data[1].getFullYear()}/${e.data[1].getMonth() + 1}/${e.data[1].getDate()}`;
+        Toast(`${startDate} - ${endDate}`);
+    }
+    validateRange(dates: [Date, Date]) {
+        let diff = dayjs(dates[1]).diff(dayjs(dates[0]), &quot;day&quot;);
+
+        if (diff &gt; 3) {
+            Toast(&quot;最多选择3天&quot;);
+
+            return false;
+        }
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Form Field</h3>
+        <p>
+            Use the
+            <code>jk-date</code>
+            component with
+            <code>type='calendar'</code>
+            for date selection in forms.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-date type=&quot;calendar&quot; /&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-date type=&quot;calendar&quot; range showConfirm format=&quot;MM/DD&quot; value=&quot;@(['2025-08-07', '2025-08-12'])&quot; /&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Calendar Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>title</td>
+                    <td>Calendar title</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>Currently selected date (or date array for range selection)</td>
+                    <td>Date / [Date, Date]</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>defaultValue</td>
+                    <td>Default displayed month/year</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>minDate</td>
+                    <td>Minimum selectable date</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>maxDate</td>
+                    <td>Maximum selectable date</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showWeekNumber</td>
+                    <td>Whether to display week numbers</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>showSwitchButton</td>
+                    <td>Whether to show month/year toggle buttons (disables swipe navigation)</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>formatter</td>
+                    <td>Custom cell formatter function to modify rendering logic</td>
+                    <td>(data: CalendarCellDataType) =&gt; void</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>readonly</td>
+                    <td>Read-only mode (disables date selection)</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>range</td>
+                    <td>Enable date range selection</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>CalendarCellDataType Definition</h3>
+        <pre><code class="language-typescript">export type CalendarCellDataType = {  
+    date: Date; // Cell date  
+    type: &quot;normal&quot; \| &quot;prev-month&quot; \| &quot;next-month&quot; \| &quot;today&quot; \| &quot;placeholder&quot;; // Cell type  
+    text?: any; // Displayed content  
+    disabled?: boolean; // Whether disabled (non-selectable)  
+    customClass?: string; // Custom CSS class  
+    inRange?: boolean; // Whether within selected range (range mode only)  
+    start?: boolean; // Whether range start date (range mode only)  
+    end?: boolean; // Whether range end date (range mode only)  
+    tip?: string; // Tooltip below cell  
+    topTip?: string; // Tooltip above cell  
+};  
+</code></pre>
+        <h3>Calendar Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Arguments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>pick</td>
+                    <td>Triggers when a date is selected</td>
+                    <td>Date / [Date, Date]</td>
+                </tr>
+                <tr>
+                    <td>change</td>
+                    <td>
+                        Similar to
+                        <code>pick</code>
+                        , but also triggers during range selection when only the start date is set
+                    </td>
+                    <td>Date / [Date, Date]</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Calendar Picker Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default (Auto-detected)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>title</td>
+                    <td>Picker panel title</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>Selected date(s)</td>
+                    <td>Date / [Date, Date]</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>defaultValue</td>
+                    <td>Default displayed month/year</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>minDate</td>
+                    <td>Minimum selectable date</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>maxDate</td>
+                    <td>Maximum selectable date</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showWeekNumber</td>
+                    <td>Display week numbers</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>showSwitchButton</td>
+                    <td>Show month/year toggle buttons (disables swipe)</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>
+                        Panel size. Priority: Manual value &gt; Auto-detection. Auto-rules:
+                        <code>auto</code>
+                        if
+                        <code>showSwitchButton</code>
+                        enabled; else
+                        <code>60%</code>
+                    </td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>
+                        <code>auto</code>
+                        /
+                        <code>60%</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>formatter</td>
+                    <td>Cell formatter function</td>
+                    <td>(data: CalendarCellDataType) =&gt; void</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>range</td>
+                    <td>Enable range selection</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showConfirm</td>
+                    <td>Show confirmation button</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>confirmText</td>
+                    <td>Confirmation button text</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;Confirm&quot;</td>
+                </tr>
+                <tr>
+                    <td>validate</td>
+                    <td>
+                        Pre-confirmation validation. Returns
+                        <code>true</code>
+                        to proceed or
+                        <code>false</code>
+                        to cancel and keep panel open
+                    </td>
+                    <td>(value: Date / [Date, Date]) =&gt; boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Calendar Picker Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Arguments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>pick</td>
+                    <td>Triggers on date selection</td>
+                    <td>Date / [Date, Date]</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Date Calendar Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>Bound value</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>Type</td>
+                    <td>calendar</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom CSS class</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Disable state</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>clearable</td>
+                    <td>Show clear button</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Input size</td>
+                    <td>string</td>
+                    <td>large / small / mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td>Placeholder text (non-range mode)</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>format</td>
+                    <td>Display format</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>HH:mm:ss</td>
+                </tr>
+                <tr>
+                    <td>value-format</td>
+                    <td>Bound value format (optional)</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>HH:mm:ss</td>
+                </tr>
+                <tr>
+                    <td>default-value</td>
+                    <td>Default displayed time when opened</td>
+                    <td>string</td>
+                    <td>
+                        Must match
+                        <code>format</code>
+                    </td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>prefix-icon</td>
+                    <td>Custom header icon class</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>jk-icon-time</td>
+                </tr>
+                <tr>
+                    <td>panel-size</td>
+                    <td>Picker panel size</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>pick-validate</td>
+                    <td>
+                        See
+                        <code>validate</code>
+                        in Calendar
+                    </td>
+                    <td>Function</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>cellFormatter</td>
+                    <td>
+                        See
+                        <code>formatter</code>
+                        in Calendar
+                    </td>
+                    <td>Function</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>range</td>
+                    <td>Enable range selection</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showConfirm</td>
+                    <td>Show confirmation button</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>confirmText</td>
+                    <td>Confirmation button text</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;Confirm&quot;</td>
+                </tr>
+                <tr>
+                    <td>minDate</td>
+                    <td>Minimum selectable date</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>maxDate</td>
+                    <td>Maximum selectable date</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showWeekNumber</td>
+                    <td>Display week numbers</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>showSwitchButton</td>
+                    <td>Show month/year toggle buttons (disables swipe)</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Date Calendar Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Arguments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Triggers on date selection</td>
+                    <td>string / [string, string]</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo6 from "../../components/calendar/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/calendar/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/calendar/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/calendar/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/calendar/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/calendar/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

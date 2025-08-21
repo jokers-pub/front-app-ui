@@ -1,0 +1,13 @@
+<template>
+    <jk-cell>
+        <jk-tag closable>Tag 1</jk-tag>
+        <jk-tag type="success" closable>Tag 2</jk-tag>
+        <jk-tag type="info" closable>Tag 3</jk-tag>
+    </jk-cell>
+    <jk-cell>
+        <jk-tag type="warning" closable>Tag 4</jk-tag>
+        <jk-tag type="danger" closable>Tag 5</jk-tag>
+        <jk-tag color="yellow" closable>Custom Color</jk-tag>
+    </jk-cell>
+</template>
+

@@ -1,0 +1,5 @@
+<template>
+    <jk-field>
+        <jk-select clearable options="@(['Apple', 'Banana', 'Cherry', 'Date'])" />
+    </jk-field>
+</template>

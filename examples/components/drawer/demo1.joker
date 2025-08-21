@@ -1,0 +1,30 @@
+<template>
+    <DemoRow>
+        <jk-radio-group @change="handleRadioChange" value="@model.direction" direction="vertical">
+            <jk-radio value="left">Left to right</jk-radio>
+            <jk-radio value="top">Top to bottom</jk-radio>
+            <jk-radio value="right">Right to left</jk-radio>
+            <jk-radio value="bottom">Bottom to top</jk-radio>
+        </jk-radio-group>
+    </DemoRow>
+    <jk-button @click="handleOpen">Pop up</jk-button>
+    <jk-drawer ref="drawer" direction="@model.direction" title="I'm the title">I'm the content.</jk-drawer>
+</template>
+<script>
+import { VNode } from "@joker.front/core";
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        direction: "left"
+    };
+
+    handleRadioChange(e: VNode.Event<string>) {
+        this.model.direction = e.data;
+    }
+
+    handleOpen() {
+        this.$getRef("drawer")?.component.open();
+    }
+}
+</script>

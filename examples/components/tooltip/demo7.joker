@@ -1,0 +1,8 @@
+<template>
+    <jk-tooltip
+        content="Extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content, extremely long content"
+        maxWidth="150px"
+        placement="top">
+        <jk-button>Extremely long content</jk-button>
+    </jk-tooltip>
+</template>

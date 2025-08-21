@@ -1,0 +1,76 @@
+<template>
+    <div
+        class="@(['jk-grid', props.border && 'is-border', props.class])"
+        style="@({ gap: props.gutter ? props.gutter + 'px' : undefined })">
+        @RenderSection()
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { componentName } from "../utils";
+
+export default class extends Component<{
+    class: any;
+    columnNum: number;
+    border: boolean;
+    gutter: number;
+}> {
+    name = componentName("grid");
+    propsOption = {
+        columnNum: 4,
+        border: true,
+        gutter: Number
+    };
+    model = {
+        itemWidth: ""
+    };
+
+    created() {
+        this.$watch(() => this.props.columnNum, this.initItemWidth);
+        this.initItemWidth();
+    }
+
+    initItemWidth() {
+        if (this.props.gutter) {
+            this.model.itemWidth = `calc((100% - (${this.props.columnNum} - 1) * ${this.props.gutter}px) / ${this.props.columnNum})`;
+        } else {
+            this.model.itemWidth = `calc(100%/${this.props.columnNum})`;
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-grid {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+
+    &.is-border {
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            right: 1px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            z-index: 1;
+            background: #fff;
+        }
+
+        &:before {
+            content: "";
+            display: block;
+            position: absolute;
+            right: 1px;
+            left: 0;
+            right: 0;
+            bottom: 1px;
+            height: 1px;
+            z-index: 1;
+            background: #fff;
+        }
+    }
+}
+</style>

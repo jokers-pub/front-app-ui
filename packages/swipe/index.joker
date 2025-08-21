@@ -1,0 +1,421 @@
+<template>
+    <div class="@(['jk-carousel', this.props.class, this.props.direction])" ref="carousel">
+        @if(this.props.arrow) {
+            <button type="button" @click.stop="throttledArrowClick(model.activeIndex - 1)" class="arrow arrow-left">
+                <i class="jk-icon-arrow-left"></i>
+            </button>
+            <button type="button" @click.stop="throttledArrowClick(model.activeIndex + 1)" class="arrow arrow-right">
+                <i class="jk-icon-arrow-right"></i>
+            </button>
+        }
+        <div class="container" style="@({ height: props.height })" ref="container">
+            @RenderSection()
+        </div>
+        @if(props.indicatorPosition !== "none") {
+            <ul class="@indicatorsClasses">
+                @for(let(index, item) in model.items) {
+                    <li
+                        class="indicator
+                            @('indicator-' + props.direction)
+                            @(parseInt(index) === model.activeIndex?'is-active':'')"
+                        @click.stop="handleIndicatorClick(index)">
+                        <button class="button">
+                            @if(hasLabel) {
+                                <span>@item.label</span>
+                            }
+                        </button>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</template>
+<script>
+import { VNode, combinedReply } from "@joker.front/core";
+import { throttle } from "@joker.front/shared";
+import { addResizeListener, removeResizeListener } from "../utils/resize-event";
+import { componentName } from "../utils/index";
+import { TouchBase } from "../utils/touch";
+
+export default class extends TouchBase<{
+    initialIndex: number;
+    height: string;
+    autoplay: boolean;
+    class: string;
+    interval: number;
+    indicatorPosition: string;
+    indicator: boolean;
+    arrow: boolean;
+    loop: boolean;
+    direction: string;
+}> {
+    propsOption = {
+        initialIndex: 0,
+        autoplay: true,
+        interval: 3000,
+        indicator: true,
+        loop: true,
+        direction: {
+            default: "horizontal",
+            validator(val: string): boolean {
+                return ["horizontal", "vertical"].includes(val);
+            }
+        }
+    };
+    name = componentName("carousel");
+    model = {
+        items: [] as any,
+        activeIndex: -1,
+        containerWidth: 0,
+        timer: null as any,
+        hover: false
+    };
+    items: any[] = [];
+
+    mounted() {
+        this.$watch(
+            () => this.model.items,
+            (val) => {
+                if (val?.length > 0) this.setActiveItem(<number>this.props.initialIndex || 0);
+            }
+        );
+
+        this.$watch(
+            () => this.model.activeIndex,
+            (val, oldVal) => {
+                this.resetItemPosition(oldVal);
+                if (oldVal > -1) {
+                    this.$trigger("change", val);
+                }
+            }
+        );
+
+        this.$watch(
+            () => this.props.autoplay,
+            (val) => {
+                val ? this.startTimer() : this.pauseTimer();
+            }
+        );
+
+        this.$watch(
+            () => this.props.loop,
+            () => {
+                this.setActiveItem(this.model.activeIndex);
+            }
+        );
+
+        this.$watch(
+            () => this.props.interval,
+            () => {
+                this.pauseTimer();
+                this.startTimer();
+            }
+        );
+
+        this.bindTouchEvent(this.$getRef("container").output);
+        this.updateItems();
+
+        addResizeListener(this.$getRef("carousel")!.output, this.resetItemPosition);
+        if (<number>this.props.initialIndex < this.model.items.length && <number>this.props.initialIndex >= 0) {
+            this.model.activeIndex = <number>this.props.initialIndex;
+        }
+
+        this.startTimer();
+    }
+
+    beforeDestroy() {
+        if (this.$getRef("carousel")!.output)
+            removeResizeListener(this.$getRef("carousel")!.output, this.resetItemPosition);
+        this.pauseTimer();
+    }
+
+    get hasLabel() {
+        for (let item of this.items) {
+            if (<any>item.component.props.label?.toString().length > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    get indicatorsClasses() {
+        let classes = ["indicators", "indicators-" + this.props.direction];
+        if (this.hasLabel) {
+            classes.push("indicators-labels");
+        }
+        if (this.props.indicatorPosition === "outside") {
+            classes.push("indicators-outside");
+        }
+        return classes.join(" ");
+    }
+
+    throttledArrowClick = throttle(300, (e: VNode.Event, index: any): void => {
+        this.setActiveItem(parseInt(index));
+    });
+
+    updateItems() {
+        this.items =
+            this.$rootVNode?.find((n) => {
+                return n instanceof VNode.Component && n.component?.name === componentName("carousel-item");
+            }) || [];
+
+        combinedReply(() => {
+            this.model.items.length = 0;
+            this.items?.forEach((item) => {
+                this.model.items.push(Object.assign({}, item.component.model, item.component.props));
+            });
+        });
+    }
+
+    resetItemPosition = (oldIndex: number): void => {
+        this.items.forEach((item: any, index: number): void => {
+            item.component.translateItem(index, this.model.activeIndex, oldIndex);
+        });
+    };
+
+    playSlides = () => {
+        if (this.model.activeIndex < this.items.length - 1) {
+            this.model.activeIndex++;
+        } else if (this.props.loop) {
+            this.model.activeIndex = 0;
+        }
+    };
+
+    pauseTimer() {
+        if (this.model.timer) {
+            clearInterval(this.model.timer);
+            this.model.timer = null;
+        }
+    }
+
+    startTimer() {
+        if (<number>this.props.interval <= 0 || !this.props.autoplay || this.model.timer) return;
+        this.model.timer = setInterval(this.playSlides, this.props.interval);
+    }
+
+    resetTimer() {
+        this.pauseTimer();
+        this.startTimer();
+    }
+
+    setActiveItem(index: any) {
+        if (typeof index === "string") {
+            let filteredItem;
+            for (let item of this.items) {
+                if (item.component.props.name === index) {
+                    filteredItem = item;
+                    break;
+                }
+            }
+            if (filteredItem) {
+                index = this.items.indexOf(filteredItem);
+            }
+        }
+        index = Number(index);
+        if (isNaN(index) || index !== Math.floor(index)) {
+            return;
+        }
+        let length = this.model.items.length;
+        let oldIndex = this.model.activeIndex;
+        if (index < 0) {
+            this.model.activeIndex = this.props.loop ? length - 1 : 0;
+        } else if (index >= length) {
+            this.model.activeIndex = this.props.loop ? 0 : length - 1;
+        } else {
+            this.model.activeIndex = index;
+        }
+        if (oldIndex === this.model.activeIndex) {
+            this.resetItemPosition(oldIndex);
+        }
+        this.resetTimer();
+    }
+
+    prev() {
+        this.setActiveItem(this.model.activeIndex - 1);
+    }
+
+    next() {
+        this.setActiveItem(this.model.activeIndex + 1);
+    }
+
+    handleIndicatorClick(e: VNode.Event, index: any): void {
+        this.model.activeIndex = parseInt(index);
+    }
+
+    //#region  touch
+
+    onTouchStart(e: TouchEvent | MouseEvent) {
+        e.preventDefault();
+        this.pauseTimer();
+    }
+    onTouchMove(e: TouchEvent | MouseEvent) {
+        e.preventDefault();
+        //方向一致
+        if (this.touchData.direction === this.props.direction) {
+            let delta = this.props.direction === "horizontal" ? this.touchData.deltaX : this.touchData.deltaY;
+
+            this.items.forEach((item: any, index: number): void => {
+                item.component.move(index, this.model.activeIndex, delta);
+            });
+        }
+    }
+    onTouchEnd() {
+        const duration = Date.now() - this.touchData.startTime;
+        let delta = this.props.direction === "horizontal" ? this.touchData.deltaX : this.touchData.deltaY;
+        const speed = delta / duration;
+
+        if (this.touchData.direction === this.props.direction) {
+            let container = this.$getRef("container")?.output;
+
+            let size = this.props.direction === "horizontal" ? container.offsetWidth : container.offsetHeight;
+            const shouldSwipe = Math.abs(speed) > 0.25 || Math.abs(delta) > size / 2;
+
+            if (shouldSwipe) {
+                if (delta > 0) this.prev();
+                else {
+                    this.next();
+                }
+                return;
+            }
+        }
+        this.resetItemPosition(this.model.activeIndex);
+        this.resetTimer();
+    }
+    //#endregion
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-carousel {
+    position: relative;
+    overflow: hidden;
+    &.horizontal {
+        overflow-x: hidden;
+    }
+    &.vertical {
+        overflow-y: hidden;
+    }
+    .container {
+        position: relative;
+        height: 300px;
+    }
+    .arrow {
+        border: none;
+        outline: none;
+        padding: 0;
+        margin: 0;
+        height: 36px;
+        width: 36px;
+        cursor: pointer;
+        transition: 0.3s;
+        border-radius: 50%;
+        background-color: rgba(31, 45, 61, 0.11);
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        z-index: 10;
+        transform: translateY(-50%);
+        text-align: center;
+        font-size: 12px;
+        &:hover {
+            background-color: rgba(31, 45, 61, 0.23);
+        }
+        &.arrow-left {
+            left: 16px;
+        }
+
+        &.arrow-right {
+            right: 16px;
+        }
+        i {
+            cursor: pointer;
+        }
+    }
+    .indicators {
+        position: absolute;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        z-index: 2;
+        &.indicators-horizontal {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+        &.indicators-vertical {
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        &.indicators-outside {
+            bottom: 26px;
+            text-align: center;
+            position: static;
+            transform: none;
+            .indicator:hover button {
+                opacity: 0.64;
+            }
+            .indicator {
+                .button {
+                    background-color: #c0c4cc;
+                    opacity: 0.24;
+                }
+            }
+        }
+        &.indicators-labels {
+            left: 0;
+            right: 0;
+            transform: none;
+            text-align: center;
+            .button {
+                height: auto;
+                width: auto;
+                padding: 2px 18px;
+                font-size: 12px;
+            }
+            .indicator {
+                padding: 6px 4px;
+            }
+        }
+        .indicator {
+            background-color: transparent;
+            cursor: pointer;
+            &:hover button {
+                opacity: 0.72;
+            }
+            &.indicator-horizontal {
+                display: inline-block;
+                padding: 12px 4px;
+            }
+            &.indicator-vertical {
+                padding: 4px 12px;
+                .button {
+                    width: 2px;
+                    height: 15px;
+                }
+            }
+            &.is-active .button {
+                opacity: 1;
+            }
+            .button {
+                display: block;
+                opacity: 0.48;
+                width: 30px;
+                height: 2px;
+                background-color: var(--jk-background-color-default);
+                border: none;
+                outline: none;
+                padding: 0;
+                margin: 0;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+        }
+    }
+}
+</style>

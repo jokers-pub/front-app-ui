@@ -1,0 +1,22 @@
+<template>
+    <div class="demo-image__preview">
+        <jk-image style="width: 100px; height: 100px" src="@model.url" preview preview-list="@model.srcList"></jk-image>
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        url: "https://img.freepik.com/free-photo/beautiful-landscape-mountain-lake-sunset_23-2149012366.jpg", // 200x300 比例风景图
+        srcList: [
+            "https://img.freepik.com/free-photo/serene-forest-path-with-greenery_23-2148816677.jpg", // 600x1000 比例森林路径图
+            "https://img.freepik.com/free-photo/coastal-cliffs-overlooking-ocean_23-2148784024.jpg", // 800x1000 比例海岸悬崖图
+            "https://img.freepik.com/free-photo/vibrant-autumn-leaves-on-tree_23-2148684648.jpg", // 1000x1000 比例秋季树叶图
+            "https://img.freepik.com/free-photo/modern-minimalist-interior-living-room_23-2148599347.jpg", // 1200x1000 比例现代客厅图
+            "https://img.freepik.com/free-photo/colorful-flower-field-in-spring_23-2148488876.jpg" // 1400x1000 比例春季花田图
+        ]
+    };
+}
+</script>

@@ -1,0 +1,39 @@
+<template>
+    <div>
+        <jk-collapse accordion>
+            <jk-collapse-item title="Consistency" name="1">
+                <div>
+                    Visual consistency: Components should follow the same visual and interaction style guidelines.
+                </div>
+                <div>Naming consistency: The naming of components and their APIs should be clear and consistent.</div>
+            </jk-collapse-item>
+            <jk-collapse-item title="Reusability" name="2">
+                <div>
+                    Independence: Components should be self - contained and not rely on specific external implementations.
+                </div>
+                <div>
+                    Parameterization: Components should allow customization of their behavior and appearance through parameters or attributes.
+                </div>
+            </jk-collapse-item>
+            <jk-collapse-item title="Maintainability" name="3">
+                <div>
+                    Clear documentation: Each component should have detailed documentation explaining its purpose, interfaces, and usage examples.
+                </div>
+                <div>Clean code: Component code should be readable, with a clear structure and comments.</div>
+            </jk-collapse-item>
+            <jk-collapse-item title="Accessibility" name="4">
+                <div>
+                    Compliance with standards: Follow WAI - ARIA guidelines to ensure that components are friendly to assistive technologies (such as screen readers).
+                </div>
+                <div>Keyboard accessibility: Components should be operable via the keyboard.</div>
+            </jk-collapse-item>
+        </jk-collapse>
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {};
+}
+</script>

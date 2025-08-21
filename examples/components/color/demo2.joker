@@ -1,0 +1,30 @@
+<template>
+    @for(let name of colors) {
+        <div class="demo-container" style="background-color: var(--jk-color-@(name));">
+            <div style="background-color:var(--jk-color-@(name)-dark-2)"></div>
+            @for(let i = 3; i < 10; i++) {
+                <div style="background-color:var(--jk-color-@(name)-light-@(i))"></div>
+            }
+        </div>
+    }
+</template>
+<script>
+import { Component } from "@joker.front/core";
+export default class extends Component {
+    colors = ["success", "warning", "danger", "info"];
+}
+</script>
+
+<style lang="scss" scoped>
+.demo-container {
+    border-radius: 4px;
+    padding-top: 80px;
+    margin-bottom: 20px;
+    display: flex;
+    overflow: hidden;
+    div {
+        flex: 1;
+        height: 30px;
+    }
+}
+</style>

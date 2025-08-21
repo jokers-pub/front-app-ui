@@ -1,0 +1,34 @@
+<template>
+    <jk-cell>
+        <jk-upload-img before-read="@beforeRead" before-delete="@beforeDelete" />
+    </jk-cell>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { sleep } from "@joker.front/shared";
+import { Loading } from "../../../src";
+
+export default class extends Component {
+    async beforeRead(file: File) {
+        let loading = Loading();
+        //模拟上传
+        await sleep(1000);
+        loading.close();
+        //返回上传后的文件路径
+        return URL.createObjectURL(file);
+
+        //返回false 则代表上传/读取失败，将不会添加到展示结果中
+        //return false;
+    }
+
+    async beforeDelete(index: number, urlOrFile: any) {
+        let loading = Loading();
+        //模拟从服务器中删除地址
+        await sleep(1000);
+        loading.close();
+
+        //返回false 则代表上传/读取失败，将不会添加到展示结果中
+        //return false;
+    }
+}
+</script>

@@ -1,0 +1,323 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>DatePicker 日期选择器</h2>
+        <p>用于选择或输入日期</p>
+        <h3>基础用法</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick('picker1')&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick('picker2')&quot;&gt;Default Value&lt;/jk-button&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-date-picker ref=&quot;picker1&quot; placeholder=&quot;Select Date&quot; @pick=&quot;handlePick&quot; /&gt;
+    &lt;jk-date-picker ref=&quot;picker2&quot; placeholder=&quot;Select Date&quot; defaultValue=&quot;2023-09-27&quot; @pick=&quot;handlePick&quot; /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick(_: VNode.Event, ref: string) {
+        this.$getRef(ref)?.component.open();
+    }
+
+    handlePick(e: VNode.Event&lt;string&gt;) {
+        Toast(e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>其他日期单位</h3>
+        <p>通过扩展基础的日期选择，可以选择周、月、年。</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick('picker1')&quot;&gt;Pick Year&lt;/jk-button&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick('picker2')&quot;&gt;Pick Year Month&lt;/jk-button&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick('picker3')&quot;&gt;Pick Year Week&lt;/jk-button&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-date-picker type=&quot;year&quot; ref=&quot;picker1&quot; placeholder=&quot;Please select year&quot; @pick=&quot;handlePick&quot;&gt;&lt;/jk-date-picker&gt;
+    &lt;jk-date-picker type=&quot;month&quot; ref=&quot;picker2&quot; placeholder=&quot;Please select&quot; @pick=&quot;handlePick&quot;&gt;&lt;/jk-date-picker&gt;
+    &lt;jk-date-picker
+        format=&quot;YYYY-ww&quot;
+        value=&quot;2023-36&quot;
+        type=&quot;week&quot;
+        showWeekNumber
+        ref=&quot;picker3&quot;
+        @pick=&quot;handlePick&quot;
+        placeholder=&quot;Please select a week&quot;&gt;&lt;/jk-date-picker&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick(_: VNode.Event, ref: string) {
+        this.$getRef(ref)?.component.open();
+    }
+
+    handlePick(e: VNode.Event&lt;string&gt;) {
+        Toast(e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>输入项</h3>
+        <p>
+            结合
+            <code>jk-date</code>
+            在表单内使用。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-date type=&quot;year&quot; placeholder=&quot;Select Year&quot; clearable /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-date type=&quot;month&quot; placeholder=&quot;Select Month&quot; clearable /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-date type=&quot;date&quot; placeholder=&quot;Select Date&quot; clearable /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-date type=&quot;week&quot; placeholder=&quot;Select Week&quot; clearable format=&quot;YYYY年ww周&quot; /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <div class="warning">
+            <p>
+                请注意大小写，内部采用
+                <code>dayjs</code>
+                进行时间运算及格式化，详细格式值，请参考
+                <a href="https://dayjs.fenxianglu.cn/" target="_blank">dayjs</a>
+            </p>
+        </div>
+        <h3>Date Picker Attribute</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>format</td>
+                    <td>值规则</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>HH:mm</td>
+                </tr>
+                <tr>
+                    <td>defauleValue</td>
+                    <td>默认展示值</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>值</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>filter</td>
+                    <td>选项过滤</td>
+                    <td>
+                        (date:{year?: number; month?: number; day?: number; week?: number}) =&gt; boolean
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>labelFormat</td>
+                    <td>自定义展示列的文本</td>
+                    <td>(value: number, type: string) =&gt; string</td>
+                    <td>—</td>
+                    <td>jk-icon-time</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Time Select Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>pick</td>
+                    <td>选中值后出发事件</td>
+                    <td>string</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Date Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>绑定值</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>类型</td>
+                    <td>year/month/date/week</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>自定义 class 样式</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>禁用</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>clearable</td>
+                    <td>是否显示清除按钮</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>输入框尺寸</td>
+                    <td>string</td>
+                    <td>large / small / mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td>非范围选择时的占位内容</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>format</td>
+                    <td>展示值的格式</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>HH:mm:ss</td>
+                </tr>
+                <tr>
+                    <td>value-format</td>
+                    <td>可选，绑定值的格式</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>HH:mm:ss</td>
+                </tr>
+                <tr>
+                    <td>default-value</td>
+                    <td>可选，选择器打开时默认显示的时间</td>
+                    <td>string</td>
+                    <td>符合 format 格式</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>prefix-icon</td>
+                    <td>自定义头部图标的类名</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>jk-icon-time</td>
+                </tr>
+                <tr>
+                    <td>labelFormat</td>
+                    <td>自定义展示列的文本</td>
+                    <td>(value: number, type: string) =&gt; string</td>
+                    <td>—</td>
+                    <td>jk-icon-time</td>
+                </tr>
+                <tr>
+                    <td>filter</td>
+                    <td>选项过滤</td>
+                    <td>
+                        (date:{year?: number; month?: number; day?: number; week?: number}) =&gt; boolean
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Date Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>用户确认选定的值时触发</td>
+                    <td>值（按照valueFomat格式化后的值）</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo3 from "../../components/date-picker/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/date-picker/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/date-picker/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

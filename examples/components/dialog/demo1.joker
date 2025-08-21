@@ -1,0 +1,73 @@
+<template>
+    <DemoRow>
+        <jk-button fullWidth @click="open">Click to open Dialog</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth @click="open1">Full-screen window</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth @click="open2">Window with extremely long content</jk-button>
+    </DemoRow>
+    <jk-dialog ref="dialog" title="Basic display" before-close="@dialogBeforeClose">
+        <jk-form label-position="top">
+            <jk-cell-group title="User Info">
+                <jk-field label="UserName">
+                    <jk-input placeholder="Pleasse Input" />
+                </jk-field>
+                <jk-field label="UserName">
+                    <jk-input placeholder="Pleasse Input" />
+                </jk-field>
+                <jk-field label="UserName">
+                    <jk-input placeholder="Pleasse Input" />
+                </jk-field>
+            </jk-cell-group>
+        </jk-form>
+        @section("footer") {
+            <jk-button @click="handleDialogCancelClick">Cancel</jk-button>
+            <jk-button type="primary" @click="handleDialogConfirmClick">OK</jk-button>
+        }
+    </jk-dialog>
+    <jk-dialog ref="dialog1" fullscreen title="Full-screen display"></jk-dialog>
+    <jk-dialog ref="dialog2" title="Window with extremely long content">
+        <ul>
+            @for(let i = 0; i < 100; i++) {
+                <li>
+                    I'm line @(i).
+                </li>
+            }
+        </ul>
+    </jk-dialog>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { MessageBox } from "../../../src";
+
+export default class extends Component {
+    open() {
+        this.$getRef("dialog")?.component.open();
+    }
+    open1() {
+        this.$getRef("dialog1")?.component.open();
+    }
+    open2() {
+        this.$getRef("dialog2")?.component.open();
+    }
+    dialogBeforeClose(close: Function) {
+        MessageBox.confirm("Are you sure you want to close?", {
+            title: "Prompt",
+            callback(action) {
+                if (action === "confirm") {
+                    close();
+                }
+            }
+        });
+    }
+    handleDialogCancelClick() {
+        this.$getRef("dialog")?.component.close();
+    }
+
+    handleDialogConfirmClick() {
+        this.$getRef("dialog")?.component.close();
+    }
+}
+</script>

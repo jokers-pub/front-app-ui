@@ -1,0 +1,5 @@
+<template>
+    <jk-cell>
+        <jk-pagination total="1000" currentPage="10" pagerCount="3" pageSize="20" />
+    </jk-cell>
+</template>

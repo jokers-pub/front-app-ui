@@ -1,0 +1,5 @@
+<template>
+    <jk-empty>
+        <jk-button type="primary">Button</jk-button>
+    </jk-empty>
+</template>

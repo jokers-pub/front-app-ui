@@ -1,0 +1,394 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Select Component</h2>
+        <p>A dropdown menu for displaying and selecting content when there are too many options.</p>
+        <h3>Basic Usage</h3>
+        <p>
+            Supports fundamental single selection widely. Refer to the
+            <code>picker</code>
+            component's
+            <strong>columns</strong>
+            parameter for
+            <code>options</code>
+            rules.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select options=&quot;@(['Apple', 'Banana', 'Cherry', 'Date'])&quot; value=&quot;Date&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select
+            options=&quot;@([
+                { label: 'Apple', value: '1' },
+                { label: 'Banana', value: '2' },
+                { label: 'Cherry', value: '3' },
+                { label: 'Date', value: '4' }
+            ])&quot;
+        /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select
+            value=&quot;9&quot;
+            options=&quot;@([
+                { label: 'Apple', value: '1' },
+                { label: 'Banana', value: '2' },
+                { label: 'Cherry', value: '3' },
+                { label: 'Date', value: '4' },
+                { label: 'Eggplant', value: '5' },
+                { label: 'Fig', value: '6' },
+                { label: 'Grape', value: '7' },
+                { label: 'Honeydew', value: '8' },
+                { label: 'Kiwi', value: '9' },
+                { label: 'Lemon', value: '10' },
+                { label: 'Mango', value: '11' },
+                { label: 'Orange', value: '12' }
+            ])&quot;
+        /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select
+            value=&quot;@(['周三', '下午'])&quot;
+            options=&quot;@([
+                ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                ['上午', '中午', '下午', '晚上']
+            ])&quot;
+        /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select
+            value=&quot;@(['sd', 'sd-yt'])&quot;
+            options=&quot;@([
+                {
+                    label: '山东',
+                    value: 'sd',
+                    children: [
+                        { label: '济南', value: 'sd-jn' },
+                        { label: '青岛', value: 'sd-qd' },
+                        { label: '烟台', value: 'sd-yt' },
+                        { label: '潍坊', value: 'sd-wf' },
+                        { label: '淄博', value: 'sd-zb' }
+                    ]
+                },
+                {
+                    label: '浙江',
+                    value: 'zj',
+                    children: [
+                        { label: '杭州', value: 'zj-hz' },
+                        { label: '宁波', value: 'zj-nb' },
+                        { label: '温州', value: 'zj-wz' },
+                        { label: '绍兴', value: 'zj-sx' },
+                        { label: '嘉兴', value: 'zj-jx' }
+                    ]
+                }
+            ])&quot;
+        /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+    
+</code></pre>
+        </DemoContainer>
+        <h3>Disabled State</h3>
+        <p>
+            Set
+            <code>disabled</code>
+            to true to disable the dropdown selection.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select disabled options=&quot;@(['Apple', 'Banana', 'Cherry', 'Date'])&quot; /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Clearable Selection</h3>
+        <p>Includes a clear button to reset the selector to its initial state.</p>
+        <p>
+            Set the
+            <code>clearable</code>
+            property to enable clearing the selector. Note that...
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select clearable options=&quot;@(['Apple', 'Banana', 'Cherry', 'Date'])&quot; /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Lazy Loading Data</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select load=&quot;@loadData&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select load=&quot;@loadData&quot; value=&quot;Cherry&quot; /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+
+export default class extends Component {
+    async loadData() {
+        await sleep(2000);
+
+        return [&quot;Apple&quot;, &quot;Banana&quot;, &quot;Cherry&quot;, &quot;Date&quot;];
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Empty Data Display</h3>
+        <p>
+            When the passed array is empty (length:0), configure the
+            <code>emptyText</code>
+            property to modify the empty panel data.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select options=&quot;@([])&quot; empty-text=&quot;no data&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select options=&quot;@([])&quot;&gt;
+            @section(&quot;empty&quot;) {
+                &lt;jk-empty size=&quot;small&quot;&gt;
+                    &lt;jk-button&gt;去添加&lt;/jk-button&gt;
+                &lt;/jk-empty&gt;
+            }
+        &lt;/jk-select&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Size</h3>
+        <p>
+            Use the
+            <code>size</code>
+            property to specify the input size. Besides the default size, medium, small, and mini sizes are also available.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select size=&quot;large&quot; options=&quot;@(['Apple', 'Banana', 'Cherry', 'Date'])&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select options=&quot;@(['Apple', 'Banana', 'Cherry', 'Date'])&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select size=&quot;small&quot; options=&quot;@(['Apple', 'Banana', 'Cherry', 'Date'])&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-select size=&quot;mini&quot; options=&quot;@(['Apple', 'Banana', 'Cherry', 'Date'])&quot; /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Select Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>options</td>
+                    <td>
+                        Option data list. See the
+                        <code>picker</code>
+                        component's
+                        <code>columns</code>
+                        parameter type for details
+                    </td>
+                    <td>Array&lt;any&gt;</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>Bound value. For multiple columns, pass as an array</td>
+                    <td>any / any[]</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>
+                        Used for the
+                        <code>name</code>
+                        attribute in form integration
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>clearable</td>
+                    <td>Whether to show the clear button</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td>Placeholder text</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>Select</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class style</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>Title of the selection window</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>load</td>
+                    <td>
+                        Async loading method. Do not set
+                        <code>data</code>
+                        ; request data and return options when dropdown is opened or for display
+                    </td>
+                    <td>() =&gt; Array&lt;any&gt; | Promise&lt;Array&lt;any&gt;&gt;</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>emptyText</td>
+                    <td>Text to display when options are empty</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>labelKey</td>
+                    <td>Key name for display</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>&quot;label&quot;</td>
+                </tr>
+                <tr>
+                    <td>valueKey</td>
+                    <td>Key name for unique value identification</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>&quot;value&quot;</td>
+                </tr>
+                <tr>
+                    <td>childrenKey</td>
+                    <td>Key name for child options (if options are nested)</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>&quot;children&quot;</td>
+                </tr>
+                <tr>
+                    <td>splitText</td>
+                    <td>Separator for displaying text in multiple columns</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>&quot; / &quot;</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Whether the selector is disabled</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>readonly</td>
+                    <td>Whether to set to read-only state (non-selectable but styled differently from disabled)</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Selector size</td>
+                    <td>string</td>
+                    <td>large/small/mini</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Select Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Callback Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Triggered when the selected value changes</td>
+                    <td>The current selected value</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Select Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>empty</td>
+                    <td>List when no options are available</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo6 from "../../components/select/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/select/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/select/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/select/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/select/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/select/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

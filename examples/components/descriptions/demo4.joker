@@ -1,0 +1,27 @@
+<template>
+    <div class="descriptions-demo">
+        <jk-descriptions title="Custom style list" column="3" border>
+            <jk-descriptions-item label="Username" labelClassName="my-label" contentClassName="my-content">
+                kooriookami
+            </jk-descriptions-item>
+            <jk-descriptions-item label="Phone Number">18100000000</jk-descriptions-item>
+            <jk-descriptions-item label="Residence">Suzhou City</jk-descriptions-item>
+            <jk-descriptions-item label="Remarks">
+                <jk-tag size="small">School</jk-tag>
+            </jk-descriptions-item>
+            <jk-descriptions-item label="Contact Address" contentStyle="text-align: right">
+                No. 1188, Wuzhong Avenue, Wuzhong District, Suzhou City, Jiangsu Province
+            </jk-descriptions-item>
+        </jk-descriptions>
+    </div>
+</template>
+<style lang="scss" scoped>
+.descriptions-demo {
+    :deep(.my-content) {
+        background: #fde2e2;
+    }
+    :deep(.my-label) {
+        background: #e1f3d8 !important;
+    }
+}
+</style>

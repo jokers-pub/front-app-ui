@@ -1,0 +1,99 @@
+<template>
+    @if(model.show) {
+        <div
+            class="jk-dropdown-menu jk-popper @(props.size||'')"
+            ref="menu"
+            append-to="body"
+            transition-name="jk-zoom-in-top"
+            @click.outside="close">
+            <div style="@({ maxHeight: props.maxHeight })">
+                @RenderSection()
+            </div>
+        </div>
+    }
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Popper } from "../utils/popper";
+import { componentName } from "../utils";
+
+export default class extends Component<{
+    size: string;
+    maxHeight: string;
+    placement: string;
+}> {
+    model = {
+        show: false
+    };
+    name = componentName("dropdown-menu");
+
+    get dropdown() {
+        return this.$rootVNode.closest(
+            (n) => n instanceof VNode.Component && n.component.name === componentName("dropdown")
+        );
+    }
+
+    private popperHandler?: Popper;
+
+    timeout?: any;
+
+    async open(reference: HTMLElement) {
+        this.clearTimeOut();
+
+        this.model.show = true;
+
+        await this.$nextUpdatedRender();
+
+        let popper = this.$getRef("menu")?.output;
+
+        if (popper && reference) {
+            if (this.popperHandler === undefined) {
+                this.popperHandler = new Popper(reference, popper, {
+                    placement: this.props.placement || "bottom-start",
+                    boundariesPadding: 0
+                });
+            }
+
+            this.$trigger("open");
+        }
+    }
+
+    close() {
+        this.clearTimeOut();
+
+        this.timeout = setTimeout(() => {
+            this.model.show = false;
+
+            this.popperHandler?.destroy();
+
+            this.popperHandler = undefined;
+
+            this.$trigger("close");
+        }, 150);
+    }
+
+    clearTimeOut() {
+        if (!this.timeout) return;
+
+        window.clearTimeout(this.timeout);
+        this.timeout === undefined;
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-dropdown-menu {
+    background-color: var(--jk-background-color-default);
+    padding: 5px 0;
+    position: fixed;
+    border: solid 1px var(--jk-border-color-lighter);
+    border-radius: 5px;
+    box-shadow: var(--jk-box-shadow-light);
+    font-size: 14px;
+    color: var(--jk-color-text-regular);
+
+    > div {
+        overflow: auto;
+    }
+}
+</style>

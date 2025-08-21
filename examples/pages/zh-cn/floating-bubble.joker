@@ -1,0 +1,102 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>FloatingBubble 浮动气泡</h2>
+        <p>悬浮在页面边缘的可点击气泡。</p>
+        <h3>基础用法</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    请查看文件右下角
+    &lt;jk-floating-bubble icon=&quot;jk-icon-s-comment&quot; /&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>icon</strong>
+                    </td>
+                    <td>气泡内显示的图标，通常传入图标类名</td>
+                    <td>string</td>
+                    <td>任意有效的图标类名/标识</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>class</strong>
+                    </td>
+                    <td>为浮动气泡添加的自定义样式类，用于覆盖默认样式或添加额外样式</td>
+                    <td>any</td>
+                    <td>单个类名字符串、多个类名组成的数组或对象</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>点击事件</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>自定义展示</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo1 from "../../components/floating-bubble/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

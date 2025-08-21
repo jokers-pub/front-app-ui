@@ -1,0 +1,199 @@
+<template>
+    <div
+        class="@([
+            'jk-tree-node',
+            'drop_' + model.dropState,
+            {
+                'is-expanded': props.node.expanded,
+                'is-current': props.node.isCurrent,
+                'is-hidden': !props.node.visible,
+                'is-disabled': props.node.disabled
+            }
+        ])"
+        role="treeitem"
+        tabindex="-1"
+        ref="node"
+        aria-expanded="@props.node.expanded"
+        aria-disabled="@props.node.disabled"
+        aria-checked="@props.node.checked">
+        <div class="content" style="margin-left:@(paddingLeft)px" @click="handleClick">
+            <span
+                class="@([
+                    tree.props.iconClass || 'jk-icon-caret-right',
+                    { 'expand-icon': true, 'is-leaf': props.node.isLeaf, expanded: !props.node.isLeaf && props.node.expanded }
+                ])"
+                @click.stop="handleExpandIconClick"></span>
+            @if(tree.props.showCheckbox) {
+                <JokerCheckBox
+                    value="@props.node.checked"
+                    indeterminate="@props.node.indeterminate"
+                    disabled="@props.node.disabled"
+                    @change="handleCheckBoxChange"
+                />
+            }
+            @if(props.node.loading) {
+                <span class="loading jk-icon-loading"></span>
+            }
+            @if($sections.default) {
+                @RenderSection("default", props.node)
+            }
+            else {
+                <span class="label">@props.node.label</span>
+            }
+        </div>
+        @if(model.childNodeRendered || props.node.expanded) {
+            <div class="children" role="group" aria-expanded="@props.node.extended">
+                @for(let child of props.node.children) {
+                    <JokerTreeNode node="@child">
+                        @if($sections.default) {
+                            @section("default", node) {
+                                @RenderSection("default", node)
+                            }
+                        }
+                    </JokerTreeNode>
+                }
+            </div>
+        }
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { TreeNode } from "./store/node";
+import { componentName } from "../utils";
+import JokerCheckBox from "../checkbox/checkbox.joker";
+import JokerTreeNode from "./tree-node.joker";
+
+export default class extends Component<{ node: TreeNode }> {
+    model = {
+        childNodeRendered: false,
+        dropState: ""
+    };
+
+    components = {
+        JokerCheckBox,
+        JokerTreeNode
+    };
+
+    tree?: any;
+    nodeEl?: HTMLElement;
+    mounted() {
+        this.nodeEl = this.$getRef("node")?.output;
+    }
+    created() {
+        //结点是否被首次渲染，once
+        let [_, destroyWatch] = this.$watch(
+            () => this.props.node?.expanded,
+            (expaned) => {
+                if (expaned) {
+                    this.model.childNodeRendered = true;
+                    destroyWatch();
+                }
+            }
+        );
+
+        this.tree = (<any>this.$root)?.closest(
+            (n: any) => n instanceof VNode.Component && n.component.name === componentName("tree")
+        )!.component!;
+    }
+
+    get paddingLeft() {
+        return (this.props.node!.level - 1) * this.tree?.props.indent;
+    }
+    handleClick() {
+        this.tree.store.setCurrentNode(this.props.node);
+
+        this.tree.$trigger("current-change", this.props.node);
+
+        this.tree?.props.expandOnClickNode && this.handleExpandIconClick();
+    }
+    handleExpandIconClick() {
+        if (!this.props.node) return;
+        if (this.props.node?.isLeaf) return;
+
+        if (this.props.node?.expanded) {
+            this.tree?.collapseNode(this.props.node);
+        } else {
+            this.tree?.expandNode(this.props.node);
+        }
+    }
+
+    handleCheckBoxChange(e: VNode.Event<boolean>) {
+        this.tree?.checkNode(this.props.node!, e.data);
+        e.stopPropagation();
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-tree-node {
+    white-space: nowrap;
+    outline: none;
+    position: relative;
+    &:focus {
+        > .content {
+            background-color: var(--jk-background-color-base);
+        }
+    }
+
+    &.is-current {
+        > .content {
+            background-color: var(--jk-color-primary-light-9) !important;
+        }
+    }
+
+    > .content {
+        display: flex;
+        align-items: center;
+        height: 28px;
+        line-height: 28px;
+        cursor: pointer;
+
+        > span.expand-icon {
+            padding: 6px;
+            cursor: pointer;
+            color: var(--jk-color-text-secondary);
+            font-size: 12px;
+
+            transform: rotate(0deg);
+            transition: transform 0.3s ease-in-out;
+
+            &.expanded {
+                transform: rotate(90deg);
+            }
+
+            &.is-leaf {
+                color: transparent;
+                cursor: default;
+            }
+        }
+
+        :deep(> label.jk-checkbox) {
+            margin-right: 8px;
+        }
+
+        > .label {
+            font-size: 14px;
+        }
+
+        > .loading {
+            margin-right: 8px;
+            font-size: 14px;
+            color: var(--jk-color-text-placeholder);
+        }
+    }
+
+    > .children {
+        overflow: hidden;
+        background: transparent;
+        display: none;
+    }
+
+    &.is-expanded > .children {
+        display: block;
+    }
+
+    &.is-hidden {
+        display: none;
+    }
+}
+</style>

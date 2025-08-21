@@ -1,0 +1,30 @@
+<template>
+    <jk-picker
+        title="选择时间"
+        columns="@([
+            ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            ['上午', '中午', '晚上']
+        ])"
+        value="@(['周三', '晚上'])"
+        @confirm="handleConfirm"
+        @cancel="handleCancel"
+        @change="handleChange"
+    />
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event<string[]>) {
+        Toast(`confirm:${e.data.join("-")}`);
+    }
+    handleCancel(e: VNode.Event<string[]>) {
+        Toast(`cancel:${e.data.join("-")}`);
+    }
+    handleChange(e: VNode.Event<string[]>) {
+        Toast(`change:${e.data.join("-")}`);
+    }
+}
+</script>
+

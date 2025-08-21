@@ -1,0 +1,22 @@
+<template>
+    <jk-cell>
+        <jk-result icon="success" title="Success Prompt" subTitle="Please operate according to the prompt">
+            <jk-button type="primary" size="medium">Back</jk-button>
+        </jk-result>
+    </jk-cell>
+    <jk-cell>
+        <jk-result icon="warning" title="Warning Prompt" subTitle="Please operate according to the prompt">
+            <jk-button type="primary" size="medium">Back</jk-button>
+        </jk-result>
+    </jk-cell>
+    <jk-cell>
+        <jk-result icon="error" title="Error Prompt" subTitle="Please operate according to the prompt">
+            <jk-button type="primary" size="medium">Back</jk-button>
+        </jk-result>
+    </jk-cell>
+    <jk-cell>
+        <jk-result icon="info" title="Information Prompt" subTitle="Please operate according to the prompt">
+            <jk-button type="primary" size="medium">Back</jk-button>
+        </jk-result>
+    </jk-cell>
+</template>

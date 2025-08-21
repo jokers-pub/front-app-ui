@@ -1,0 +1,26 @@
+<template>
+    <jk-cell-group title="属性方式">
+        <jk-field>
+            <jk-input placeholder="Please select a date" suffix-icon="jk-icon-date" />
+        </jk-field>
+        <jk-field>
+            <jk-input placeholder="Please enter the content" prefix-icon="jk-icon-search" />
+        </jk-field>
+    </jk-cell-group>
+    <jk-cell-group title="Section方式">
+        <jk-field>
+            <jk-input placeholder="Please select a date">
+                @section("suffix") {
+                    <i class="jk-icon-date" />
+                }
+            </jk-input>
+        </jk-field>
+        <jk-field>
+            <jk-input placeholder="Please enter the content">
+                @section("prefix") {
+                    <i class="jk-icon-search" />
+                }
+            </jk-input>
+        </jk-field>
+    </jk-cell-group>
+</template>

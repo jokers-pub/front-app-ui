@@ -1,0 +1,117 @@
+<template>
+    <div class="@(['jk-nav-bar', props.class])">
+        @if($sections.left || props.leftText || props.leftIcon) {
+            <div class="@(['left', props.leftDisabled && 'is-disabled'])" @click="handleClick('left')">
+                @if($sections.left) {
+                    @RenderSection("left")
+                }
+                else {
+                    @if(props.leftIcon) {
+                        <i class="@props.leftIcon" />
+                    }
+                    <span>@props.leftText</span>
+                }
+            </div>
+        }
+        <div class="title">
+            @if($sections.default) {
+                @RenderSection()
+            }
+            else {
+                @props.title
+            }
+        </div>
+        @if($sections.right || props.rightText || props.rightIcon) {
+            <div class="@(['right', props.rightDisabled && 'is-disabled'])" @click="handleClick('right')">
+                @if($sections.right) {
+                    @RenderSection("right")
+                }
+                else {
+                    <span>@props.rightText</span>
+                    @if(props.rightIcon) {
+                        <i class="@props.rightIcon" />
+                    }
+                }
+            </div>
+        }
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+
+export default class extends Component<{
+    class: any;
+
+    title: string;
+    leftText: string;
+    leftIcon: string;
+    leftDisabled: boolean;
+
+    rightText: string;
+    rightIcon: string;
+    rightDisabled: boolean;
+}> {
+    handleClick(e: VNode.Event, tag: string) {
+        if (tag === "left") {
+            if (this.props.leftDisabled) return;
+
+            this.$trigger("left-click");
+        } else if (tag === "right") {
+            if (this.props.rightDisabled) return;
+
+            this.$trigger("right-click");
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-nav-bar {
+    align-items: center;
+    display: flex;
+    position: relative;
+    background: var(--jk-background-color-default);
+    user-select: none;
+    position: relative;
+    line-height: 22px;
+    text-align: center;
+    height: 46px;
+
+    .title {
+        max-width: 60%;
+        color: var(--jk-color-text-primary);
+        font-weight: 600;
+        font-size: 16px;
+        margin: 0 auto;
+    }
+
+    .left,
+    .right {
+        padding: 0 16px;
+        font-size: 14px;
+        align-items: center;
+        display: flex;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        color: var(--jk-color-primary);
+        &.left {
+            left: 0;
+            i {
+                margin-right: 4px;
+            }
+        }
+        &.right {
+            right: 0;
+            i {
+                margin-left: 4px;
+            }
+        }
+
+        &.is-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+}
+</style>

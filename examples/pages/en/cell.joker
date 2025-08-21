@@ -1,0 +1,390 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Cell</h2>
+        <p>The cell is a single display item in a list.</p>
+        <h3>Basic Usage</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+    &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Card Style</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group inset&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group inset title=&quot;Title&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Cell Size</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group title=&quot;Large Size&quot; size=&quot;large&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Default Size&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Small Size&quot; size=&quot;small&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Mini Size&quot; size=&quot;mini&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Diff Size&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow description=&quot;Description&quot; size=&quot;large&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow description=&quot;Description&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow description=&quot;Description&quot; size=&quot;small&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow description=&quot;Description&quot; size=&quot;mini&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Display Icon</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; icon=&quot;jk-icon-s-user&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; icon=&quot;jk-icon-star-on&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Display Arrow</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; arrow /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow arrow-direction=&quot;top&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow arrow-direction=&quot;bottom&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow arrow-direction=&quot;left&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Custom Block Content</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group title=&quot;Title Section&quot;&gt;
+        &lt;jk-cell arrow&gt;
+            @section(&quot;title&quot;) {
+                &lt;span&gt;Custom Title&lt;/span&gt;
+                &lt;jk-tag size=&quot;mini&quot;&gt;TAG&lt;/jk-tag&gt;
+            }
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Content Section&quot;&gt;
+        &lt;jk-cell title=&quot;Title&quot; arrow&gt;
+            &lt;jk-tag size=&quot;mini&quot;&gt;TAG&lt;/jk-tag&gt;
+            &lt;jk-tag size=&quot;mini&quot;&gt;TAG1&lt;/jk-tag&gt;
+            &lt;jk-tag size=&quot;mini&quot;&gt;TAG2&lt;/jk-tag&gt;
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Right Icon Section&quot;&gt;
+        &lt;jk-cell title=&quot;Title&quot; content=&quot;Content&quot;&gt;
+            @section(&quot;rightIcon&quot;) {
+                &lt;i class=&quot;jk-icon-close&quot; /&gt;
+            }
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.jk-icon-close {
+    line-height: inherit;
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Vertical Centering</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; center arrow description=&quot;Description&quot; size=&quot;large&quot; /&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Title Alignment</h3>
+        <p>
+            The
+            <code>title-align</code>
+            property configures the title alignment. If no
+            <strong>title</strong>
+            or Section Title is specified, the default layout is
+            <code>top</code>
+            . In
+            <code>top</code>
+            layout, the content area defaults to left alignment, while others default to right alignment.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo8)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-radio-group value=&quot;@model.labelAlign&quot; @change=&quot;handleChange&quot;&gt;
+            &lt;jk-radio-button value=&quot;&quot;&gt;Left&lt;/jk-radio-button&gt;
+            &lt;jk-radio-button value=&quot;top&quot;&gt;Top&lt;/jk-radio-button&gt;
+            &lt;jk-radio-button value=&quot;right&quot;&gt;Right&lt;/jk-radio-button&gt;
+        &lt;/jk-radio-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;jk-cell-group&gt;
+        &lt;jk-cell
+            title=&quot;Cell title&quot;
+            title-align=&quot;@model.labelAlign&quot;
+            value=&quot;Content&quot;
+            arrow
+            description=&quot;Description&quot;
+            size=&quot;large&quot;
+        /&gt;
+        &lt;jk-cell title-align=&quot;@model.labelAlign&quot; value=&quot;Content&quot; arrow size=&quot;large&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        labelAlign: &quot;&quot;
+    };
+    handleChange(e: VNode.Event&lt;string&gt;) {
+        this.model.labelAlign = e.data;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Cell Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class name for additional styling</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>Title content of the cell</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>description</td>
+                    <td>Descriptive text of the cell, typically supplementary information to the title</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>
+                        Numeric or content value of the cell, displayed in the corresponding position of the title or description
+                    </td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Size of the cell, affecting the overall display proportion</td>
+                    <td>&quot;large&quot; | &quot;small&quot; | &quot;mini&quot;</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>Icon on the left side of the cell, specified by the icon name</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>arrow</td>
+                    <td>Whether to show an arrow, indicating the cell is clickable or has a redirection behavior</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>arrowDirection</td>
+                    <td>Direction of the arrow</td>
+                    <td>'top' | 'bottom' | 'left' | 'right'</td>
+                    <td>-</td>
+                    <td>'right'</td>
+                </tr>
+                <tr>
+                    <td>center</td>
+                    <td>Whether the cell content is vertically centered</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>title-align</td>
+                    <td>
+                        Controls the alignment of the cell title. Takes effect only when
+                        <code>title</code>
+                        or
+                        <code>Section Title</code>
+                        is configured. In
+                        <code>top</code>
+                        layout, content defaults to left-aligned; in
+                        <code>right</code>
+                        /
+                        <code>left</code>
+                        , content defaults to right-aligned.
+                    </td>
+                    <td>&quot;top&quot; | &quot;right&quot; | &quot;left&quot;</td>
+                    <td>-</td>
+                    <td>&quot;left&quot;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cell Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Slot Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>Custom content block</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>Custom title block</td>
+                </tr>
+                <tr>
+                    <td>leftIcon</td>
+                    <td>Custom left icon block</td>
+                </tr>
+                <tr>
+                    <td>rightIcon</td>
+                    <td>Custom right icon block</td>
+                </tr>
+                <tr>
+                    <td>description</td>
+                    <td>Custom description block</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cell Group Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>title</td>
+                    <td>Title of the cell group, used to classify and describe a set of cells</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>inset</td>
+                    <td>Card mode</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>
+                        Size of cells within the group, uniformly affecting the display proportion of all cells in the group
+                    </td>
+                    <td>&quot;large&quot; | &quot;small&quot; | &quot;mini&quot;</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cell Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>Response event after clicking</td>
+                    <td>VNode.Event</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo8 from "../../components/cell/demo8.joker";
+import DEMO_JOKER_demo7 from "../../components/cell/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/cell/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/cell/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/cell/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/cell/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/cell/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/cell/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo8,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

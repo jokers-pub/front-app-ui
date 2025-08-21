@@ -1,0 +1,5 @@
+<template>
+    <jk-field>
+        <jk-number value="0" step="2" step-strictly show-controls />
+    </jk-field>
+</template>

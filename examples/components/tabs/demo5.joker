@@ -1,0 +1,65 @@
+<template>
+    <jk-tabs>
+        <jk-tab-panel label="用户管理">
+            <div class="demo-content">
+                展示系统内所有用户的信息，包括用户名、角色、创建时间等，支持搜索、筛选和编辑操作。
+            </div>
+        </jk-tab-panel>
+        <jk-tab-panel label="权限配置">
+            <div class="demo-content">
+                管理不同角色的权限分配，可设置菜单访问权限、操作权限等，支持批量配置和权限继承。
+            </div>
+        </jk-tab-panel>
+        <jk-tab-panel label="数据统计">
+            <div class="demo-content">
+                展示平台运行的关键数据指标，如用户活跃度、业务成交量、系统访问量等，以图表形式直观呈现。
+            </div>
+        </jk-tab-panel>
+        <jk-tab-panel label="日志记录">
+            <div class="demo-content">
+                记录用户的所有操作行为，包括登录日志、操作日志、异常日志等，支持按时间、用户、操作类型筛选。
+            </div>
+        </jk-tab-panel>
+        <jk-tab-panel label="系统设置">
+            <div class="demo-content">配置系统基础参数，如时区、语言、缓存策略等，支持系统备份和恢复功能。</div>
+        </jk-tab-panel>
+        <jk-tab-panel label="模块管理">
+            <div class="demo-content">管理系统内的功能模块，支持模块的启用、禁用和排序，可自定义模块名称和图标。</div>
+        </jk-tab-panel>
+        <jk-tab-panel label="消息通知">
+            <div class="demo-content">设置系统消息的推送规则，包括邮件、短信、站内信等渠道，支持消息模板自定义。</div>
+        </jk-tab-panel>
+        <jk-tab-panel label="接口文档">
+            <div class="demo-content">
+                展示系统提供的API接口详情，包括请求参数、返回格式、调用示例等，支持在线调试。
+            </div>
+        </jk-tab-panel>
+        <jk-tab-panel label="数据字典">
+            <div class="demo-content">维护系统内的基础数据字典，如性别、学历、状态等枚举值，支持字典项的增删改查。</div>
+        </jk-tab-panel>
+        <jk-tab-panel label="任务调度">
+            <div class="demo-content">
+                管理系统定时任务，可配置任务执行时间、频率和执行脚本，支持任务状态监控和手动触发。
+            </div>
+        </jk-tab-panel>
+        <jk-tab-panel label="缓存管理">
+            <div class="demo-content">
+                查看和管理系统缓存数据，支持缓存的清除、刷新和预热操作，显示缓存命中率等指标。
+            </div>
+        </jk-tab-panel>
+        <jk-tab-panel label="安全中心">
+            <div class="demo-content">
+                展示系统安全状态，包括登录异常检测、漏洞扫描结果等，提供密码策略和安全设置选项。
+            </div>
+        </jk-tab-panel>
+    </jk-tabs>
+</template>
+
+<style>
+.demo-content {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px 10px;
+    color: var(--jk-color-text-secondary);
+}
+</style>

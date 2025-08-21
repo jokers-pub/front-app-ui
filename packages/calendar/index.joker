@@ -1,0 +1,289 @@
+<template>
+    <div class="@(['jk-calendar', props.showSwitchButton && 'switch-model', props.class])">
+        <div class="header">
+            @if(props.title) {
+                <div class="title">
+                    @props.title
+                </div>
+            }
+            <div class="sub-title @(props.type==='year'||props.type ==='month'?'bordered':'')">
+                @if(props.showSwitchButton) {
+                    <button
+                        type="button"
+                        @click="prevYear"
+                        aria-label="@getValueByLang('prevYear')"
+                        class="prev-btn jk-icon-d-arrow-left"></button>
+                    <button
+                        type="button"
+                        @click="prevMonth"
+                        aria-label="@getValueByLang('prevMonth')"
+                        class="prev-btn jk-icon-arrow-left"></button>
+                    <button
+                        type="button"
+                        @click="nextYear"
+                        aria-label="@getValueByLang('nextYear')"
+                        class="next-btn jk-icon-d-arrow-right"></button>
+                    <button
+                        type="button"
+                        @click="nextMonth"
+                        aria-label="@getValueByLang('nextMonth')"
+                        class="next-btn jk-icon-arrow-right"></button>
+                }
+                <span class="label">@yearLabel</span>
+                <span class="label @(props.type==='month'?'active':'')">@monthLabel</span>
+            </div>
+            @if(props.showWeekNumber) {
+                <div class="weeks">
+                    @for(let week of getWeeks()) {
+                        <div class="week">
+                            @week
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+        <div class="content" ref="content">
+            @if(props.showSwitchButton) {
+                <JokerDateTable
+                    date="@model.date"
+                    value="@model.value"
+                    isRange="@props.range"
+                    minDate="@props.minDate"
+                    maxDate="@props.maxDate"
+                    formatter="@props.formatter"
+                    readonly="@props.readonly"
+                    @pick="handleDatePick"
+                />
+            }
+            else {
+                <JokerDateTableContainer
+                    date="@model.date"
+                    value="@model.value"
+                    isRange="@props.range"
+                    minDate="@props.minDate"
+                    maxDate="@props.maxDate"
+                    formatter="@props.formatter"
+                    readonly="@props.readonly"
+                    @pick="handleDatePick"
+                />
+            }
+        </div>
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import JokerDateTable from "./date-table.joker";
+import { addDate, subtractDate } from "../utils/date";
+import { getValueByLang } from "../utils/lang";
+import JokerDateTableContainer from "./data-table-container.joker";
+import { componentName } from "../utils";
+import { CalendarCellDataType } from "./type";
+import dayjs from "dayjs";
+
+export default class extends Component<{
+    title: string;
+    value: Date | [Date, Date];
+    defaultValue: Date;
+    minDate: Date;
+    maxDate: Date;
+    showWeekNumber: boolean;
+    showSwitchButton?: boolean;
+    formatter: (data: CalendarCellDataType) => void;
+    readonly: boolean;
+    range: boolean;
+}> {
+    name = componentName("calendar");
+    getValueByLang = getValueByLang;
+    propsOption = {
+        showWeekNumber: true
+    };
+    model = {
+        currentView: "date" as string,
+        value: undefined as any,
+        date: undefined as Date
+    };
+    getWeeks() {
+        return getValueByLang("weeks") || [];
+    }
+    components = {
+        JokerDateTable,
+        JokerDateTableContainer
+    };
+
+    created() {
+        this.initModelDate();
+
+        this.$watch(
+            () => [this.props.value, this.props.defaultValue],
+            () => {
+                this.initModelDate();
+            }
+        );
+    }
+
+    initModelDate() {
+        if (this.props.value) {
+            if (this.props.range) {
+                if (Array.isArray(this.props.value) && this.props.value.length === 2) {
+                    this.model.value = this.props.value;
+
+                    this.model.date = this.model.value[0];
+                    return;
+                }
+            } else {
+                this.model.value = this.props.value || [undefined, undefined];
+            }
+        } else if (this.props.defaultValue) {
+            this.model.value = this.props.defaultValue;
+        } else if (this.props.minDate) {
+            this.model.date = this.props.minDate;
+            return;
+        } else if (this.props.maxDate && new Date() > this.props.maxDate) {
+            this.model.date = this.props.maxDate;
+            return;
+        } else {
+            this.model.date = new Date();
+            return;
+        }
+
+        this.model.date = this.model.value;
+    }
+
+    //#region 属性
+    get yearLabel() {
+        return this.model.date.getFullYear() + ` ${getValueByLang("year")}`;
+    }
+
+    get monthLabel() {
+        return this.model.date.getMonth() + 1 + ` ${getValueByLang("month")}`;
+    }
+
+    //#endregion
+
+    //#region  方法
+    prevYear() {
+        this.model.date = subtractDate(this.model.date, 1, "y");
+    }
+    prevMonth() {
+        this.model.date = subtractDate(this.model.date, 1, "M");
+    }
+
+    nextYear() {
+        this.model.date = addDate(this.model.date, 1, "y");
+    }
+    nextMonth() {
+        this.model.date = addDate(this.model.date, 1, "M");
+    }
+
+    getScrollElement() {
+        return this.$getRef("content")?.output;
+    }
+    //#endregion
+
+    //#region  event
+
+    handleDatePick(e: VNode.Event<any>) {
+        this.model.value = e.data;
+        this.$trigger("change", this.model.value);
+        if (this.props.range) {
+            if (this.model.value[0] && this.model.value[1]) {
+                this.$trigger("pick", this.model.value);
+            }
+        } else {
+            this.$trigger("pick", this.model.value);
+
+            if (dayjs(this.model.date).format("YYYY-MM") !== dayjs(this.model.value).format("YYYY-MM")) {
+                this.model.date = this.model.value;
+            }
+        }
+    }
+
+    //#endregion
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-calendar {
+    background: var(--jk-background-color-default);
+    flex-direction: column;
+    height: 100%;
+    display: flex;
+
+    .header {
+        color: var(--jk-color-text-regular);
+        box-shadow: 0 2px 10px rgba(125, 126, 128, 0.16);
+        .title {
+            height: 44px;
+            font-weight: 600;
+            line-height: 44px;
+            text-align: center;
+        }
+
+        .sub-title {
+            margin: 12px;
+            text-align: center;
+            &.bordered {
+                padding-bottom: 12px;
+                border-bottom: solid 1px var(--jk-border-color-lighter);
+                & + .content {
+                    margin-top: 0;
+                }
+            }
+
+            .label {
+                font-size: 14px;
+                font-weight: 500;
+                padding: 0 5px;
+                line-height: 22px;
+                text-align: center;
+                cursor: pointer;
+
+                &:hover,
+                &:active {
+                    color: var(--jk-color-primary);
+                }
+            }
+
+            button {
+                font-size: 12px;
+                color: var(--jk-color-text-secondary);
+                border: 0;
+                background: transparent;
+                cursor: pointer;
+                outline: none;
+                margin-top: 5px;
+
+                &:hover {
+                    color: var(--jk-color-primary);
+                }
+
+                &.prev-btn {
+                    float: left;
+                }
+
+                &.next-btn {
+                    float: right;
+                }
+            }
+        }
+
+        .weeks {
+            display: flex;
+            text-align: center;
+            .week {
+                font-size: 12px;
+                line-height: 30px;
+                flex: 1;
+            }
+        }
+    }
+    .content {
+        position: relative;
+        overflow: auto;
+    }
+
+    &.switch-model {
+        height: auto;
+    }
+}
+</style>

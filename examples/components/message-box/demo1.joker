@@ -1,0 +1,24 @@
+<template>
+    <DemoRow>
+        <jk-link type="primary" @click="open">Click to open the message pop-up window</jk-link>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { MessageBox, Message } from "../../../src";
+
+export default class extends Component {
+    open() {
+        MessageBox.alert("I'm an alert prompt box", {
+            confirmButtonText: "I'm OK",
+            title: "Title",
+            callback: (action) => {
+                Message({
+                    type: "info",
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+}
+</script>

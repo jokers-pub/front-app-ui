@@ -1,0 +1,6 @@
+<template>
+    <jk-alert
+        title="With auxiliary text introduction"
+        type="success"
+        description="This is some supplementary information. Success often comes from hard work and perseverance. Keep up the good work and you'll achieve your goals!"></jk-alert>
+</template>

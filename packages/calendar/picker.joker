@@ -1,0 +1,150 @@
+<template>
+    <JokerDrawer ref="drawer" size="@size" direction="bottom" @close="handleClose" title="@props.title">
+        @if(props.showConfirm) {
+            <div class="jk-calendar-picker">
+                <div class="panel">
+                    <JokerCalendar
+                        date="@props.date"
+                        value="@model.value"
+                        defaultValue="@props.defaultValue"
+                        range="@props.range"
+                        minDate="@props.minDate"
+                        maxDate="@props.maxDate"
+                        formatter="@props.formatter"
+                        showWeekNumber="@props.showWeekNumber"
+                        showSwitchButton="@props.showSwitchButton"
+                        @pick="handleDatePick"
+                        @change="handleChange"
+                    />
+                </div>
+                <div class="btn-container">
+                    <JokerButton fullWidth disabled="@disabled" type="primary" round @click="handleConfirm">
+                        @props.confirmText
+                    </JokerButton>
+                </div>
+            </div>
+        }
+        else {
+            <JokerCalendar
+                date="@props.date"
+                value="@model.value"
+                defaultValue="@props.defaultValue"
+                range="@props.range"
+                minDate="@props.minDate"
+                maxDate="@props.maxDate"
+                formatter="@props.formatter"
+                showWeekNumber="@props.showWeekNumber"
+                showSwitchButton="@props.showSwitchButton"
+                @pick="handleDatePick"
+            />
+        }
+    </JokerDrawer>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import JokerDrawer from "../drawer/index.joker";
+import { CalendarCellDataType } from "./type";
+import JokerCalendar from "./index.joker";
+import JokerButton from "../button/index.joker";
+import { getValueByLang } from "../utils/lang";
+
+export default class extends Component<{
+    title: string;
+    value: Date | [Date, Date];
+    defaultValue: Date;
+    minDate: Date;
+    maxDate: Date;
+    showWeekNumber: boolean;
+    showSwitchButton?: boolean;
+    size: string;
+    formatter: (data: CalendarCellDataType) => void;
+    range: boolean;
+    showConfirm: boolean;
+    confirmText: string;
+    validate: (value: any) => boolean;
+}> {
+    propsOption = {
+        confirmText: getValueByLang("confirm")
+    };
+    components = {
+        JokerDrawer,
+        JokerCalendar,
+        JokerButton
+    };
+    model = {
+        value: undefined as any
+    };
+    showPanel = false;
+    created() {
+        this.$syncProp("value");
+    }
+    get size() {
+        if (this.props.size) return this.props.size;
+
+        if (!this.props.showSwitchButton) {
+            return "70%";
+        }
+
+        return "auto";
+    }
+    get disabled() {
+        if (this.props.range) {
+            if (this.model.value && this.model.value.filter(Boolean).length === 2) return false;
+
+            return true;
+        } else {
+            return !this.model.value;
+        }
+    }
+    open() {
+        if (this.showPanel) return;
+        this.showPanel = true;
+        this.$getRef("drawer")?.component.open();
+    }
+    handleClose() {
+        this.showPanel = false;
+    }
+
+    handleDatePick(e: VNode.Event<any>) {
+        this.model.value = e.data;
+
+        if (!this.props.showConfirm) {
+            if (this.props.validate && this.props.validate(this.model.value) === false) {
+                return;
+            }
+            this.$getRef("drawer")?.component.close();
+            this.$trigger("pick", e.data);
+        }
+    }
+    handleConfirm() {
+        if (this.props.validate && this.props.validate(this.model.value) === false) {
+            return;
+        }
+        this.$getRef("drawer")?.component.close();
+        this.$trigger("pick", this.model.value);
+    }
+
+    handleChange(e: VNode.Event<any>) {
+        if (this.props.range) {
+            this.model.value = e.data;
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-calendar-picker {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .panel {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .btn-container {
+        padding: 8px 16px;
+        background: #fff;
+    }
+}
+</style>

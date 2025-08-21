@@ -1,0 +1,31 @@
+<template>
+    <jk-cell-group title="Title Section">
+        <jk-cell arrow>
+            @section("title") {
+                <span>Custom Title</span>
+                <jk-tag size="mini">TAG</jk-tag>
+            }
+        </jk-cell>
+    </jk-cell-group>
+    <jk-cell-group title="Content Section">
+        <jk-cell title="Title" arrow>
+            <jk-tag size="mini">TAG</jk-tag>
+            <jk-tag size="mini">TAG1</jk-tag>
+            <jk-tag size="mini">TAG2</jk-tag>
+        </jk-cell>
+    </jk-cell-group>
+    <jk-cell-group title="Right Icon Section">
+        <jk-cell title="Title" content="Content">
+            @section("rightIcon") {
+                <i class="jk-icon-close" />
+            }
+        </jk-cell>
+    </jk-cell-group>
+</template>
+
+
+<style lang="scss" scoped>
+.jk-icon-close {
+    line-height: inherit;
+}
+</style>

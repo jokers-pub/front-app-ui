@@ -1,0 +1,73 @@
+<template>
+    <jk-cell>
+        <jk-tree data="@treeData" @current-change="handleCurrentChange" />
+    </jk-cell>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { TreeNode } from "../../../packages/tree/store/node";
+
+export default class extends Component {
+    treeData = [
+        {
+            label: "Level 1 - 1",
+            children: [
+                {
+                    label: "Level 2 - 1-1",
+                    children: [
+                        {
+                            label: "Level 3 - 1-1-1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            label: "Level 1 - 2",
+            children: [
+                {
+                    label: "Level 2 - 2-1",
+                    children: [
+                        {
+                            label: "Level 3 - 2-1-1"
+                        }
+                    ]
+                },
+                {
+                    label: "Level 2 - 2-2",
+                    children: [
+                        {
+                            label: "Level 3 - 2-2-1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            label: "Level 1 - 3",
+            children: [
+                {
+                    label: "Level 2 - 3-1",
+                    children: [
+                        {
+                            label: "Level 3 - 3-1-1"
+                        }
+                    ]
+                },
+                {
+                    label: "Level 2 - 3-2",
+                    children: [
+                        {
+                            label: "Level 3 - 3-2-1"
+                        }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    handleCurrentChange(e: VNode.Event<TreeNode>) {
+        console.log(e.data.label);
+    }
+}
+</script>

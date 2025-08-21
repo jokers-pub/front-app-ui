@@ -1,0 +1,16 @@
+<template>
+    <DemoRow>
+        <jk-input placeholder="Please enter the content">
+            @section("prepend") {
+                https://
+            }
+        </jk-input>
+    </DemoRow>
+    <DemoRow>
+        <jk-input placeholder="Please enter the content">
+            @section("append") {
+                .com
+            }
+        </jk-input>
+    </DemoRow>
+</template>

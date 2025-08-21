@@ -1,0 +1,38 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Upload Img 上传图片组件</h2>
+        <p>
+            用于将本地的图片上传至服务器，并在上传过程中展示预览图。目前 Uploader 组件不包含将文件上传至服务器的接口逻辑，该步骤需要自行实现。
+        </p>
+        <h3>基础用法</h3>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo5 from "../../components/upload-img/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/upload-img/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/upload-img/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/upload-img/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/upload-img/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

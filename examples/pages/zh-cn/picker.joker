@@ -1,0 +1,579 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Picker 选择器</h2>
+        <p>提供多个选项集合供用户选择，支持单列选择和多列级联，通常与弹出层组件配合使用。</p>
+        <h3>基础用法</h3>
+        <p>Picker 组件通过 columns 属性配置选项数据，columns 是一个包含字符串或对象的数组。</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-picker
+        title=&quot;选择地区&quot;
+        columns=&quot;@(['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华'])&quot;
+        @confirm=&quot;handleConfirm&quot;
+        @cancel=&quot;handleCancel&quot;
+        @change=&quot;handleChange&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`confirm:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleCancel(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`cancel:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleChange(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`change:${e.data.join(&quot;-&quot;)}`);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>默认选中</h3>
+        <p>
+            通过配置
+            <code>value</code>
+            属性来设置默认选中项，
+            <strong>注意</strong>
+            当非级联选择时，value应传入数组。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-picker
+        title=&quot;选择地区&quot;
+        columns=&quot;@(['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华'])&quot;
+        value=&quot;绍兴&quot;
+        @confirm=&quot;handleConfirm&quot;
+        @cancel=&quot;handleCancel&quot;
+        @change=&quot;handleChange&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`confirm:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleCancel(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`cancel:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleChange(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`change:${e.data.join(&quot;-&quot;)}`);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>多列（非级联）</h3>
+        <p>通过传入多项数组实现多列展示</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-picker
+        title=&quot;选择时间&quot;
+        columns=&quot;@([
+            ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            ['上午', '中午', '晚上']
+        ])&quot;
+        value=&quot;@(['周三', '晚上'])&quot;
+        @confirm=&quot;handleConfirm&quot;
+        @cancel=&quot;handleCancel&quot;
+        @change=&quot;handleChange&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`confirm:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleCancel(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`cancel:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleChange(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`change:${e.data.join(&quot;-&quot;)}`);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>级联选择</h3>
+        <p>
+            通过指定
+            <code>children</code>
+            来关联数据
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-picker
+        title=&quot;选择地区&quot;
+        columns=&quot;@([
+            {
+                label: '山东',
+                value: '山东',
+                children: [
+                    { label: '济南', value: '济南' },
+                    { label: '青岛', value: '青岛' },
+                    { label: '烟台', value: '烟台' },
+                    { label: '潍坊', value: '潍坊' },
+                    { label: '淄博', value: '淄博' }
+                ]
+            },
+            {
+                label: '浙江',
+                value: '浙江',
+                children: [
+                    { label: '杭州', value: '杭州' },
+                    { label: '宁波', value: '宁波' },
+                    { label: '温州', value: '温州' },
+                    { label: '绍兴', value: '绍兴' },
+                    { label: '嘉兴', value: '嘉兴' }
+                ]
+            }
+        ])&quot;
+        value=&quot;@(['山东', '烟台'])&quot;
+        @confirm=&quot;handleConfirm&quot;
+        @cancel=&quot;handleCancel&quot;
+        @change=&quot;handleChange&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`confirm:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleCancel(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`cancel:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleChange(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`change:${e.data.join(&quot;-&quot;)}`);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>等待加载</h3>
+        <p>
+            可通过配置
+            <code>loading</code>
+            属性来开启等待加载。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-picker
+        title=&quot;选择地区&quot;
+        columns=&quot;@([
+            {
+                label: '山东',
+                value: 'sd',
+                children: [
+                    { label: '济南', value: 'sd-jn' },
+                    { label: '青岛', value: 'sd-qd' },
+                    { label: '烟台', value: 'sd-yt' },
+                    { label: '潍坊', value: 'sd-wf' },
+                    { label: '淄博', value: 'sd-zb' }
+                ]
+            },
+            {
+                label: '浙江',
+                value: 'zj',
+                children: [
+                    { label: '杭州', value: 'zj-hz' },
+                    { label: '宁波', value: 'zj-nb' },
+                    { label: '温州', value: 'zj-wz' },
+                    { label: '绍兴', value: 'zj-sx' },
+                    { label: '嘉兴', value: 'zj-jx' }
+                ]
+            }
+        ])&quot;
+        value=&quot;@(['sd', 'sd-yt'])&quot;
+        loading=&quot;@true&quot;
+        @confirm=&quot;handleConfirm&quot;
+        @cancel=&quot;handleCancel&quot;
+        @change=&quot;handleChange&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`confirm:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleCancel(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`cancel:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleChange(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`change:${e.data.join(&quot;-&quot;)}`);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>数据自定义</h3>
+        <p>
+            可通过
+            <code>labelKey</code>
+            、
+            <code>valueKey</code>
+            、
+            <code>childrenKey</code>
+            来实现数据自定义
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-picker
+        title=&quot;选择地区&quot;
+        columns=&quot;@([
+            {
+                regionName: '山东',
+                regionCode: '山东',
+                cities: [
+                    { regionName: '济南', regionCode: '济南' },
+                    { regionName: '青岛', regionCode: '青岛' },
+                    { regionName: '烟台', regionCode: '烟台' },
+                    { regionName: '潍坊', regionCode: '潍坊' },
+                    { regionName: '淄博', regionCode: '淄博' }
+                ]
+            },
+            {
+                regionName: '浙江',
+                regionCode: '浙江',
+                cities: [
+                    { regionName: '杭州', regionCode: '杭州' },
+                    { regionName: '宁波', regionCode: '宁波' },
+                    { regionName: '温州', regionCode: '温州' },
+                    { regionName: '绍兴', regionCode: '绍兴' },
+                    { regionName: '嘉兴', regionCode: '嘉兴' }
+                ]
+            }
+        ])&quot;
+        labelKey=&quot;regionName&quot;
+        valueKey=&quot;regionCode&quot;
+        childrenKey=&quot;cities&quot;
+        value=&quot;@(['山东', '烟台'])&quot;
+        @confirm=&quot;handleConfirm&quot;
+        @cancel=&quot;handleCancel&quot;
+        @change=&quot;handleChange&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`confirm:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleCancel(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`cancel:${e.data.join(&quot;-&quot;)}`);
+    }
+    handleChange(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`change:${e.data.join(&quot;-&quot;)}`);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>搭配弹出层使用</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button type=&quot;primary&quot; fullWidth @click=&quot;handleClick&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;jk-drawer ref=&quot;drawer&quot; direction=&quot;bottom&quot; showHeader=&quot;@false&quot; size=&quot;auto&quot;&gt;
+        &lt;jk-picker
+            title=&quot;选择地区&quot;
+            columns=&quot;@([
+                {
+                    regionName: '山东',
+                    regionCode: '山东',
+                    cities: [
+                        { regionName: '济南', regionCode: '济南' },
+                        { regionName: '青岛', regionCode: '青岛' },
+                        { regionName: '烟台', regionCode: '烟台' },
+                        { regionName: '潍坊', regionCode: '潍坊' },
+                        { regionName: '淄博', regionCode: '淄博' }
+                    ]
+                },
+                {
+                    regionName: '浙江',
+                    regionCode: '浙江',
+                    cities: [
+                        { regionName: '杭州', regionCode: '杭州' },
+                        { regionName: '宁波', regionCode: '宁波' },
+                        { regionName: '温州', regionCode: '温州' },
+                        { regionName: '绍兴', regionCode: '绍兴' },
+                        { regionName: '嘉兴', regionCode: '嘉兴' }
+                    ]
+                }
+            ])&quot;
+            labelKey=&quot;regionName&quot;
+            valueKey=&quot;regionCode&quot;
+            childrenKey=&quot;cities&quot;
+            value=&quot;@(['山东', '烟台'])&quot;
+            @confirm=&quot;handleConfirm&quot;
+            @cancel=&quot;handleCancel&quot;
+            @change=&quot;handleChange&quot;
+        /&gt;
+    &lt;/jk-drawer&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;drawer&quot;)?.component.open();
+    }
+    handleConfirm(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`confirm:${e.data.join(&quot;-&quot;)}`);
+        this.$getRef(&quot;drawer&quot;)?.component.close();
+    }
+    handleCancel(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`cancel:${e.data.join(&quot;-&quot;)}`);
+        this.$getRef(&quot;drawer&quot;)?.component.close();
+    }
+    handleChange(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`change:${e.data.join(&quot;-&quot;)}`);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>空面板</h3>
+        <p>
+            可通过配置
+            <code>empty-text</code>
+            属性来设置空面板展示内容
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo8)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-picker
+        title=&quot;选择地区&quot;
+        columns=&quot;@([])&quot;
+        labelKey=&quot;regionName&quot;
+        valueKey=&quot;regionCode&quot;
+        childrenKey=&quot;cities&quot;
+        value=&quot;@(['山东', '烟台'])&quot;
+        @confirm=&quot;handleConfirm&quot;
+        @cancel=&quot;handleCancel&quot;
+        @change=&quot;handleChange&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`confirm:${e.data.join(&quot;-&quot;)}`);
+        this.$getRef(&quot;drawer&quot;)?.component.close();
+    }
+    handleCancel(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`cancel:${e.data.join(&quot;-&quot;)}`);
+        this.$getRef(&quot;drawer&quot;)?.component.close();
+    }
+    handleChange(e: VNode.Event&lt;string[]&gt;) {
+        Toast(`change:${e.data.join(&quot;-&quot;)}`);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>title</td>
+                    <td>选择器的标题文本</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>cancelText</td>
+                    <td>取消按钮的文本，默认显示“取消”</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>'取消'</td>
+                </tr>
+                <tr>
+                    <td>confirmText</td>
+                    <td>确认按钮的文本，默认显示“确认”</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>'确认'</td>
+                </tr>
+                <tr>
+                    <td>columns</td>
+                    <td>选项数据集合，单列时为一维数组，多列时为二维数组，级联时可通过children关联子选项</td>
+                    <td>Array&lt;any&gt;</td>
+                    <td>—</td>
+                    <td>[]</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>绑定值，单项选择时为单个值（string/number），多列选择时为数组</td>
+                    <td>any / any[]</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>loading</td>
+                    <td>是否显示加载状态</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>loadingText</td>
+                    <td>加载状态时显示的文本</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>labelKey</td>
+                    <td>自定义选项对象中用于展示的字段名，默认使用“label”</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>'label'</td>
+                </tr>
+                <tr>
+                    <td>valueKey</td>
+                    <td>自定义选项对象中用于作为值的字段名，默认使用“value”</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>'value'</td>
+                </tr>
+                <tr>
+                    <td>childrenKey</td>
+                    <td>级联选择时，自定义子选项数组的字段名，默认使用“children”</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>'children'</td>
+                </tr>
+                <tr>
+                    <td>empty-text</td>
+                    <td>空面板展示文本</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>选项发生变化时触发</td>
+                    <td>
+                        {index:number（变动列索引）,value:any[] (全部最新值)}
+                    </td>
+                </tr>
+                <tr>
+                    <td>confirm</td>
+                    <td>点击确认按钮时触发</td>
+                    <td>当前选中的值（单项为单个值，多列为数组）、选中项的详细信息</td>
+                </tr>
+                <tr>
+                    <td>cancel</td>
+                    <td>点击取消按钮时触发</td>
+                    <td>当前选中的值（单项为单个值，多列为数组）、选中项的详细信息</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Section</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>empty</td>
+                    <td>无选项时的列表</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo8 from "../../components/picker/demo8.joker";
+import DEMO_JOKER_demo7 from "../../components/picker/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/picker/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/picker/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/picker/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/picker/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/picker/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/picker/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo8,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

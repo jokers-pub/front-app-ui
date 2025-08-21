@@ -1,0 +1,14 @@
+<template>
+    <DemoRow>
+        <jk-button type="primary" icon="jk-icon-edit"></jk-button>
+        <jk-button type="primary" icon="jk-icon-share"></jk-button>
+        <jk-button type="primary" icon="jk-icon-delete"></jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button type="primary" icon="jk-icon-search">Search</jk-button>
+        <jk-button type="primary">
+            Upload
+            <i class="jk-icon-upload jk-icon--right"></i>
+        </jk-button>
+    </DemoRow>
+</template>

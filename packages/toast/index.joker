@@ -1,0 +1,215 @@
+<template>
+    <div
+        ref="contianer"
+        class="@([
+            'jk-toast',
+            props.type && !props.icon ? props.type : '',
+            props.customClass,
+            props.type || props.icon ? 'has-icon' : '',
+            props.position
+        ])"
+        transition-name="jk-toast-fade"
+        style="z-index:@zIndex"
+        @mouseenter="clearTimer"
+        @mouseleave="startTimer">
+        @if(props.icon) {
+            @if(checkIconIsUrl()) {
+                <img class="icon" src="@props.icon" />
+            }
+            else {
+                <i class="icon @props.icon"></i>
+            }
+        }
+        else if(props.type === "loading") {
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" />
+            </svg>
+        }
+        else if(props.type) {
+            <i class="@typeClass"></i>
+        }
+        <p class="content">
+            @model.message
+        </p>
+    </div>
+    @if(props.forbidClick) {
+        <div class="toast-overlay" style="z-index:@zIndex"></div>
+    }
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { zIndexManage } from "../utils/zindex";
+import { PropsOption } from "./index";
+
+export default class extends Component<PropsOption> {
+    propsOption = {
+        message: "",
+        type: "",
+        duration: 3000
+    };
+    model = {
+        message: ""
+    };
+    created() {
+        this.$syncProp("message");
+    }
+    checkIconIsUrl() {
+        return this.props.icon && this.props.icon.includes("/");
+    }
+    zIndex = zIndexManage.nextZIndex();
+
+    id = this.props.id!;
+
+    get typeClass() {
+        return this.props.type && !this.props.icon ? `icon jk-icon-${this.props.type}` : "";
+    }
+
+    closed = false;
+
+    timer?: any;
+
+    close() {
+        if (this.closed) return;
+
+        this.closed = true;
+
+        this.props.onClose?.();
+
+        this.$trigger("close");
+
+        this.$destroy(true);
+    }
+
+    setMessage(message: string) {
+        this.model.message = message;
+    }
+    clearTimer() {
+        window.clearTimeout(this.timer);
+    }
+
+    startTimer() {
+        if (this.props.duration) {
+            this.timer = setTimeout(() => {
+                if (this.closed === false) {
+                    this.close();
+                }
+            }, this.props.duration);
+        }
+    }
+
+    mounted() {
+        this.startTimer();
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.jk-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: content-box;
+    border-radius: 8px;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    transition:
+        opacity 0.3s,
+        transform 0.4s,
+        top 0.4s;
+    overflow: hidden;
+    padding: 8px 12px;
+    max-width: 70%;
+    display: flex;
+    align-items: center;
+
+    .content {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        line-height: 20px;
+        color: #fff;
+        white-space: pre-wrap;
+        text-align: center;
+        word-break: break-all;
+    }
+    .circular {
+        height: 36px;
+        width: 36px;
+
+        animation: loading-rotate 2s linear infinite;
+
+        .path {
+            animation: loading-dash 1.5s ease-in-out infinite;
+            stroke-dasharray: 90, 150;
+            stroke-dashoffset: 0;
+            stroke-width: 2;
+            stroke: #fff;
+            stroke-linecap: round;
+        }
+    }
+    &.has-icon {
+        padding: 16px;
+        min-height: 88px;
+        .icon {
+            color: #fff;
+            font-size: 36px;
+        }
+
+        img.icon {
+            width: 36px;
+            height: 36px;
+            display: block;
+            object-fit: contain;
+        }
+        .content {
+            margin-top: 8px;
+        }
+    }
+
+    &.top {
+        top: 20%;
+    }
+
+    &.bottom {
+        top: auto;
+        bottom: 20%;
+    }
+
+    &.jk-toast-fade-enter-from,
+    &.jk-toast-fade-leave-to {
+        opacity: 0;
+    }
+}
+.toast-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    cursor: not-allowed;
+}
+@keyframes loading-rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loading-dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -40px;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -120px;
+    }
+}
+</style>

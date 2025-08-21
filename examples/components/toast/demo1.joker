@@ -1,0 +1,14 @@
+<template>
+    <jk-button fullWidth type="primary" @click="handleClick">Click Me</jk-button>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleClick() {
+        Toast("Hello World");
+    }
+}
+</script>
+

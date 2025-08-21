@@ -1,0 +1,26 @@
+<template>
+    <div class="demo-container" style="box-shadow:var(--jk-box-shadow-base);">
+        <p>Level 1</p>
+        <p>--jk-box-shadow-base</p>
+    </div>
+    <div class="demo-container" style="box-shadow:var(--jk-box-shadow-dark);">
+        <p>Level 2</p>
+        <p>--jk-box-shadow-dark</p>
+    </div>
+    <div class="demo-container" style="box-shadow:var(--jk-box-shadow-light);">
+        <p>Level 3</p>
+        <p>--jk-box-shadow-light</p>
+    </div>
+</template>
+<style scoped lang="scss">
+.demo-container {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    p {
+        color: #000;
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
+</style>

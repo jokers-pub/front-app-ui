@@ -1,0 +1,395 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>InputNumber Counter</h2>
+        <p>Only permits input of standard numeric values with configurable range limits.</p>
+        <h3>Basic Usage</h3>
+        <p>
+            To use it, simply bind a variable to
+            <code>value</code>
+            within the
+            <code>jk-number</code>
+            element. The initial value of the variable serves as the default value.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number value=&quot;1&quot; show-controls /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Disabled State</h3>
+        <p>
+            The
+            <code>disabled</code>
+            attribute accepts a
+            <code>Boolean</code>
+            . Setting it to
+            <code>true</code>
+            disables the entire component. If you only need to constrain the value within a specific range, configure the
+            <code>min</code>
+            and
+            <code>max</code>
+            attributes. When neither
+            <code>min</code>
+            nor
+            <code>max</code>
+            is set, the default minimum value is 0.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number value=&quot;1&quot; disabled show-controls /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number value=&quot;1&quot; min=&quot;1&quot; show-controls /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number value=&quot;2&quot; max=&quot;2&quot; show-controls /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Step</h3>
+        <p>Allows defining increment/decrement step control.</p>
+        <p>
+            Set the
+            <code>step</code>
+            attribute to control the step increment. Accepts a
+            <code>Number</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number value=&quot;1&quot; step=&quot;2&quot; show-controls /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Strict Step</h3>
+        <p>
+            The
+            <code>step-strictly</code>
+            attribute accepts a
+            <code>Boolean</code>
+            . When set to
+            <code>true</code>
+            , only multiples of the step value can be entered.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number value=&quot;0&quot; step=&quot;2&quot; step-strictly show-controls /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Precision</h3>
+        <p>
+            Configure the
+            <code>precision</code>
+            attribute to control numeric precision. Accepts a
+            <code>Number</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number value=&quot;0.1&quot; precision=&quot;1&quot; step=&quot;0.1&quot; max=&quot;1&quot; min=&quot;0&quot; show-controls /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>
+                The
+                <code>precision</code>
+                value must be a non-negative integer and cannot be less than the number of decimal places in the
+                <code>step</code>
+                value.
+            </p>
+        </blockquote>
+        <h3>Sizes</h3>
+        <p>
+            Additional numeric input box sizes are provided:
+            <code>medium</code>
+            ,
+            <code>small</code>
+            , and
+            <code>mini</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number show-controls size=&quot;large&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number show-controls /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number size=&quot;small&quot; show-controls /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number size=&quot;mini&quot; show-controls /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Hide Control Buttons</h3>
+        <p>
+            Set the
+            <code>show-controls</code>
+            attribute to control button visibility.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo8)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number placeholder=&quot;Please enter content&quot; size=&quot;large&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number placeholder=&quot;Please enter content&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number size=&quot;small&quot; placeholder=&quot;Please enter content&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number size=&quot;mini&quot; placeholder=&quot;Please enter content&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number hiddenControls placeholder=&quot;Please enter content&quot;&gt;
+            @section(&quot;prepend&quot;) {
+                Font size
+            }
+            @section(&quot;append&quot;) {
+                px
+            }
+        &lt;/jk-number&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number hiddenControls size=&quot;small&quot; placeholder=&quot;Please enter content&quot;&gt;
+            @section(&quot;prepend&quot;) {
+                Font size
+            }
+            @section(&quot;append&quot;) {
+                px
+            }
+        &lt;/jk-number&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-number hiddenControls size=&quot;mini&quot; placeholder=&quot;Please enter content&quot;&gt;
+            @section(&quot;prepend&quot;) {
+                Font size
+            }
+            @section(&quot;append&quot;) {
+                px
+            }
+        &lt;/jk-number&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>Bound value</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class styles</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>min</td>
+                    <td>Minimum allowed value</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>-Infinity</td>
+                </tr>
+                <tr>
+                    <td>max</td>
+                    <td>Maximum allowed value</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>Infinity</td>
+                </tr>
+                <tr>
+                    <td>step</td>
+                    <td>Step increment</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>step-strictly</td>
+                    <td>Whether only step multiples are allowed</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>precision</td>
+                    <td>Numeric precision</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Counter size</td>
+                    <td>string</td>
+                    <td>large, small,mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Whether the counter is disabled</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>show-controls</td>
+                    <td>Whether to show control buttons</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>Native attribute</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>label</td>
+                    <td>Label text associated with the input</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td>Default input placeholder</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>Input Type</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>number</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Callback Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Triggered when bound value changes</td>
+                    <td>currentValue, oldValue</td>
+                </tr>
+                <tr>
+                    <td>blur</td>
+                    <td>Triggered when Input loses focus</td>
+                    <td>VNode.Event</td>
+                </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>Triggered when Input gains focus</td>
+                    <td>VNode.Event</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Methods</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>blur</td>
+                    <td>Makes input lose focus</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>Makes input gain focus</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>Selects text within the input</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo8 from "../../components/number/demo8.joker";
+import DEMO_JOKER_demo6 from "../../components/number/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/number/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/number/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/number/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/number/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/number/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo8,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

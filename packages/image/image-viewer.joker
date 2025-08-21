@@ -1,0 +1,198 @@
+<template>
+    <div
+        tabindex="-1"
+        append-to="body"
+        class="joker-image-viewer"
+        @click="handleMaskClick"
+        style="z-index:@viewerZIndex">
+        <!-- 关闭按钮 -->
+        <span class="viewer-btn close-btn" @click.stop="hide"><i class="jk-icon-close"></i></span>
+        <!-- 前一张后一张按钮 -->
+        @if(!isSingle) {
+            @if(!isFirst) {
+                <span class="viewer-btn prev" @click.stop="prev"><i class="jk-icon-arrow-left" /></span>
+            }
+            @if(!isLast) {
+                <span class="viewer-btn next" @click.stop="next"><i class="jk-icon-arrow-right" /></span>
+            }
+        }
+        <!-- CANVAS -->
+        <div class="viewer-canvas">
+            <img ref="img" class="viewer-img" src="@currentImg" @load="handleImgLoad" @error="handleImgError" />
+            @if(model.loading || model.firstIn) {
+                <div class="placeholder">
+                    <i class="jk-icon-loading"></i>
+                </div>
+            }
+        </div>
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { zIndexManage } from "../utils/zindex";
+
+export default class extends Component<{
+    list: Array<string>;
+    index: number;
+    maskClosable: boolean;
+}> {
+    propsOption = {
+        list: [],
+        maskClosable: true
+    };
+
+    model = {
+        index: 0,
+
+        loading: false,
+        mode: "jk-icon-full-screen",
+
+        firstIn: true
+    };
+
+    prevOverflow: any;
+    viewerZIndex: any;
+    created() {
+        this.model.index = this.props.index || 0;
+        this.viewerZIndex = zIndexManage.nextZIndex();
+    }
+    mounted() {
+        this.$watch(
+            () => this.currentImg,
+            () => {
+                let curImg = this.$getRef("img").output;
+                if (!curImg.complete) {
+                    this.model.loading = true;
+                }
+            }
+        );
+
+        document.body.classList.add("jk-overflow-hidden");
+    }
+
+    beforeDestroy() {
+        document.body.classList.remove("jk-overflow-hidden");
+    }
+
+    get isSingle() {
+        return this.props.list.length <= 1;
+    }
+    get isFirst() {
+        return this.model.index === 0;
+    }
+    get isLast() {
+        return this.model.index === this.props.list.length - 1;
+    }
+    get currentImg() {
+        return this.props.list[this.model.index];
+    }
+
+    hide() {
+        this.$trigger("close");
+    }
+
+    handleImgLoad() {
+        this.model.loading = false;
+        this.model.firstIn = false;
+    }
+    handleImgError() {
+        this.model.loading = false;
+    }
+
+    handleMaskClick() {
+        if (this.props.maskClosable) {
+            this.hide();
+        }
+    }
+
+    prev() {
+        if (this.isFirst) return;
+
+        this.model.index--;
+    }
+    next() {
+        if (this.isLast) return;
+
+        this.model.index++;
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.joker-image-viewer {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background: rgb(0, 0, 0);
+    align-content: center;
+    .viewer-btn {
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        cursor: pointer;
+        box-sizing: border-box;
+        user-select: none;
+        border-radius: 50%;
+    }
+
+    .close-btn {
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        color: rgb(255, 255, 255);
+        background-color: rgb(96, 98, 102);
+    }
+
+    .prev,
+    .next {
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        font-size: 24px;
+        color: #fff;
+        background-color: #606266;
+        border-color: #fff;
+        opacity: 0.8;
+    }
+
+    .prev {
+        left: 10px;
+    }
+
+    .next {
+        right: 10px;
+        text-indent: 2px;
+    }
+
+    .viewer-canvas {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .viewer-img {
+            overflow-clip-margin: content-box;
+            overflow: clip;
+        }
+
+        .placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            color: #c0c4cc;
+            vertical-align: middle;
+            position: absolute;
+        }
+    }
+}
+</style>

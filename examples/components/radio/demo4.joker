@@ -1,0 +1,47 @@
+<template>
+    <DemoRow>
+        <jk-radio-group value="Beijing" direction="vertical" size="large">
+            <jk-radio border label="Shanghai" value="Shanghai"></jk-radio>
+            <jk-radio border label="Beijing" value="Beijing"></jk-radio>
+            <jk-radio border label="Guangzhou" value="Guangzhou"></jk-radio>
+            <jk-radio border label="Shenzhen" value="Shenzhen"></jk-radio>
+        </jk-radio-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-radio-group value="Beijing" direction="vertical">
+            <jk-radio border label="Shanghai" value="Shanghai"></jk-radio>
+            <jk-radio border label="Beijing" value="Beijing"></jk-radio>
+            <jk-radio border label="Guangzhou" value="Guangzhou"></jk-radio>
+            <jk-radio border label="Shenzhen" value="Shenzhen"></jk-radio>
+        </jk-radio-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-radio-group value="Beijing" size="small" direction="vertical">
+            <jk-radio border label="Shanghai" value="Shanghai"></jk-radio>
+            <jk-radio border label="Beijing" value="Beijing"></jk-radio>
+            <jk-radio border label="Guangzhou" value="Guangzhou"></jk-radio>
+            <jk-radio border label="Shenzhen" disabled value="Shenzhen"></jk-radio>
+        </jk-radio-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-radio-group value="Beijing" size="mini" direction="vertical">
+            <jk-radio border label="Shanghai" value="Shanghai"></jk-radio>
+            <jk-radio border label="Beijing" disabled value="Beijing"></jk-radio>
+            <jk-radio border label="Guangzhou" value="Guangzhou"></jk-radio>
+            <jk-radio border label="Shenzhen" value="Shenzhen"></jk-radio>
+        </jk-radio-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-radio-group value="Beijing" size="mini" disabled direction="vertical">
+            <jk-radio border label="Shanghai" value="Shanghai"></jk-radio>
+            <jk-radio border label="Beijing" value="Beijing"></jk-radio>
+            <jk-radio border label="Guangzhou" value="Guangzhou"></jk-radio>
+            <jk-radio border label="Shenzhen" value="Shenzhen"></jk-radio>
+        </jk-radio-group>
+    </DemoRow>
+</template>
+<style scoped lang="scss">
+div {
+    margin-bottom: 5px;
+}
+</style>

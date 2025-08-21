@@ -1,0 +1,151 @@
+<template>
+    <div class="@(['jk-index-bar', props.class])">
+        <JokerScrollbar ref="scrollbar" @scroll="handleScroll">
+            @RenderSection()
+        </JokerScrollbar>
+        <div class="index-bar" ref="indexBar">
+            @for(let item of model.panels) {
+                <div
+                    ref="index"
+                    class="@({ 'is-selected': item.props.index === model.currentIndex })"
+                    @click="handleClick(item)">
+                    @item.props.index
+                </div>
+            }
+        </div>
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { componentName } from "../utils";
+import { remove } from "@joker.front/shared";
+import JokerScrollbar from "../scrollbar/index.joker";
+import { TouchBase } from "../utils/touch";
+export default class extends TouchBase<{ class: any }> {
+    name = componentName("index-bar");
+    model = {
+        currentIndex: undefined,
+        panels: []
+    };
+    components = {
+        JokerScrollbar
+    };
+    mounted() {
+        this.bindTouchEvent(this.$getRef("indexBar")?.output);
+    }
+
+    registerPanel(panel: Component<any>) {
+        this.model.panels.push(panel);
+    }
+    unRegisterPanel(panel: Component<any>) {
+        remove(this.model.panels, panel);
+    }
+    handleClick(e: VNode.Event, item: any) {
+        let index = item.props.index;
+
+        this.scrollToIndex(index);
+    }
+
+    onTouchMove(e: Event) {
+        e.preventDefault();
+        let indexBar = this.$getRef("indexBar").output;
+        let top = this.touchData.startY + this.touchData.deltaY - indexBar.getBoundingClientRect().top;
+
+        let indexs = this.$getRefs("index");
+
+        for (let i in indexs) {
+            let index = indexs[i];
+            let html: HTMLElement = index.output;
+
+            let start = html.offsetTop;
+            let end = start + html.offsetHeight;
+            if (top >= start && top <= end) {
+                this.scrollToIndex(this.model.panels[Number(i)]?.props.index);
+                break;
+            }
+        }
+    }
+
+    scrollToIndex(index: any) {
+        this.model.currentIndex = index;
+
+        let aimCom: Component<any> = this.model.panels.find((n) => n.props.index === index);
+
+        if (aimCom) {
+            let html: HTMLElement = aimCom.$rootVNode.first((n) => n instanceof VNode.Element)?.output;
+            this.$getRef("scrollbar")?.component.scrollToEl(html);
+        }
+    }
+
+    handleScroll(e: VNode.Event<{ top: number; isUserScroll: boolean }>) {
+        if (!e.data.isUserScroll) return;
+        let scrollTop = e.data.top;
+        let container = this.$getRef("scrollbar")?.component.wrapEl;
+        if (!container) return; // 避免容器不存在时的报错
+        const containerRect = container.getBoundingClientRect(); // 容器相对于视口的位置
+
+        // 1. 计算滚动容器的视口范围（起始/结束位置）
+        const containerHeight = container.clientHeight; // 容器可视高度
+        const viewportStart = scrollTop; // 视口顶部（容器滚动后的顶部位置）
+        const viewportEnd = scrollTop + containerHeight; // 视口底部（顶部 + 可视高度）
+
+        let activePanel = null; // 存储首个在视口中的面板
+
+        for (let panel of this.model.panels) {
+            // 获取当前面板的真实DOM元素（避免空值报错，增加可选链判断）
+            const html: HTMLElement = panel.$rootVNode.first((n) => n instanceof VNode.Element)?.output;
+            if (!html) continue; // 若DOM不存在，跳过当前循环
+
+            // 2. 计算当前面板相对于滚动容器的位置
+            const elementRect = html.getBoundingClientRect(); // 元素相对于视口的位置
+
+            // 转换为：元素相对于滚动容器的「顶部」和「底部」位置
+            const elementTop = elementRect.top - containerRect.top + scrollTop;
+            const elementBottom = elementTop + html.offsetHeight; // 元素顶部 + 元素自身高度
+
+            // 3. 判断面板是否在视口中（满足任一条件即视为在视口内）
+            const isInViewport =
+                // 情况1：元素顶部在视口范围内
+                (elementTop >= viewportStart && elementTop < viewportEnd) ||
+                // 情况2：元素底部在视口范围内
+                (elementBottom > viewportStart && elementBottom <= viewportEnd) ||
+                // 情况3：元素完全包裹视口（元素比视口大，且覆盖视口）
+                (elementTop <= viewportStart && elementBottom >= viewportEnd);
+
+            if (isInViewport) {
+                activePanel = panel; // 记录首个符合条件的面板
+                break; // 找到后立即退出循环
+            }
+        }
+
+        // 4. 处理找到的「首个在视口内的面板」
+        if (activePanel) {
+            this.model.currentIndex = activePanel.props.index;
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-index-bar {
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    .index-bar {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0;
+        font-size: 10px;
+        text-align: center;
+        line-height: 14px;
+        font-weight: 600;
+        div {
+            padding: 0 8px 0 16px;
+            &.is-selected {
+                color: var(--jk-color-primary);
+            }
+        }
+    }
+}
+</style>

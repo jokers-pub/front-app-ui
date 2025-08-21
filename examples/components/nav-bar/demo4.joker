@@ -1,0 +1,22 @@
+<template>
+    <DemoRow>
+        <jk-nav-bar
+            title="标题"
+            left-text="返回"
+            left-icon="jk-icon-arrow-left"
+            right-text="搜索"
+            right-icon="jk-icon-search"
+            right-disabled
+        />
+    </DemoRow>
+    <DemoRow>
+        <jk-nav-bar
+            title="标题"
+            left-text="返回"
+            left-icon="jk-icon-arrow-left"
+            right-text="搜索"
+            right-icon="jk-icon-search"
+            left-disabled
+        />
+    </DemoRow>
+</template>

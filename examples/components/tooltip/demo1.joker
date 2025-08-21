@@ -1,0 +1,81 @@
+<template>
+    <div class="box">
+        <div class="top">
+            <jk-tooltip content="Top Left Tooltip Text" placement="top-start">
+                <jk-button>Top Left</jk-button>
+            </jk-tooltip>
+            <jk-tooltip content="Top Center Tooltip Text" placement="top">
+                <jk-button>Top</jk-button>
+            </jk-tooltip>
+            <jk-tooltip content="Top Right Tooltip Text" placement="top-end">
+                <jk-button>Top Right</jk-button>
+            </jk-tooltip>
+        </div>
+        <div class="left">
+            <jk-tooltip content="Left Top Tooltip Text" placement="left-start">
+                <jk-button>Left Top</jk-button>
+            </jk-tooltip>
+            <jk-tooltip content="Left Center Tooltip Text" placement="left">
+                <jk-button>Left</jk-button>
+            </jk-tooltip>
+            <jk-tooltip content="Left Bottom Tooltip Text" placement="left-end">
+                <jk-button>Left Bottom</jk-button>
+            </jk-tooltip>
+        </div>
+        <div class="right">
+            <jk-tooltip content="Right Top Tooltip Text" placement="right-start">
+                <jk-button>Right Top</jk-button>
+            </jk-tooltip>
+            <jk-tooltip content="Right Center Tooltip Text" placement="right">
+                <jk-button>Right</jk-button>
+            </jk-tooltip>
+            <jk-tooltip content="Right Bottom Tooltip Text" placement="right-end">
+                <jk-button>Right Bottom</jk-button>
+            </jk-tooltip>
+        </div>
+        <div class="bottom">
+            <jk-tooltip content="Bottom Left Tooltip Text" placement="bottom-start">
+                <jk-button>Bottom Left</jk-button>
+            </jk-tooltip>
+            <jk-tooltip content="Bottom Center Tooltip Text" placement="bottom">
+                <jk-button>Bottom</jk-button>
+            </jk-tooltip>
+            <jk-tooltip content="Bottom Right Tooltip Text" placement="bottom-end">
+                <jk-button>Bottom Right</jk-button>
+            </jk-tooltip>
+        </div>
+    </div>
+</template>
+<style lang="scss" scoped>
+.box {
+    width: 300px;
+
+    .top {
+        text-align: center;
+    }
+
+    .left {
+        float: left;
+        width: 60px;
+    }
+
+    .right {
+        float: right;
+        width: 60px;
+    }
+
+    .bottom {
+        clear: both;
+        text-align: center;
+    }
+
+    :deep(.jk-button) {
+        margin: 4px;
+    }
+
+    .left .el-tooltip__popper,
+    .right .el-tooltip__popper {
+        padding: 8px 10px;
+    }
+}
+</style>

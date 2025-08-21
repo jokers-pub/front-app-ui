@@ -1,0 +1,14 @@
+<template>
+    <jk-field>
+        <jk-date type="year" placeholder="Select Year" clearable />
+    </jk-field>
+    <jk-field>
+        <jk-date type="month" placeholder="Select Month" clearable />
+    </jk-field>
+    <jk-field>
+        <jk-date type="date" placeholder="Select Date" clearable />
+    </jk-field>
+    <jk-field>
+        <jk-date type="week" placeholder="Select Week" clearable format="YYYY年ww周" />
+    </jk-field>
+</template>

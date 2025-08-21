@@ -1,0 +1,20 @@
+<template>
+    <jk-table data="@tableData" border>
+        <jk-table-column label="Date" key="date" width="100" fixed="left" />
+        <jk-table-column label="Name" key="name" width="180" />
+        <jk-table-column label="Address" key="address" />
+        <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+    </jk-table>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    tableData = [
+        { name: "Zhang San", date: "2023-11-21", address: "Jinan, Shandong Province", money: 1000 },
+        { name: "Li Si", date: "2023-11-21", address: "Jinan, Shandong Province", money: 10 },
+        { name: "Li Mei", date: "2023-11-21", address: "Jinan, Shandong Province", money: 300 },
+        { name: "Wang Wu", date: "2023-11-21", address: "Jinan, Shandong Province", money: 11.9 }
+    ];
+}
+</script>

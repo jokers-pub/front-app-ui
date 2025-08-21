@@ -1,0 +1,11 @@
+<template>
+    <jk-cell>
+        <jk-pagination total="50" />
+    </jk-cell>
+    <jk-cell>
+        <jk-pagination total="1000" />
+    </jk-cell>
+    <jk-cell>
+        <jk-pagination total="1000" currentPage="25" disabled />
+    </jk-cell>
+</template>

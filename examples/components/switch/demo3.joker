@@ -1,0 +1,24 @@
+<template>
+    <jk-field>
+        <jk-switch value="@model.value1" activeText="Pay monthly" inactiveText="Pay annually"></jk-switch>
+    </jk-field>
+    <jk-field>
+        <jk-switch
+            value="@model.value2"
+            activeText="Pay monthly"
+            inactiveText="Pay annually"
+            activeColor="#13ce66"
+            inactiveColor="#ff4949"></jk-switch>
+    </jk-field>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        value1: false,
+        value2: true
+    };
+}
+</script>
+

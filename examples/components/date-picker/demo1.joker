@@ -1,0 +1,25 @@
+<template>
+    <jk-field>
+        <jk-button fullWidth type="primary" @click="handleClick('picker1')">Click Me</jk-button>
+    </jk-field>
+    <jk-field>
+        <jk-button fullWidth type="primary" @click="handleClick('picker2')">Default Value</jk-button>
+    </jk-field>
+    <jk-date-picker ref="picker1" placeholder="Select Date" @pick="handlePick" />
+    <jk-date-picker ref="picker2" placeholder="Select Date" defaultValue="2023-09-27" @pick="handlePick" />
+</template>
+
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleClick(_: VNode.Event, ref: string) {
+        this.$getRef(ref)?.component.open();
+    }
+
+    handlePick(e: VNode.Event<string>) {
+        Toast(e.data);
+    }
+}
+</script>

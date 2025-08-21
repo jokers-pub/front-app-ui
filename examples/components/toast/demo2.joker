@@ -1,0 +1,33 @@
+<template>
+    <DemoRow>
+        <jk-button fullWidth type="info" @click="handleClick('info')">Info</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth type="success" @click="handleClick('success')">Success</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth type="warning" @click="handleClick('warning')">Warning</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth type="danger" @click="handleClick('error')">Error</jk-button>
+    </DemoRow>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleClick(e: VNode.Event, type: string) {
+        if (type === "info") {
+            Toast.info("Hello World");
+        } else if (type === "success") {
+            Toast.success("Hello World");
+        } else if (type === "warning") {
+            Toast.warning("Hello World");
+        } else if (type === "error") {
+            Toast.error("Hello World");
+        }
+    }
+}
+</script>
+

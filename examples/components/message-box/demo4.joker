@@ -1,0 +1,21 @@
+<template>
+    <DemoRow>
+        <jk-link type="primary" @click="open">Open the message pop-up window</jk-link>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { MessageBox } from "../../../src";
+
+export default class extends Component {
+    open() {
+        MessageBox.confirm(
+            "Are you sure you want to transfer <span style='color:red'>2,000</span> yuan to xxx?",
+            "Account movement prompt",
+            {
+                useHtml: true
+            }
+        );
+    }
+}
+</script>

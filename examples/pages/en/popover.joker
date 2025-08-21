@@ -1,0 +1,275 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Popover Popup Box</h2>
+        <h3>Basic Usage</h3>
+        <p>
+            The properties of Popover are very similar to Tooltip. Therefore, for duplicated properties, please refer to the Tooltip documentation, which will not be elaborated on here.
+        </p>
+        <p>
+            The
+            <code>trigger</code>
+            property is used to define how the Popover is triggered, supporting two modes:
+            <code>click</code>
+            and
+            <code>manual</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-popover
+        trigger=&quot;click&quot;
+        title=&quot;Title&quot;
+        width=&quot;200px&quot;
+        placement=&quot;bottom&quot;
+        content=&quot;This is a paragraph of content. This is a paragraph of content. This is a paragraph of content. This is a paragraph of content.&quot;&gt;
+        @section(&quot;reference&quot;) {
+            &lt;jk-button&gt;Activate on click&lt;/jk-button&gt;
+        }
+    &lt;/jk-popover&gt;
+    &lt;jk-popover
+        trigger=&quot;manual&quot;
+        title=&quot;Title&quot;
+        width=&quot;200px&quot;
+        placement=&quot;bottom&quot;
+        ref=&quot;popover1&quot;
+        content=&quot;Click the button again to close&quot;&gt;
+        @section(&quot;reference&quot;) {
+            &lt;jk-button @click=&quot;open&quot;&gt;Activate manually&lt;/jk-button&gt;
+        }
+    &lt;/jk-popover&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    isShow = false;
+    open() {
+        let popover = this.$getRef(&quot;popover1&quot;)?.component;
+        if (this.isShow) {
+            popover?.hide();
+        } else {
+            popover?.show();
+        }
+        this.isShow = !this.isShow;
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Nested Content</h3>
+        <p>
+            Various types of information can be nested within Popover. Below is an example of nesting a table. Use the
+            <code>section</code>
+            slot to replace the
+            <code>content</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-popover title=&quot;I have a nested component inside&quot; placement=&quot;bottom&quot; width=&quot;350px&quot;&gt;
+        &lt;jk-skeleton rows=&quot;6&quot; animated /&gt;
+        &lt;jk-popover
+            appendTo=&quot;&quot;
+            title=&quot;This is a nested window, and it won't disappear when you move the mouse over it. &quot;
+            placement=&quot;right&quot;
+            width=&quot;350px&quot;&gt;
+            @section(&quot;reference&quot;) {
+                &lt;jk-button&gt;nested pop-up window&lt;/jk-button&gt;
+            }
+        &lt;/jk-popover&gt;
+        @section(&quot;reference&quot;) {
+            &lt;jk-button&gt;Activate on click&lt;/jk-button&gt;
+        }
+    &lt;/jk-popover&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Valid Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>trigger</td>
+                    <td>Trigger method</td>
+                    <td>String</td>
+                    <td>click/manual</td>
+                    <td>click</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>Title</td>
+                    <td>String</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>content</td>
+                    <td>
+                        Displayed content; can also pass DOM via
+                        <code>section</code>
+                    </td>
+                    <td>String</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>width</td>
+                    <td>Width</td>
+                    <td>String, Number</td>
+                    <td>—</td>
+                    <td>Min-width 150px</td>
+                </tr>
+                <tr>
+                    <td>placement</td>
+                    <td>Position where the popover appears</td>
+                    <td>String</td>
+                    <td>
+                        top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end
+                    </td>
+                    <td>bottom</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Whether the Popover is disabled</td>
+                    <td>Boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>offset</td>
+                    <td>Offset of the popover's position</td>
+                    <td>Number</td>
+                    <td>—</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>open-delay</td>
+                    <td>Delay (ms) before showing on hover trigger</td>
+                    <td>Number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>close-delay</td>
+                    <td>Delay (ms) before hiding on hover trigger</td>
+                    <td>Number</td>
+                    <td>—</td>
+                    <td>200</td>
+                </tr>
+                <tr>
+                    <td>appendTo</td>
+                    <td>Container for element output</td>
+                    <td>String</td>
+                    <td>—</td>
+                    <td>body</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Slots</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>HTML content inside the Popover</td>
+                </tr>
+                <tr>
+                    <td>reference</td>
+                    <td>HTML element triggering the Popover</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Callback Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>show</td>
+                    <td>Triggered when shown</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>hide</td>
+                    <td>Triggered when hidden</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Methods</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Method Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>show</td>
+                    <td>In manual mode, use this method to display the Popover</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>hide</td>
+                    <td>
+                        Actively hides the Popover; calling this method will not be affected by the
+                        <code>closeDelay</code>
+                        debounce
+                    </td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>updatePosition</td>
+                    <td>
+                        Manually updates the Popover's position. Commonly used when internal content changes to re-calculate positioning
+                    </td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo2 from "../../components/popover/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/popover/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

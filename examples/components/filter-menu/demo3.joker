@@ -1,0 +1,46 @@
+<template>
+    <jk-filter-menu shrink>
+        <jk-filter-item
+            options="@([
+                { label: '全部商品', value: '' },
+                { label: '新款商品', value: '1' },
+                { label: '活动商品', value: '2' },
+                { label: '清仓商品', value: '3' }
+            ])"
+        />
+        <jk-filter-item
+            options="@([
+                { label: '全部价格', value: '' },
+                { label: '0-99元', value: '0-99' },
+                { label: '100-299元', value: '100-299' },
+                { label: '300-499元', value: '300-499' },
+                { label: '500元以上', value: '500+' }
+            ])"
+        />
+        <jk-filter-item
+            options="@([
+                { label: '销量排序', value: '' },
+                { label: '销量从高到低', value: 'sales_desc' },
+                { label: '销量从低到高', value: 'sales_asc' }
+            ])"
+        />
+        <jk-filter-item
+            options="@([
+                { label: '全部好评', value: '' },
+                { label: '好评率95%+', value: 'rate_95' },
+                { label: '好评率90%-94%', value: 'rate_90' },
+                { label: '好评率85%-89%', value: 'rate_85' }
+            ])"
+        />
+        <jk-filter-item
+            options="@([
+                { label: '全部库存', value: '' },
+                { label: '库存50件以上', value: 'stock_50+' },
+                { label: '库存10-49件', value: 'stock_10-49' },
+                { label: '库存1-9件', value: 'stock_1-9' }
+            ])"
+        />
+    </jk-filter-menu>
+</template>
+
+

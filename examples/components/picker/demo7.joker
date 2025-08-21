@@ -1,0 +1,61 @@
+<template>
+    <jk-button type="primary" fullWidth @click="handleClick">Click Me</jk-button>
+    <jk-drawer ref="drawer" direction="bottom" showHeader="@false" size="auto">
+        <jk-picker
+            title="选择地区"
+            columns="@([
+                {
+                    regionName: '山东',
+                    regionCode: '山东',
+                    cities: [
+                        { regionName: '济南', regionCode: '济南' },
+                        { regionName: '青岛', regionCode: '青岛' },
+                        { regionName: '烟台', regionCode: '烟台' },
+                        { regionName: '潍坊', regionCode: '潍坊' },
+                        { regionName: '淄博', regionCode: '淄博' }
+                    ]
+                },
+                {
+                    regionName: '浙江',
+                    regionCode: '浙江',
+                    cities: [
+                        { regionName: '杭州', regionCode: '杭州' },
+                        { regionName: '宁波', regionCode: '宁波' },
+                        { regionName: '温州', regionCode: '温州' },
+                        { regionName: '绍兴', regionCode: '绍兴' },
+                        { regionName: '嘉兴', regionCode: '嘉兴' }
+                    ]
+                }
+            ])"
+            labelKey="regionName"
+            valueKey="regionCode"
+            childrenKey="cities"
+            value="@(['山东', '烟台'])"
+            @confirm="handleConfirm"
+            @cancel="handleCancel"
+            @change="handleChange"
+        />
+    </jk-drawer>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef("drawer")?.component.open();
+    }
+    handleConfirm(e: VNode.Event<string[]>) {
+        Toast(`confirm:${e.data.join("-")}`);
+        this.$getRef("drawer")?.component.close();
+    }
+    handleCancel(e: VNode.Event<string[]>) {
+        Toast(`cancel:${e.data.join("-")}`);
+        this.$getRef("drawer")?.component.close();
+    }
+    handleChange(e: VNode.Event<string[]>) {
+        Toast(`change:${e.data.join("-")}`);
+    }
+}
+</script>
+

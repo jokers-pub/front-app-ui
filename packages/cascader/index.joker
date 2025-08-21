@@ -1,0 +1,280 @@
+<template>
+    <div ref="container" class="@(['jk-cascader', sizeClass, props.class])">
+        <JokerInput
+            ref="input"
+            placeholder="@props.placeholder"
+            autocomplete="off"
+            size="@sizeClass"
+            disabled="@props.disabled"
+            readonly
+            value="@inputText"
+            error="@isError"
+            tabindex="@false"
+            @focus.prevent="handleFocus">
+            @if($sections.prefix) {
+                @section("prefix") {
+                    @RenderSection("prefix", value)
+                }
+            }
+            @section("suffix") {
+                @if(model.loading) {
+                    <i class="jk-icon-loading" />
+                }
+                else {
+                    @if(showClose) {
+                        <i class="jk-icon-circle-close" @click.stop="handleClear" />
+                    }
+                    else {
+                        <i class="jk-icon-arrow-right" @click.stop="handleFocus" />
+                    }
+                }
+            }
+        </JokerInput>
+    </div>
+    <JokerDropDown
+        ref="dropdown"
+        size="@props.drawerSize"
+        title="@props.title"
+        loadingText="@props.loadingText"
+        emptyText="@props.emptyText"
+    />
+</template>
+
+<script>
+import { ShallowObserver } from "@joker.front/core";
+import { FormCtrl } from "../form/form-ctrl";
+import JokerInput from "../input/index.joker";
+import JokerDropDown from "./dropdown.joker";
+import JokerTag from "../tag/index.joker";
+import { componentName, valueEquals } from "../utils";
+import { Store, Node } from "./store";
+import { getValueByLang } from "../utils/lang";
+
+export default class extends FormCtrl<{
+    class: string;
+    options: Array<any>;
+    clearable: boolean;
+    placeholder: string;
+    valueKey: string;
+    labelKey: string;
+    childrenKey: string;
+    leafKey: string;
+    disabledKey: string;
+    drawerSize: string;
+    separator: string;
+    emitPath: boolean;
+    title: string;
+    showAllLevels: boolean;
+    load: Function;
+    loadingText: string;
+    emptyText: string;
+}> {
+    name = componentName("cascader");
+
+    model = {
+        selectedLabel: "",
+
+        visibleOptionCount: 0
+    };
+
+    store!: Store;
+
+    propsOption = {
+        data: [],
+        separator: " / ",
+        showAllLevels: true,
+        emitPath: true,
+        drawerSize: "70%",
+        title: getValueByLang("selectPlaceholder"),
+        placeholder: getValueByLang("selectPlaceholder"),
+        labelKey: "label",
+        valueKey: "value",
+        childrenKey: "children",
+        leafKey: "leaf",
+        disabledKey: "disabled",
+        loadingText: getValueByLang("loading"),
+        emptyText: getValueByLang("emptyText")
+    };
+
+    components = {
+        JokerInput,
+        JokerDropDown,
+        JokerTag
+    };
+
+    created() {
+        this.$syncProp("value");
+
+        this.initOptions();
+
+        this.$watch(
+            () => this.props.options,
+            () => {
+                this.initOptions();
+                this.setSelected();
+            }
+        );
+    }
+
+    mounted() {
+        this.$watch(
+            () => this.value,
+            () => {
+                this.setSelected();
+            }
+        );
+    }
+
+    initOptions() {
+        this.store = new Store(this.props.options, {
+            valueKey: this.props.valueKey!,
+            labelKey: this.props.labelKey!,
+            childrenKey: this.props.childrenKey!,
+            disabledKey: this.props.disabledKey!,
+            leafKey: this.props.leafKey!,
+            lazy: !!this.props.load,
+            emitPath: this.props.emitPath!,
+            allLevels: !!this.props.showAllLevels,
+            separator: this.props.separator!
+        });
+
+        this.$getRef("dropdown")?.component.reset();
+    }
+
+    selectedOptions: ShallowObserver<Array<Node>> = new ShallowObserver([]);
+
+    //#region  属性
+
+    get showClose() {
+        if (this.props.clearable) {
+            let hasValue = this.value !== undefined && this.value !== null && this.value !== "";
+
+            return hasValue && !this.props.disabled;
+        }
+        return false;
+    }
+
+    get inputText() {
+        return this.model.selectedLabel;
+    }
+
+    //#endregion
+
+    //#region  方法
+    lazyLoad(
+        node?: Node | { root: true; level: 0; loading?: boolean; loaded?: boolean; children?: Array<Node> },
+        onFullfiled?: Function
+    ) {
+        node ??= { root: true, level: 0 };
+
+        node.loading = true;
+
+        let complete = async (dataList: any[]) => {
+            if (!node) return;
+
+            let parent: Node | undefined = "root" in node! && node.root ? undefined : <Node>node;
+            if (dataList) {
+                this.store.appendNodes(dataList, parent);
+            }
+
+            node.loading = false;
+            node.loaded = true;
+
+            //不考虑lazy下的数据首次反显
+            //存在多层级接口调用，不建议该方案
+            onFullfiled?.();
+        };
+
+        if (node.children?.length) {
+            node.loading = false;
+            node.loaded = true;
+            onFullfiled?.();
+        } else {
+            this.props.load?.(node, (dataList: Array<any>) => {
+                complete(dataList);
+            });
+        }
+    }
+
+    //通过value 设置选中（配合异步）
+    setSelected() {
+        //清空
+        this.clear(true);
+
+        let option = this.getOption(this.value);
+        if (option) {
+            option.doChecked(true);
+            this.model.selectedLabel = this.props.showAllLevels
+                ? option.pathLabels.join(this.props.separator)
+                : option.label;
+            this.selectedOptions.value = [option];
+        }
+    }
+
+    getOption(value: any) {
+        return this.store.getNodeByValue(value);
+    }
+
+    //#endregion
+
+    //#region  事件
+
+    async handleFocus() {
+        this.$getRef("dropdown")?.component.open();
+    }
+    handleClear() {
+        this.clear();
+        this.$getRef("dropdown")?.component.reset();
+    }
+    clear(dontRefreshSelectedNode = false) {
+        this.store.leafNodes.forEach((m) => {
+            m.checked = false;
+        });
+
+        if (!dontRefreshSelectedNode) {
+            this.refreshSelectedNode();
+        }
+        this.model.selectedLabel = "";
+    }
+
+    //#endregion
+
+    private triggerChange(val: any) {
+        if (valueEquals(this.value, val) === false) {
+            this.value = val;
+
+            this.$trigger("change", val);
+        }
+    }
+
+    public refreshSelectedNode() {
+        this.selectedOptions.value = this.store.leafNodes.filter((m) => m.checked);
+
+        this.triggerChange(this.selectedOptions.value[0]?.value);
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@use "../../theme/var.scss";
+
+.jk-cascader {
+    display: block;
+    position: relative;
+
+    :deep(.jk-input) {
+        input {
+            cursor: pointer;
+
+            &[disabled] {
+                cursor: not-allowed;
+            }
+        }
+    }
+    i {
+        color: var(--jk-color-text-placeholder);
+        font-size: 14px;
+        cursor: pointer;
+    }
+}
+</style>

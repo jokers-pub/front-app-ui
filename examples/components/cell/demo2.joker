@@ -1,0 +1,10 @@
+<template>
+    <jk-cell-group inset>
+        <jk-cell title="Cell title" value="Content" />
+        <jk-cell title="Cell title" value="Content" description="Description" />
+    </jk-cell-group>
+    <jk-cell-group inset title="Title">
+        <jk-cell title="Cell title" value="Content" />
+        <jk-cell title="Cell title" value="Content" description="Description" />
+    </jk-cell-group>
+</template>

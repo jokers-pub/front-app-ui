@@ -1,0 +1,5 @@
+<template>
+    <jk-field>
+        <jk-input placeholder="Please enter the content" clearable />
+    </jk-field>
+</template>

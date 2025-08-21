@@ -1,0 +1,85 @@
+<template>
+    <jk-table data="@tableData" row-key="name" lazy load="@loadChildrenRow">
+        <jk-table-column label="Date" key="date" width="180" />
+        <jk-table-column label="Name" key="name" width="180" />
+        <jk-table-column label="Address" key="address" />
+        <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+    </jk-table>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { sleep } from "@joker.front/shared";
+
+export default class extends Component {
+    tableData = [
+        { name: "Zhang San", date: "2023-11-21", address: "Jinan, Shandong Province", money: 10 },
+        { name: "Li Si", date: "2023-11-21", address: "Jinan, Shandong Province", isLeaf: true, money: 10 },
+        { name: "Li Mei", date: "2023-11-21", address: "Jinan, Shandong Province", isLeaf: true, money: 300 },
+        { name: "Wang Wu", date: "2023-11-21", address: "Jinan, Shandong Province", isLeaf: true, money: 11.9 }
+    ];
+
+    async loadChildrenRow(row: any, callBack: Function) {
+        await sleep(1000);
+
+        if (row.name === "Zhang San") {
+            row.children = [
+                {
+                    name: "Zhang San 1",
+                    date: "2023-11-21",
+                    address: "Jinan, Shandong Province",
+                    isLeaf: true,
+                    money: 10
+                },
+                { name: "Zhang San 2", date: "2023-11-21", address: "Jinan, Shandong Province", money: 10 },
+                {
+                    name: "Zhang San 3",
+                    date: "2023-11-21",
+                    address: "Jinan, Shandong Province",
+                    isLeaf: true,
+                    money: 300
+                },
+                {
+                    name: "Zhang San 4",
+                    date: "2023-11-21",
+                    address: "Jinan, Shandong Province",
+                    isLeaf: true,
+                    money: 11.9
+                }
+            ];
+        } else {
+            row.children = [
+                {
+                    name: "Zhang San 12",
+                    date: "2023-11-21",
+                    address: "Jinan, Shandong Province",
+                    children: [],
+                    money: 10
+                },
+                {
+                    name: "Zhang San 22",
+                    date: "2023-11-21",
+                    address: "Jinan, Shandong Province",
+                    children: [],
+                    money: 10
+                },
+                {
+                    name: "Zhang San 32",
+                    date: "2023-11-21",
+                    address: "Jinan, Shandong Province",
+                    children: [],
+                    money: 300
+                },
+                {
+                    name: "Zhang San 42",
+                    date: "2023-11-21",
+                    address: "Jinan, Shandong Province",
+                    children: [],
+                    money: 11.9
+                }
+            ];
+        }
+
+        callBack();
+    }
+}
+</script>

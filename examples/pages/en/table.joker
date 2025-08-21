@@ -1,0 +1,1822 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Table</h2>
+        <p>
+            Used to display multiple sets of structurally similar data, allowing operations like sorting, filtering, comparison, or other custom actions.
+        </p>
+        <h3>Basic Table</h3>
+        <p>Basic table display usage.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot;&gt;
+        &lt;jk-table-column label=&quot;Date&quot; fixed=&quot;left&quot; key=&quot;date&quot; width=&quot;100&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+    ];
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Striped Table</h3>
+        <p>Tables with zebra striping make it easier to distinguish between rows.</p>
+        <p>
+            The
+            <code>stripe</code>
+            attribute enables striped tables. It accepts a
+            <code>Boolean</code>
+            value, defaulting to
+            <code>false</code>
+            . Set to
+            <code>true</code>
+            to enable.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; stripe&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+    ];
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Bordered Table</h3>
+        <p>
+            By default, the Table component does not have vertical borders. If needed, use the
+            <code>border</code>
+            attribute, which accepts a
+            <code>Boolean</code>
+            value. Set to
+            <code>true</code>
+            to enable.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; border&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+    ];
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Fixed Header</h3>
+        <p>When vertical content is extensive, you can choose to fix the table header.</p>
+        <p>
+            Simply define the
+            <code>height</code>
+            attribute in the
+            <code>jk-table</code>
+            element to fix the table header without requiring additional code.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; height=&quot;250&quot;&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 },
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 },
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+    ];
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Fixed Column</h3>
+        <p>When horizontal content is extensive, you can choose to fix columns.</p>
+        <p>
+            Use the
+            <code>fixed</code>
+            attribute to fix columns. It accepts a
+            <code>Boolean</code>
+            value or
+            <code>left</code>
+            /
+            <code>right</code>
+            to specify left or right fixation.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; height=&quot;250&quot; border&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;120&quot; /&gt;
+        &lt;jk-table-column label=&quot;Province&quot; key=&quot;province&quot; width=&quot;120&quot; /&gt;
+        &lt;jk-table-column label=&quot;City&quot; key=&quot;city&quot; width=&quot;120&quot; /&gt;
+        &lt;jk-table-column label=&quot;Zip Code&quot; key=&quot;zip&quot; width=&quot;120&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;300&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; fixed=&quot;right&quot; align=&quot;right&quot; width=&quot;80&quot; /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        {
+            name: &quot;Zhang San&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 1000
+        },
+        {
+            name: &quot;Li Si&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address:
+                &quot;Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province&quot;,
+            money: 10
+        },
+        {
+            name: &quot;Li Mei&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 300
+        },
+        {
+            name: &quot;Wang Wu&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 11.9
+        },
+        {
+            name: &quot;Zhang San&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 1000
+        },
+        {
+            name: &quot;Li Si&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 10
+        },
+        {
+            name: &quot;Li Mei&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 300
+        },
+        {
+            name: &quot;Wang Wu&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 11.9
+        },
+        {
+            name: &quot;Zhang San&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 1000
+        },
+        {
+            name: &quot;Li Si&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 10
+        },
+        {
+            name: &quot;Li Mei&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 300
+        },
+        {
+            name: &quot;Wang Wu&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 11.9
+        }
+    ];
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Fluid Height</h3>
+        <p>When data volume changes dynamically, set a maximum height for the Table.</p>
+        <p>
+            Use the
+            <code>max-height</code>
+            attribute to define the table's maximum height. If the table's required height exceeds this, a scrollbar will appear.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; max-height=&quot;250&quot;&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;120&quot; /&gt;
+            &lt;jk-table-column label=&quot;Province&quot; key=&quot;province&quot; width=&quot;120&quot; /&gt;
+            &lt;jk-table-column label=&quot;City&quot; key=&quot;city&quot; width=&quot;120&quot; /&gt;
+            &lt;jk-table-column label=&quot;Zip Code&quot; key=&quot;zip&quot; width=&quot;120&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;300&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; fixed=&quot;right&quot; align=&quot;right&quot; width=&quot;80&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button @click=&quot;loadAll&quot;&gt;Load All&lt;/jk-button&gt;
+        &lt;jk-button @click=&quot;loadPart&quot;&gt;Load Part&lt;/jk-button&gt;
+        &lt;jk-button @click=&quot;clearData&quot;&gt;Clear All Data&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+let demoData = [
+    {
+        name: &quot;Zhang San&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 1000
+    },
+    {
+        name: &quot;Li Si&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address:
+            &quot;Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province&quot;,
+        money: 10
+    },
+    {
+        name: &quot;Li Mei&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 300
+    },
+    {
+        name: &quot;Wang Wu&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 11.9
+    },
+    {
+        name: &quot;Zhang San&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 1000
+    },
+    {
+        name: &quot;Li Si&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 10
+    },
+    {
+        name: &quot;Li Mei&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 300
+    },
+    {
+        name: &quot;Wang Wu&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 11.9
+    },
+    {
+        name: &quot;Zhang San&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 1000
+    },
+    {
+        name: &quot;Li Si&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 10
+    },
+    {
+        name: &quot;Li Mei&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 300
+    },
+    {
+        name: &quot;Wang Wu&quot;,
+        date: &quot;2023-11-21&quot;,
+        province: &quot;Shandong Province&quot;,
+        city: &quot;Jinan&quot;,
+        zip: &quot;251900&quot;,
+        address: &quot;Jinan, Shandong Province&quot;,
+        money: 11.9
+    }
+];
+export default class extends Component {
+    model = {
+        tableData: [] as any
+    };
+
+    mounted() {
+        this.loadAll();
+    }
+
+    loadAll() {
+        this.model.tableData = demoData.slice(0);
+    }
+    loadPart() {
+        this.model.tableData = demoData.slice(0, 3);
+    }
+    clearData() {
+        this.model.tableData.length = 0;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Multi-Level Header</h3>
+        <p>For complex data structures, multi-level headers can display hierarchical relationships.</p>
+        <p>
+            Nest
+            <code>jk-table-column</code>
+            within
+            <code>jk-table-column</code>
+            to achieve multi-level headers.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; border&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column label=&quot;Personal Information&quot;&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;120&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot;&gt;
+                &lt;jk-table-column label=&quot;Province&quot; key=&quot;province&quot; width=&quot;120&quot; /&gt;
+                &lt;jk-table-column label=&quot;City&quot; key=&quot;city&quot; width=&quot;120&quot; /&gt;
+                &lt;jk-table-column label=&quot;Zip Code&quot; key=&quot;zip&quot; width=&quot;120&quot; /&gt;
+                &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;300&quot; /&gt;
+            &lt;/jk-table-column&gt;
+        &lt;/jk-table-column&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; width=&quot;150&quot; /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        {
+            name: &quot;Zhang San&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 1000
+        },
+        {
+            name: &quot;Li Si&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address:
+                &quot;Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province&quot;,
+            money: 10
+        },
+        {
+            name: &quot;Li Mei&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 300
+        },
+        {
+            name: &quot;Wang Wu&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 11.9
+        },
+        {
+            name: &quot;Zhang San&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 1000
+        },
+        {
+            name: &quot;Li Si&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 10
+        },
+        {
+            name: &quot;Wang Wu&quot;,
+            date: &quot;2023-11-21&quot;,
+            province: &quot;Shandong Province&quot;,
+            city: &quot;Jinan&quot;,
+            zip: &quot;251900&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 11.9
+        }
+    ];
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Row Selection</h3>
+        <p>
+            Enable row selection via the
+            <code>select</code>
+            attribute. Set to
+            <strong>true</strong>
+            for single-select mode, and configure the
+            <code>mutiple</code>
+            attribute for multi-select mode.
+        </p>
+        <p>
+            Add an
+            <code>jk-table-column</code>
+            component with
+            <code>type=&quot;selection&quot;</code>
+            to display the selection helper column.
+            <strong>Note</strong>
+            : If enabled, clicking a row won't trigger selection.
+        </p>
+        <p>
+            Use the
+            <code>selected-change</code>
+            event to observe selection state changes. Both single and multi-select return an array of row data.
+        </p>
+        <p>Methods for controlling selected rows:</p>
+        <ul>
+            <li>
+                <code>getSelectedRow</code>
+                : Get selected row(s) (single row in single-select mode, multiple rows in multi-select mode).
+            </li>
+            <li>
+                <code>setSelectedRow</code>
+                : Select rows. Pass single or multiple rows (
+                <strong>Note</strong>
+                : In single-select mode, only the first row is selected if multiple are passed).
+            </li>
+            <li>
+                <code>clearSelectedRow</code>
+                : Clear selected rows.
+            </li>
+            <li>
+                <code>selectAll</code>
+                : In multi-select mode, selects all non-disabled data.
+            </li>
+        </ul>
+        <p>Single-select example:</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo8)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-table ref=&quot;table1&quot; data=&quot;@model.tableData&quot; select @selected-change=&quot;handleSelectedChange('table2')&quot;&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-table ref=&quot;table2&quot; data=&quot;@model.tableData&quot; select @selected-change=&quot;handleSelectedChange('table1')&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; disabledMethod=&quot;@disabledMethod&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        //存放到model中，使用数据观察代理，以保证两个table行数据一致
+        tableData: [
+            { name: &quot;Zhang San&quot;, date: &quot;2023-11-01&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+            { name: &quot;Li Si&quot;, date: &quot;2023-11-02&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+            { name: &quot;Li Mei&quot;, date: &quot;2023-11-03&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+            { name: &quot;Wang Wu&quot;, date: &quot;2023-11-04&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+        ]
+    };
+
+    disabledMethod(row: any) {
+        return row.name === &quot;Li Mei&quot;;
+    }
+
+    handleSelectedChange(e: VNode.Event&lt;any&gt;, syncTableName: string) {
+        this.$getRef(syncTableName)?.component.setSelectedRow(e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <p>Multi-select example:</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo9)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-table
+            ref=&quot;table1&quot;
+            data=&quot;@model.tableData&quot;
+            select
+            multiple
+            @selected-change=&quot;handleSelectedChange('table2')&quot;&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-table
+            ref=&quot;table2&quot;
+            data=&quot;@model.tableData&quot;
+            select
+            multiple
+            @selected-change=&quot;handleSelectedChange('table1')&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; disabledMethod=&quot;@disabledMethod&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button @click=&quot;clear&quot;&gt;Clear&lt;/jk-button&gt;
+        &lt;jk-button @click=&quot;selectAll&quot;&gt;Select All&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; select multiple&gt;
+            &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        tableData: [
+            { name: &quot;Zhang San&quot;, date: &quot;2023-11-01&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+            { name: &quot;Li Si&quot;, date: &quot;2023-11-02&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+            { name: &quot;Li Mei&quot;, date: &quot;2023-11-03&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300, checked: true },
+            { name: &quot;Wang Wu&quot;, date: &quot;2023-11-04&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+        ]
+    };
+
+    disabledMethod(row: any) {
+        return row.name === &quot;Li Mei&quot;;
+    }
+
+    selectAll() {
+        this.$getRef(&quot;table1&quot;)?.component.selectAll();
+        this.$getRef(&quot;table2&quot;)?.component.selectAll();
+    }
+
+    clear() {
+        this.$getRef(&quot;table1&quot;)?.component.clearSelectedRow();
+        this.$getRef(&quot;table2&quot;)?.component.clearSelectedRow();
+    }
+
+    handleSelectedChange(e: VNode.Event&lt;any&gt;, syncTableName: string) {
+        this.$getRef(syncTableName)?.component.setSelectedRow(e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Sorting</h3>
+        <p>Sort tables to quickly find or compare data.</p>
+        <p>
+            Set the
+            <code>sortable</code>
+            attribute on a column to enable sorting by that column (accepts
+            <code>Boolean</code>
+            , defaults to
+            <code>false</code>
+            ).
+            <br />
+            Configure default sorting via the Table's
+            <code>default-sort</code>
+            attribute. Use
+            <code>sort-method</code>
+            for custom sorting logic.
+            <code>default-sort-order</code>
+            defaults to
+            <strong>ascending</strong>
+            ; set to
+            <strong>descending</strong>
+            to reverse.
+        </p>
+        <p>
+            For backend sorting, set
+            <code>sortable=&quot;custom&quot;</code>
+            , then listen to the
+            <code>sort-change</code>
+            event on the Table to fetch sorted data.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo10)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; default-sort=&quot;date&quot; default-sort-order=&quot;descending&quot;&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; sortable fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; sortable /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-02&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-01&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-03&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-04&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+    ];
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <p>Custom sorting (simulated server-side sorting):</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo11)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData.value&quot; ref=&quot;table&quot; @sort-change=&quot;handleSortChange&quot;&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; sortable=&quot;custom&quot; fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column
+            label=&quot;Balance&quot;
+            key=&quot;money&quot;
+            headerAlign=&quot;right&quot;
+            align=&quot;right&quot;
+            sortable
+            sort-method=&quot;@moneySortMethod&quot;
+        /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, ShallowObserver, VNode } from &quot;@joker.front/core&quot;;
+import { ColumnType, SortableOrderType } from &quot;../../../packages/table/store&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+import { Loading } from &quot;../../../src&quot;;
+
+// Table data array, containing user information
+let tableData = [
+    { name: &quot;Zhang San&quot;, date: &quot;2023-11-02&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+    { name: &quot;Li Si&quot;, date: &quot;2023-11-01&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+    { name: &quot;Li Mei&quot;, date: &quot;2023-11-03&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+    { name: &quot;Wang Wu&quot;, date: &quot;2023-11-04&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+];
+
+export default class extends Component {
+    // Perform shallow hijacking for the demo
+    tableData = new ShallowObserver(tableData.slice(0));
+
+    // Record the currently sorted column
+    order?: string;
+
+    // The current demo simulates delayed sorting only for the 'date' field, so the logic is relatively complex. Please adjust according to your own needs.
+    async handleSortChange(e: VNode.Event&lt;{ column: ColumnType; order: SortableOrderType }&gt;) {
+        // Simulate restoring data
+        if (this.order &amp;&amp; e.data === undefined) {
+            this.order = undefined;
+            let loading = Loading({
+                target: this.$getRef(&quot;table&quot;)
+            });
+            // Simulate a request
+            await sleep(1500);
+
+            loading.close();
+
+            this.tableData.value = tableData.slice(0);
+            return;
+        }
+
+        // If it's not the 'date' column, clear the marker
+        if (e.data?.column.key !== &quot;date&quot;) {
+            this.order = undefined;
+            return;
+        }
+
+        if (e.data?.column.key === &quot;date&quot; &amp;&amp; this.order !== e.data.order) {
+            this.order = e.data.order;
+            let loading = Loading({
+                target: this.$getRef(&quot;table&quot;)
+            });
+            // Simulate a request
+            await sleep(1500);
+
+            loading.close();
+
+            this.tableData.value = tableData.slice(0).sort((a, b) =&gt; {
+                if (e.data.order === &quot;ascending&quot;) {
+                    return a.date &gt; b.date ? 1 : -1;
+                } else {
+                    return a.date &gt; b.date ? -1 : 1;
+                }
+            });
+        }
+    }
+
+    // Sorting method for the balance column
+    moneySortMethod(datas: Array&lt;any&gt;, col: ColumnType, order: SortableOrderType) {
+        console.log(&quot;Custom sorting&quot;);
+        return datas.sort((a, b) =&gt; {
+            if (order === &quot;ascending&quot;) {
+                return a.money &gt; b.money ? 1 : -1;
+            } else {
+                return a.money &gt; b.money ? -1 : 1;
+            }
+        });
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Filtering</h3>
+        <p>Filter tables to quickly locate desired data.</p>
+        <p>
+            Enable column filtering via
+            <code>filter</code>
+            and
+            <code>filter-method</code>
+            attributes.
+            <code>filter</code>
+            is an array; if omitted, it defaults to all unique values in the column.
+            <code>filter-method</code>
+            determines visibility by accepting three params:
+            <code>row data</code>
+            ,
+            <code>filter value</code>
+            , and
+            <code>column</code>
+            .
+        </p>
+        <p>
+            <code>filter</code>
+            can be configured as:
+        </p>
+        <pre><code class="language-js">[
+    { value: &quot;1&quot;, text: &quot;Male&quot; },
+    { value: &quot;0&quot;, text: &quot;Female&quot; }
+];
+</code></pre>
+        <DemoContainer component="@(components.DEMO_JOKER_demo12)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; default-sort=&quot;date&quot; default-sort-order=&quot;descending&quot;&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; sortable filter fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column
+            label=&quot;Balance&quot;
+            key=&quot;money&quot;
+            headerAlign=&quot;right&quot;
+            align=&quot;right&quot;
+            filter=&quot;@([
+                { text: 'Less than 100', value: 1 },
+                { text: 'Greater than 100', value: 2 }
+            ])&quot;
+            filter-method=&quot;@customFilter&quot;
+        /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-02&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-01&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-03&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-04&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+    ];
+    customFilter(row: any, filters: number[]) {
+        for (let i = 0; i &lt; filters.length; i++) {
+            let filter = filters[i];
+            if ((filter === 1 &amp;&amp; row.money &lt; 100) || (filter === 2 &amp;&amp; row.money &gt; 100)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Index Column</h3>
+        <p>
+            Display index columns by setting
+            <code>type=&quot;index&quot;</code>
+            on
+            <code>jk-table-column</code>
+            and configuring the starting index via the
+            <code>index</code>
+            attribute (default: 1).
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo13)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-table data=&quot;@tableData&quot;&gt;
+            &lt;jk-table-column type=&quot;index&quot; index=&quot;@model.startIndex&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/DemoRow&gt;
+    &lt;jk-button @click=&quot;handleClick&quot;&gt;Set starting index to 10&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+    ];
+    model = {
+        startIndex: 1
+    };
+    handleClick() {
+        this.model.startIndex = 10;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Custom Column Template</h3>
+        <p>
+            Customize column content by combining other components.
+            <br />
+            Use
+            <code>RenderSection</code>
+            to access
+            <code>value</code>
+            ,
+            <code>row</code>
+            ,
+            <code>rowIndex</code>
+            ,
+            <code>columnIndex</code>
+            ,
+            <code>column</code>
+            , and
+            <code>store</code>
+            (table state management). See demo.
+        </p>
+        <p>
+            <code>td</code>
+            area renders cell content;
+            <code>th</code>
+            area renders headers.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo14)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@model.tableData&quot; select multiple dataChangeNotClearSelected&gt;
+        &lt;jk-table-column type=&quot;selection&quot; fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column type=&quot;index&quot; fixed=&quot;left&quot; /&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot;&gt;
+            @section(&quot;td&quot;, data) {
+                &lt;i class=&quot;jk-icon-time&quot; /&gt;@data.value
+            }
+        &lt;/jk-table-column&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;jk-table-column label=&quot;Operation&quot; headerAlign=&quot;right&quot; align=&quot;right&quot;&gt;
+            @section(&quot;th&quot;) {
+                &lt;i class=&quot;jk-icon-edit&quot;&gt;&lt;/i&gt;
+                Operation
+            }
+            @section(&quot;td&quot;, data) {
+                &lt;jk-button type=&quot;primary&quot; size=&quot;small&quot; @click=&quot;handleMoveDown(data)&quot;&gt;Move Down&lt;/jk-button&gt;
+                &lt;jk-button type=&quot;danger&quot; size=&quot;small&quot; @click=&quot;handleDelete(data)&quot;&gt;Delete&lt;/jk-button&gt;
+            }
+        &lt;/jk-table-column&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { ColumnType, Store } from &quot;../../../packages/table/store&quot;;
+import { Message, MessageBox } from &quot;../../../src&quot;;
+import { moveDown, remove } from &quot;@joker.front/shared&quot;;
+
+export default class extends Component {
+    model = {
+        tableData: [
+            { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+            { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+            { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+            { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+        ]
+    };
+
+    handleDelete(
+        e: VNode.Event,
+        data: {
+            // Current row value, will be retrieved only when column.key is configured
+            value: any;
+            // Current row data
+            row: any;
+            // Row index
+            rowIndex: number;
+            // Column index
+            cellIndex: number;
+            // Column data
+            column: ColumnType;
+            // Storage unit
+            store: Store;
+        }
+    ) {
+        MessageBox.confirm('Are you sure you want to delete &quot;' + data.row.name + '&quot;?', {
+            callback: (action) =&gt; {
+                if (action === &quot;confirm&quot;) {
+                    remove(this.model.tableData, data.row);
+                }
+            }
+        });
+    }
+
+    handleMoveDown(e: VNode.Event, data: any) {
+        moveDown(this.model.tableData, data.rowIndex);
+
+        console.log(this.model.tableData);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Expandable Rows</h3>
+        <p>
+            Use expandable rows when row content is extensive without horizontal scrolling.
+            <br />
+            Set
+            <code>type=&quot;expand&quot;</code>
+            and
+            <code>section('expand',data)</code>
+            to enable. The template in
+            <code>jk-table-column</code>
+            becomes the expanded content, where
+            <code>data</code>
+            includes
+            <code>current row</code>
+            ,
+            <code>row index</code>
+            , and
+            <code>store</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo15)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; defaultExpandAll&gt;
+        &lt;jk-table-column type=&quot;expand&quot;&gt;
+            @section(&quot;expand&quot;, data) {
+                &lt;ul class=&quot;expand-ul&quot;&gt;
+                    &lt;li&gt;
+                        Name: @data.row.name
+                    &lt;/li&gt;
+                    &lt;li&gt;
+                        Date: @data.row.date
+                    &lt;/li&gt;
+                    &lt;li&gt;
+                        Balance: @data.row.money
+                        Yuan
+                    &lt;/li&gt;
+                    &lt;li&gt;
+                        Address: @data.row.address
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            }
+        &lt;/jk-table-column&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+    ];
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Tree Table</h3>
+        <p>
+            Display hierarchical data. Rows with
+            <code>children</code>
+            fields are treated as tree data. Specify
+            <code>row-key</code>
+            when rendering. Supports async child loading via
+            <code>lazy=true</code>
+            and
+            <code>load</code>
+            function. Use
+            <code>isLeafKey</code>
+            to mark leaf nodes.
+        </p>
+        <blockquote>
+            <p>
+                Configure
+                <code>childrenKey</code>
+                and
+                <code>isLeafKey</code>
+                for node properties.
+            </p>
+        </blockquote>
+        <DemoContainer component="@(components.DEMO_JOKER_demo16)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; row-key=&quot;name&quot;&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    tableData = [
+        {
+            name: &quot;Zhang San&quot;,
+            date: &quot;2023-11-21&quot;,
+            address: &quot;Jinan, Shandong Province&quot;,
+            money: 1000,
+            children: [
+                { name: &quot;Zhang San 1&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+                {
+                    name: &quot;Zhang San 2&quot;,
+                    date: &quot;2023-11-21&quot;,
+                    address: &quot;Jinan, Shandong Province&quot;,
+                    money: 10,
+                    children: [
+                        { name: &quot;Zhang San 12&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+                        { name: &quot;Zhang San 22&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+                        { name: &quot;Zhang San 32&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 }
+                    ]
+                },
+                { name: &quot;Zhang San 3&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 }
+            ]
+        },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+    ];
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <p>Async loading:</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo17)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@tableData&quot; row-key=&quot;name&quot; lazy load=&quot;@loadChildrenRow&quot;&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+    &lt;/jk-table&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+
+export default class extends Component {
+    tableData = [
+        { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+        { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, isLeaf: true, money: 10 },
+        { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, isLeaf: true, money: 300 },
+        { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, isLeaf: true, money: 11.9 }
+    ];
+
+    async loadChildrenRow(row: any, callBack: Function) {
+        await sleep(1000);
+
+        if (row.name === &quot;Zhang San&quot;) {
+            row.children = [
+                {
+                    name: &quot;Zhang San 1&quot;,
+                    date: &quot;2023-11-21&quot;,
+                    address: &quot;Jinan, Shandong Province&quot;,
+                    isLeaf: true,
+                    money: 10
+                },
+                { name: &quot;Zhang San 2&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+                {
+                    name: &quot;Zhang San 3&quot;,
+                    date: &quot;2023-11-21&quot;,
+                    address: &quot;Jinan, Shandong Province&quot;,
+                    isLeaf: true,
+                    money: 300
+                },
+                {
+                    name: &quot;Zhang San 4&quot;,
+                    date: &quot;2023-11-21&quot;,
+                    address: &quot;Jinan, Shandong Province&quot;,
+                    isLeaf: true,
+                    money: 11.9
+                }
+            ];
+        } else {
+            row.children = [
+                {
+                    name: &quot;Zhang San 12&quot;,
+                    date: &quot;2023-11-21&quot;,
+                    address: &quot;Jinan, Shandong Province&quot;,
+                    children: [],
+                    money: 10
+                },
+                {
+                    name: &quot;Zhang San 22&quot;,
+                    date: &quot;2023-11-21&quot;,
+                    address: &quot;Jinan, Shandong Province&quot;,
+                    children: [],
+                    money: 10
+                },
+                {
+                    name: &quot;Zhang San 32&quot;,
+                    date: &quot;2023-11-21&quot;,
+                    address: &quot;Jinan, Shandong Province&quot;,
+                    children: [],
+                    money: 300
+                },
+                {
+                    name: &quot;Zhang San 42&quot;,
+                    date: &quot;2023-11-21&quot;,
+                    address: &quot;Jinan, Shandong Province&quot;,
+                    children: [],
+                    money: 11.9
+                }
+            ];
+        }
+
+        callBack();
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>Note: Sorting/filtering/indexing only applies to top-level rows in tree tables.</p>
+        </blockquote>
+        <h3>Large Dataset Sync Loading</h3>
+        <p>Loading large datasets (800+ rows).</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo19)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot; ref=&quot;table&quot;&gt;
+        &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; /&gt;
+        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
+        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
+        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+    &lt;/jk-table&gt;
+    &lt;jk-button @click=&quot;handleLoadClick&quot;&gt;Load data&lt;/jk-button&gt;
+    &lt;jk-button @click=&quot;handleClick&quot;&gt;Select all&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, combinedReply } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        tableData: undefined
+    };
+    handleLoadClick() {
+        combinedReply(() =&gt; {
+            this.model.tableData = [];
+            for (let i = 0; i &lt; 200; i++) {
+                this.model.tableData.push(
+                    { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+                    { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+                    { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+                    { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+                );
+            }
+        });
+    }
+    handleClick() {
+        this.$getRef(&quot;table&quot;)?.component.selectAll();
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Table Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>data</td>
+                    <td>Data to display</td>
+                    <td>array</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom CSS class</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>height</td>
+                    <td>
+                        Table height (auto by default). Numbers are in px; strings set
+                        <code>style.height</code>
+                        .
+                    </td>
+                    <td>string/number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>max-height</td>
+                    <td>Maximum height (px or number).</td>
+                    <td>string/number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>stripe</td>
+                    <td>Zebra-striping</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>border</td>
+                    <td>Vertical borders</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>show-header</td>
+                    <td>Show headers</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>row-class-name</td>
+                    <td>Row className callback or static string</td>
+                    <td>Function/String</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>row-style</td>
+                    <td>Row style callback or static object</td>
+                    <td>Function/Object</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>cell-class-name</td>
+                    <td>Cell className callback or static string</td>
+                    <td>Function/String</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>cell-style</td>
+                    <td>Cell style callback or static object</td>
+                    <td>Function/Object</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>header-row-class-name</td>
+                    <td>Header row className callback or static string</td>
+                    <td>Function/String</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>header-row-style</td>
+                    <td>Header row style callback or static object</td>
+                    <td>Function/Object</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>header-cell-class-name</td>
+                    <td>Header cell className callback or static string</td>
+                    <td>Function/String</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>header-cell-style</td>
+                    <td>Header cell style callback or static object</td>
+                    <td>Function/Object</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>empty-text</td>
+                    <td>
+                        Empty data text (override via
+                        <code>section=&quot;empty&quot;</code>
+                        )
+                    </td>
+                    <td>String</td>
+                    <td>—</td>
+                    <td>&quot;No Data&quot;</td>
+                </tr>
+                <tr>
+                    <td>default-sort</td>
+                    <td>Default sort column</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>default-sort-order</td>
+                    <td>Default sort order</td>
+                    <td>&quot;ascending&quot;/&quot;descending&quot;</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>childrenKey</td>
+                    <td>Child node key for tree data</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>&quot;children&quot;</td>
+                </tr>
+                <tr>
+                    <td>isLeafKey</td>
+                    <td>Leaf node indicator key for tree data</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>dataChangeNotClearSelected</td>
+                    <td>Don't clear selection on data change</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>defaultExpandAll</td>
+                    <td>Expand all rows by default</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Table Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>selected-change</td>
+                    <td>Triggered when selection changes</td>
+                    <td>Selected rows[]</td>
+                </tr>
+                <tr>
+                    <td>sort-change</td>
+                    <td>Triggered when sorting changes</td>
+                    <td>
+                        {column, order}
+                    </td>
+                </tr>
+                <tr>
+                    <td>expand-change</td>
+                    <td>Triggered when expanding/collapsing</td>
+                    <td>row, expand</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Table Methods</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>clearSelectedRow</td>
+                    <td>Clears selection (multi-select)</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>selectAll</td>
+                    <td>Toggles all rows' selection</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>setSelectedRow</td>
+                    <td>Sets selected row (single-select)</td>
+                    <td>row</td>
+                </tr>
+                <tr>
+                    <td>clearSort</td>
+                    <td>Resets sorting</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>clearFilter</td>
+                    <td>Clears filters (optionally by column keys)</td>
+                    <td>column.key[]</td>
+                </tr>
+                <tr>
+                    <td>sort</td>
+                    <td>
+                        Manual sort by
+                        <code>key</code>
+                        and
+                        <code>order</code>
+                    </td>
+                    <td>key: string, order: string</td>
+                </tr>
+                <tr>
+                    <td>getSelectRow</td>
+                    <td>Gets selected rows</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Table-column Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>type</td>
+                    <td>
+                        Column type (
+                        <code>selection</code>
+                        for checkboxes,
+                        <code>index</code>
+                        for row numbers,
+                        <code>expand</code>
+                        for expand button)
+                    </td>
+                    <td>string</td>
+                    <td>selection/index/expand</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>index</td>
+                    <td>
+                        Custom index when
+                        <code>type=&quot;index&quot;</code>
+                    </td>
+                    <td>number/Function(index)</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>key</td>
+                    <td>
+                        Column key (required for
+                        <code>filter-change</code>
+                        )
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>label</td>
+                    <td>Header text</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>width</td>
+                    <td>Column width</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>fixed</td>
+                    <td>
+                        Fix column (
+                        <code>true</code>
+                        = left,
+                        <code>&quot;left&quot;</code>
+                        /
+                        <code>&quot;right&quot;</code>
+                        )
+                    </td>
+                    <td>string/boolean</td>
+                    <td>true/left/right</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>sortable</td>
+                    <td>
+                        Enable sorting (
+                        <code>&quot;custom&quot;</code>
+                        for remote)
+                    </td>
+                    <td>boolean/string</td>
+                    <td>true/false/custom</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>sort-method</td>
+                    <td>Custom sort function</td>
+                    <td>Function</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>align</td>
+                    <td>Content alignment</td>
+                    <td>string</td>
+                    <td>left/center/right</td>
+                    <td>left</td>
+                </tr>
+                <tr>
+                    <td>header-align</td>
+                    <td>Header alignment</td>
+                    <td>string</td>
+                    <td>left/center/right</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Column CSS class</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>filter</td>
+                    <td>
+                        Filter options (
+                        <code>
+                            {text, value}[]
+                        </code>
+                        or
+                        <code>string[]</code>
+                        )
+                    </td>
+                    <td>Array</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>filter-method</td>
+                    <td>Filter logic (executed per row)</td>
+                    <td>Function(row, filters, col)</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Table-column Section</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>td</td>
+                    <td>
+                        Custom cell content ({value, row, rowIndex, column, columnIndex, store})
+                    </td>
+                </tr>
+                <tr>
+                    <td>th</td>
+                    <td>
+                        Custom header content ({column, columnIndex, store})
+                    </td>
+                </tr>
+                <tr>
+                    <td>expand</td>
+                    <td>
+                        Expandable row content ({row, rowIndex, store})
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo9 from "../../components/table/demo9.joker";
+import DEMO_JOKER_demo8 from "../../components/table/demo8.joker";
+import DEMO_JOKER_demo7 from "../../components/table/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/table/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/table/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/table/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/table/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/table/demo2.joker";
+import DEMO_JOKER_demo19 from "../../components/table/demo19.joker";
+import DEMO_JOKER_demo17 from "../../components/table/demo17.joker";
+import DEMO_JOKER_demo16 from "../../components/table/demo16.joker";
+import DEMO_JOKER_demo15 from "../../components/table/demo15.joker";
+import DEMO_JOKER_demo14 from "../../components/table/demo14.joker";
+import DEMO_JOKER_demo13 from "../../components/table/demo13.joker";
+import DEMO_JOKER_demo12 from "../../components/table/demo12.joker";
+import DEMO_JOKER_demo11 from "../../components/table/demo11.joker";
+import DEMO_JOKER_demo10 from "../../components/table/demo10.joker";
+import DEMO_JOKER_demo1 from "../../components/table/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo9,
+        DEMO_JOKER_demo8,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo19,
+        DEMO_JOKER_demo17,
+        DEMO_JOKER_demo16,
+        DEMO_JOKER_demo15,
+        DEMO_JOKER_demo14,
+        DEMO_JOKER_demo13,
+        DEMO_JOKER_demo12,
+        DEMO_JOKER_demo11,
+        DEMO_JOKER_demo10,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

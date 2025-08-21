@@ -1,0 +1,197 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Color Palette</h2>
+        <p>
+            Joker-UI employs a specific color scheme to prevent visual communication discrepancies and ensure a consistent visual experience for your products.
+        </p>
+        <h3>Primary Color</h3>
+        <p>The core brand color of Joker-UI is a vibrant, friendly blue.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;demo-container&quot;&gt;
+        &lt;div style=&quot;background-color:var(--jk-color-primary-dark-2)&quot;&gt;&lt;/div&gt;
+        @for(let i = 3; i &lt; 10; i++) {
+            &lt;div style=&quot;background-color:var(--jk-color-primary-light-@i)&quot;&gt;&lt;/div&gt;
+        }
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-container {
+    border-radius: 4px;
+
+    display: flex;
+    padding-top: 80px;
+    background-color: var(--jk-color-primary);
+    div {
+        flex: 1;
+        height: 30px;
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Accent Colors</h3>
+        <p>Additional situational colors beyond the primary palette (e.g., danger color for hazardous operations).</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    @for(let name of colors) {
+        &lt;div class=&quot;demo-container&quot; style=&quot;background-color: var(--jk-color-@(name));&quot;&gt;
+            &lt;div style=&quot;background-color:var(--jk-color-@(name)-dark-2)&quot;&gt;&lt;/div&gt;
+            @for(let i = 3; i &lt; 10; i++) {
+                &lt;div style=&quot;background-color:var(--jk-color-@(name)-light-@(i))&quot;&gt;&lt;/div&gt;
+            }
+        &lt;/div&gt;
+    }
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+export default class extends Component {
+    colors = [&quot;success&quot;, &quot;warning&quot;, &quot;danger&quot;, &quot;info&quot;];
+}
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-container {
+    border-radius: 4px;
+    padding-top: 80px;
+    margin-bottom: 20px;
+    display: flex;
+    overflow: hidden;
+    div {
+        flex: 1;
+        height: 30px;
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Neutral Colors</h3>
+        <p>Neutrals are used for text, backgrounds, and borders. Different neutral shades create visual hierarchy.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        @for(let name in fontColors) {
+            &lt;div class=&quot;demo-container&quot; style=&quot;background-color:var(--jk-color-text-@(name));&quot;&gt;
+                &lt;p&gt;
+                    @fontColors[name]
+                &lt;/p&gt;
+                &lt;p&gt;
+                    --jk-color-text-@name
+                &lt;/p&gt;
+            &lt;/div&gt;
+        }
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        @for(let name in borderColors) {
+            &lt;div class=&quot;demo-container border&quot; style=&quot;background-color:var(--jk-border-color-@(name));&quot;&gt;
+                &lt;p&gt;
+                    @borderColors[name]
+                &lt;/p&gt;
+                &lt;p&gt;
+                    --jk-border-color-@name
+                &lt;/p&gt;
+            &lt;/div&gt;
+        }
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+export default class extends Component {
+    fontColors = {
+        primary: &quot;Primary text&quot;,
+        regular: &quot;Regular text&quot;,
+        secondary: &quot;Secondary text&quot;,
+        placeholder: &quot;Placeholder text&quot;
+    };
+    borderColors = {
+        base: &quot;Level 1 border&quot;,
+        light: &quot;Level 2 border&quot;,
+        lighter: &quot;Level 3 border&quot;,
+        &quot;extra-light&quot;: &quot;Level 4 border&quot;
+    };
+}
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-container {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+
+    p {
+        color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    &amp;.border p {
+        color: #000;
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Shadow Colors</h3>
+        <p>Provides commonly used shadow styles.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;demo-container&quot; style=&quot;box-shadow:var(--jk-box-shadow-base);&quot;&gt;
+        &lt;p&gt;Level 1&lt;/p&gt;
+        &lt;p&gt;--jk-box-shadow-base&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;demo-container&quot; style=&quot;box-shadow:var(--jk-box-shadow-dark);&quot;&gt;
+        &lt;p&gt;Level 2&lt;/p&gt;
+        &lt;p&gt;--jk-box-shadow-dark&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;demo-container&quot; style=&quot;box-shadow:var(--jk-box-shadow-light);&quot;&gt;
+        &lt;p&gt;Level 3&lt;/p&gt;
+        &lt;p&gt;--jk-box-shadow-light&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo-container {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    p {
+        color: #000;
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <p>
+            (Note: Maintaining the same formatting tags/exclamation marks for placeholder images as per the original.)
+        </p>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo4 from "../../components/color/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/color/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/color/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/color/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

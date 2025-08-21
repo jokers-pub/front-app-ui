@@ -1,0 +1,60 @@
+@charset "UTF-8";
+@use "./var.scss";
+@use "./default/color.scss";
+@use "./default/border.scss";
+@use "./default/component.scss";
+@use "./default/icon.scss";
+@use "./default/box-shadow.scss";
+@use "./default/disabled.scss";
+
+@use "./transition.scss";
+@use "./popper.scss";
+@use "./modal.scss";
+@font-face {
+    font-family: "joker-icons";
+
+    src:
+        url("./default/fonts/iconfont.woff2") format("woff2"),
+        url("./default/fonts/joker-icons.woff") format("woff"),
+        url("./default/fonts/joker-icons.ttf") format("truetype");
+    font-weight: normal;
+    font-display: auto;
+    font-style: normal;
+}
+
+:root {
+    @include color.color-vars;
+    @include border.border-vars;
+    @include box-shadow.box-shadow-vars;
+    @include disabled.disabled-vars;
+    //组件变量
+    @include component.component-vars;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family:
+        Open Sans,
+        -apple-system,
+        BlinkMacSystemFont,
+        Helvetica Neue,
+        Helvetica,
+        Segoe UI,
+        Arial,
+        Roboto,
+        PingFang SC,
+        miui,
+        Hiragino Sans GB,
+        Microsoft Yahei,
+        sans-serif;
+    font-weight: 400;
+    color: var(--jk-color-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.jk-overflow-hidden {
+    overflow: hidden !important;
+}

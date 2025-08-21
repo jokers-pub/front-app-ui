@@ -1,0 +1,386 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Cell 单元格</h2>
+        <p>单元格为列表中的单个展示项。</p>
+        <h3>基础用法</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+    &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>卡片风格</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group inset&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group inset title=&quot;Title&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>单元格尺寸</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group title=&quot;Large Size&quot; size=&quot;large&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Default Size&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Small Size&quot; size=&quot;small&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Mini Size&quot; size=&quot;mini&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Diff Size&quot;&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow description=&quot;Description&quot; size=&quot;large&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow description=&quot;Description&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow description=&quot;Description&quot; size=&quot;small&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow description=&quot;Description&quot; size=&quot;mini&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>展示图标</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; icon=&quot;jk-icon-s-user&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; icon=&quot;jk-icon-star-on&quot; description=&quot;Description&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>展示箭头</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; arrow /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow arrow-direction=&quot;top&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow arrow-direction=&quot;bottom&quot; /&gt;
+        &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; arrow arrow-direction=&quot;left&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>自定义区块内容</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group title=&quot;Title Section&quot;&gt;
+        &lt;jk-cell arrow&gt;
+            @section(&quot;title&quot;) {
+                &lt;span&gt;Custom Title&lt;/span&gt;
+                &lt;jk-tag size=&quot;mini&quot;&gt;TAG&lt;/jk-tag&gt;
+            }
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Content Section&quot;&gt;
+        &lt;jk-cell title=&quot;Title&quot; arrow&gt;
+            &lt;jk-tag size=&quot;mini&quot;&gt;TAG&lt;/jk-tag&gt;
+            &lt;jk-tag size=&quot;mini&quot;&gt;TAG1&lt;/jk-tag&gt;
+            &lt;jk-tag size=&quot;mini&quot;&gt;TAG2&lt;/jk-tag&gt;
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Right Icon Section&quot;&gt;
+        &lt;jk-cell title=&quot;Title&quot; content=&quot;Content&quot;&gt;
+            @section(&quot;rightIcon&quot;) {
+                &lt;i class=&quot;jk-icon-close&quot; /&gt;
+            }
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.jk-icon-close {
+    line-height: inherit;
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>垂直居中</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell title=&quot;Cell title&quot; value=&quot;Content&quot; center arrow description=&quot;Description&quot; size=&quot;large&quot; /&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>标题对齐方式</h3>
+        <p>
+            通过配置
+            <code>title-align</code>
+            来设置标题对齐方式。若没有配置
+            <strong>title</strong>
+            、或者Section Title则默认采用
+            <code>top</code>
+            布局。其中
+            <code>top</code>
+            布局时内容区域默认向左对齐，其余默认内容默认向右对齐。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo8)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-radio-group value=&quot;@model.labelAlign&quot; @change=&quot;handleChange&quot;&gt;
+            &lt;jk-radio-button value=&quot;&quot;&gt;Left&lt;/jk-radio-button&gt;
+            &lt;jk-radio-button value=&quot;top&quot;&gt;Top&lt;/jk-radio-button&gt;
+            &lt;jk-radio-button value=&quot;right&quot;&gt;Right&lt;/jk-radio-button&gt;
+        &lt;/jk-radio-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;jk-cell-group&gt;
+        &lt;jk-cell
+            title=&quot;Cell title&quot;
+            title-align=&quot;@model.labelAlign&quot;
+            value=&quot;Content&quot;
+            arrow
+            description=&quot;Description&quot;
+            size=&quot;large&quot;
+        /&gt;
+        &lt;jk-cell title-align=&quot;@model.labelAlign&quot; value=&quot;Content&quot; arrow size=&quot;large&quot; /&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        labelAlign: &quot;&quot;
+    };
+    handleChange(e: VNode.Event&lt;string&gt;) {
+        this.model.labelAlign = e.data;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Cell Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>自定义类名，用于额外的样式修饰</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>单元格的标题内容</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>description</td>
+                    <td>单元格的描述信息，通常用于补充说明标题</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>单元格的数值或内容值，展示在标题或描述的对应位置</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>单元格的尺寸大小，影响整体的显示比例</td>
+                    <td>&quot;large&quot; | &quot;small&quot; | &quot;mini&quot;</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>单元格左侧的图标，通过图标名称指定显示的图标</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>arrow</td>
+                    <td>是否显示箭头，用于标识该单元格可点击或有跳转行为</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>arrowDirection</td>
+                    <td>箭头的方向</td>
+                    <td>'top' | 'bottom' | 'left' | 'right'</td>
+                    <td>-</td>
+                    <td>'right'</td>
+                </tr>
+                <tr>
+                    <td>center</td>
+                    <td>单元格内容是否垂直居中显示</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>title-align</td>
+                    <td>
+                        控制单元格标题的对齐方式，仅在配置了
+                        <code>title</code>
+                        或
+                        <code>Section Title</code>
+                        时生效；取值为
+                        <code>top</code>
+                        时内容区域默认左对齐，取值为
+                        <code>right</code>
+                        /
+                        <code>left</code>
+                        时内容区域默认右对齐
+                    </td>
+                    <td>&quot;top&quot; | &quot;right&quot;</td>
+                    <td>-</td>
+                    <td>&quot;left&quot;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cell Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>内容区域自定义</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>标题区域自定义</td>
+                </tr>
+                <tr>
+                    <td>leftIcon</td>
+                    <td>左侧图标自定义区块</td>
+                </tr>
+                <tr>
+                    <td>rightIcon</td>
+                    <td>右侧图标自定义区块</td>
+                </tr>
+                <tr>
+                    <td>description</td>
+                    <td>描述信息自定义区块</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cell Group Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>title</td>
+                    <td>单元格组的标题，用于对一组单元格进行分类说明</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>inset</td>
+                    <td>卡片模式</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>单元格组内单元格的尺寸大小，会统一影响组内所有单元格的显示比例</td>
+                    <td>&quot;large&quot; | &quot;small&quot; | &quot;mini&quot;</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cell Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>点击后的响应事件</td>
+                    <td>VNode.Event</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo8 from "../../components/cell/demo8.joker";
+import DEMO_JOKER_demo7 from "../../components/cell/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/cell/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/cell/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/cell/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/cell/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/cell/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/cell/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo8,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

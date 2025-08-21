@@ -1,0 +1,175 @@
+<template>
+    <div class="picker-item">
+        <JokerScrollbar
+            noresize
+            ref="scroller"
+            tag="ul"
+            class="jk-spinner-wrapper"
+            viewClass="jk-spinner-list"
+            @scroll="handleScroll">
+            @for(let (index,item) in props.list) {
+                <li
+                    class="@({
+                        item: true,
+                        'is-selected': (item[valueKey] ?? item[labelKey]) === props.value
+                    })"
+                    @click="handleItemClick(index)">
+                    @item[labelKey]
+                </li>
+            }
+        </JokerScrollbar>
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import JokerScrollbar from "../scrollbar/index.joker";
+import { componentName } from "../utils";
+import { debounce } from "@joker.front/shared";
+
+export default class extends Component<{ list: Array<any>; value: any; links: boolean }> {
+    propsOption = {
+        list: []
+    };
+    components = {
+        JokerScrollbar
+    };
+
+    name = componentName("picker-item");
+    picker?: Component<any>;
+    labelKey: string;
+    valueKey: string;
+    childrenKey: string;
+
+    created() {
+        this.picker = this.$root.closest(
+            (n) => n instanceof VNode.Component && n.component.name === componentName("picker")
+        )?.component;
+
+        this.labelKey = this.picker?.props.labelKey;
+        this.valueKey = this.picker?.props.valueKey;
+        this.childrenKey = this.picker?.props.childrenKey;
+    }
+
+    mounted() {
+        this.$watch(() => [this.props.value, this.props.list], this.adjustScrollbar);
+        if (this.props.value !== undefined) {
+            this.adjustScrollbar();
+        }
+        this.loadChild();
+    }
+
+    loadChild() {
+        if (this.props.links) {
+            let index = this.props.list.findIndex((n) => n[this.valueKey] === this.props.value) || 0;
+            if (index === -1) index = 0;
+
+            this.$trigger("loadChild", this.props.list[index]?.[this.childrenKey]);
+        }
+    }
+
+    adjustScrollbar() {
+        let index = this.props.list.findIndex((n) => n[this.valueKey] === this.props.value);
+
+        if (index === -1) {
+            //错误索引修复
+            if (this.props.list.length && this.props.value !== undefined) {
+                this.triggerChange(0);
+            }
+            index = 0;
+        }
+
+        this.$getRef("scroller")?.component.scrollTo({
+            top: Math.max(0, index * 44)
+        });
+    }
+
+    handleScroll(e: VNode.Event<any>) {
+        if (e.data.isTouchMove || !e.data.isUserScroll) return;
+        let scrollbar = this.$getRef("scroller")?.component;
+        let scrollTop = scrollbar.scrollTop;
+
+        let index = Math.min(Math.round((scrollTop - (264 / 2 - 10) / 44 + 3) / 44), this.props.list.length - 1);
+
+        this.debounceChange(index);
+    }
+
+    debounceChange = debounce(150, this.triggerChange.bind(this));
+
+    triggerChange(index: number) {
+        let item = this.props.list[index];
+        let value = item?.[this.valueKey];
+
+        this.$trigger("change", value);
+        //触发一次，可能值不变更而无法触发
+        this.adjustScrollbar();
+        if (item?.[this.childrenKey]) {
+            this.loadChild();
+        }
+    }
+    handleItemClick(e: VNode.Event, index: number) {
+        this.triggerChange(index);
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.picker-item {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    font-size: 0;
+
+    &::after {
+        content: "";
+        top: 50%;
+        position: absolute;
+        margin-top: -22px;
+        height: 44px;
+
+        left: 0;
+        right: 0;
+        border-top: solid 1px var(--jk-border-color-extra-light);
+        border-bottom: solid 1px var(--jk-border-color-extra-light);
+        box-sizing: border-box;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    :deep(.jk-spinner-wrapper) {
+        vertical-align: top;
+        flex: 1;
+        .jk-spinner-list {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-align: center;
+
+            &::after,
+            &::before {
+                content: "";
+                display: block;
+                width: 100%;
+                height: 110px;
+            }
+
+            &::after {
+                height: 112px;
+            }
+        }
+    }
+
+    .item {
+        height: 44px;
+        line-height: 44px;
+        font-size: 16px;
+        color: var(--jk-color-text-regular);
+
+        &.is-selected {
+            color: var(--jk-color-text-primary);
+            font-weight: 500;
+        }
+    }
+}
+</style>

@@ -1,0 +1,18 @@
+<template>
+    <jk-cell>
+        <jk-timeline>
+            <jk-timeline-item timestamp="2018/4/12" placement="top">
+                <h4>Update Github template</h4>
+                <p>Wang Xiaohu submitted on 2018/4/12 20:46</p>
+            </jk-timeline-item>
+            <jk-timeline-item timestamp="2018/4/3" placement="top">
+                <h4>Update Github template</h4>
+                <p>Wang Xiaohu submitted on 2018/4/3 20:46</p>
+            </jk-timeline-item>
+            <jk-timeline-item timestamp="2018/4/2" placement="top">
+                <h4>Update Github template</h4>
+                <p>Wang Xiaohu submitted on 2018/4/2 20:46</p>
+            </jk-timeline-item>
+        </jk-timeline>
+    </jk-cell>
+</template>

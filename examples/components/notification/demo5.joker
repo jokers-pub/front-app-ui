@@ -1,0 +1,18 @@
+<template>
+    <jk-button fullWidth @click="open">Pop up an HTML warning</jk-button>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Notification } from "../../../src";
+
+export default class extends Component {
+    open() {
+        Notification({
+            title: "Prompt",
+            type: "success",
+            useHtml: true,
+            message: "Successfully received <span style='color:red'>3,000</span> yuan transferred from Zhang San"
+        });
+    }
+}
+</script>

@@ -1,0 +1,24 @@
+<template>
+    <jk-descriptions title="Vertical list with border" direction="vertical" column="4" border>
+        <jk-descriptions-item label="Username">kooriookami</jk-descriptions-item>
+        <jk-descriptions-item label="Phone Number">18100000000</jk-descriptions-item>
+        <jk-descriptions-item label="Residence" span="2">Suzhou City</jk-descriptions-item>
+        <jk-descriptions-item label="Remarks">
+            <jk-tag size="small">School</jk-tag>
+        </jk-descriptions-item>
+        <jk-descriptions-item label="Contact Address">
+            No. 1188, Wuzhong Avenue, Wuzhong District, Suzhou City, Jiangsu Province
+        </jk-descriptions-item>
+    </jk-descriptions>
+    <jk-descriptions class="margin-top" title="Vertical list without border" column="4" direction="vertical">
+        <jk-descriptions-item label="Username">kooriookami</jk-descriptions-item>
+        <jk-descriptions-item label="Phone Number">18100000000</jk-descriptions-item>
+        <jk-descriptions-item label="Residence" span="2">Suzhou City</jk-descriptions-item>
+        <jk-descriptions-item label="Remarks">
+            <jk-tag size="small">School</jk-tag>
+        </jk-descriptions-item>
+        <jk-descriptions-item label="Contact Address">
+            No. 1188, Wuzhong Avenue, Wuzhong District, Suzhou City, Jiangsu Province
+        </jk-descriptions-item>
+    </jk-descriptions>
+</template>

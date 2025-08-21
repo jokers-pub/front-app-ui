@@ -1,0 +1,77 @@
+<template>
+    <div class="@(['jk-steps', props.direction, props.class])">
+        @RenderSection()
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { componentName } from "../utils";
+
+export default class extends Component<{
+    space: number | string;
+    active: number;
+    direction: string;
+    class: string;
+}> {
+    name = componentName("steps");
+    propsOption = { direction: "horizontal", active: 0 };
+    model = {
+        active: 0,
+        stepsLength: 0,
+        stepOffset: 0,
+        steps: [] as Array<Component<any>>
+    };
+    created() {
+        this.$syncProp("active");
+        this.$watch(
+            () => this.model.steps,
+            () => {
+                this.model.steps.forEach((com: any, index) => {
+                    com.model.index = index;
+                    com.updateStatus();
+                });
+            }
+        );
+
+        this.$watch(
+            () => this.props.active,
+            (newVal, oldVal) => {
+                this.$trigger("change", { newVal, oldVal });
+            }
+        );
+    }
+    updateSteps() {
+        let newSteps: any[] = [];
+
+        let steps = this.$rootVNode.find(
+            (n) => n instanceof VNode.Component && n.component.name === componentName("step")
+        );
+
+        steps.forEach((s) => {
+            newSteps.push(s.component);
+        });
+
+        this.model.steps = newSteps;
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-steps {
+    display: flex;
+    background: var(--jk-background-color-default);
+    padding: 10px 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+
+    &.horizontal {
+        white-space: nowrap;
+    }
+    &.vertical {
+        height: 100%;
+        display: block;
+        flex-flow: column;
+    }
+}
+</style>

@@ -1,0 +1,14 @@
+<template>
+    <jk-field>
+        <jk-number show-controls size="large" />
+    </jk-field>
+    <jk-field>
+        <jk-number show-controls />
+    </jk-field>
+    <jk-field>
+        <jk-number size="small" show-controls />
+    </jk-field>
+    <jk-field>
+        <jk-number size="mini" show-controls />
+    </jk-field>
+</template>

@@ -1,0 +1,8 @@
+<template>
+    <jk-cell>
+        <jk-date type="calendar" />
+    </jk-cell>
+    <jk-cell>
+        <jk-date type="calendar" range showConfirm format="MM/DD" value="@(['2025-08-07', '2025-08-12'])" />
+    </jk-cell>
+</template>

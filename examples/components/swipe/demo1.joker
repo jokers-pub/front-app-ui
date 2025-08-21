@@ -1,0 +1,50 @@
+<template>
+    <jk-cell>
+        <jk-swipe height="150px" autoplay="@false">
+            @for(let (index,item) in model.list) {
+                <jk-swipe-item>
+                    <div class="item small @(index%2===0?'even':'')">
+                        @item
+                    </div>
+                </jk-swipe-item>
+            }
+        </jk-swipe>
+    </jk-cell>
+    <jk-cell title="Show Switch Arrow" title-align="top">
+        <jk-swipe height="150px" arrow>
+            @for(let (index,item) in model.list) {
+                <jk-swipe-item>
+                    <div class="item small @(index%2===0?'even':'')">
+                        @item
+                    </div>
+                </jk-swipe-item>
+            }
+        </jk-swipe>
+    </jk-cell>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        list: [1, 2, 3, 4]
+    };
+}
+</script>
+<style lang="scss" scoped>
+.item {
+    color: #475669;
+    font-size: 14px;
+    line-height: 150px;
+    margin: 0;
+    text-align: center;
+    background-color: #d3dce6;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+    &.even {
+        background-color: #99a9bf;
+    }
+}
+</style>

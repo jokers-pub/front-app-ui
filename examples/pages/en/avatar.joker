@@ -1,0 +1,295 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Avatar</h2>
+        <p>Display user or entity information using icons, images, or characters.</p>
+        <h3>Basic Usage</h3>
+        <p>
+            Set the shape and size of the avatar using
+            <code>shape</code>
+            and
+            <code>size</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group title=&quot;circle&quot;&gt;
+        &lt;jk-cell&gt;
+            &lt;jk-avatar size=&quot;@(50)&quot; circle src=&quot;@model.circleUrl&quot;&gt;&lt;/jk-avatar&gt;
+            @for(let item of model.sizeList) {
+                &lt;jk-avatar size=&quot;@item&quot; circle src=&quot;@model.circleUrl&quot;&gt;&lt;/jk-avatar&gt;
+            }
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;square&quot;&gt;
+        &lt;jk-cell&gt;
+            &lt;jk-avatar size=&quot;@(50)&quot; shape src=&quot;@model.squareUrl&quot;&gt;&lt;/jk-avatar&gt;
+            @for(let item of model.sizeList) {
+                &lt;jk-avatar size=&quot;@item&quot; shape src=&quot;@model.squareUrl&quot;&gt;&lt;/jk-avatar&gt;
+            }
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        circleUrl: &quot;https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?&amp;w=740&quot;,
+        squareUrl: &quot;https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?&amp;w=740&quot;,
+        sizeList: [&quot;large&quot;, &quot;medium&quot;, &quot;small&quot;]
+    };
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Display Types</h3>
+        <p>Supports three types: icon, image, and character.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;demo-type&quot;&gt;
+        &lt;div&gt;
+            &lt;jk-avatar icon=&quot;jk-icon-user&quot;&gt;&lt;/jk-avatar&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;jk-avatar src=&quot;/static/avatar/people.png&quot;&gt;&lt;/jk-avatar&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;jk-avatar text=&quot;user&quot;&gt;&lt;/jk-avatar&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-type {
+    display: flex;
+    &gt; div {
+        flex: 1;
+        text-align: center;
+        &amp;:not(:last-child) {
+            border-right: 1px solid rgba(224, 230, 237, 0.5);
+        }
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Fallback Behavior for Failed Image Loading</h3>
+        <p>Fallback behavior when the image fails to load when the display type is set to image.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;demo-type&quot;&gt;
+        &lt;jk-avatar size=&quot;@(60)&quot; src=&quot;https://empty&quot; error=&quot;@errorHandler&quot;&gt;
+            &lt;img style=&quot;width:100%&quot; src=&quot;/static/avatar/empty.png&quot; /&gt;
+        &lt;/jk-avatar&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    errorHandler() {
+        return true;
+    }
+}
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot;&gt;
+.demo-type {
+    display: flex;
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>How Images Fit the Container</h3>
+        <p>
+            When the display type is image, the
+            <code>fit</code>
+            property defines how the image fits the container, similar to the native
+            <code>object-fit</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;demo-fit&quot;&gt;
+        @for(let item of model.fits) {
+            &lt;div class=&quot;block&quot;&gt;
+                &lt;span class=&quot;title&quot;&gt;@item&lt;/span&gt;
+                &lt;jk-avatar shape=&quot;square&quot; size=&quot;@(100)&quot; fit=&quot;@item&quot; src=&quot;/static/avatar/landscape.png&quot;&gt;&lt;/jk-avatar&gt;
+            &lt;/div&gt;
+        }
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        fits: [&quot;fill&quot;, &quot;contain&quot;, &quot;cover&quot;, &quot;none&quot;, &quot;scale-down&quot;]
+    };
+}
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-fit {
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .block {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 0;
+        margin: 0 10px 10px 0;
+        .title {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #8492a6;
+        }
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Accepted Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>icon</td>
+                    <td>Set the icon type of the avatar; refer to the Icon component</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Set the size of the avatar</td>
+                    <td>number/string</td>
+                    <td>number / large / medium / small</td>
+                    <td>large</td>
+                </tr>
+                <tr>
+                    <td>shape</td>
+                    <td>Set the shape of the avatar</td>
+                    <td>string</td>
+                    <td>circle / square</td>
+                    <td>circle</td>
+                </tr>
+                <tr>
+                    <td>src</td>
+                    <td>The resource address of the image avatar</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>srcSet</td>
+                    <td>A comma-separated list of strings indicating possible images for user agent</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>alt</td>
+                    <td>Alternative text describing the image</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>fit</td>
+                    <td>When the display type is image, set how the image fits the container</td>
+                    <td>string</td>
+                    <td>fill / contain / cover / none / scale-down</td>
+                    <td>cover</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class style</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>error</td>
+                    <td>
+                        Callback when image loading fails; returning
+                        <code>false</code>
+                        disables the default fallback behavior
+                    </td>
+                    <td>function</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>Triggered when clicked</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Slots</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Slot Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>Custom avatar content</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo4 from "../../components/avatar/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/avatar/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/avatar/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/avatar/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

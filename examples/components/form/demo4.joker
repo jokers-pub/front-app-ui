@@ -1,0 +1,106 @@
+<template>
+    <jk-form ref="form" @submit="handleFormSubmit">
+        <jk-field label="Event Name" required>
+            <jk-input name="name" validate="@Global.isRequired()" placeholder="Please enter the event name" />
+        </jk-field>
+        <jk-field label="Event Area" required>
+            <jk-select
+                name="area"
+                validate="@Global.isRequired()"
+                data="@(['Shandong', 'Beijing'])"
+                placeholder="Please select the event area"
+            />
+        </jk-field>
+        <jk-field label="Event Time" required>
+            <jk-date
+                name="date"
+                type="date"
+                validate="@Global.isRequired('Please select the event time')"
+                placeholder="Please select Date"
+            />
+        </jk-field>
+        <jk-field label="Review Time" required>
+            <jk-date type="time" name="examineDate" validate="@Global.isRequired()" placeholder="Please select time" />
+        </jk-field>
+        <jk-field label="Organizer" required label-position="top">
+            <jk-col span="12">
+                <jk-field>
+                    <jk-select
+                        name="organization"
+                        validate="@Global.isRequired()"
+                        placeholder="Please select the organization"
+                        data="@([
+                            {
+                                label: 'Northern Region',
+                                value: '01'
+                            },
+                            {
+                                label: 'Southern Region',
+                                value: '02'
+                            }
+                        ])"
+                    />
+                </jk-field>
+            </jk-col>
+            <jk-col span="12">
+                <jk-field>
+                    <jk-select
+                        name="userName"
+                        validate="@Global.isRequired()"
+                        placeholder="Please select the user"
+                        data="@([
+                            { label: 'Zhang San', value: '01' },
+                            { label: 'Li Si', value: '02' }
+                        ])"></jk-select>
+                </jk-field>
+            </jk-col>
+        </jk-field>
+        <jk-field label="Promotion">
+            <jk-switch name="promotion" />
+        </jk-field>
+        <jk-field label="Participants Count">
+            <jk-number name="userCount" show-controls validate="@Global.isRequired()" />
+        </jk-field>
+        <jk-field label="Event Nature" required>
+            <jk-checkbox-group
+                name="type"
+                direction="vertical"
+                validate="@Global.isRequired('Please select the event nature')">
+                <jk-checkbox value="1" label="Food/Restaurant"></jk-checkbox>
+                <jk-checkbox value="2" label="Offline event"></jk-checkbox>
+                <jk-checkbox value="3" label="Self-driving tour"></jk-checkbox>
+                <jk-checkbox value="4" label="Press conference"></jk-checkbox>
+                <jk-checkbox value="5" label="Group tour"></jk-checkbox>
+            </jk-checkbox-group>
+        </jk-field>
+        <jk-field label="Funding Source" required>
+            <jk-radio-group
+                name="source"
+                direction="vertical"
+                validate="@Global.isRequired('Please select the funding source')">
+                <jk-radio value="1">Sponsored</jk-radio>
+                <jk-radio value="2">Free offline venue</jk-radio>
+                <jk-radio value="3">Cost sharing</jk-radio>
+            </jk-radio-group>
+        </jk-field>
+        <jk-field label="Event Rules" required>
+            <jk-textarea
+                name="note"
+                validate="@Global.isRequired()"
+                placeholder="Please enter the event rules"
+                rows="2"></jk-textarea>
+        </jk-field>
+        <jk-field>
+            <jk-button type="primary" fullWidth nativeType="submit">Submit</jk-button>
+        </jk-field>
+    </jk-form>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+
+export default class extends Component {
+    async handleFormSubmit(e: VNode.Event) {
+        console.log("Verification succeeded", e.data);
+    }
+}
+</script>

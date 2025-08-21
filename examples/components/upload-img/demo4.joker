@@ -1,0 +1,25 @@
+<template>
+    <jk-cell>
+        <jk-upload-img
+            size="large"
+            value="@(['https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360'])"
+        />
+    </jk-cell>
+    <jk-cell>
+        <jk-upload-img
+            value="@(['https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360'])"
+        />
+    </jk-cell>
+    <jk-cell>
+        <jk-upload-img
+            size="small"
+            value="@(['https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360'])"
+        />
+    </jk-cell>
+    <jk-cell>
+        <jk-upload-img
+            size="mini"
+            value="@(['https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360'])"
+        />
+    </jk-cell>
+</template>

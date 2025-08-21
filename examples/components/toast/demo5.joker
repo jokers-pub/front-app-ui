@@ -1,0 +1,29 @@
+<template>
+    <DemoRow>
+        <jk-button fullWidth type="primary" @click="handleClick">Custom Icon</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth type="primary" @click="handleClick2">Custom Image</jk-button>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleClick() {
+        Toast({
+            icon: "jk-icon-star-on",
+            message: "Hello World"
+        });
+    }
+
+    handleClick2() {
+        Toast({
+            message: "Hello World",
+            icon: "https://static.jokers.pub/joker.png"
+        });
+    }
+}
+</script>
+

@@ -1,0 +1,10 @@
+<template>
+    <jk-cell>
+        <jk-tag>Tag 1</jk-tag>
+        <jk-tag type="success">Tag 2</jk-tag>
+        <jk-tag type="info">Tag 3</jk-tag>
+        <jk-tag type="warning">Tag 4</jk-tag>
+        <jk-tag type="danger">Tag 5</jk-tag>
+    </jk-cell>
+</template>
+

@@ -1,0 +1,18 @@
+```html
+<template>
+    <jk-button @click="open">Open the prompt</jk-button>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Message } from "../../../src";
+export default class extends Component {
+    open() {
+        Message({
+            type: "success",
+            message: 'Successfully transferred <i style="color:red">2,500</i> yuan to you',
+            useHtml: true
+        });
+    }
+}
+</script>
+```

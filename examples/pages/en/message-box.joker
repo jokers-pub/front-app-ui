@@ -1,0 +1,715 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>MessageBox Modal Dialog</h2>
+        <p>
+            A set of modal dialog components that mimic system message prompts, used for displaying messages, confirmation dialogs, and input content.
+        </p>
+        <blockquote>
+            <p>
+                In terms of usage scenarios, MessageBox is designed to enhance the system's default
+                <code>alert</code>
+                ,
+                <code>confirm</code>
+                , and
+                <code>prompt</code>
+                dialogs. It is suitable for simpler content display. For more complex content, consider using Dialog instead.
+            </p>
+        </blockquote>
+        <h3>Message Alert</h3>
+        <p>
+            Triggered when a user performs an action, this dialog interrupts the operation until the user acknowledges and closes it.
+        </p>
+        <p>
+            Call the
+            <code>MessageBox.alert</code>
+            method to open a message alert. It simulates the system's
+            <code>alert</code>
+            and cannot be closed by pressing ESC or clicking outside the dialog. This example accepts two parameters:
+            <code>message</code>
+            and
+            <code>title</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open&quot;&gt;Click to open the message pop-up window&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { MessageBox, Message } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open() {
+        MessageBox.alert(&quot;I'm an alert prompt box&quot;, {
+            confirmButtonText: &quot;I'm OK&quot;,
+            title: &quot;Title&quot;,
+            callback: (action) =&gt; {
+                Message({
+                    type: &quot;info&quot;,
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Confirmation Dialog</h3>
+        <p>Used to prompt users to confirm an action they have triggered and ask whether to proceed.</p>
+        <p>
+            Call the
+            <code>MessageBox.confirm</code>
+            method to open a confirmation dialog, which simulates the system's
+            <code>confirm</code>
+            . The MessageBox component is highly customizable—you can pass an
+            <code>options</code>
+            object as the third parameter. The
+            <code>type</code>
+            field specifies the message type, which can be
+            <code>success</code>
+            ,
+            <code>error</code>
+            ,
+            <code>info</code>
+            , or
+            <code>warning</code>
+            . Invalid settings will be ignored. Note that the second parameter
+            <code>title</code>
+            must be defined as a
+            <code>String</code>
+            ; if provided as an
+            <code>Object</code>
+            , it will be treated as
+            <code>options</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open&quot;&gt;Click to open the message pop-up window&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open1&quot;&gt;Click to open the warning pop-up window&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open2&quot;&gt;Click to open the success pop-up window&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open3&quot;&gt;Click to open the error pop-up window&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open4&quot;&gt;Click to open the custom icon pop-up window&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { MessageBox, Message } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open() {
+        MessageBox.confirm(&quot;I'm a confirm prompt box&quot;, &quot;Friendly reminder&quot;, {
+            confirmButtonText: &quot;I'm OK&quot;,
+            callback: (action) =&gt; {
+                Message({
+                    type: &quot;info&quot;,
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+    open1() {
+        MessageBox.confirm(&quot;I'm a confirm prompt box&quot;, &quot;Friendly reminder&quot;, {
+            confirmButtonText: &quot;I'm OK&quot;,
+            type: &quot;warning&quot;,
+            callback: (action) =&gt; {
+                Message({
+                    type: &quot;info&quot;,
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+    open2() {
+        MessageBox.confirm(&quot;I'm a confirm prompt box&quot;, &quot;Friendly reminder&quot;, {
+            confirmButtonText: &quot;I'm OK&quot;,
+            type: &quot;success&quot;,
+            callback: (action) =&gt; {
+                Message({
+                    type: &quot;info&quot;,
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+    open3() {
+        MessageBox.confirm(&quot;I'm a confirm prompt box&quot;, &quot;Friendly reminder&quot;, {
+            confirmButtonText: &quot;I'm OK&quot;,
+            type: &quot;error&quot;,
+            callback: (action) =&gt; {
+                Message({
+                    type: &quot;info&quot;,
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+    open4() {
+        MessageBox.confirm(&quot;I'm a confirm prompt box&quot;, &quot;Friendly reminder&quot;, {
+            confirmButtonText: &quot;I'm OK&quot;,
+            iconClass: &quot;jk-icon-message&quot;,
+            callback: (action) =&gt; {
+                Message({
+                    type: &quot;info&quot;,
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Input Prompt</h3>
+        <p>
+            Triggered when a user performs an action, this dialog interrupts the operation and prompts the user for input.
+        </p>
+        <p>
+            Call the
+            <code>MessageBox.prompt</code>
+            method to open an input prompt, which simulates the system's
+            <code>prompt</code>
+            . Use
+            <code>validate</code>
+            to define a validation function, which can return either a
+            <code>String</code>
+            or a
+            <code>Boolean</code>
+            . Returning a string means defining a custom error message, while returning
+            <code>false</code>
+            triggers the default error message. For precise interaction, it is recommended to return a
+            <code>String</code>
+            . Additionally, use
+            <code>inputPlaceholder</code>
+            to define a placeholder for the input field.
+        </p>
+        <p>
+            <code>beforeClose</code>
+            allows custom actions (e.g., data submission) before letting the caller decide whether to close the dialog.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open&quot;&gt;Please enter your email&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Message, MessageBox, Loading } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open() {
+        MessageBox.prompt(&quot;Please enter your email&quot;, &quot;Confirm your email&quot;, {
+            validate(val) {
+                if (!val) return &quot;Please enter an email&quot;;
+
+                if (
+                    /[\w!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[\w!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/.test(
+                        val
+                    ) === false
+                ) {
+                    return &quot;The email address is incorrect&quot;;
+                }
+            },
+            beforeClose(action, com, close) {
+                if (action === &quot;confirm&quot;) {
+                    let value = com.inputValue;
+
+                    let loading = Loading({
+                        text: &quot;Submitting data&quot;
+                    });
+
+                    Message(&quot;Submitting data: &quot; + value);
+
+                    setTimeout(() =&gt; {
+                        loading.close();
+                        close();
+                    }, 3000);
+                } else {
+                    close();
+                }
+            },
+            callback: (action) =&gt; {
+                Message({
+                    type: &quot;info&quot;,
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Using HTML Fragments</h3>
+        <p>
+            The
+            <code>message</code>
+            property supports HTML fragments. By setting
+            <code>useHtml</code>
+            to
+            <code>true</code>
+            ,
+            <code>message</code>
+            will be processed as an HTML snippet.
+        </p>
+        <div class="warning">
+            <p>
+                While the
+                <code>message</code>
+                property supports HTML snippets, dynamically rendering arbitrary HTML on a website is highly dangerous as it can lead to
+                <a href="https://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">XSS attacks</a>
+                . When
+                <code>useHtml</code>
+                is enabled, ensure the
+                <code>message</code>
+                content is trustworthy—
+                <strong>never</strong>
+                assign user-submitted content to the
+                <code>message</code>
+                property.
+            </p>
+        </div>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open&quot;&gt;Open the message pop-up window&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { MessageBox } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open() {
+        MessageBox.confirm(
+            &quot;Are you sure you want to transfer &lt;span style='color:red'&gt;2,000&lt;/span&gt; yuan to xxx?&quot;,
+            &quot;Account movement prompt&quot;,
+            {
+                useHtml: true
+            }
+        );
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Queue Display</h3>
+        <p>
+            Similar to browser-native dialogs,
+            <code>MessageBox</code>
+            follows a
+            <strong>first-in-first-out (FIFO)</strong>
+            queue display logic. If needed, use
+            <code>MessageBox.closeAll</code>
+            to close all currently displayed dialogs and clear the queue.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open&quot;&gt;Open multiple windows simultaneously&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { MessageBox } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open() {
+        MessageBox.alert(&quot;I'm prompt box 1&quot;, &quot;Friendly reminder&quot;);
+        MessageBox.alert(&quot;I'm prompt box 2&quot;, &quot;Friendly reminder&quot;);
+        MessageBox.alert(&quot;I'm prompt box 3&quot;, &quot;Friendly reminder&quot;);
+        MessageBox.confirm(
+            &quot;I'm the middle confirmation box. There are still two pop-ups left. Do you want to execute closeAll to close all pop-ups?&quot;,
+            &quot;Friendly reminder&quot;,
+            {
+                callback(action) {
+                    if (action === &quot;confirm&quot;) {
+                        MessageBox.closeAll();
+                    }
+                }
+            }
+        );
+        MessageBox.alert(&quot;I'm prompt box 4&quot;, &quot;Friendly reminder&quot;);
+        MessageBox.alert(&quot;I'm prompt box 5&quot;, &quot;Friendly reminder&quot;);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Distinguishing Cancel &amp; Close</h3>
+        <p>
+            In some scenarios, canceling (clicking the cancel button) and closing (clicking the close button, overlay, or pressing ESC) may have different implications. By default, both actions trigger the Promise's
+            <code>reject</code>
+            callback and
+            <code>callback</code>
+            with the parameter
+            <code>'cancel'</code>
+            . Setting
+            <code>distinguishCancelAndClose</code>
+            to
+            <code>true</code>
+            differentiates these actions: canceling yields
+            <code>'cancel'</code>
+            , while closing yields
+            <code>'close'</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open&quot;&gt;Click to open the message pop-up window&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { MessageBox, Message } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open() {
+        MessageBox.confirm(
+            &quot;I'm a confirm prompt box to distinguish between cancel and close states&quot;,
+            &quot;Friendly reminder&quot;,
+            {
+                confirmButtonText: &quot;I'm OK&quot;,
+                distinguishCancelAndClose: true,
+                callback: (action) =&gt; {
+                    Message({
+                        type: &quot;info&quot;,
+                        message: `The pop-up window is closed. The trigger timing is: ${action}`
+                    });
+                }
+            }
+        );
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>No Title</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-link type=&quot;primary&quot; @click=&quot;open&quot;&gt;Click Me&lt;/jk-link&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { MessageBox } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open() {
+        MessageBox.alert(&quot;I'm a confirm prompt box&quot;);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Import Method</h3>
+        <p>
+            Import
+            <code>MessageBox</code>
+            :
+        </p>
+        <pre><code class="language-javascript">import { MessageBox } from &quot;@joker.front/ui&quot;;  
+</code></pre>
+        <p>
+            The corresponding methods are
+            <code>MessageBox</code>
+            ,
+            <code>MessageBox.alert</code>
+            ,
+            <code>MessageBox.confirm</code>
+            , and
+            <code>MessageBox.prompt</code>
+            , with the same parameters as the global methods.
+        </p>
+        <h3>Options</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Accepted Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>title</td>
+                    <td>Title of the MessageBox</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>&quot;Reminder&quot;</td>
+                </tr>
+                <tr>
+                    <td>message</td>
+                    <td>Content body of the MessageBox</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>useHtml</td>
+                    <td>
+                        Whether to treat
+                        <code>message</code>
+                        as an HTML fragment
+                    </td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>Type of message, affecting the displayed icon</td>
+                    <td>string</td>
+                    <td>success / info / warning / error</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>iconClass</td>
+                    <td>
+                        Custom icon class name (overrides
+                        <code>type</code>
+                        )
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>customClass</td>
+                    <td>Custom CSS class for MessageBox</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>callback</td>
+                    <td>Callback after MessageBox closes (alternative to Promise)</td>
+                    <td>
+                        function(action, instance), where
+                        <code>action</code>
+                        is 'confirm', 'cancel', or 'close';
+                        <code>instance</code>
+                        is the MessageBox instance for accessing properties/methods
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>closable</td>
+                    <td>Whether to show the close button in the top-right corner</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>beforeClose</td>
+                    <td>Callback before MessageBox closes (pauses closure)</td>
+                    <td>
+                        function(action, instance, close), where
+                        <code>action</code>
+                        is 'confirm', 'cancel', or 'close';
+                        <code>instance</code>
+                        is the MessageBox instance;
+                        <code>close</code>
+                        triggers actual closure; read
+                        <code>inputValue</code>
+                        from
+                        <code>instance</code>
+                        for validation
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>distinguishCancelAndClose</td>
+                    <td>
+                        Whether to distinguish between cancel (via Cancel button) and close (via Close button, overlay, or ESC key)
+                    </td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>showCancelButton</td>
+                    <td>Whether to show the Cancel button</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>
+                        false (true for
+                        <code>confirm</code>
+                        /
+                        <code>prompt</code>
+                        calls)
+                    </td>
+                </tr>
+                <tr>
+                    <td>showConfirmButton</td>
+                    <td>Whether to show the Confirm button</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>cancelButtonText</td>
+                    <td>Text content for the Cancel button</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>&quot;Cancel&quot;</td>
+                </tr>
+                <tr>
+                    <td>confirmButtonText</td>
+                    <td>Text content for the Confirm button</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>&quot;Confirm&quot;</td>
+                </tr>
+                <tr>
+                    <td>closeOnClickModal</td>
+                    <td>Whether clicking the overlay closes MessageBox</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>
+                        true (false for
+                        <code>alert</code>
+                        calls)
+                    </td>
+                </tr>
+                <tr>
+                    <td>closeOnPressEscape</td>
+                    <td>Whether pressing ESC closes MessageBox</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>
+                        true (false for
+                        <code>alert</code>
+                        calls)
+                    </td>
+                </tr>
+                <tr>
+                    <td>showInput</td>
+                    <td>Whether to show an input field</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>
+                        false (true for
+                        <code>prompt</code>
+                        calls)
+                    </td>
+                </tr>
+                <tr>
+                    <td>inputPlaceholder</td>
+                    <td>Placeholder text for the input field</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>validate</td>
+                    <td>
+                        Input field validation function (returns
+                        <code>Boolean</code>
+                        or
+                        <code>String</code>
+                        —latter defines a custom error message; parameter is input value)
+                    </td>
+                    <td>function</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>center</td>
+                    <td>Whether to center-align the MessageBox</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>roundButton</td>
+                    <td>Whether to use rounded buttons</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>id</td>
+                    <td>If configured, only one instance with this ID can appear at a time in the same queue</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Methods</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Method Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>close</td>
+                    <td>Close the current MessageBox</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>setErrorMsg</td>
+                    <td>Manually set an error message</td>
+                    <td>errMsg: string</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo7 from "../../components/message-box/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/message-box/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/message-box/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/message-box/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/message-box/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/message-box/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/message-box/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

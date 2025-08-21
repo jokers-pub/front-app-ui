@@ -1,0 +1,7 @@
+<template>
+    <jk-grid gutter="10" border="@false">
+        @for(let i = 0; i < 8; i++) {
+            <jk-grid-item title="菜单" icon="jk-icon-picture-outline" />
+        }
+    </jk-grid>
+</template>

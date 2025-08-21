@@ -1,0 +1,240 @@
+<template>
+    <JokerDrawer ref="drawer" direction="bottom" @close="handleClose" showHeader="@false">
+        <JokerPicker
+            value="@([model.date.hours, model.date.minutes, model.date.seconds])"
+            columns="@model.columns"
+            title="@props.title"
+            @change="handleChange"
+            @confirm="handleConfirm"
+            @cancel="handleCancel"
+        />
+    </JokerDrawer>
+</template>
+<script>
+import { PickerPanel } from "./base";
+import { TimeMode, parseTime, validateTimeInRange } from "../../utils/date";
+import { getValueByLang } from "../../utils/lang";
+import JokerPicker from "../../picker/index.joker";
+import JokerDrawer from "../../drawer/index.joker";
+import { VNode } from "@joker.front/core";
+
+export default class extends PickerPanel<{
+    format: string;
+    value: string;
+    defaultValue: string;
+    selectableRange: Array<string | string[]>;
+    title: string;
+    labelFormat?: (value: number, type: "hours" | "minutes" | "seconds") => string;
+}> {
+    getValueByLang = getValueByLang;
+    propsOption = {
+        format: "HH:mm:ss",
+        minTime: "-1:-1",
+        maxTime: "100:100"
+    };
+
+    model = {
+        date: { hours: 0, minutes: 0, seconds: 0 } as TimeMode,
+        selectableRange: [] as Array<TimeMode[]>,
+        columns: []
+    };
+
+    components = {
+        JokerPicker,
+        JokerDrawer
+    };
+
+    created() {
+        this.initModelDate();
+
+        this.$watch(
+            () => this.props.value,
+            () => {
+                this.initModelDate();
+            }
+        );
+
+        this.$watch(
+            () => this.props.selectableRange,
+            () => {
+                this.initSelectableRange();
+                this.initColumns();
+            }
+        );
+    }
+
+    open() {
+        if (this.showDrawer) return;
+        this.showDrawer = true;
+        this.initModelDate();
+        this.initSelectableRange();
+        this.initColumns();
+
+        this.$getRef("drawer")?.component.open();
+    }
+
+    initModelDate() {
+        if (this.props.value) {
+            this.model.date = parseTime(this.props.value, this.props.format!);
+        } else if (this.props.defaultValue) {
+            this.model.date = parseTime(this.props.defaultValue, this.props.format!);
+        } else {
+            let nowDate = new Date();
+            this.model.date = parseTime(
+                `${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}`,
+                "HH:mm:ss"
+            );
+        }
+
+        let showSeconds = this.props.format?.includes("ss");
+        if (!showSeconds) {
+            this.model.date.seconds = 0;
+        }
+    }
+
+    initColumns() {
+        let result = [];
+
+        let showSeconds = this.props.format?.includes("ss");
+
+        result.push(this.getHours());
+        result.push(this.getMinutesList());
+
+        if (showSeconds) {
+            result.push(this.getSecondsList());
+        }
+
+        this.model.columns = result;
+    }
+
+    getHours() {
+        let result = [];
+
+        let selectableHours = this.model.selectableRange.map((n) => [n[0].hours, n[1].hours]);
+
+        for (let i = 0; i < 24; i++) {
+            let canSelect = false;
+            if (selectableHours?.length) {
+                for (let item of selectableHours) {
+                    if (i >= item[0] && i <= item[1]) {
+                        canSelect = true;
+                        break;
+                    }
+                }
+            } else {
+                canSelect = true;
+            }
+
+            if (canSelect) {
+                result.push({
+                    value: i,
+                    label: this.props.labelFormat?.(i, "hours") ?? i.toString().padStart(2, "0")
+                });
+            }
+        }
+
+        return result;
+    }
+
+    getMinutesList() {
+        let result = [];
+
+        let selectableMins = this.model.selectableRange?.map((n) => {
+            return [
+                {
+                    ...n[0],
+                    seconds: 0
+                },
+                {
+                    ...n[1],
+                    seconds: 0
+                }
+            ];
+        });
+
+        for (let i = 0; i < 60; i++) {
+            let current = `${this.model.date.hours}:${i}:0`;
+
+            if (validateTimeInRange(current, this.props.format!, selectableMins)) {
+                result.push({
+                    value: i,
+                    label: this.props.labelFormat?.(i, "minutes") ?? i.toString().padStart(2, "0")
+                });
+            }
+        }
+
+        return result;
+    }
+
+    getSecondsList() {
+        let result = [];
+        let selectableRange = this.model.selectableRange;
+
+        for (let i = 0; i < 60; i++) {
+            let current = `${this.model.date.hours}:${this.model.date.minutes}:${i}`;
+
+            if (validateTimeInRange(current, this.props.format!, selectableRange)) {
+                result.push({
+                    value: i,
+                    label: this.props.labelFormat?.(i, "seconds") ?? i.toString().padStart(2, "0")
+                });
+            }
+        }
+
+        return result;
+    }
+    handleChange(e: VNode.Event<{ index: number; value: Array<number> }>) {
+        let changeSeconds = false;
+        let datas = e.data.value;
+        if (datas[0] !== undefined && datas[0] !== this.model.date.hours) {
+            this.model.date.hours = datas[0];
+
+            this.model.columns[1] = this.getMinutesList();
+            changeSeconds = true;
+        }
+
+        let showSeconds = this.props.format?.includes("ss");
+        if (showSeconds && (changeSeconds || (datas[1] !== undefined && datas[1] !== this.model.date.minutes))) {
+            this.model.date.minutes = datas[1];
+
+            this.model.columns[2] = this.getSecondsList();
+        }
+
+        this.model.date.minutes = datas[1] ?? this.model.date.minutes;
+        if (showSeconds) {
+            this.model.date.seconds = datas[2] ?? this.model.date.seconds;
+        }
+    }
+    handleConfirm() {
+        this.$getRef("drawer")?.component.close();
+
+        this.$trigger("pick", this.model.date);
+    }
+    handleCancel() {
+        this.$getRef("drawer")?.component.close();
+    }
+
+    initSelectableRange() {
+        let result: Array<TimeMode[]> = [];
+        if (this.props.selectableRange) {
+            for (let item of this.props.selectableRange) {
+                let start = "";
+                let end = "";
+                if (Array.isArray(item)) {
+                    start = item[0];
+                    end = item[1];
+                } else {
+                    let arrItem = item.split("-");
+                    start = arrItem[0];
+                    end = arrItem[1];
+                }
+
+                result.push([parseTime(start, this.props.format!), parseTime(end, this.props.format!)]);
+            }
+        }
+
+        this.model.selectableRange = result;
+    }
+}
+</script>
+

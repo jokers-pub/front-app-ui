@@ -1,0 +1,26 @@
+<template>
+    <jk-field>
+        <jk-button fullWidth type="primary" @click="handleClick('picker1')">08:30 - 18:30</jk-button>
+    </jk-field>
+    <jk-field>
+        <jk-button fullWidth type="primary" @click="handleClick('picker2')">min-time : 09:00</jk-button>
+    </jk-field>
+    <jk-time-select ref="picker1" start="08:30" step="00:10" end="18:30"></jk-time-select>
+    <jk-time-select ref="picker2" start="08:30" step="00:10" end="18:30" minTime="09:00"></jk-time-select>
+    <jk-field>
+        <jk-date type="time-select" start="08:30" step="00:10" end="18:30" placeholder="Select time" />
+    </jk-field>
+    <jk-field>
+        <jk-date type="time-select" start="08:30" step="00:10" end="18:30" minTime="09:00" placeholder="Select time" />
+    </jk-field>
+</template>
+
+<script>
+import { Component, VNode } from "@joker.front/core";
+
+export default class extends Component {
+    handleClick(e: VNode.Event, ref: string) {
+        this.$getRef(ref)?.component.open();
+    }
+}
+</script>

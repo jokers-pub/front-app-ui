@@ -1,0 +1,288 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>ShareSheet</h2>
+        <p>
+            A bottom pop-up panel for sharing that displays action buttons corresponding to various sharing channels, without including the specific sharing logic.
+        </p>
+        <h3>Basic Usage</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button @click=&quot;handleClick&quot; fullWidth type=&quot;primary&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;jk-share-sheet
+        ref=&quot;shareSheet&quot;
+        title=&quot;立即分享&quot;
+        @select=&quot;handleSelect&quot;
+        options=&quot;@([
+            { label: '微信', icon: 'wechat' },
+            { label: '微博', icon: 'weibo' },
+            { label: 'QQ', icon: 'qq' },
+            { label: '复制链接', icon: 'link' },
+            { label: '分享海报', icon: 'poster' },
+            { label: '二维码', icon: 'qrcode' }
+        ])&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;shareSheet&quot;)?.component.open();
+    }
+    handleSelect(e: VNode.Event&lt;{ label: string }&gt;) {
+        Toast(e.data.label);
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Title &amp; Description</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button @click=&quot;handleClick&quot; fullWidth type=&quot;primary&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;jk-share-sheet
+        ref=&quot;shareSheet&quot;
+        title=&quot;分享给你的朋友&quot;
+        description=&quot;分享美好&quot;
+        options=&quot;@([
+            { label: '微信', icon: 'wechat' },
+            { label: '微博', icon: 'weibo' },
+            { label: 'QQ', icon: 'qq' },
+            { label: '复制链接', icon: 'link' },
+            { label: '分享海报', icon: 'poster' },
+            { label: '二维码', icon: 'qrcode' }
+        ])&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;shareSheet&quot;)?.component.open();
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Disabling Items</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button @click=&quot;handleClick&quot; fullWidth type=&quot;primary&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;jk-share-sheet
+        ref=&quot;shareSheet&quot;
+        title=&quot;分享给你的朋友&quot;
+        description=&quot;分享美好&quot;
+        options=&quot;@([
+            { label: '微信', icon: 'wechat' },
+            { label: '微博', icon: 'weibo', disabled: true },
+            { label: 'QQ', icon: 'qq' },
+            { label: '复制链接', icon: 'link' },
+            { label: '分享海报', icon: 'poster' },
+            { label: '二维码', icon: 'qrcode' }
+        ])&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;shareSheet&quot;)?.component.open();
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Custom Icons</h3>
+        <p>
+            The
+            <code>icon</code>
+            property can accept any font icon or an image URL.
+        </p>
+        <blockquote>
+            <p>
+                The following shortcut ICONs are provided by default:
+                <code>&quot;wechat&quot;</code>
+                ,
+                <code>&quot;weibo&quot;</code>
+                ,
+                <code>&quot;qq&quot;</code>
+                ,
+                <code>&quot;link&quot;</code>
+                ,
+                <code>&quot;qrcode&quot;</code>
+                ,
+                <code>&quot;poster&quot;</code>
+                .
+            </p>
+        </blockquote>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button @click=&quot;handleClick&quot; fullWidth type=&quot;primary&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;jk-share-sheet
+        ref=&quot;shareSheet&quot;
+        title=&quot;分享给你的朋友&quot;
+        description=&quot;分享美好&quot;
+        options=&quot;@([
+            { label: '用户', icon: 'jk-icon-user' },
+            { label: '微博', icon: 'weibo' },
+            {
+                label: '好兄弟',
+                icon: 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=360'
+            }
+        ])&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;shareSheet&quot;)?.component.open();
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Accepted Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>title</strong>
+                    </td>
+                    <td>
+                        The title text of the sharing panel, used to describe the sharing context or purpose. The title area is hidden if not provided.
+                    </td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>options</strong>
+                    </td>
+                    <td>
+                        Configuration array for sharing channels, where each item corresponds to a sharing button's settings.
+                    </td>
+                    <td>
+                        Array&lt;{label: string; // Sharing channel name (e.g., &quot;WeChat Friends&quot;)icon: string; // Sharing icondisabled: boolean; // Whether the sharing channel is disabled}&gt;
+                    </td>
+                    <td>
+                        <code>icon</code>
+                        options: - Shortcut ICONs:
+                        <code>&quot;wechat&quot;</code>
+                        ,
+                        <code>&quot;weibo&quot;</code>
+                        ,
+                        <code>&quot;qq&quot;</code>
+                        ,
+                        <code>&quot;link&quot;</code>
+                        ,
+                        <code>&quot;qrcode&quot;</code>
+                        ,
+                        <code>&quot;poster&quot;</code>
+                        - Font icon classes (e.g.,
+                        <code>&quot;iconfont icon-custom&quot;</code>
+                        ) - Image URL (e.g.,
+                        <code>&quot;https://xxx.com/icon.png&quot;</code>
+                        )
+                    </td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>cancelText</strong>
+                    </td>
+                    <td>The text content of the bottom cancel button, used to close the sharing panel.</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;Cancel&quot;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>select</td>
+                    <td>Triggered when a sharing channel is selected.</td>
+                    <td>Array item</td>
+                </tr>
+                <tr>
+                    <td>cancel</td>
+                    <td>Triggered when the cancel button is clicked.</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Slots</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>title</td>
+                    <td>Custom title section</td>
+                </tr>
+                <tr>
+                    <td>description</td>
+                    <td>Custom description section</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo4 from "../../components/share-sheet/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/share-sheet/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/share-sheet/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/share-sheet/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

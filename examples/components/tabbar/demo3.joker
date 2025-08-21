@@ -1,0 +1,9 @@
+<template>
+    <template>
+        <jk-tabbar value="home">
+            <jk-tabbar-item title="首页" icon="jk-icon-house" name="home" />
+            <jk-tabbar-item title="统计" icon="jk-icon-pie-chart" name="chart" badge="99+" />
+            <jk-tabbar-item title="我的" icon="jk-icon-user" name="user" dot />
+        </jk-tabbar>
+    </template>
+</template>

@@ -1,0 +1,191 @@
+<template>
+    <JokerScrollbar ref="scrollbar" @scroll="handleScroll">
+        @for(let (index,panel) in model.panelData) {
+            <div class="jk-calendar-date-panel" ref="table">
+                <JokerDateTable
+                    date="@panel.date"
+                    value="@props.value"
+                    inContainer
+                    load="@panel.load"
+                    isRange="@props.isRange"
+                    showTitle="@(index !== 0)"
+                    minDate="@props.minDate"
+                    maxDate="@props.maxDate"
+                    formatter="@props.formatter"
+                    readonly="@props.readonly"
+                    @pick="handleDatePick"
+                />
+            </div>
+        }
+    </JokerScrollbar>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { addDate } from "../utils/date";
+import JokerScrollbar from "../scrollbar/index.joker";
+import JokerDateTable from "./date-table.joker";
+import { componentName } from "../utils";
+import { CalendarCellDataType } from "./type";
+
+export default class extends Component<{
+    date: Date;
+    value: Date;
+    minDate: Date;
+    maxDate: Date;
+    readonly: boolean;
+    formatter: (date: CalendarCellDataType) => boolean;
+    isRange: boolean;
+}> {
+    components = {
+        JokerScrollbar,
+        JokerDateTable
+    };
+    model = {
+        minDate: undefined as Date,
+        maxDate: undefined as Date,
+        panelData: []
+    };
+    calendar: any;
+    created() {
+        this.calendar = this.$root.closest(
+            (n) => n instanceof VNode.Component && n.component.name === componentName("calendar")
+        )?.component;
+
+        this.$watch(
+            () => [this.props.minDate, this.props.maxDate],
+            () => {
+                this.initPanels();
+            }
+        );
+        this.initPanels();
+    }
+
+    initPanels() {
+        this.model.minDate = this.props.minDate ?? this.props.date ?? new Date();
+
+        this.model.maxDate = this.props.maxDate ?? addDate(this.model.minDate, 6, "M");
+
+        this.model.panelData = this.getMonthsArray(this.model.minDate, this.model.maxDate);
+    }
+    mounted() {
+        this.$nextUpdatedRender(() => {
+            if (this.props.date) {
+                let year = this.props.date.getFullYear();
+                let month = this.props.date.getMonth() + 1;
+                let index = -1;
+                for (let i = 0; i < this.model.panelData.length; i++) {
+                    let panelData = this.model.panelData[i];
+
+                    if (panelData.year === year && panelData.month === month) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index > 0) {
+                    let panel = this.$getRefs("table")?.[index]?.output;
+
+                    if (panel) {
+                        this.$getRef("scrollbar")?.component.scrollToEl(panel);
+                        return;
+                    }
+                }
+            }
+
+            this.resetItemLoad(0);
+        });
+    }
+    getMonthsArray(
+        startDate: Date,
+        endDate: Date
+    ): Array<{
+        year: number;
+        month: number;
+        date: Date;
+        load: boolean;
+    }> {
+        const months: Array<{ year: number; month: number; date: Date; load: boolean }> = [];
+
+        // 复制开始日期，设置为当月第一天
+        const currentDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+        const end = new Date(endDate.getFullYear(), endDate.getMonth(), 1);
+
+        // 循环添加每个月，直到超过结束日期
+        while (currentDate <= end) {
+            // 创建当前月份第一天的日期对象（避免引用问题）
+            const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
+            months.push({
+                year: currentDate.getFullYear(),
+                month: currentDate.getMonth() + 1, // 月份从1开始（1-12）
+                date: firstDayOfMonth,
+                load: false
+            });
+
+            // 移动到下个月
+            currentDate.setMonth(currentDate.getMonth() + 1);
+        }
+        //默认展示第一个
+        months.length && (months[0].load = true);
+        return months;
+    }
+    resetItemLoad(top: number) {
+        // 1. 获取必要元素和尺寸
+        const scrollContainer = this.calendar.getScrollElement();
+        const scrollTop = top;
+        const viewportHeight = scrollContainer.clientHeight;
+        const containers = this.$getRefs("table").map((n) => n.output);
+
+        // 2. 计算视口边界
+        const viewportTop = scrollTop;
+        const viewportBottom = scrollTop + viewportHeight;
+
+        // 3. 可见容器收集
+        const visibleIndices = [];
+        const scrollRect = scrollContainer.getBoundingClientRect();
+
+        for (let i = 0; i < containers.length; i++) {
+            const container = containers[i];
+            const rect = container.getBoundingClientRect();
+
+            // 4. 转换为相对于滚动容器的绝对位置
+            const containerTop = rect.top - scrollRect.top + scrollTop;
+            const containerBottom = containerTop + rect.height;
+
+            // 5. 可见性判断
+            const isVisible = containerBottom > viewportTop && containerTop < viewportBottom;
+
+            if (isVisible) {
+                visibleIndices.push(i);
+            } else if (visibleIndices.length > 0) {
+                // 6. 如果已经有可见元素，且当前元素不可见，则终止循环
+                break;
+            }
+        }
+
+        for (let i in this.model.panelData) {
+            if (visibleIndices.includes(Number(i))) {
+                if (!this.model.panelData[i].load) {
+                    this.model.panelData[i].load = true;
+                }
+            } else {
+                if (this.model.panelData[i].load) {
+                    this.model.panelData[i].load = false;
+                }
+            }
+        }
+    }
+
+    handleScroll(e: VNode.Event<any>) {
+        this.resetItemLoad(e.data.top);
+    }
+    handleDatePick(e: VNode.Event) {
+        this.$trigger("pick", e.data);
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-calendar-date-panel {
+    position: relative;
+}
+</style>

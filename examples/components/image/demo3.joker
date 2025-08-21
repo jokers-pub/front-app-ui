@@ -1,0 +1,30 @@
+<template>
+    <jk-cell-group title="Default">
+        <jk-cell>
+            <jk-image src="xxx" style="width: 300px;height:200px;"></jk-image>
+        </jk-cell>
+    </jk-cell-group>
+    <jk-cell-group title="Custom">
+        <jk-cell>
+            <jk-image src="xxx" style="width: 300px;height:200px;">
+                @section("error") {
+                    <i class="jk-icon-picture-outline" />
+                }
+            </jk-image>
+        </jk-cell>
+    </jk-cell-group>
+</template>
+
+<style lang="scss" scoped>
+.demo-image__error {
+    display: flex;
+    .block {
+        padding: 30px 0;
+        text-align: center;
+        border-right: 1px solid #eff2f6;
+        flex: 1;
+        box-sizing: border-box;
+        vertical-align: top;
+    }
+}
+</style>

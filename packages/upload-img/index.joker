@@ -1,0 +1,157 @@
+<template>
+    <div class="@(['jk-upload-img', props.disabled && 'is-disabled', props.class, sizeClass])">
+        @for(let (index,item) in model.value) {
+            <div class="item">
+                <jk-image preview src="@getImgUrl(item)" fit="scale-down" />
+                <i class="delete jk-icon-close" @click.stop="handleDelete(index)" />
+            </div>
+        }
+        @if(!props.maxFileCount || value.length < props.maxFileCount) {
+            <div class="item" @click="handleSelectFile">
+                <jk-image fit="@fit">
+                    @section("placeholder") {
+                        <i class="jk-icon-s-camera placeholder" />
+                    }
+                </jk-image>
+            </div>
+        }
+    </div>
+    <JokerUploadBtn
+        hidden
+        ref="uploadBtn"
+        maxFileSize="@props.maxFileSize"
+        mimeType="@props.mimeType"
+        @change="handleChange"
+    />
+</template>
+<script>
+import { VNode } from "@joker.front/core";
+import { FormCtrl } from "../form/form-ctrl";
+import JokerUploadBtn from "../upload-btn/index.joker";
+import { remove } from "@joker.front/shared";
+
+export default class extends FormCtrl<{
+    imageSize: string;
+    returnType: "url" | "file";
+    //上传属性
+    maxFileCount?: number;
+    mimeType?: string | string[];
+    maxFileSize?: number;
+    disabled: boolean;
+    //自定义处理
+    beforeRead: (file: File) => Promise<any> | any;
+    beforeDelete: (index: number, urlOrFile: any) => Promise<any> | any;
+}> {
+    propsOption = {
+        returnType: "file",
+        imageSize: "80px",
+        maxFileCount: Number,
+        maxFileSize: Number,
+        value: [],
+        mimeType: ["image/png", "image/jpeg"]
+    };
+
+    getImgUrl(itemData: any) {
+        if (typeof itemData === "string") return itemData;
+
+        let imageUrl = URL.createObjectURL(itemData);
+        return imageUrl;
+    }
+
+    components = {
+        JokerUploadBtn
+    };
+
+    handleSelectFile() {
+        if (this.props.disabled) return;
+        this.$getRef("uploadBtn")?.component.selectFile();
+    }
+    async handleDelete(e: VNode.Event, index: number) {
+        let itemValue = this.value[index];
+        if (this.props.beforeDelete) {
+            let result = await this.props.beforeDelete(index, itemValue);
+
+            if (result === false) {
+                return;
+            }
+        }
+
+        remove(this.value, itemValue);
+    }
+    async handleChange(e: VNode.Event<File[]>) {
+        let file = e.data[0];
+
+        if (this.props.beforeRead) {
+            let result = await this.props.beforeRead(file);
+
+            if (result === false) {
+                return;
+            } else if (typeof result === "string") {
+                this.value.push(result);
+                return;
+            }
+        }
+
+        if (this.props.returnType === "url") {
+            let imageUrl = URL.createObjectURL(file);
+            this.value.push(imageUrl);
+        } else {
+            this.value.push(file);
+        }
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.jk-upload-img {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .item {
+        height: 80px;
+        width: 80px;
+        margin: 0 8px 8px 0;
+        cursor: pointer;
+        position: relative;
+        i.placeholder {
+            font-size: 24px;
+        }
+
+        .delete {
+            position: absolute;
+            display: block;
+            color: rgb(255, 255, 255);
+            background-color: rgb(96, 98, 102);
+            height: 20px;
+            width: 20px;
+            line-height: 15px;
+            border-radius: 0 0 0 20px;
+            text-align: center;
+            top: 0;
+            right: 0;
+            font-size: 12px;
+        }
+    }
+
+    &.large {
+        .item {
+            height: 100px;
+            width: 100px;
+        }
+    }
+
+    &.small {
+        .item {
+            height: 70px;
+            width: 70px;
+        }
+    }
+
+    &.mini {
+        .item {
+            height: 60px;
+            width: 60px;
+        }
+    }
+}
+</style>

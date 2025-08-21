@@ -1,0 +1,137 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Built-in Transition Animations</h2>
+        <p>
+            Joker-UI incorporates transition animations in some components, which you can also use directly. Before using them, please read the
+            <code>Transition Component Documentation</code>
+            .
+        </p>
+        <h3>Fade</h3>
+        <p>
+            Provides the
+            <code>jk-fade-in</code>
+            effect.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button @click=&quot;handleClick&quot;&gt;Click!&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;div style=&quot;height:120px&quot;&gt;
+        @if(model.show) {
+            &lt;div class=&quot;demo-container&quot; transition-name=&quot;jk-fade-in&quot;&gt;jk-fade-in&lt;/div&gt;
+            &lt;jk-button type=&quot;success&quot; transition-name=&quot;jk-fade-in&quot;&gt;jk-fade-in&lt;/jk-button&gt;
+        }
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+export default class extends Component {
+    model = {
+        show: false
+    };
+
+    handleClick() {
+        this.model.show = !this.model.show;
+    }
+}
+&lt;/script&gt;
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-container {
+    width: 200px;
+    height: 100px;
+    border-radius: 4px;
+    background-color: #409eff;
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+    margin-right: 10px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Zoom</h3>
+        <p>
+            Offers three effects:
+            <code>jk-zoom-in-center</code>
+            ,
+            <code>jk-zoom-in-top</code>
+            , and
+            <code>jk-zoom-in-bottom</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button @click=&quot;handleClick&quot;&gt;Click!&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;div style=&quot;display:flex;height:120px&quot;&gt;
+        @if(model.show) {
+            &lt;div class=&quot;demo-container&quot; transition-name=&quot;jk-zoom-in-center&quot;&gt;jk-zoom-in-center&lt;/div&gt;
+            &lt;div class=&quot;demo-container&quot; transition-name=&quot;jk-zoom-in-top&quot;&gt;jk-zoom-in-top&lt;/div&gt;
+            &lt;div class=&quot;demo-container&quot; transition-name=&quot;jk-zoom-in-bottom&quot;&gt;jk-zoom-in-bottom&lt;/div&gt;
+        }
+    &lt;/div&gt;
+    &lt;div style=&quot;height:80px&quot;&gt;
+        @if(model.show) {
+            &lt;jk-button type=&quot;primary&quot; transition-name=&quot;jk-zoom-in-center&quot;&gt;jk-zoom-in-center&lt;/jk-button&gt;
+            &lt;jk-button type=&quot;success&quot; transition-name=&quot;jk-zoom-in-top&quot;&gt;jk-zoom-in-top&lt;/jk-button&gt;
+            &lt;jk-button type=&quot;warning&quot; transition-name=&quot;jk-zoom-in-bottom&quot;&gt;jk-zoom-in-bottom&lt;/jk-button&gt;
+        }
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+export default class extends Component {
+    model = {
+        show: false
+    };
+
+    handleClick() {
+        this.model.show = !this.model.show;
+    }
+}
+&lt;/script&gt;
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-container {
+    width: 150px;
+    height: 100px;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #409eff;
+    text-align: center;
+    color: #fff;
+    padding: 40px 20px;
+    margin-right: 20px;
+    box-sizing: border-box;
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo2 from "../../components/transition/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/transition/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

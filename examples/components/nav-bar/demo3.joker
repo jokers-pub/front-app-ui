@@ -1,0 +1,12 @@
+<template>
+    <jk-nav-bar>
+        XX银行
+        @section("left") {
+            <i class="jk-icon-user" />
+            <span style="margin-left:5px">用户中心</span>
+        }
+        @section("right") {
+            推荐理财
+        }
+    </jk-nav-bar>
+</template>

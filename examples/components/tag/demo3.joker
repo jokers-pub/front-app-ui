@@ -1,0 +1,14 @@
+<template>
+    <jk-cell>
+        <jk-tag closable size="large">Large Size</jk-tag>
+    </jk-cell>
+    <jk-cell>
+        <jk-tag size="medium" closable>Medium Tag</jk-tag>
+    </jk-cell>
+    <jk-cell>
+        <jk-tag closable>Default Size</jk-tag>
+    </jk-cell>
+    <jk-cell>
+        <jk-tag size="small" closable>small Tag</jk-tag>
+    </jk-cell>
+</template>

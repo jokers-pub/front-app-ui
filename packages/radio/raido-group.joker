@@ -1,0 +1,45 @@
+<template>
+    <div class="@(['jk-radio-group', props.class, props.direction])" ref="group">
+        @RenderSection()
+    </div>
+</template>
+<script>
+import { VNode } from "@joker.front/core";
+import { FormCtrl } from "../form/form-ctrl";
+import { componentName } from "../utils";
+
+export default class extends FormCtrl<{
+    disabled: boolean;
+    size: string;
+    class: string;
+    direction?: string;
+    value: string | number | boolean;
+}> {
+    name = componentName("radio_group");
+
+    model: { value: string | number | boolean | undefined } = {
+        value: undefined
+    };
+
+    checked(val: string) {
+        this.model.value = val;
+    }
+
+    handleChange(e: VNode.Event, val: any) {
+        this.$trigger("change", val, e);
+
+        this.triggerValidate();
+    }
+}
+</script>
+<style scoped lang="scss">
+.vertical {
+    display: inline-flex;
+    gap: 10px;
+    flex-direction: column;
+
+    :deep(.jk-radio) {
+        margin: 0 !important;
+    }
+}
+</style>

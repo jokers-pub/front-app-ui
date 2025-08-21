@@ -1,0 +1,281 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>ActionSheet</h2>
+        <p>A modal panel that pops up from the bottom, containing multiple contextual action options.</p>
+        <h3>Basic Usage</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;jk-action-sheet
+        ref=&quot;actionSheet&quot;
+        @select=&quot;handleSelect&quot;
+        options=&quot;@([
+            { label: '选项1', value: '1' },
+            { label: '选项2', value: '2' },
+            { label: '选项3', value: '3' },
+            { label: '选项4', value: '4' }
+        ])&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { VNode } from &quot;@joker.front/core&quot;;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;actionSheet&quot;)?.component.open();
+    }
+    handleSelect(e: VNode.Event&lt;{ label: string; value: string }&gt;) {
+        Toast(e.data.label);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Displaying Icons</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;jk-action-sheet
+        ref=&quot;actionSheet&quot;
+        @select=&quot;handleSelect&quot;
+        options=&quot;@([
+            { label: '选项1', value: '1', icon: 'jk-icon-user' },
+            { label: '选项2', value: '2', icon: 'jk-icon-phone-outline' },
+            { label: '选项3', value: '3', icon: 'jk-icon-success' },
+            { label: '选项4', value: '4', icon: 'jk-icon-picture' }
+        ])&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { VNode } from &quot;@joker.front/core&quot;;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;actionSheet&quot;)?.component.open();
+    }
+    handleSelect(e: VNode.Event&lt;{ label: string; value: string }&gt;) {
+        Toast(e.data.label);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Showing Cancel Button</h3>
+        <p>
+            Use
+            <code>showCancel</code>
+            to display the cancel button, and customize the cancel button text via
+            <code>cancel-text</code>
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;jk-action-sheet
+        ref=&quot;actionSheet&quot;
+        showCancel
+        @cancel=&quot;handleCancel&quot;
+        @select=&quot;handleSelect&quot;
+        options=&quot;@([
+            { label: '选项1', value: '1', icon: 'jk-icon-user' },
+            { label: '选项2', value: '2', icon: 'jk-icon-phone-outline', disabled: true },
+            { label: '选项3', value: '3', icon: 'jk-icon-success' },
+            { label: '选项4', value: '4', icon: 'jk-icon-picture' }
+        ])&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { VNode } from &quot;@joker.front/core&quot;;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;actionSheet&quot;)?.component.open();
+    }
+    handleSelect(e: VNode.Event&lt;{ label: string; value: string }&gt;) {
+        Toast(e.data.label);
+    }
+    handleCancel() {
+        Toast(&quot;点击了取消&quot;);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Displaying Descriptions</h3>
+        <p>
+            Configure the
+            <code>description</code>
+            parameter or block to display panel descriptions. Alternatively, set the
+            <code>description</code>
+            property in
+            <code>options</code>
+            to configure item descriptions.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleClick&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;jk-action-sheet
+        ref=&quot;actionSheet&quot;
+        showCancel
+        @cancel=&quot;handleCancel&quot;
+        @select=&quot;handleSelect&quot;
+        description=&quot;我是简介&quot;
+        options=&quot;@([
+            { label: '选项1', value: '1', icon: 'jk-icon-user' },
+            { label: '选项2', value: '2', icon: 'jk-icon-phone-outline' },
+            { label: '选项3', value: '3', icon: 'jk-icon-success', description: '选项简介' },
+            { label: '选项4', value: '4', icon: 'jk-icon-picture' }
+        ])&quot;
+    /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { VNode } from &quot;@joker.front/core&quot;;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;actionSheet&quot;)?.component.open();
+    }
+    handleSelect(e: VNode.Event&lt;{ label: string; value: string }&gt;) {
+        Toast(e.data.label);
+    }
+    handleCancel() {
+        Toast(&quot;点击了取消&quot;);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>options</td>
+                    <td>
+                        Action sheet option list data, each configurable with label, value, disabled state, and icon
+                    </td>
+                    <td>
+                        Array&lt;{label?: string; value?: string; disabled?: boolean; icon?: string}&gt;
+                    </td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>description</td>
+                    <td>
+                        Supplemental description text for the action sheet, used to explain its purpose or option details
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>showCancel</td>
+                    <td>Whether to display the cancel button at the bottom of the panel</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>cancelText</td>
+                    <td>
+                        Custom text for the cancel button, only effective when
+                        <code>showCancel</code>
+                        is
+                        <code>true</code>
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>&quot;Cancel&quot;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>select</td>
+                    <td>Triggered after selection</td>
+                    <td>Item data</td>
+                </tr>
+                <tr>
+                    <td>cancel</td>
+                    <td>Triggered when clicked cancel</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>-</td>
+                    <td>Description</td>
+                </tr>
+                <tr>
+                    <td>description</td>
+                    <td>Custom description section</td>
+                </tr>
+                <tr>
+                    <td>item</td>
+                    <td>Custom option rendering (receives item data)</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo4 from "../../components/action-sheet/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/action-sheet/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/action-sheet/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/action-sheet/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

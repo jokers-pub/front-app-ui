@@ -1,0 +1,36 @@
+<template>
+    <DemoRow>
+        <jk-checkbox indeterminate="@model.indeterminate" value="@model.checkAll" @change="handleCheckAllChange">
+            Select All
+        </jk-checkbox>
+    </DemoRow>
+    <DemoRow>
+        <jk-checkbox-group value="@model.checkedCities" @change="handleGroupChange" direction="vertical">
+            @for(let cityItem of model.cities) {
+                <jk-checkbox value="@cityItem" label="@cityItem"></jk-checkbox>
+            }
+        </jk-checkbox-group>
+    </DemoRow>
+</template>
+
+<script>
+import { Component, VNode } from "@joker.front/core";
+export default class extends Component {
+    model = {
+        cities: ["Shanghai", "Beijing", "Guangzhou", "Shenzhen"],
+        checkedCities: ["Shanghai", "Beijing"],
+        checkAll: false,
+        indeterminate: true
+    };
+    handleCheckAllChange(e: VNode.Event) {
+        this.model.checkedCities = e.data ? Object.assign([], this.model.cities) : [];
+        this.model.indeterminate = false;
+    }
+    handleGroupChange(e: VNode.Event) {
+        let checklength = this.model.checkedCities.length;
+        let citieslength = this.model.cities.length;
+        this.model.indeterminate = checklength > 0 && checklength < citieslength;
+        this.model.checkAll = checklength === citieslength;
+    }
+}
+</script>

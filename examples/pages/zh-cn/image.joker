@@ -1,0 +1,316 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Image 图片</h2>
+        <p>图片容器，保留原生 img 的特性，支持懒加载，自定义占位、加载失败等</p>
+        <h3>基础用法</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    @for(let fit of model.fits) {
+        &lt;jk-cell-group title=&quot;@fit&quot;&gt;
+            &lt;jk-cell&gt;
+                &lt;jk-image style=&quot;width: 100px; height: 100px&quot; src=&quot;@model.url&quot; fit=&quot;@fit&quot;&gt;&lt;/jk-image&gt;
+            &lt;/jk-cell&gt;
+        &lt;/jk-cell-group&gt;
+    }
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        fits: [&quot;fill&quot;, &quot;contain&quot;, &quot;cover&quot;, &quot;none&quot;, &quot;scale-down&quot;],
+        url: &quot;https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360&quot;
+    };
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>占位内容</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group title=&quot;Default&quot;&gt;
+        &lt;jk-cell&gt;
+            &lt;jk-image src=&quot;@model.src&quot; style=&quot;width: 300px;height:200px;&quot;&gt;&lt;/jk-image&gt;
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Custom&quot;&gt;
+        &lt;jk-cell&gt;
+            &lt;jk-image src=&quot;@model.src&quot; style=&quot;width: 300px;height:200px;&quot; lazy&gt;
+                @section(&quot;placeholder&quot;) {
+                    Loading
+                    &lt;span class=&quot;dot&quot;&gt;...&lt;/span&gt;
+                }
+            &lt;/jk-image&gt;
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        src: &quot;https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360&quot;
+    };
+}
+&lt;/script&gt;
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-image__placeholder {
+    display: flex;
+    .block {
+        padding: 30px 0;
+        text-align: center;
+        border-right: 1px solid #eff2f6;
+        flex: 1;
+        box-sizing: border-box;
+        vertical-align: top;
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>加载失败</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group title=&quot;Default&quot;&gt;
+        &lt;jk-cell&gt;
+            &lt;jk-image src=&quot;xxx&quot; style=&quot;width: 300px;height:200px;&quot;&gt;&lt;/jk-image&gt;
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Custom&quot;&gt;
+        &lt;jk-cell&gt;
+            &lt;jk-image src=&quot;xxx&quot; style=&quot;width: 300px;height:200px;&quot;&gt;
+                @section(&quot;error&quot;) {
+                    &lt;i class=&quot;jk-icon-picture-outline&quot; /&gt;
+                }
+            &lt;/jk-image&gt;
+        &lt;/jk-cell&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-image__error {
+    display: flex;
+    .block {
+        padding: 30px 0;
+        text-align: center;
+        border-right: 1px solid #eff2f6;
+        flex: 1;
+        box-sizing: border-box;
+        vertical-align: top;
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>懒加载</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;demo-image&quot;&gt;
+        @for(let url of model.urls) {
+            &lt;jk-cell&gt;
+                &lt;jk-image src=&quot;@url&quot; lazy preview /&gt;
+            &lt;/jk-cell&gt;
+        }
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        urls: [
+            &quot;https://img.freepik.com/free-photo/futuristic-cyberpunk-city-skyline-with-neon-lights_23-2149315228.jpg&quot;, // 赛博朋克霓虹都市全景
+            &quot;https://img.freepik.com/free-photo/abstract-glowing-blue-digital-network-connections_23-2149286543.jpg&quot;, // 科技感数字网络光效
+            &quot;https://img.freepik.com/free-photo/dramatic-sci-fi-landscape-with-floating-islands-and-purple-sky_23-2149314897.jpg&quot;, // 科幻悬浮岛紫色天空
+            &quot;https://img.freepik.com/free-photo/neon-lit-gaming-setup-with-mechanical-keyboard-and-headphones_23-2149315017.jpg&quot;, // 潮流电竞设备特写
+            &quot;https://img.freepik.com/free-photo/futuristic-flying-car-hovering-over-a-neon-city-street_23-2149315102.jpg&quot;, // 未来飞行汽车霓虹街景
+            &quot;https://img.freepik.com/free-photo/abstract-3d-render-of-glowing-geometric-shapes-in-space_23-2149298765.jpg&quot;, // 太空感发光几何图形
+            &quot;https://img.freepik.com/free-photo/rainy-urban-street-with-reflective-wet-pavement-and-neon-signs_23-2149314988.jpg&quot;, // 雨夜霓虹街道反光
+            &quot;https://img.freepik.com/free-photo/holographic-display-showing-futuristic-data-visualization_23-2149286611.jpg&quot;, // 全息投影数据可视化
+            &quot;https://img.freepik.com/free-photo/dark-tech-background-with-glowing-circuit-lines-and-particles_23-2149298833.jpg&quot;, // 暗黑科技电路粒子背景
+            &quot;https://img.freepik.com/free-photo/sci-fi-character-in-a-glowing-exoskeleton-suit_23-2149315189.jpg&quot; // 科幻外骨骼发光角色
+        ]
+    };
+}
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demo-image {
+    height: 400px;
+    overflow-y: auto;
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>大图预览</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;demo-image__preview&quot;&gt;
+        &lt;jk-image style=&quot;width: 100px; height: 100px&quot; src=&quot;@model.url&quot; preview preview-list=&quot;@model.srcList&quot;&gt;&lt;/jk-image&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        url: &quot;https://img.freepik.com/free-photo/beautiful-landscape-mountain-lake-sunset_23-2149012366.jpg&quot;, // 200x300 比例风景图
+        srcList: [
+            &quot;https://img.freepik.com/free-photo/serene-forest-path-with-greenery_23-2148816677.jpg&quot;, // 600x1000 比例森林路径图
+            &quot;https://img.freepik.com/free-photo/coastal-cliffs-overlooking-ocean_23-2148784024.jpg&quot;, // 800x1000 比例海岸悬崖图
+            &quot;https://img.freepik.com/free-photo/vibrant-autumn-leaves-on-tree_23-2148684648.jpg&quot;, // 1000x1000 比例秋季树叶图
+            &quot;https://img.freepik.com/free-photo/modern-minimalist-interior-living-room_23-2148599347.jpg&quot;, // 1200x1000 比例现代客厅图
+            &quot;https://img.freepik.com/free-photo/colorful-flower-field-in-spring_23-2148488876.jpg&quot; // 1400x1000 比例春季花田图
+        ]
+    };
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>src</td>
+                    <td>图片源，同原生</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>自定义 class 样式</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>fit</td>
+                    <td>确定图片如何适应容器框，同原生 object-fit</td>
+                    <td>string</td>
+                    <td>fill / contain / cover / none / scale-down</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>lazy</td>
+                    <td>是否开启懒加载</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>preview</td>
+                    <td>开启图片预览功能</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>preview-list</td>
+                    <td>图片预览列表</td>
+                    <td>Array&lt;string&gt;</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>preview-index</td>
+                    <td>图片预览索引，当使用预览列表时，可通过该属性实现定向展示</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>errMsg</td>
+                    <td>加载错误时的提示</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>加载失败</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名称</th>
+                    <th>说明</th>
+                    <th>回调参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>load</td>
+                    <td>图片加载成功触发</td>
+                    <td>(e: Event)</td>
+                </tr>
+                <tr>
+                    <td>error</td>
+                    <td>图片加载失败触发</td>
+                    <td>(e: Error)</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名称</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>placeholder</td>
+                    <td>图片未加载的占位内容</td>
+                </tr>
+                <tr>
+                    <td>error</td>
+                    <td>加载失败的内容</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo5 from "../../components/image/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/image/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/image/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/image/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/image/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

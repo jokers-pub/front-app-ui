@@ -1,0 +1,24 @@
+<template>
+    <DemoRow>
+        <jk-button>Default Button</jk-button>
+        <jk-button size="medium">Medium-sized Button</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button size="small">Small Button</jk-button>
+        <jk-button size="mini">Extra-small Button</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button round>Default Button</jk-button>
+        <jk-button size="medium" round>Medium-sized Button</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button size="small" round>Small Button</jk-button>
+        <jk-button size="mini" round>Extra-small Button</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth type="primary">Full Width</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth size="mini" type="danger" round>Full Width</jk-button>
+    </DemoRow>
+</template>

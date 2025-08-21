@@ -1,0 +1,5 @@
+<template>
+    <jk-field>
+        <jk-number value="1" show-controls />
+    </jk-field>
+</template>

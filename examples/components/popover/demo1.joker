@@ -1,0 +1,39 @@
+<template>
+    <jk-popover
+        trigger="click"
+        title="Title"
+        width="200px"
+        placement="bottom"
+        content="This is a paragraph of content. This is a paragraph of content. This is a paragraph of content. This is a paragraph of content.">
+        @section("reference") {
+            <jk-button>Activate on click</jk-button>
+        }
+    </jk-popover>
+    <jk-popover
+        trigger="manual"
+        title="Title"
+        width="200px"
+        placement="bottom"
+        ref="popover1"
+        content="Click the button again to close">
+        @section("reference") {
+            <jk-button @click="open">Activate manually</jk-button>
+        }
+    </jk-popover>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    isShow = false;
+    open() {
+        let popover = this.$getRef("popover1")?.component;
+        if (this.isShow) {
+            popover?.hide();
+        } else {
+            popover?.show();
+        }
+        this.isShow = !this.isShow;
+    }
+}
+</script>

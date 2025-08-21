@@ -1,0 +1,24 @@
+<template>
+    <jk-cell>
+        <jk-grid column-num="3" border="@false">
+            <jk-grid-item>
+                <jk-image
+                    style="width: 100%"
+                    src="https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360"
+                />
+            </jk-grid-item>
+            <jk-grid-item>
+                <jk-image
+                    style="width: 100%"
+                    src="https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360"
+                />
+            </jk-grid-item>
+            <jk-grid-item>
+                <jk-image
+                    style="width: 100%"
+                    src="https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360"
+                />
+            </jk-grid-item>
+        </jk-grid>
+    </jk-cell>
+</template>

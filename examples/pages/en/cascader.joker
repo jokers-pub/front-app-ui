@@ -1,0 +1,509 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Cascader</h2>
+        <p>
+            When a dataset has a clear hierarchical structure, the cascader component allows step-by-step browsing and selection.
+        </p>
+        <h3>Basic Usage</h3>
+        <p>
+            There are two ways to trigger submenus. Simply specify an options array for the
+            <code>options</code>
+            property of the Cascader to render a cascading selector.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-cascader options=&quot;@options&quot; value=&quot;@model.value&quot; @change=&quot;handleChange&quot;&gt;&lt;/jk-cascader&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { mock } from &quot;./mock&quot;;
+export default class extends Component {
+    options = mock();
+    model = {
+        value: &quot;&quot;
+    };
+    handleChange(e: VNode.Event) {
+        this.model.value = e.data!;
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Disabled Options</h3>
+        <p>
+            Declare an option as disabled by setting the
+            <code>disabled</code>
+            field in the data source. In this example, the first element of the array specified in
+            <code>options</code>
+            contains the key-value pair
+            <code>disabled: true</code>
+            , making it disabled. By default, Cascader checks if the
+            <code>disabled</code>
+            field for each item in the data is
+            <code>true</code>
+            . If your data uses a different field name to indicate disabled status, you can specify it via the
+            <code>props.disabled</code>
+            property (see the API table below). Similarly, the field names for
+            <code>value</code>
+            ,
+            <code>label</code>
+            , and
+            <code>children</code>
+            can also be customized this way.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-cascader disabled options=&quot;@options&quot; value=&quot;@model.value&quot; @change=&quot;handleChange&quot;&gt;&lt;/jk-cascader&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-cascader options=&quot;@options&quot; value=&quot;@model.value&quot; @change=&quot;handleChange&quot;&gt;&lt;/jk-cascader&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { mock } from &quot;./mock&quot;;
+
+export default class extends Component {
+    options!: any;
+    model = {
+        value: &quot;&quot;
+    };
+    created() {
+        this.options = mock();
+
+        this.options[0].disabled = true;
+    }
+    handleChange(e: VNode.Event) {
+        this.model.value = e.data!;
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Clearable</h3>
+        <p>
+            Set the input field to be clearable via the
+            <code>clearable</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-cascader clearable options=&quot;@options&quot;&gt;&lt;/jk-cascader&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { mock } from &quot;./mock&quot;;
+export default class extends Component {
+    options = mock();
+}
+&lt;/script&gt;
+
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+.demoContainer {
+    :deep(.jk-cascader) {
+        width: 250px;
+    }
+
+    .row {
+        padding: 30px 24px;
+        overflow: hidden;
+        border-bottom: 1px solid #eff2f6;
+
+        span {
+            font-size: 14px;
+            color: #8492a6;
+            line-height: 44px;
+            font-size: 16px;
+        }
+
+        &amp;:last-child {
+            border-bottom: none;
+        }
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Show Last Level Only</h3>
+        <p>
+            Display only the label of the last level of the selected item in the input field instead of the full path. The
+            <code>show-all-levels</code>
+            property defines whether the full path is shown. Setting it to
+            <code>false</code>
+            will display only the last level.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-cascader options=&quot;@options&quot; showAllLevels=&quot;@false&quot;&gt;&lt;/jk-cascader&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { mock } from &quot;./mock&quot;;
+export default class extends Component {
+    options = mock();
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Dynamic Loading</h3>
+        <p>
+            Dynamically load options under the selected level.
+            <br />
+            Configure the
+            <code>load</code>
+            method to set the data loading logic. The
+            <code>load</code>
+            method takes two parameters: the first
+            <code>node</code>
+            is the currently clicked node, and the second
+            <code>resolve</code>
+            is the callback for completing data loading (must be called). To accurately display node states, a
+            <code>leaf</code>
+            flag (default field name) can be added to the node data (adjustable via
+            <code>props.leaf</code>
+            ). Otherwise, it simply determines leaf status based on the presence of child nodes.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-cascader load=&quot;@lazyLoad&quot;&gt;
+            @section(&quot;empty&quot;, parentNode) {
+                &lt;jk-empty&gt;
+                    &lt;jk-button&gt;
+                        (@(parentNode?.label))没有数据
+                    &lt;/jk-button&gt;
+                &lt;/jk-empty&gt;
+            }
+        &lt;/jk-cascader&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+
+export default class extends Component {
+    id = 0;
+    async lazyLoad(node: any, resolve: Function) {
+        let level = node.level;
+
+        //模拟请求耗时
+        await sleep(1000);
+
+        if (node.nodeData?.value === 3) {
+            resolve([]);
+            return;
+        }
+
+        // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+        resolve(
+            Array.from({ length: level + 1 }).map(() =&gt; ({
+                value: ++this.id,
+                label: `选项${this.id}`,
+                leaf: level &gt;= 2
+            }))
+        );
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Custom Node Content</h3>
+        <p>
+            Customize the content of cascader options via the
+            <code>section</code>
+            slot, which takes two fields:
+            <code>node</code>
+            (the current Node object) and
+            <code>data</code>
+            (the option's data).
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-cascader options=&quot;@options&quot;&gt;
+            @section(&quot;node&quot;, node) {
+                &lt;span&gt;@node.label&lt;/span&gt;
+                &lt;span style=&quot;padding-left:5px; color:red&quot;&gt;（@(node.children.length)）&lt;/span&gt;
+            }
+        &lt;/jk-cascader&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { mock } from &quot;./mock&quot;;
+
+export default class extends Component {
+    options = mock();
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Cascader Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Accepted Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class name</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>options</td>
+                    <td>Data source for the options</td>
+                    <td>Array&lt;any&gt;</td>
+                    <td>—</td>
+                    <td>
+                        <code>[]</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Size of the input field</td>
+                    <td>string</td>
+                    <td>large / small / mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>clearable</td>
+                    <td>Whether the selection can be cleared</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td>Placeholder text for the input field</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>Select</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>valueKey</td>
+                    <td>Field name for the value in the data</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>value</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>labelKey</td>
+                    <td>Field name for the label in the data</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>label</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>childrenKey</td>
+                    <td>Field name for child nodes in the data</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>children</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>leafKey</td>
+                    <td>Field name for identifying leaf nodes in the data</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>leaf</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>disabledKey</td>
+                    <td>Field name for identifying disabled nodes in the data</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>disabled</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>drawerSize</td>
+                    <td>Size of the selection window</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>70%</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>separator</td>
+                    <td>Separator used when displaying all levels</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>&quot; / &quot;</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>emitPath</td>
+                    <td>Whether to return the full path in emitted events</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>
+                        <code>true</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>Title of the selection window</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>Select</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>showAllLevels</td>
+                    <td>Whether to display the full path of the selected value in the input</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>
+                        <code>true</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>load</td>
+                    <td>
+                        Async data loading method, with
+                        <code>node</code>
+                        (current node) and
+                        <code>resolve</code>
+                        (callback after loading data, mandatory)
+                    </td>
+                    <td>function(node?: Node, resolve: (list: Array&lt;Node&gt;) =&gt; void)</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>loadingText</td>
+                    <td>Text displayed during loading state</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>Loading</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>emptyText</td>
+                    <td>Text displayed for empty lists</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>
+                        <code>No data</code>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cascader Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Callback Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Triggers when the selected node changes</td>
+                    <td>Selected node value</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cascader Section</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>node</td>
+                    <td>
+                        Custom content for an option, parameter:
+                        <code>
+                            {node}
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>empty</td>
+                    <td>
+                        Content displayed when the list is empty, parameter:
+                        <code>
+                            {parentNode}
+                        </code>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo6 from "../../components/cascader/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/cascader/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/cascader/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/cascader/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/cascader/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/cascader/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

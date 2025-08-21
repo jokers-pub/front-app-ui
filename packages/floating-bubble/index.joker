@@ -1,0 +1,96 @@
+<template>
+    <div
+        class="@(['jk-floating-bubble', props.class])"
+        ref="container"
+        style="@style"
+        @click="handleClick"
+        append-to="body">
+        @if($sections.default) {
+            @RenderSection()
+        }
+        else {
+            <i class="@props.icon" />
+        }
+    </div>
+</template>
+<script>
+import { TouchBase } from "../utils/touch";
+export default class extends TouchBase<{ icon: string; class: any }> {
+    model = {
+        style: {
+            left: 0,
+            top: 0,
+            transition: ""
+        }
+    };
+    startPos = {
+        left: 0,
+        top: 0
+    };
+    get style() {
+        return `top:${this.model.style.top}px;left:${this.model.style.left}px; ${this.model.style.transition}`;
+    }
+    created() {
+        this.reset();
+        window.addEventListener("resize", this.reset);
+    }
+    beforeDestroy() {
+        window.removeEventListener("resize", this.reset);
+    }
+    reset() {
+        this.model.style.left = document.documentElement.clientWidth - 48 - 24;
+        this.model.style.top = document.documentElement.clientHeight - 48 - 24;
+    }
+    mounted() {
+        this.bindTouchEvent(this.$getRef("container")?.output);
+    }
+    onTouchStart(e: Event) {
+        e.preventDefault();
+        this.model.style.transition = "";
+        this.startPos.left = this.model.style.left;
+        this.startPos.top = this.model.style.top;
+    }
+    onTouchMove(e: Event) {
+        e.preventDefault();
+        this.model.style.left = this.startPos.left + this.touchData.deltaX;
+        this.model.style.top = this.startPos.top + this.touchData.deltaY;
+    }
+
+    onTouchEnd() {
+        this.model.style.transition = "transition:0.3s ease-in-out";
+
+        this.$nextUpdatedRender(() => {
+            if (this.model.style.left > document.documentElement.clientWidth / 2) {
+                this.model.style.left = document.documentElement.clientWidth - 48 - 24;
+            } else {
+                this.model.style.left = 24;
+            }
+        });
+    }
+    handleClick() {
+        this.$trigger("click");
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-floating-bubble {
+    height: 48px;
+    width: 48px;
+    z-index: 999;
+
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: fixed;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: var(--jk-color-primary);
+
+    i {
+        font-size: 28px;
+        color: #fff;
+    }
+}
+</style>

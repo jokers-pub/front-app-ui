@@ -1,0 +1,258 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Tabbar</h2>
+        <p>A bottom navigation bar for switching between different pages.</p>
+        <h3>Basic Usage</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-tabbar&gt;
+        &lt;jk-tabbar-item title=&quot;首页&quot; icon=&quot;jk-icon-house&quot; /&gt;
+        &lt;jk-tabbar-item title=&quot;统计&quot; icon=&quot;jk-icon-pie-chart&quot; /&gt;
+        &lt;jk-tabbar-item title=&quot;我的&quot; icon=&quot;jk-icon-user&quot; /&gt;
+    &lt;/jk-tabbar&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Default Selection</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-tabbar value=&quot;home&quot;&gt;
+        &lt;jk-tabbar-item title=&quot;首页&quot; icon=&quot;jk-icon-house&quot; name=&quot;home&quot; /&gt;
+        &lt;jk-tabbar-item title=&quot;统计&quot; icon=&quot;jk-icon-pie-chart&quot; name=&quot;chart&quot; /&gt;
+        &lt;jk-tabbar-item title=&quot;我的&quot; icon=&quot;jk-icon-user&quot; name=&quot;user&quot; /&gt;
+    &lt;/jk-tabbar&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Badge Display</h3>
+        <p>
+            Use the
+            <code>badge</code>
+            and
+            <code>dot</code>
+            properties to configure badges. For detailed usage rules, refer to the
+            <strong>Badge</strong>
+            component specifications.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;template&gt;
+        &lt;jk-tabbar value=&quot;home&quot;&gt;
+            &lt;jk-tabbar-item title=&quot;首页&quot; icon=&quot;jk-icon-house&quot; name=&quot;home&quot; /&gt;
+            &lt;jk-tabbar-item title=&quot;统计&quot; icon=&quot;jk-icon-pie-chart&quot; name=&quot;chart&quot; badge=&quot;99+&quot; /&gt;
+            &lt;jk-tabbar-item title=&quot;我的&quot; icon=&quot;jk-icon-user&quot; name=&quot;user&quot; dot /&gt;
+        &lt;/jk-tabbar&gt;
+    &lt;/template&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Event Listening</h3>
+        <p>
+            Menu switching can be monitored via the
+            <strong>change</strong>
+            event in
+            <code>jk-tabbar</code>
+            . Alternatively, you can register a click event for
+            <code>jk-tabbar-item</code>
+            to handle logic.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;template&gt;
+        &lt;jk-tabbar value=&quot;home&quot; @change=&quot;handleChange&quot;&gt;
+            &lt;jk-tabbar-item title=&quot;首页&quot; icon=&quot;jk-icon-house&quot; name=&quot;home&quot; /&gt;
+            &lt;jk-tabbar-item title=&quot;统计&quot; icon=&quot;jk-icon-pie-chart&quot; name=&quot;chart&quot; badge=&quot;99+&quot; /&gt;
+            &lt;jk-tabbar-item title=&quot;我的&quot; icon=&quot;jk-icon-user&quot; name=&quot;user&quot; dot @click=&quot;handleClick&quot; /&gt;
+        &lt;/jk-tabbar&gt;
+    &lt;/template&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+import { Message } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    handleChange(e: VNode.Event&lt;string&gt;) {
+        Toast(`切换至：${e.data}`);
+    }
+
+    handleClick(e: VNode.Event&lt;{ title: string }&gt;) {
+        Message(&quot;点击了&quot; + e.data.title);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class name</td>
+                    <td>any</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>name value of the currently selected item</td>
+                    <td>any</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Menu switching event</td>
+                    <td>string (menu name)</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Item Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class name</td>
+                    <td>any</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>Unique identifier for identifying the current selection</td>
+                    <td>any</td>
+                    <td>—</td>
+                    <td>Randomly generated GUID by default</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>Text title of the menu item</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>Icon class name for the menu item</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>dot</td>
+                    <td>Whether to display a red dot indicator</td>
+                    <td>boolean</td>
+                    <td>true/false</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>badge</td>
+                    <td>Content of the displayed badge</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Item Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>Menu click event</td>
+                    <td>
+                        {name: any, title: string, icon: string}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Item Slots</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Slot Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>Custom title</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>Custom icon</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo4 from "../../components/tabbar/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/tabbar/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/tabbar/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/tabbar/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

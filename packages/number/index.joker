@@ -1,0 +1,483 @@
+<template>
+    <div
+        class="@([
+            'jk-number',
+            props.class,
+            sizeClass,
+            props.fullWidth && 'full-width',
+            props.disabled && 'is-disabled',
+            props.showControls && 'show-controls'
+        ])">
+        @if(props.showControls) {
+            <span
+                class="decrease @(minDisabled?'is-disabled':'')"
+                role="button"
+                @click="handleDecrease"
+                @keydown.enter="handleDecrease">
+                <i class="jk-icon-minus" />
+            </span>
+        }
+        <JokerInput
+            ref="input"
+            value="@displayValue"
+            placeholder="@props.placeholder"
+            disabled="@props.disabled"
+            size="@sizeClass"
+            label="@props.label"
+            error="@isError"
+            type="@props.type"
+            @keydown="handleKeydown"
+            @blur="handleBlur"
+            @focus="handleFocus"
+            @input="handleInput"
+            @change="handleChange">
+            @if($sections.prepend) {
+                @section("prepend") {
+                    @RenderSection("prepend")
+                }
+            }
+            @if($sections.append) {
+                @section("append") {
+                    @RenderSection("append")
+                }
+            }
+        </JokerInput>
+        @if(props.showControls) {
+            <span
+                class="increase @(maxDisabled?'is-disabled':'')"
+                role="button"
+                @click="handleIncrease"
+                @keydown.enter="handleIncrease">
+                <i class="jk-icon-plus" />
+            </span>
+        }
+    </div>
+</template>
+<script>
+import { logger } from "@joker.front/shared";
+import { FormCtrl } from "../form/form-ctrl";
+import { LOGTAG } from "../config";
+import { VNode } from "@joker.front/core";
+import JokerInput from "../input/index.joker";
+
+export default class extends FormCtrl<{
+    step: number;
+    stepStrictly: boolean;
+    max: number;
+    min: number;
+    class: string;
+    label: string;
+    type: string;
+    placeholder: string;
+    showControls: boolean;
+    precision: number;
+}> {
+    components = {
+        JokerInput
+    };
+    propsOption = {
+        step: {
+            type: Number,
+            default: 1
+        },
+        max: {
+            type: Number,
+            default: Infinity
+        },
+        min: {
+            type: Number,
+            default: -Infinity
+        },
+        precision: Number,
+        type: "number"
+    };
+
+    model: Record<string, any> = {
+        userInput: null
+    };
+
+    mounted() {
+        this.$watch(
+            () => this.value,
+            (val) => {
+                let newVal = val === undefined ? val : Number(val);
+
+                if (val !== undefined) {
+                    if (isNaN(val)) return;
+
+                    if (this.props.stepStrictly) {
+                        let stepPrecision = this.getPrecision(this.props.step);
+                        let precisionFactor = Math.pow(10, stepPrecision);
+
+                        newVal =
+                            (Math.round(newVal / this.props.step!) * precisionFactor * this.props.step!) /
+                            precisionFactor;
+
+                        if (this.props.precision !== undefined) {
+                            newVal = this.toPrecision(newVal, this.props.precision);
+                        }
+                    }
+
+                    if (newVal >= this.props.max!) newVal = this.props.max!;
+                    if (newVal <= this.props.min!) newVal = this.props.min!;
+
+                    if (this.value === newVal) return;
+
+                    this.value = Number(newVal);
+                    this.value = isNaN(this.value) ? undefined : this.value;
+
+                    this.model.userInput = null;
+
+                    this.$trigger("input", newVal);
+                }
+            }
+        );
+
+        this.value = this.value === undefined ? undefined : Number(this.value);
+        this.value = isNaN(this.value) ? undefined : this.value;
+    }
+
+    get minDisabled() {
+        if (this.props.disabled) return true;
+
+        return this.decrease(this.value) < this.props.min!;
+    }
+
+    get maxDisabled() {
+        if (this.props.disabled) return true;
+
+        return this.increase(this.value) > this.props.max!;
+    }
+
+    get numPrecision() {
+        let stepPrecision = this.getPrecision(this.props.step);
+        if (this.props.precision !== undefined) {
+            if (this.props.precision >= 0 && this.props.precision === parseInt(this.props.precision.toString(), 10)) {
+                if (stepPrecision > this.props.precision) {
+                    logger.warn(
+                        LOGTAG,
+                        "[number] The calculation precision of the value is greater than the required precision passed in."
+                    );
+                }
+                return this.props.precision;
+            } else {
+                logger.warn(
+                    LOGTAG,
+                    "[number] The value of props.precision does not meet the requirements.",
+                    this.props.precision
+                );
+            }
+        }
+
+        return Math.max(this.getPrecision(this.value), stepPrecision);
+    }
+
+    get displayValue() {
+        if (this.model.userInput !== null) {
+            return this.model.userInput;
+        }
+
+        let value: string | number | undefined = this.value === undefined ? undefined : Number(this.value);
+
+        value = isNaN(value) ? undefined : value;
+        if (typeof value === "number") {
+            if (this.props.stepStrictly) {
+                let stepPrecision = this.getPrecision(this.props.step);
+
+                let presisionFactor = Math.pow(10, stepPrecision);
+
+                value = (Math.round(value / this.props.step!) * presisionFactor * this.props.step!) / presisionFactor;
+            }
+
+            if (this.props.precision !== undefined) {
+                value = value.toFixed(this.props.precision);
+            }
+        }
+
+        return value;
+    }
+
+    clear() {
+        this.model.userInput = null;
+        this.$trigger("input", undefined);
+        this.$trigger("change", undefined);
+        this.value = undefined;
+    }
+    focus() {
+        this.$getRef("input")?.component.focus();
+    }
+
+    blur() {
+        this.$getRef("input")?.component.blur();
+    }
+
+    select() {
+        this.$getRef("input")?.component.select();
+    }
+
+    //#region Event
+    handleDecrease(e: VNode.Event) {
+        if (this.props.disabled || this.minDisabled) return;
+
+        let value = this.value || 0;
+        let newVal = this.decrease(value);
+
+        this.setNativeInputValue(newVal);
+    }
+
+    handleIncrease(e: VNode.Event) {
+        if (this.props.disabled || this.maxDisabled) return;
+
+        let value = this.value || 0;
+        let newVal = this.increase(value);
+
+        this.setNativeInputValue(newVal);
+    }
+
+    handleKeydown(e: VNode.Event) {
+        let event = e.event! as KeyboardEvent;
+
+        switch (event.key) {
+            case "ArrowDown":
+                e.preventDefault();
+                e.stopPropagation();
+                this.handleDecrease(e);
+                break;
+            case "ArrowUp":
+                e.preventDefault();
+                e.stopPropagation();
+                this.handleIncrease(e);
+                break;
+        }
+    }
+    handleBlur(e: VNode.Event) {
+        this.triggerValidate();
+        this.$trigger("blur", undefined, e);
+    }
+    handleFocus(e: VNode.Event) {
+        this.$trigger("focus", undefined, e);
+    }
+    handleInput(e: VNode.Event<string>) {
+        this.model.userInput = e.data;
+    }
+    handleChange(e: VNode.Event<string>) {
+        let newVal = e.data === "" ? undefined : Number(e.data);
+
+        if ((newVal !== undefined && !isNaN(newVal)) || e.data === "") {
+            this.setNativeInputValue(newVal);
+        }
+
+        this.model.userInput = null;
+    }
+
+    //#endregion
+
+    private getPrecision(val?: number) {
+        if (val === undefined) return 0;
+
+        let valStr = val.toString();
+        let dotPostion = valStr.indexOf(".");
+        let precision = 0;
+
+        if (dotPostion !== -1) {
+            precision = valStr.length - dotPostion - 1;
+        }
+
+        return precision;
+    }
+
+    private decrease(val?: number) {
+        val = val === undefined ? undefined : Number(val);
+        if (val === undefined) return this.value;
+
+        if (typeof val !== "number" && val !== undefined) return this.value;
+
+        let presisionFactor = Math.pow(10, this.numPrecision);
+
+        return this.toPrecision((presisionFactor * val - presisionFactor * this.props.step!) / presisionFactor);
+    }
+
+    private increase(val?: number) {
+        val = val === undefined ? undefined : Number(val);
+        if (val === undefined) return this.value;
+
+        if (typeof val !== "number" && val !== undefined) return this.value;
+
+        let presisionFactor = Math.pow(10, this.numPrecision);
+
+        return this.toPrecision((presisionFactor * val + presisionFactor * this.props.step!) / presisionFactor);
+    }
+
+    private toPrecision(val: number, precision?: number) {
+        if (precision === undefined) precision = this.numPrecision;
+
+        return parseFloat((Math.round(val * Math.pow(10, precision)) / Math.pow(10, precision)).toString());
+    }
+
+    private setNativeInputValue(newVal?: number) {
+        if (newVal === undefined) {
+            this.clear();
+            this.triggerValidate();
+            return;
+        }
+        let oldVal = this.value;
+
+        if (typeof newVal === "number" && this.props.precision !== undefined) {
+            newVal = this.toPrecision(newVal, this.props.precision);
+        }
+        newVal ??= 0;
+
+        if (newVal >= this.props.max!) {
+            newVal = this.props.max!;
+        }
+
+        if (newVal <= this.props.min!) {
+            newVal = this.props.min!;
+        }
+
+        if (oldVal === newVal) return;
+
+        this.model.userInput = null;
+
+        this.$trigger("input", newVal);
+        this.$trigger("change", newVal);
+
+        this.value = newVal;
+        this.triggerValidate();
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@use "../../theme/var.scss";
+
+.jk-number {
+    display: flex;
+    line-height: 24px;
+    width: 100%;
+    align-items: center;
+    flex-direction: row;
+    :deep(.jk-input) {
+        input {
+            -webkit-appearance: none; /* 针对 Chrome, Safari, Edge 等 WebKit 内核浏览器 */
+            -moz-appearance: textfield; /* 针对 Firefox */
+            appearance: none;
+            text-align: right;
+
+            /* 专门针对 WebKit 浏览器（Chrome、Safari 等）聚焦时的箭头按钮 */
+            &::-webkit-inner-spin-button,
+            &::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0; /* 移除默认边距，避免布局偏移 */
+            }
+        }
+    }
+
+    &.show-controls {
+        width: auto;
+        display: inline-flex;
+        border: var.$border-base;
+        border-radius: 4px;
+        :deep(.jk-input) {
+            width: 60px;
+            input {
+                text-align: center;
+            }
+            &.group {
+                .append,
+                .prepend {
+                    padding: 0 10px;
+                }
+            }
+        }
+        .increase,
+        .decrease {
+            z-index: 1;
+            top: 1px;
+            width: 24px;
+            height: auto;
+            display: none;
+            text-align: center;
+            background: var(--jk-background-color-base);
+            color: var(--jk-color-text-regular);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+
+            &.is-disabled {
+                color: var(--jk-disabled-color);
+                cursor: not-allowed;
+            }
+
+            &.is-disabled {
+                color: var(--jk-disabled-color);
+                cursor: not-allowed;
+                &:hover {
+                    color: var(--jk-disabled-color);
+                    cursor: not-allowed;
+                }
+            }
+        }
+
+        &.large {
+            line-height: 36px;
+
+            .increase,
+            .decrease {
+                width: 36px;
+                font-size: 14px;
+            }
+        }
+
+        &.small {
+            line-height: 22px;
+
+            .increase,
+            .decrease {
+                width: 22px;
+                font-size: 13px;
+
+                [class*="jk-icon"] {
+                    transform: scale(0.9);
+                }
+            }
+
+            :deep(.jk-input) {
+                &.group {
+                    .append,
+                    .prepend {
+                        padding: 0 5px;
+                    }
+                }
+            }
+        }
+
+        &.mini {
+            line-height: 20px;
+
+            .increase,
+            .decrease {
+                width: 20px;
+                font-size: 12px;
+
+                [class*="jk-icon"] {
+                    transform: scale(0.8);
+                }
+            }
+
+            :deep(.jk-input) {
+                &.group {
+                    .append,
+                    .prepend {
+                        padding: 0 5px;
+                    }
+                }
+            }
+        }
+        .increase,
+        .decrease {
+            display: block;
+        }
+    }
+}
+</style>

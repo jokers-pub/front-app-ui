@@ -1,0 +1,14 @@
+<template>
+    <jk-field>
+        <jk-select size="large" options="@(['Apple', 'Banana', 'Cherry', 'Date'])" />
+    </jk-field>
+    <jk-field>
+        <jk-select options="@(['Apple', 'Banana', 'Cherry', 'Date'])" />
+    </jk-field>
+    <jk-field>
+        <jk-select size="small" options="@(['Apple', 'Banana', 'Cherry', 'Date'])" />
+    </jk-field>
+    <jk-field>
+        <jk-select size="mini" options="@(['Apple', 'Banana', 'Cherry', 'Date'])" />
+    </jk-field>
+</template>

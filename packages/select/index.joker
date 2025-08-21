@@ -1,0 +1,346 @@
+<template>
+    <div ref="container" class="@(['jk-select', sizeClass, props.class, isError && 'is-error'])">
+        <JokerInput
+            ref="input"
+            placeholder="@props.placeholder"
+            autocomplete="off"
+            size="@sizeClass"
+            disabled="@props.disabled"
+            readonly
+            value="@model.dispalyLabel"
+            align="@props.align"
+            error="@isError"
+            tabindex="-1"
+            @focus="handleFocus">
+            @if($sections.prefix) {
+                @section("prefix") {
+                    @RenderSection("prefix", value)
+                }
+            }
+            @section("suffix") {
+                @if(model.loading) {
+                    <i class="jk-icon-loading" />
+                }
+                else {
+                    @if(showClose) {
+                        <i class="jk-icon-circle-close" @click.stop="clear" />
+                    }
+                    else {
+                        <i class="jk-icon-arrow-right" @click.stop="handleFocus" />
+                    }
+                }
+            }
+        </JokerInput>
+    </div>
+    <JokerDrawer ref="drawer" direction="bottom" @close="handleClose" showHeader="@false" size="auto">
+        <JokerPicker
+            title="@(props.title)"
+            columns="@model.options"
+            labelKey="@props.labelKey"
+            valueKey="@props.valueKey"
+            childrenKey="@props.childrenKey"
+            value="@value"
+            loading="@model.loading"
+            emptyText="@props.emptyText"
+            @confirm="handleConfirm"
+            @cancel="handleCancel">
+            @if($sections.empty) {
+                @section("empty") {
+                    @RenderSection("empty")
+                }
+            }
+        </JokerPicker>
+    </JokerDrawer>
+</template>
+
+<script>
+import { FormCtrl } from "../form/form-ctrl";
+import JokerInput from "../input/index.joker";
+import { componentName } from "../utils";
+import { getValueByLang } from "../utils/lang";
+import JokerDrawer from "../drawer/index.joker";
+import { VNode } from "@joker.front/core";
+import { isObject } from "@joker.front/shared";
+import JokerPicker from "../picker/index.joker";
+
+export default class extends FormCtrl<{
+    options: Array<any>;
+    clearable: boolean;
+    placeholder: string;
+    class: string;
+    title: string;
+    load?: () => Array<any> | Promise<Array<any>>;
+    emptyText: string;
+    labelKey?: string;
+    valueKey?: string;
+    childrenKey?: string;
+    splitText?: string;
+}> {
+    name = componentName("select");
+
+    propsOption = {
+        title: getValueByLang("selectPlaceholder"),
+        placeholder: getValueByLang("selectPlaceholder"),
+        valueKey: "value",
+        splitText: " / ",
+        loadingText: getValueByLang("loading"),
+        noDataText: getValueByLang("emptyText"),
+        labelKey: "label",
+        childrenKey: "children"
+    };
+    model = {
+        dispalyLabel: "",
+        loading: false,
+        options: undefined as any
+    };
+    components = {
+        JokerInput,
+        JokerDrawer,
+        JokerPicker
+    };
+
+    showPanel = false;
+    created() {
+        this.$syncProp("options");
+    }
+    async mounted() {
+        this.$watch(
+            () => [this.value, this.model.options],
+            () => {
+                if (this.value === undefined) {
+                    this.model.dispalyLabel = "";
+                    return;
+                }
+
+                if (this.model.options?.length) {
+                    this.setDisplayLabel();
+                } else if (this.model.options === undefined && this.props.load) {
+                    this.setDisplayLabel();
+                }
+            }
+        );
+
+        if (
+            this.props.value !== undefined &&
+            (this.model.options?.length || (this.model.options === undefined && this.props.load))
+        ) {
+            this.setDisplayLabel();
+        }
+    }
+
+    async setDisplayLabel() {
+        let values = Array.isArray(this.value) ? this.value : [this.value];
+
+        let data = this.model.options;
+
+        if (this.value !== undefined && data === undefined && this.props.load) {
+            this.model.loading = true;
+            this.model.options = data = (await this.props.load()) || [];
+
+            this.model.loading = false;
+        }
+
+        let result = [];
+        if (data) {
+            if (typeof data[0] === "string") {
+                result.push(this.value);
+            } else if (Array.isArray(data[0])) {
+                //[[1,2,3],[1,2,3]]
+                for (let valueIndex in values) {
+                    let value = data[valueIndex]?.find((n) => {
+                        if (isObject(n)) {
+                            return n[this.props.valueKey] || n[this.props.labelKey] === values[valueIndex];
+                        } else {
+                            return n === values[valueIndex];
+                        }
+                    });
+
+                    if (!value) {
+                        this.value = undefined;
+                        this.model.dispalyLabel = "";
+                        return;
+                    } else {
+                        result.push(isObject(value) ? value[this.props.valueKey] || value[this.props.labelKey] : value);
+                    }
+                }
+            } else if (isObject(data[0])) {
+                // 带children的对象数组结构（多级嵌套）
+                let currentLevelOptions = [...data];
+                let isCompleteMatch = true;
+
+                // 按层级依次查找每个value
+                for (let i = 0; i < values.length; i++) {
+                    const currentValue = values[i];
+                    const matchedItem = currentLevelOptions.find((item) => {
+                        // 支持valueKey或直接值匹配
+                        return item[this.props.valueKey] === currentValue || item === currentValue;
+                    });
+
+                    if (!matchedItem) {
+                        // 未找到匹配项
+                        isCompleteMatch = false;
+                        break;
+                    }
+
+                    // 收集显示标签
+                    result.push(
+                        isObject(matchedItem)
+                            ? matchedItem[this.props.labelKey] || matchedItem[this.props.valueKey]
+                            : matchedItem
+                    );
+
+                    // 如果有下一级且存在children，更新为下一级选项
+                    if (
+                        i < values.length - 1 &&
+                        matchedItem[this.props.childrenKey] &&
+                        matchedItem[this.props.childrenKey].length
+                    ) {
+                        currentLevelOptions = matchedItem[this.props.childrenKey];
+                    } else if (i < values.length - 1) {
+                        // 还有下一级但没有children，匹配失败
+                        isCompleteMatch = false;
+                        break;
+                    }
+                }
+
+                // 如果匹配不完整，重置
+                if (!isCompleteMatch) {
+                    this.value = undefined;
+                    this.model.dispalyLabel = "";
+                    return;
+                }
+            }
+        }
+
+        this.model.dispalyLabel = result.join(this.props.splitText);
+    }
+    focus() {
+        this.$getRef("reference")?.output?.focus();
+    }
+
+    //#region  属性
+
+    get showClose() {
+        if (this.props.clearable) {
+            let hasValue = this.value !== undefined && this.value !== null && this.value !== "";
+
+            return hasValue && !this.props.disabled;
+        }
+        return false;
+    }
+
+    oldValue: any;
+    //#endregion
+
+    //#region  事件
+    async handleFocus() {
+        if (this.props.disabled) return;
+        if (this.showPanel) {
+            return;
+        }
+        //防止 值反显时，重复触发load
+        if (this.model.loading) return;
+
+        this.showPanel = true;
+
+        if (this.model.options === undefined && this.props.load) {
+            this.model.loading = true;
+        } else {
+            this.model.loading = false;
+        }
+
+        this.$getRef("drawer")?.component.open();
+        if (this.model.loading) {
+            this.model.options = (await this.props.load()) || [];
+
+            this.model.loading = false;
+        }
+    }
+
+    clear() {
+        this.value = undefined;
+
+        this.$trigger("change", this.value);
+
+        this.$trigger("validate");
+    }
+
+    handleClose() {
+        this.showPanel = false;
+    }
+
+    handleCancel() {
+        this.$getRef("drawer")?.component.close();
+    }
+
+    handleConfirm(e: VNode.Event<any[]>) {
+        this.$getRef("drawer")?.component.close();
+
+        if (e.data.length === 1) {
+            this.value = e.data[0];
+        } else {
+            this.value = e.data;
+        }
+
+        this.$trigger("change", this.value);
+        this.$trigger("validate");
+    }
+    //#endregion
+}
+</script>
+
+<style lang="scss" scoped>
+@use "../../theme/var.scss";
+
+.jk-select {
+    display: block;
+    position: relative;
+
+    &:hover {
+        :deep(.jk-input:not(.is-disabled) input) {
+            border-color: var(--jk-border-color-hover);
+        }
+    }
+
+    :deep(.jk-input) {
+        input {
+            cursor: pointer;
+
+            &[disabled] {
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    &.is-error {
+        input {
+            &,
+            &:focus {
+                border-color: var(--jk-color-danger) !important;
+            }
+        }
+    }
+
+    i {
+        color: var(--jk-color-text-secondary);
+        cursor: pointer;
+    }
+}
+
+.loading {
+    text-align: center;
+    padding: 10px 0;
+    color: var(--jk-color-text-secondary);
+    i {
+        margin-right: 10px;
+    }
+}
+
+.emtpy-text {
+    padding: 8px 0;
+    margin: 0;
+    text-align: center;
+    color: var(--jk-color-text-primary);
+    font-size: 14px;
+}
+</style>

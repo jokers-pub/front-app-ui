@@ -1,0 +1,5 @@
+<template>
+    <jk-field>
+        <jk-select disabled options="@(['Apple', 'Banana', 'Cherry', 'Date'])" />
+    </jk-field>
+</template>

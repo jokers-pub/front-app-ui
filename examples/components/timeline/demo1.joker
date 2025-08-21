@@ -1,0 +1,55 @@
+<template>
+    <jk-cell-group title="Sorting">
+        <jk-cell>
+            <jk-radio-group value="@model.reverse" @change="radioChange">
+                <jk-radio value="@true">Descending</jk-radio>
+                <jk-radio value="@false">Ascending</jk-radio>
+            </jk-radio-group>
+        </jk-cell>
+    </jk-cell-group>
+    <jk-cell>
+        <jk-timeline>
+            @for(let item of model.activities) {
+                <jk-timeline-item timestamp="@item.timestamp">
+                    @item.content
+                </jk-timeline-item>
+            }
+        </jk-timeline>
+    </jk-cell>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        reverse: true,
+        activities: [
+            {
+                content: "The event starts on schedule",
+                timestamp: "2023-08-15"
+            },
+            {
+                content: "Passed the review",
+                timestamp: "2018-04-13"
+            },
+            {
+                content: "Created successfully",
+                timestamp: "2018-04-11"
+            }
+        ]
+    };
+
+    radioChange() {
+        this.model.activities = this.model.activities.reverse();
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.radio {
+    margin-bottom: 20px;
+    .group {
+        display: inline-block;
+    }
+}
+</style>

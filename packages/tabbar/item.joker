@@ -1,0 +1,84 @@
+<template>
+    <div class="@(['jk-tabbar-item', props.class, selectedName === props.name && 'is-selected'])" @click="handleClick">
+        <Jokerbadge isDot="@props.dot" value="@props.badge">
+            @if($sections.icon || props.icon) {
+                <div class="icon">
+                    @if($sections.icon) {
+                        @RenderSection("icon")
+                    }
+                    else if(props.icon) {
+                        <i class="@props.icon" />
+                    }
+                </div>
+            }
+            @if($sections.default || props.title) {
+                <div class="title">
+                    @if($sections.default) {
+                        @RenderSection()
+                    }
+                    else if(props.title) {
+                        @props.title
+                    }
+                </div>
+            }
+        </Jokerbadge>
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { componentName } from "../utils";
+import { guid } from "@joker.front/shared";
+import Jokerbadge from "../badge/index.joker";
+export default class extends Component<{
+    class: any;
+    name: any;
+    title: string;
+    icon: string;
+    dot: boolean;
+    badge: string;
+}> {
+    components = {
+        Jokerbadge
+    };
+
+    propsOption = {
+        name: guid()
+    };
+    tabbar: any;
+
+    created() {
+        this.tabbar = this.$root.closest(
+            (n) => n instanceof VNode.Component && n.component.name === componentName("tabbar")
+        )?.component;
+    }
+
+    get selectedName() {
+        return this.tabbar?.model.value;
+    }
+
+    handleClick() {
+        this.$trigger("click", { name: this.props.name, title: this.props.title, icon: this.props.icon });
+
+        this.tabbar?.select(this.props.name);
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-tabbar-item {
+    flex: 1;
+    text-align: center;
+    line-height: 1;
+    font-size: 12px;
+    color: var(--jk-color-text-regular);
+    cursor: pointer;
+    div.icon {
+        margin-bottom: 4px;
+        font-size: 22px;
+    }
+
+    &.is-selected {
+        color: var(--jk-color-primary);
+    }
+}
+</style>

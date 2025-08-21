@@ -1,0 +1,186 @@
+<template>
+    <div
+        ref="container"
+        class="@(['jk-filter-item', disabled && 'is-disabled', model.open && 'is-open', props.class])"
+        @click="handleClick">
+        <div>
+            @if($sections.label) {
+                @RenderSection("label")
+            }
+            else {
+                @labelText
+            }
+        </div>
+        <i class="jk-icon-caret-bottom" />
+    </div>
+    @if(model.open) {
+        <div class="jk-filter-item-panel" append-to="body" style="top:@(top)px">
+            <div class="content" ref="content" @click.outside="close" transition-name="jk-top">
+                @if($sections.default) {
+                    @RenderSection()
+                }
+                else if(props.options) {
+                    @for(let item of props.options) {
+                        <JokerCell @click="handleItemClick(item)">
+                            @section("title") {
+                                <span class="@(item.value === model.value ? 'active' : '')">@item.label</span>
+                            }
+                            @section("rightIcon") {
+                                @if(item.value === model.value) {
+                                    <i class="jk-icon-check" />
+                                }
+                            }
+                        </JokerCell>
+                    }
+                }
+            </div>
+        </div>
+    }
+</template>
+<script>
+import { VNode } from "@joker.front/core";
+import { Component } from "@joker.front/core";
+import { componentName } from "../utils";
+import JokerCell from "../cell/index.joker";
+
+let closeOpend: () => void | undefined;
+
+export default class extends Component<{
+    class: any;
+    title: string;
+    value: string;
+    options: Array<any>;
+    disabled: boolean;
+}> {
+    model = {
+        open: false,
+        value: undefined
+    };
+    components = {
+        JokerCell
+    };
+    get labelText() {
+        if (this.props.title) return this.props.title;
+
+        if (this.props.options?.length) {
+            if (this.model.value !== undefined) {
+                let aimItem = this.props.options.find((n) => n.value === this.model.value);
+
+                if (aimItem) {
+                    return aimItem.label;
+                }
+            }
+            return this.props.options[0]?.label;
+        }
+    }
+
+    get disabled() {
+        return this.menu?.props.disabled || this.props.disabled;
+    }
+    top = 0;
+    menu: any;
+    container: HTMLElement;
+    created() {
+        this.$syncProp("value");
+        this.menu = this.$root.closest(
+            (n) => n instanceof VNode.Component && n.component.name === componentName("filter-menu")
+        )?.component;
+    }
+    mounted() {
+        this.container = this.$getRef("container").output;
+    }
+
+    handleClick() {
+        if (this.disabled) return;
+        if (this.model.open) {
+            this.close();
+        } else {
+            this.open();
+        }
+    }
+
+    open() {
+        if (this.model.open) return;
+        closeOpend?.();
+
+        document.body.classList.add("jk-overflow-hidden");
+        let rect = this.container.getBoundingClientRect();
+
+        this.top = rect.top + this.container.offsetHeight;
+        this.menu?.setActive(true);
+        this.model.open = true;
+
+        closeOpend = this.close.bind(this);
+    }
+
+    close() {
+        if (this.model.open) {
+            document.body.classList.remove("jk-overflow-hidden");
+            this.model.open = false;
+            closeOpend = undefined;
+            this.menu?.setActive(false);
+        }
+    }
+    beforeDestroy() {
+        this.close();
+    }
+    handleItemClick(e: VNode.Event, item: any) {
+        this.model.value = item.value;
+        this.$trigger("change", this.model.value);
+        this.close();
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-filter-item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    div {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding: 8px;
+    }
+    i {
+        color: var(--jk-color-text-placeholder);
+        font-size: 12px;
+        transition: 0.1s ease-in-out;
+    }
+
+    &.is-disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    &.is-open {
+        color: var(--jk-color-primary);
+        i {
+            color: var(--jk-color-primary);
+            font-size: 12px;
+            transform: rotate(-180deg);
+        }
+    }
+}
+.jk-filter-item-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    overflow: auto;
+    .content {
+        background: #fff;
+        .active {
+            color: var(--jk-color-primary);
+        }
+        .jk-icon-check {
+            color: var(--jk-color-primary);
+        }
+    }
+}
+</style>

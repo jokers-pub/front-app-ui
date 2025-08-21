@@ -1,0 +1,84 @@
+<template>
+    <jk-radio-group value="@model.size" @change="radioChange">
+        <jk-radio label="">Default</jk-radio>
+        <jk-radio label="medium">Medium</jk-radio>
+        <jk-radio label="small">Small</jk-radio>
+        <jk-radio label="mini">Extra Small</jk-radio>
+    </jk-radio-group>
+    <jk-descriptions class="margin-top" title="List with border" column="3" size="@model.size" border>
+        @section("extra") {
+            <jk-button type="primary" size="small">Operation</jk-button>
+        }
+        <jk-descriptions-item>
+            @section("label") {
+                <i class="jk-icon-user"></i>
+                Username
+            }
+            @section("default") {
+                kooriookami
+            }
+        </jk-descriptions-item>
+        <jk-descriptions-item>
+            @section("label") {
+                <i class="jk-icon-mobile-phone"></i>
+                Phone Number
+            }
+            @section("default") {
+                18100000000
+            }
+        </jk-descriptions-item>
+        <jk-descriptions-item>
+            @section("label") {
+                <i class="jk-icon-location-outline"></i>
+                Residence
+            }
+            @section("default") {
+                Suzhou City
+            }
+        </jk-descriptions-item>
+        <jk-descriptions-item>
+            @section("label") {
+                <i class="jk-icon-tickets"></i>
+                Remarks
+            }
+            @section("default") {
+                <jk-tag size="small">School</jk-tag>
+            }
+        </jk-descriptions-item>
+        <jk-descriptions-item>
+            @section("label") {
+                <i class="jk-icon-office-building"></i>
+                Contact Address
+            }
+            @section("default") {
+                No. 1188, Wuzhong Avenue, Wuzhong District, Suzhou City, Jiangsu Province
+            }
+        </jk-descriptions-item>
+    </jk-descriptions>
+    <jk-descriptions class="margin-top" title="List without border" column="3" size="@model.size">
+        @section("extra") {
+            <jk-button type="primary" size="small">Operation</jk-button>
+        }
+        <jk-descriptions-item label="Username">kooriookami</jk-descriptions-item>
+        <jk-descriptions-item label="Phone Number">18100000000</jk-descriptions-item>
+        <jk-descriptions-item label="Residence">Suzhou City</jk-descriptions-item>
+        <jk-descriptions-item label="Remarks">
+            <jk-tag size="small">School</jk-tag>
+        </jk-descriptions-item>
+        <jk-descriptions-item label="Contact Address">
+            No. 1188, Wuzhong Avenue, Wuzhong District, Suzhou City, Jiangsu Province
+        </jk-descriptions-item>
+    </jk-descriptions>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        size: "mini"
+    };
+    radioChange(e: VNode.Event) {
+        this.model.size = e.data!;
+    }
+}
+</script>

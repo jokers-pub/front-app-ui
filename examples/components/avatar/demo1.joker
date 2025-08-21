@@ -1,0 +1,29 @@
+<template>
+    <jk-cell-group title="circle">
+        <jk-cell>
+            <jk-avatar size="@(50)" circle src="@model.circleUrl"></jk-avatar>
+            @for(let item of model.sizeList) {
+                <jk-avatar size="@item" circle src="@model.circleUrl"></jk-avatar>
+            }
+        </jk-cell>
+    </jk-cell-group>
+    <jk-cell-group title="square">
+        <jk-cell>
+            <jk-avatar size="@(50)" shape src="@model.squareUrl"></jk-avatar>
+            @for(let item of model.sizeList) {
+                <jk-avatar size="@item" shape src="@model.squareUrl"></jk-avatar>
+            }
+        </jk-cell>
+    </jk-cell-group>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        circleUrl: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?&w=740",
+        squareUrl: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?&w=740",
+        sizeList: ["large", "medium", "small"]
+    };
+}
+</script>

@@ -1,0 +1,92 @@
+<template>
+    <jk-table data="@tableData.value" ref="table" @sort-change="handleSortChange">
+        <jk-table-column label="Date" key="date" width="100" sortable="custom" fixed="left" />
+        <jk-table-column label="Name" key="name" width="180" />
+        <jk-table-column label="Address" key="address" />
+        <jk-table-column
+            label="Balance"
+            key="money"
+            headerAlign="right"
+            align="right"
+            sortable
+            sort-method="@moneySortMethod"
+        />
+    </jk-table>
+</template>
+<script>
+import { Component, ShallowObserver, VNode } from "@joker.front/core";
+import { ColumnType, SortableOrderType } from "../../../packages/table/store";
+import { sleep } from "@joker.front/shared";
+import { Loading } from "../../../src";
+
+// Table data array, containing user information
+let tableData = [
+    { name: "Zhang San", date: "2023-11-02", address: "Jinan, Shandong Province", money: 1000 },
+    { name: "Li Si", date: "2023-11-01", address: "Jinan, Shandong Province", money: 10 },
+    { name: "Li Mei", date: "2023-11-03", address: "Jinan, Shandong Province", money: 300 },
+    { name: "Wang Wu", date: "2023-11-04", address: "Jinan, Shandong Province", money: 11.9 }
+];
+
+export default class extends Component {
+    // Perform shallow hijacking for the demo
+    tableData = new ShallowObserver(tableData.slice(0));
+
+    // Record the currently sorted column
+    order?: string;
+
+    // The current demo simulates delayed sorting only for the 'date' field, so the logic is relatively complex. Please adjust according to your own needs.
+    async handleSortChange(e: VNode.Event<{ column: ColumnType; order: SortableOrderType }>) {
+        // Simulate restoring data
+        if (this.order && e.data === undefined) {
+            this.order = undefined;
+            let loading = Loading({
+                target: this.$getRef("table")
+            });
+            // Simulate a request
+            await sleep(1500);
+
+            loading.close();
+
+            this.tableData.value = tableData.slice(0);
+            return;
+        }
+
+        // If it's not the 'date' column, clear the marker
+        if (e.data?.column.key !== "date") {
+            this.order = undefined;
+            return;
+        }
+
+        if (e.data?.column.key === "date" && this.order !== e.data.order) {
+            this.order = e.data.order;
+            let loading = Loading({
+                target: this.$getRef("table")
+            });
+            // Simulate a request
+            await sleep(1500);
+
+            loading.close();
+
+            this.tableData.value = tableData.slice(0).sort((a, b) => {
+                if (e.data.order === "ascending") {
+                    return a.date > b.date ? 1 : -1;
+                } else {
+                    return a.date > b.date ? -1 : 1;
+                }
+            });
+        }
+    }
+
+    // Sorting method for the balance column
+    moneySortMethod(datas: Array<any>, col: ColumnType, order: SortableOrderType) {
+        console.log("Custom sorting");
+        return datas.sort((a, b) => {
+            if (order === "ascending") {
+                return a.money > b.money ? 1 : -1;
+            } else {
+                return a.money > b.money ? -1 : 1;
+            }
+        });
+    }
+}
+</script>

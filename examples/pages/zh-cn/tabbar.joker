@@ -1,0 +1,258 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Tabbar 标签栏</h2>
+        <p>底部导航栏，用于在不同页面之间进行切换。</p>
+        <h3>基础用法</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-tabbar&gt;
+        &lt;jk-tabbar-item title=&quot;首页&quot; icon=&quot;jk-icon-house&quot; /&gt;
+        &lt;jk-tabbar-item title=&quot;统计&quot; icon=&quot;jk-icon-pie-chart&quot; /&gt;
+        &lt;jk-tabbar-item title=&quot;我的&quot; icon=&quot;jk-icon-user&quot; /&gt;
+    &lt;/jk-tabbar&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>默认选中</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-tabbar value=&quot;home&quot;&gt;
+        &lt;jk-tabbar-item title=&quot;首页&quot; icon=&quot;jk-icon-house&quot; name=&quot;home&quot; /&gt;
+        &lt;jk-tabbar-item title=&quot;统计&quot; icon=&quot;jk-icon-pie-chart&quot; name=&quot;chart&quot; /&gt;
+        &lt;jk-tabbar-item title=&quot;我的&quot; icon=&quot;jk-icon-user&quot; name=&quot;user&quot; /&gt;
+    &lt;/jk-tabbar&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>微标展示</h3>
+        <p>
+            可设置
+            <code>badge</code>
+            和
+            <code>dot</code>
+            属性来配置微标，具体使用规则可参考
+            <strong>Badge</strong>
+            组件规范。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;template&gt;
+        &lt;jk-tabbar value=&quot;home&quot;&gt;
+            &lt;jk-tabbar-item title=&quot;首页&quot; icon=&quot;jk-icon-house&quot; name=&quot;home&quot; /&gt;
+            &lt;jk-tabbar-item title=&quot;统计&quot; icon=&quot;jk-icon-pie-chart&quot; name=&quot;chart&quot; badge=&quot;99+&quot; /&gt;
+            &lt;jk-tabbar-item title=&quot;我的&quot; icon=&quot;jk-icon-user&quot; name=&quot;user&quot; dot /&gt;
+        &lt;/jk-tabbar&gt;
+    &lt;/template&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>事件监听</h3>
+        <p>
+            可通过
+            <code>jk-tabbar</code>
+            中的
+            <strong>change</strong>
+            事件来监听菜单切换，也可以为
+            <code>jk-tabbar-item</code>
+            注册点击事件来处理逻辑。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;template&gt;
+        &lt;jk-tabbar value=&quot;home&quot; @change=&quot;handleChange&quot;&gt;
+            &lt;jk-tabbar-item title=&quot;首页&quot; icon=&quot;jk-icon-house&quot; name=&quot;home&quot; /&gt;
+            &lt;jk-tabbar-item title=&quot;统计&quot; icon=&quot;jk-icon-pie-chart&quot; name=&quot;chart&quot; badge=&quot;99+&quot; /&gt;
+            &lt;jk-tabbar-item title=&quot;我的&quot; icon=&quot;jk-icon-user&quot; name=&quot;user&quot; dot @click=&quot;handleClick&quot; /&gt;
+        &lt;/jk-tabbar&gt;
+    &lt;/template&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+import { Message } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    handleChange(e: VNode.Event&lt;string&gt;) {
+        Toast(`切换至：${e.data}`);
+    }
+
+    handleClick(e: VNode.Event&lt;{ title: string }&gt;) {
+        Message(&quot;点击了&quot; + e.data.title);
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>自定义类名</td>
+                    <td>any</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>当前选中项的name值</td>
+                    <td>any</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Event</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>菜单切换事件</td>
+                    <td>string(菜单name)</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Item Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>自定义类名</td>
+                    <td>any</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>唯一标识，用于识别当前选中项</td>
+                    <td>any</td>
+                    <td>—</td>
+                    <td>默认随机生成GUID</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>菜单项的文本标题</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>菜单项的图标类名</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>dot</td>
+                    <td>是否显示红点提示</td>
+                    <td>boolean</td>
+                    <td>true/false</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>badge</td>
+                    <td>显示的徽章内容</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Item Event</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>菜单点击事件</td>
+                    <td>
+                        {name:any,title:string,icon:string}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Item Section</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>自定义标题</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>自定义图标</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo4 from "../../components/tabbar/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/tabbar/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/tabbar/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/tabbar/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

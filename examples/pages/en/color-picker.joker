@@ -1,0 +1,192 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>ColorPicker</h2>
+        <p>A color picker component that supports multiple color formats.</p>
+        <h3>Basic Usage</h3>
+        <p>
+            Set the default color display using the
+            <code>value</code>
+            variable and retrieve the selected color by accessing
+            <code>value</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-color-picker value=&quot;@model.color&quot; @change=&quot;handleChange&quot; /&gt;
+        &lt;p&gt;
+            @model.color
+        &lt;/p&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; /&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        color: &quot;&quot;
+    };
+
+    handleChange(e: VNode.Event&lt;string&gt;) {
+        this.model.color = e.data;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Alpha Channel Selection</h3>
+        <p>
+            ColorPicker supports both standard colors and colors with Alpha channel (transparency). Toggle alpha channel selection using the
+            <code>show-alpha</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-color-picker show-alpha value=&quot;rgba(19, 206, 102, 0.8)&quot; format=&quot;rgba&quot; /&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Different Sizes</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;demo-container&quot;&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; /&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;medium&quot; /&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;small&quot; /&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;mini&quot; /&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo-container {
+    :deep(.jk-color-picker) {
+        margin-right: 15px;
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Read-only/Disabled</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;demo-container&quot;&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; readonly /&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;medium&quot; disabled /&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;small&quot; readonly /&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;mini&quot; disabled /&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo-container {
+    :deep(.jk-color-picker) {
+        margin-right: 15px;
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>Binding value</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Whether disabled</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom CSS class</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Size</td>
+                    <td>string</td>
+                    <td>medium / small / mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>show-alpha</td>
+                    <td>Show alpha channel option</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>format</td>
+                    <td>Color output format</td>
+                    <td>string</td>
+                    <td>hex / rgba</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Callback Parameter</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Triggered when value changes</td>
+                    <td>Current selected value</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo4 from "../../components/color-picker/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/color-picker/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/color-picker/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/color-picker/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

@@ -1,0 +1,41 @@
+<template>
+    <div class="container">
+        <jk-tabs animated full-height>
+            <jk-tab-panel label="Home">
+                <div class="demo-content red">Home</div>
+            </jk-tab-panel>
+            <jk-tab-panel label="Issues">
+                <div class="demo-content blue">Issues</div>
+            </jk-tab-panel>
+            <jk-tab-panel label="Repository">
+                <div class="demo-content red">Repository</div>
+            </jk-tab-panel>
+            <jk-tab-panel label="Settings">
+                <div class="demo-content blue">Settings</div>
+            </jk-tab-panel>
+        </jk-tabs>
+    </div>
+</template>
+
+<style scoped lang="scss">
+.container {
+    height: 400px;
+    .demo-content {
+        font-size: 24px;
+        height: 300px;
+        font-weight: bold;
+        padding: 20px 10px;
+        text-align: center;
+        line-height: 300px;
+        color: #fff;
+
+        &.red {
+            background: red;
+        }
+
+        &.blue {
+            background: blue;
+        }
+    }
+}
+</style>

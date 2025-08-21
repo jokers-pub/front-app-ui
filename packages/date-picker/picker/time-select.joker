@@ -1,0 +1,112 @@
+<template>
+    <JokerDrawer ref="drawer" direction="bottom" @close="handleClose" showHeader="@false">
+        <JokerPicker
+            columns="@items"
+            title="@props.title"
+            value="@props.value"
+            @confirm="handleConfirm"
+            @cancel="handleCancel"
+        />
+    </JokerDrawer>
+</template>
+<script>
+import { PickerPanel } from "./base";
+import { VNode } from "@joker.front/core";
+import { TimeMode, compareTime, parseTime } from "../../utils/date";
+import JokerPicker from "../../picker/index.joker";
+import JokerDrawer from "../../drawer/index.joker";
+
+export default class extends PickerPanel<{
+    start: string;
+    end: string;
+    step: string;
+    maxTime: string;
+    minTime: string;
+    value: string;
+    format: string;
+    defaultValue: string;
+    title: string;
+}> {
+    model = {
+        value: ""
+    };
+    components = {
+        JokerPicker,
+        JokerDrawer
+    };
+
+    propsOption = {
+        start: "09:00",
+        end: "18:00",
+        step: "00:30",
+        minTime: "-1:-1",
+        maxTime: "100:100",
+        format: "HH:mm"
+    };
+
+    created() {
+        this.$syncProp("value");
+    }
+
+    get items() {
+        let start = this.props.start;
+        let end = this.props.end;
+        let step = this.props.step;
+
+        let result: any[] = [];
+        if (start && end && step) {
+            let current = start;
+
+            while (compareTime(current, end, this.props.format!) <= 0) {
+                let disabled =
+                    compareTime(current, this.props.minTime!, this.props.format!) <= 0 ||
+                    compareTime(current, this.props.maxTime!, this.props.format!) >= 0;
+
+                if (!disabled) {
+                    result.push({
+                        label: current,
+                        value: current
+                    });
+                }
+
+                current = this.nextTime(current, step);
+            }
+        }
+
+        return result;
+    }
+
+    handleCancel() {
+        this.$getRef("drawer")?.component.close();
+    }
+    handleConfirm(e: VNode.Event<any>) {
+        let data = e.data;
+
+        this.$trigger("pick", data[0]);
+
+        this.$getRef("drawer")?.component.close();
+    }
+
+    private formatTime(time: Omit<TimeMode, "seconds">) {
+        return `${time.hours.toString().padStart(2, "0")}:${time.minutes.toString().padStart(2, "0")}`;
+    }
+
+    private nextTime(time: string, step: string) {
+        let timeValue = parseTime(time, "HH:mm");
+        let stepValue = parseTime(step, "HH:mm");
+
+        let next: Omit<TimeMode, "seconds"> = {
+            hours: timeValue.hours,
+            minutes: timeValue.minutes
+        };
+
+        next.minutes += stepValue.minutes;
+        next.hours += stepValue.hours;
+
+        next.hours += Math.floor(next.minutes / 60);
+        next.minutes = next.minutes % 60;
+
+        return this.formatTime(next);
+    }
+}
+</script>

@@ -1,0 +1,11 @@
+<template>
+    <jk-cell>
+        <jk-badge isDot>Data Query</jk-badge>
+    </jk-cell>
+    <jk-cell>
+        <jk-badge isDot>
+            <jk-button type="primary" icon="jk-icon-share"></jk-button>
+        </jk-badge>
+    </jk-cell>
+</template>
+

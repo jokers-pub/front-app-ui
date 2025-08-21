@@ -1,0 +1,29 @@
+<template>
+    <jk-tabs>
+        <jk-tab-panel>
+            <div class="demo-content">Shoot</div>
+            @section("label") {
+                <i class="jk-icon-s-camera" />
+                Shoot
+            }
+        </jk-tab-panel>
+        <jk-tab-panel label="Issues">
+            <div class="demo-content">Issues</div>
+        </jk-tab-panel>
+        <jk-tab-panel label="Repository Activity">
+            <div class="demo-content">Repository Activity</div>
+        </jk-tab-panel>
+        <jk-tab-panel label="Settings">
+            <div class="demo-content">Settings</div>
+        </jk-tab-panel>
+    </jk-tabs>
+</template>
+
+<style>
+.demo-content {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px 10px;
+    color: var(--jk-color-text-secondary);
+}
+</style>

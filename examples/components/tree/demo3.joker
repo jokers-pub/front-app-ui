@@ -1,0 +1,135 @@
+<template>
+    <jk-cell>
+        <jk-tree
+            ref="tree"
+            data="@treeData"
+            node-key="id"
+            show-checkbox
+            default-expanded-keys="@(['2', '2-1', '3'])"
+            default-checked-keys="@(['1-1-1', '2-2-1'])"
+        />
+    </jk-cell>
+    <jk-cell>
+        <jk-button @click="getCheckNodes">Get selected nodes</jk-button>
+        <jk-button @click="getCheckKeys">Get selected keys</jk-button>
+        <jk-button @click="setCheckedByKeys">Set selected by keys</jk-button>
+        <jk-button @click="checkedAll">Select all</jk-button>
+        <jk-button @click="clear">Clear selection</jk-button>
+        <jk-button @click="selectLeafNode">Select Leaf Node</jk-button>
+    </jk-cell>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Message, MessageBox } from "../../../src";
+
+export default class extends Component {
+    treeData = [
+        {
+            id: "1",
+            label: "Level 1 - 1",
+            children: [
+                {
+                    id: "1-1",
+                    label: "Level 2 - 1-1",
+                    children: [
+                        {
+                            id: "1-1-1",
+                            label: "Level 3 - 1-1-1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            id: "2",
+            label: "Level 1 - 2",
+            children: [
+                {
+                    id: "2-1",
+                    label: "Level 2 - 2-1",
+                    children: [
+                        {
+                            id: "2-1-1",
+                            label: "Level 3 - 2-1-1"
+                        }
+                    ]
+                },
+                {
+                    id: "2-2",
+                    label: "Level 2 - 2-2",
+                    disabled: true,
+                    children: [
+                        {
+                            id: "2-2-1",
+                            label: "Level 3 - 2-2-1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            id: "3",
+            label: "Level 1 - 3",
+            children: [
+                {
+                    id: "3-1",
+                    label: "Level 2 - 3-1",
+                    children: [
+                        {
+                            id: "3-1-1",
+                            label: "Level 3 - 3-1-1"
+                        }
+                    ]
+                },
+                {
+                    id: "3-2",
+                    label: "Level 2 - 3-2",
+                    children: [
+                        {
+                            id: "3-2-1",
+                            label: "Level 3 - 3-2-2"
+                        },
+                        {
+                            id: "3-2-2",
+                            label: "Level 3 - 3-2-1",
+                            disabled: true
+                        }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    get tree() {
+        return this.$getRef("tree")?.component;
+    }
+
+    getCheckNodes() {
+        Message({
+            message: "Please check the console output",
+            type: "success"
+        });
+
+        console.log(this.tree?.getCheckedNodes());
+    }
+
+    getCheckKeys() {
+        MessageBox.alert(this.tree?.getCheckedKeys().join(","));
+    }
+
+    setCheckedByKeys() {
+        this.tree?.setCheckedKeys(["2-1-1", "3-1"]);
+    }
+
+    checkedAll() {
+        this.tree?.checkedAll();
+    }
+
+    clear() {
+        this.tree?.clearChecked();
+    }
+    selectLeafNode() {
+        this.tree?.setCurrentNode("3-2-2");
+    }
+}
+</script>

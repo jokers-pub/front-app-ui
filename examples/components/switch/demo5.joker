@@ -1,0 +1,14 @@
+<template>
+    <jk-field label="Large">
+        <jk-switch size="large" />
+    </jk-field>
+    <jk-field label="Default">
+        <jk-switch />
+    </jk-field>
+    <jk-field label="Small">
+        <jk-switch size="small" />
+    </jk-field>
+    <jk-field label="Mini">
+        <jk-switch size="mini" />
+    </jk-field>
+</template>

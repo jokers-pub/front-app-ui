@@ -1,0 +1,51 @@
+<template>
+    <DemoRow>
+        <jk-checkbox-group value="@model.checkedCities1" size="large">
+            <jk-checkbox-button value="Shanghai" label="Shanghai"></jk-checkbox-button>
+            <jk-checkbox-button value="Beijing" label="Beijing"></jk-checkbox-button>
+        </jk-checkbox-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-checkbox-group value="@model.checkedCities2">
+            <jk-checkbox-button value="Shanghai" label="Shanghai"></jk-checkbox-button>
+            <jk-checkbox-button value="Beijing" label="Beijing"></jk-checkbox-button>
+        </jk-checkbox-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-checkbox-group value="@model.checkedCities3" size="small">
+            <jk-checkbox-button value="Shanghai" label="Shanghai"></jk-checkbox-button>
+            <jk-checkbox-button value="Beijing" label="Beijing"></jk-checkbox-button>
+            <jk-checkbox-button value="Guangzhou" label="Guangzhou"></jk-checkbox-button>
+            <jk-checkbox-button disabled value="Shenzhen" label="Shenzhen"></jk-checkbox-button>
+        </jk-checkbox-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-checkbox-group value="@model.checkedCities4" size="mini">
+            <jk-checkbox-button value="Shanghai" label="Shanghai"></jk-checkbox-button>
+            <jk-checkbox-button disabled value="Beijing" label="Beijing"></jk-checkbox-button>
+            <jk-checkbox-button value="Guangzhou" label="Guangzhou"></jk-checkbox-button>
+            <jk-checkbox-button value="Shenzhen" label="Shenzhen"></jk-checkbox-button>
+        </jk-checkbox-group>
+    </DemoRow>
+    <DemoRow>
+        <jk-checkbox-group value="@model.checkedCities5" size="mini" disabled>
+            <jk-checkbox-button value="Shanghai" label="Shanghai"></jk-checkbox-button>
+            <jk-checkbox-button value="Beijing" label="Beijing"></jk-checkbox-button>
+            <jk-checkbox-button value="Guangzhou" label="Guangzhou"></jk-checkbox-button>
+            <jk-checkbox-button value="Shenzhen" label="Shenzhen"></jk-checkbox-button>
+        </jk-checkbox-group>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        checkedCities1: ["Shanghai", "Beijing"],
+        checkedCities2: ["Shanghai", "Beijing"],
+        checkedCities3: ["Shanghai", "Beijing"],
+        checkedCities4: ["Shanghai", "Beijing"],
+        checkedCities5: ["Shanghai", "Beijing"]
+    };
+}
+</script>

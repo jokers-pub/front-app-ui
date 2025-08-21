@@ -1,0 +1,26 @@
+<template>
+    <DemoRow>
+        <jk-button fullWidth type="primary" @click="handleClick">Click Me</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth type="primary" @click="handleClick2">Loading With Overlay</jk-button>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleClick() {
+        Toast.loading("Hello World");
+    }
+
+    handleClick2() {
+        Toast.loading({
+            message: "Hello World",
+            forbidClick: true
+        });
+    }
+}
+</script>
+

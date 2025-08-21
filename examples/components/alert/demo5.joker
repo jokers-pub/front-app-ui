@@ -1,0 +1,14 @@
+<template>
+    <DemoRow>
+        <jk-alert title="Text for success prompt" type="success" center showIcon></jk-alert>
+    </DemoRow>
+    <DemoRow>
+        <jk-alert title="Text for message prompt" type="info" center showIcon></jk-alert>
+    </DemoRow>
+    <DemoRow>
+        <jk-alert title="Text for warning prompt" type="warning" center showIcon></jk-alert>
+    </DemoRow>
+    <DemoRow>
+        <jk-alert title="Text for error prompt" type="error" center showIcon></jk-alert>
+    </DemoRow>
+</template>

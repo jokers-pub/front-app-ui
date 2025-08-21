@@ -1,0 +1,365 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Filter Menu</h2>
+        <p>
+            A menu-style interactive component that can be quickly invoked, supports multi-dimensional filtering (such as option selection, keyword search, etc.), and provides real-time feedback on filtering results to efficiently narrow down data ranges.
+        </p>
+        <h3>Basic Usage</h3>
+        <p>
+            Configure
+            <code>jk-filter-item</code>
+            to display filtering options.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-filter-menu&gt;
+        &lt;jk-filter-item
+            options=&quot;@([
+                { label: '全部商品', value: '' },
+                { label: '新款商品', value: '1' },
+                { label: '活动商品', value: '2' }
+            ])&quot;
+        /&gt;
+        &lt;jk-filter-item
+            value=&quot;2&quot;
+            options=&quot;@([
+                { label: '默认排序', value: '' },
+                { label: '好评排序', value: '1' },
+                { label: '销量排序', value: '2' }
+            ])&quot;
+        /&gt;
+    &lt;/jk-filter-menu&gt;
+&lt;/template&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Custom Content</h3>
+        <p>
+            Custom styling can be achieved through the
+            <code>default</code>
+            block in
+            <code>jk-filter-item</code>
+            . When customizing content, the title of the filter menu can be adjusted by controlling the
+            <code>title</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-filter-menu&gt;
+        &lt;jk-filter-item
+            options=&quot;@([
+                { label: '全部商品', value: '' },
+                { label: '新款商品', value: '1' },
+                { label: '活动商品', value: '2' }
+            ])&quot;
+        /&gt;
+        &lt;jk-filter-item title=&quot;筛选&quot; ref=&quot;item2&quot;&gt;
+            &lt;jk-cell title=&quot;包邮&quot;&gt;
+                &lt;jk-switch /&gt;
+            &lt;/jk-cell&gt;
+            &lt;jk-cell title=&quot;促销&quot;&gt;
+                &lt;jk-switch /&gt;
+            &lt;/jk-cell&gt;
+            &lt;jk-cell&gt;
+                &lt;jk-button type=&quot;primary&quot; fullWidth @click=&quot;handleClick&quot;&gt;确定&lt;/jk-button&gt;
+            &lt;/jk-cell&gt;
+        &lt;/jk-filter-item&gt;
+    &lt;/jk-filter-menu&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef(&quot;item2&quot;)?.component.close();
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Compact Layout</h3>
+        <p>
+            For scenarios with excessive filtering conditions, enable
+            <code>shrink</code>
+            . When activated, hidden options can be displayed via scrollable content.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-filter-menu shrink&gt;
+        &lt;jk-filter-item
+            options=&quot;@([
+                { label: '全部商品', value: '' },
+                { label: '新款商品', value: '1' },
+                { label: '活动商品', value: '2' },
+                { label: '清仓商品', value: '3' }
+            ])&quot;
+        /&gt;
+        &lt;jk-filter-item
+            options=&quot;@([
+                { label: '全部价格', value: '' },
+                { label: '0-99元', value: '0-99' },
+                { label: '100-299元', value: '100-299' },
+                { label: '300-499元', value: '300-499' },
+                { label: '500元以上', value: '500+' }
+            ])&quot;
+        /&gt;
+        &lt;jk-filter-item
+            options=&quot;@([
+                { label: '销量排序', value: '' },
+                { label: '销量从高到低', value: 'sales_desc' },
+                { label: '销量从低到高', value: 'sales_asc' }
+            ])&quot;
+        /&gt;
+        &lt;jk-filter-item
+            options=&quot;@([
+                { label: '全部好评', value: '' },
+                { label: '好评率95%+', value: 'rate_95' },
+                { label: '好评率90%-94%', value: 'rate_90' },
+                { label: '好评率85%-89%', value: 'rate_85' }
+            ])&quot;
+        /&gt;
+        &lt;jk-filter-item
+            options=&quot;@([
+                { label: '全部库存', value: '' },
+                { label: '库存50件以上', value: 'stock_50+' },
+                { label: '库存10-49件', value: 'stock_10-49' },
+                { label: '库存1-9件', value: 'stock_1-9' }
+            ])&quot;
+        /&gt;
+    &lt;/jk-filter-menu&gt;
+&lt;/template&gt;
+
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Disabled</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-filter-menu disabled&gt;
+        &lt;jk-filter-item
+            options=&quot;@([
+                { label: '全部商品', value: '' },
+                { label: '新款商品', value: '1' },
+                { label: '活动商品', value: '2' }
+            ])&quot;
+        /&gt;
+        &lt;jk-filter-item
+            value=&quot;2&quot;
+            options=&quot;@([
+                { label: '默认排序', value: '' },
+                { label: '好评排序', value: '1' },
+                { label: '销量排序', value: '2' }
+            ])&quot;
+        /&gt;
+    &lt;/jk-filter-menu&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>
+                When the filter panel is open, a
+                <code>no-scroll</code>
+                identifier is set on the body. However, if your scroll container is not the body, you can listen to the
+                <code>open</code>
+                and
+                <code>close</code>
+                events to customize scrolling behavior.
+            </p>
+        </blockquote>
+        <h3>Menu Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>disabled</strong>
+                    </td>
+                    <td>Whether to disable the filter menu</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>shrink</strong>
+                    </td>
+                    <td>Compact mode (enables scrolling for hidden options)</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>class</strong>
+                    </td>
+                    <td>Custom CSS class for the filter menu</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Menu Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>open</td>
+                    <td>Triggered when panel opens</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>close</td>
+                    <td>Triggered when panel closes</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Menu Item Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>class</strong>
+                    </td>
+                    <td>Custom CSS class for filter item</td>
+                    <td>any</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>title</strong>
+                    </td>
+                    <td>Filter menu item title</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>value</strong>
+                    </td>
+                    <td>Bound value of filter item</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>options</strong>
+                    </td>
+                    <td>List of dropdown options</td>
+                    <td>
+                        Array&lt;{label: string; value: string}&gt;
+                    </td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>disabled</strong>
+                    </td>
+                    <td>Whether the filter item is disabled</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Menu Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Triggered when an option is selected</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Menu Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Slot Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>label</td>
+                    <td>Custom title rendering</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>default</td>
+                    <td>Custom panel content</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo4 from "../../components/filter-menu/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/filter-menu/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/filter-menu/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/filter-menu/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

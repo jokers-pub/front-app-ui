@@ -1,0 +1,3 @@
+<template>
+    <jk-nav-bar title="标题" />
+</template>

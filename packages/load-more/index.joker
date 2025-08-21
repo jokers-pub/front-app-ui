@@ -1,0 +1,111 @@
+<template>
+    <div class="@(['jk-load-more', props.class])" ref="container" @click="handleClick">
+        @if($sections.default) {
+            @RenderSection("default", model.state)
+        }
+        else {
+            @if(model.state === "loading") {
+                <i class="jk-icon-loading" />
+            }
+            @text
+        }
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { getValueByLang } from "../utils/lang";
+
+export default class extends Component<{
+    class: any;
+    text: string;
+    noData: boolean;
+    loadingText: string;
+    noDataText: string;
+    load: () => any;
+}> {
+    propsOption = {
+        text: getValueByLang("loadMoreText"),
+        loadingText: getValueByLang("loadMoreLoadingText"),
+        noDataText: getValueByLang("loadMoreNoDataText")
+    };
+    model = {
+        state: "" as "" | "loading" | "noData"
+    };
+    observer: any;
+    mounted() {
+        this.$watch(
+            () => this.props.noData,
+            () => {
+                if (this.props.noData) {
+                    this.model.state === "noData";
+                }
+            }
+        );
+        let container = this.$getRef("container")?.output;
+
+        // 创建观察器实例，设置阈值为0.5（50%）
+        this.observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(async (entry) => {
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.8) {
+                        if (this.model.state === "loading" || this.model.state === "noData") return;
+
+                        await this.load();
+                    }
+                });
+            },
+            {
+                threshold: 0.8 // 当可见比例达到50%时触发回调
+            }
+        );
+
+        // 开始观察目标元素
+        this.observer.observe(container);
+    }
+
+    get text() {
+        switch (this.model.state) {
+            case "loading":
+                return this.props.loadingText;
+            case "noData":
+                return this.props.noDataText;
+        }
+        return this.props.text;
+    }
+    beforeDestroy() {
+        this.observer.unobserve(this.$getRef("container")?.output);
+    }
+
+    async load() {
+        this.model.state = "loading";
+        await this.props.load?.();
+
+        this.model.state = "";
+    }
+
+    async handleClick() {
+        if (this.model.state === "loading" || this.model.state === "noData") return;
+
+        await this.load();
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-load-more {
+    padding: 10px;
+    text-align: center;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    color: var(--jk-color-text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    i {
+        margin-right: 5px;
+    }
+}
+</style>

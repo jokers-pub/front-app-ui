@@ -1,0 +1,73 @@
+<template>
+    <jk-table data="@model.tableData" select multiple dataChangeNotClearSelected>
+        <jk-table-column type="selection" fixed="left" />
+        <jk-table-column type="index" fixed="left" />
+        <jk-table-column label="Date" key="date" width="100">
+            @section("td", data) {
+                <i class="jk-icon-time" />@data.value
+            }
+        </jk-table-column>
+        <jk-table-column label="Name" key="name" width="180" />
+        <jk-table-column label="Address" key="address" />
+        <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+        <jk-table-column label="Operation" headerAlign="right" align="right">
+            @section("th") {
+                <i class="jk-icon-edit"></i>
+                Operation
+            }
+            @section("td", data) {
+                <jk-button type="primary" size="small" @click="handleMoveDown(data)">Move Down</jk-button>
+                <jk-button type="danger" size="small" @click="handleDelete(data)">Delete</jk-button>
+            }
+        </jk-table-column>
+    </jk-table>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { ColumnType, Store } from "../../../packages/table/store";
+import { Message, MessageBox } from "../../../src";
+import { moveDown, remove } from "@joker.front/shared";
+
+export default class extends Component {
+    model = {
+        tableData: [
+            { name: "Zhang San", date: "2023-11-21", address: "Jinan, Shandong Province", money: 1000 },
+            { name: "Li Si", date: "2023-11-21", address: "Jinan, Shandong Province", money: 10 },
+            { name: "Li Mei", date: "2023-11-21", address: "Jinan, Shandong Province", money: 300 },
+            { name: "Wang Wu", date: "2023-11-21", address: "Jinan, Shandong Province", money: 11.9 }
+        ]
+    };
+
+    handleDelete(
+        e: VNode.Event,
+        data: {
+            // Current row value, will be retrieved only when column.key is configured
+            value: any;
+            // Current row data
+            row: any;
+            // Row index
+            rowIndex: number;
+            // Column index
+            cellIndex: number;
+            // Column data
+            column: ColumnType;
+            // Storage unit
+            store: Store;
+        }
+    ) {
+        MessageBox.confirm('Are you sure you want to delete "' + data.row.name + '"?', {
+            callback: (action) => {
+                if (action === "confirm") {
+                    remove(this.model.tableData, data.row);
+                }
+            }
+        });
+    }
+
+    handleMoveDown(e: VNode.Event, data: any) {
+        moveDown(this.model.tableData, data.rowIndex);
+
+        console.log(this.model.tableData);
+    }
+}
+</script>

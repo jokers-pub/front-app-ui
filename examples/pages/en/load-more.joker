@@ -1,0 +1,209 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>LoadMore</h2>
+        <p>
+            Triggers loading event when scrolling to the bottom or when the control enters the viewport, enabling infinite loading functionality.
+        </p>
+        <h3>Basic Usage</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div style=&quot;height:400px&quot;&gt;
+        &lt;jk-scrollbar&gt;
+            @for(let i of model.datas) {
+                &lt;jk-cell title=&quot;@(i)&quot; /&gt;
+            }
+            &lt;jk-load-more load=&quot;@load&quot; /&gt;
+        &lt;/jk-scrollbar&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+
+export default class extends Component {
+    model = {
+        datas: []
+    };
+
+    async load() {
+        await sleep(2000);
+
+        for (let i = 0; i &lt; 10; i++) {
+            this.model.datas.push(i.toString());
+        }
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Lazy Loading</h3>
+        <p>When content does not fill a full page, users can click to manually load more.</p>
+        <blockquote>
+            <p>This scenario is suitable for ultra-long screens or when the initial data volume is too small.</p>
+        </blockquote>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div style=&quot;height:400px&quot;&gt;
+        &lt;jk-scrollbar&gt;
+            @for(let i of model.datas) {
+                &lt;jk-cell title=&quot;@(i)&quot; /&gt;
+            }
+            &lt;jk-load-more load=&quot;@load&quot; /&gt;
+        &lt;/jk-scrollbar&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+
+export default class extends Component {
+    model = {
+        datas: []
+    };
+
+    async load() {
+        await sleep(2000);
+
+        for (let i = 0; i &lt; 5; i++) {
+            this.model.datas.push(i.toString());
+        }
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <div class="warning">
+            <p>
+                If the control is displayed during initial rendering due to insufficient content length, it may trigger duplicate loading logic. It is recommended to consistently use this control for initial resource loading.
+            </p>
+        </div>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>class</strong>
+                    </td>
+                    <td>Custom class name for overriding default component styles</td>
+                    <td>any</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>text</strong>
+                    </td>
+                    <td>Default loading state hint text (displayed when neither loading nor no-data state)</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;Load More&quot;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>noData</strong>
+                    </td>
+                    <td>
+                        Whether in &quot;no more data&quot; state. When
+                        <code>true</code>
+                        , displays
+                        <code>noDataText</code>
+                        and disables loading events
+                    </td>
+                    <td>boolean</td>
+                    <td>true / false</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>loadingText</strong>
+                    </td>
+                    <td>Loading state hint text (displayed when loading logic is triggered)</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;Loading...&quot;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>noDataText</strong>
+                    </td>
+                    <td>
+                        &quot;No more data&quot; state hint text (displayed when
+                        <code>noData</code>
+                        is
+                        <code>true</code>
+                        )
+                    </td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;No more data&quot;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>load</strong>
+                    </td>
+                    <td>
+                        Callback function executed when loading is triggered, supports async operations (e.g., API requests)
+                    </td>
+                    <td>() =&gt; any</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>Custom title content</td>
+                    <td>state status: ''|'loading'|'nodata'</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo2 from "../../components/load-more/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/load-more/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

@@ -1,0 +1,9 @@
+<template>
+    <jk-cell>
+        <span>first</span>
+        <jk-divider direction="vertical" />
+        <span>second</span>
+        <jk-divider direction="vertical" />
+        <span>third</span>
+    </jk-cell>
+</template>

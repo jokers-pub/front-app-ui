@@ -1,0 +1,1033 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Form</h2>
+        <p>A component for collecting, validating, and submitting form data.</p>
+        <h3>Typical Form</h3>
+        <p>
+            Use
+            <code>jk-field</code>
+            for layout.
+        </p>
+        <p>Includes various form items such as input fields, selectors, switches, radio buttons, checkboxes, etc.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-form ref=&quot;form&quot; @submit=&quot;handleFormSubmit&quot;&gt;
+        &lt;jk-cell-group&gt;
+            &lt;jk-field label=&quot;Name&quot; tip=&quot;Test data, please understand&quot;&gt;
+                &lt;jk-input name=&quot;name&quot; placeholder=&quot;Please enter the event name&quot; /&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field
+                label=&quot;Area&quot;
+                tip=&quot;Test data, please understand. Super long text test. Test data, please understand. Super long text test. Test data, please understand. Super long text test. Test data, please understand. Super long text test. Test data, please understand. Super long text test&quot;&gt;
+                &lt;jk-select name=&quot;area&quot; data=&quot;@(['Shandong', 'Beijing'])&quot; /&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Area&quot;&gt;
+                &lt;jk-cascader name=&quot;area1&quot; data=&quot;@cascaderMock&quot;&gt;&lt;/jk-cascader&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Event Time&quot;&gt;
+                &lt;jk-date name=&quot;date&quot; type=&quot;date&quot; placeholder=&quot;Select Date&quot; /&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Promotion&quot;&gt;
+                &lt;jk-switch name=&quot;promotion&quot; /&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Event Nature&quot;&gt;
+                &lt;jk-checkbox-group name=&quot;type&quot; direction=&quot;vertical&quot;&gt;
+                    &lt;jk-checkbox value=&quot;1&quot; label=&quot;Food/Restaurant&quot;&gt;&lt;/jk-checkbox&gt;
+                    &lt;jk-checkbox value=&quot;2&quot; label=&quot;Offline event&quot;&gt;&lt;/jk-checkbox&gt;
+                    &lt;jk-checkbox value=&quot;3&quot; label=&quot;Self-driving tour&quot;&gt;&lt;/jk-checkbox&gt;
+                    &lt;jk-checkbox value=&quot;4&quot; label=&quot;Press conference&quot;&gt;&lt;/jk-checkbox&gt;
+                    &lt;jk-checkbox value=&quot;5&quot; label=&quot;Group tour&quot;&gt;&lt;/jk-checkbox&gt;
+                &lt;/jk-checkbox-group&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Funding Source&quot;&gt;
+                &lt;jk-radio-group name=&quot;source&quot; direction=&quot;vertical&quot;&gt;
+                    &lt;jk-radio value=&quot;1&quot;&gt;Sponsored&lt;/jk-radio&gt;
+                    &lt;jk-radio value=&quot;2&quot;&gt;Free&lt;/jk-radio&gt;
+                    &lt;jk-radio value=&quot;3&quot;&gt;Cost sharing&lt;/jk-radio&gt;
+                &lt;/jk-radio-group&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Funding Ratio&quot;&gt;
+                &lt;jk-slider name=&quot;sourcePic&quot; value=&quot;30&quot;&gt;&lt;/jk-slider&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Event Rules&quot;&gt;
+                &lt;jk-textarea name=&quot;note&quot; placeholder=&quot;Please enter the content&quot; rows=&quot;2&quot;&gt;&lt;/jk-textarea&gt;
+            &lt;/jk-field&gt;
+        &lt;/jk-cell-group&gt;
+        &lt;jk-cell-group title=&quot;Other&quot;&gt;
+            &lt;jk-field label=&quot;Rate&quot;&gt;
+                &lt;jk-rate name=&quot;rate&quot; /&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Password&quot;&gt;
+                &lt;jk-password name=&quot;password&quot; placeholder=&quot;Enter Password&quot; /&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Number&quot;&gt;
+                &lt;jk-number name=&quot;number&quot; placeholder=&quot;Enter Number&quot; /&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field label=&quot;Number&quot;&gt;
+                &lt;jk-number name=&quot;number&quot; value=&quot;0&quot; show-controls /&gt;
+            &lt;/jk-field&gt;
+            &lt;jk-field&gt;
+                &lt;jk-button type=&quot;primary&quot; fullWidth&gt;Submit&lt;/jk-button&gt;
+            &lt;/jk-field&gt;
+        &lt;/jk-cell-group&gt;
+    &lt;/jk-form&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { mock } from &quot;../cascader/mock&quot;;
+export default class extends Component {
+    cascaderMock = mock();
+    handleFormSubmit(e: VNode.Event&lt;any&gt;) {
+        console.log(e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Text Alignment</h3>
+        <p>
+            The alignment of labels can be set using the
+            <code>label-position</code>
+            attribute. Currently supported values are
+            <code>top</code>
+            and
+            <code>left</code>
+            . When set to
+            <code>top</code>
+            , the label will be placed at the top of the form item.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-radio-group value=&quot;@model.labelPosition&quot; @change=&quot;handleRadioChange&quot;&gt;
+            &lt;jk-radio-button value=&quot;left&quot;&gt;Left&lt;/jk-radio-button&gt;
+            &lt;jk-radio-button value=&quot;right&quot;&gt;Right&lt;/jk-radio-button&gt;
+            &lt;jk-radio-button value=&quot;top&quot;&gt;Top&lt;/jk-radio-button&gt;
+        &lt;/jk-radio-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;jk-form label-position=&quot;@model.labelPosition&quot;&gt;
+        &lt;jk-field label=&quot;Name&quot; required&gt;
+            &lt;jk-input name=&quot;name&quot; placeholder=&quot;Please enter the event name&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Area&quot;&gt;
+            &lt;jk-select name=&quot;area&quot; placeholder=&quot;Please select the event area&quot;&gt;
+                &lt;jk-option label=&quot;Shandong&quot; value=&quot;shandong&quot; /&gt;
+                &lt;jk-option label=&quot;Beijing&quot; value=&quot;beijing&quot; /&gt;
+            &lt;/jk-select&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Time&quot;&gt;
+            &lt;jk-date type=&quot;date&quot; name=&quot;date&quot; placeholder=&quot;Select Date&quot;&gt;&lt;/jk-date&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field&gt;
+            &lt;jk-button type=&quot;primary&quot; fullWidth&gt;Query&lt;/jk-button&gt;
+        &lt;/jk-field&gt;
+    &lt;/jk-form&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        labelPosition: &quot;left&quot;
+    };
+
+    handleRadioChange(e: VNode.Event&lt;string&gt;) {
+        this.model.labelPosition = e.data;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Form Validation</h3>
+        <p>
+            The Form component provides validation functionality. Built-in validation methods are available and can be configured by adding
+            <code>validate</code>
+            to specify validation rules.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-form ref=&quot;form&quot; @submit=&quot;handleFormSubmit&quot;&gt;
+        &lt;jk-field label=&quot;Event Name&quot; required&gt;
+            &lt;jk-input name=&quot;name&quot; validate=&quot;@Global.isRequired()&quot; placeholder=&quot;Please enter the event name&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Event Area&quot; required&gt;
+            &lt;jk-select
+                name=&quot;area&quot;
+                validate=&quot;@Global.isRequired()&quot;
+                data=&quot;@(['Shandong', 'Beijing'])&quot;
+                placeholder=&quot;Please select the event area&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Event Time&quot; required&gt;
+            &lt;jk-date
+                name=&quot;date&quot;
+                type=&quot;date&quot;
+                validate=&quot;@Global.isRequired('Please select the event time')&quot;
+                placeholder=&quot;Please select Date&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Review Time&quot; required&gt;
+            &lt;jk-date type=&quot;time&quot; name=&quot;examineDate&quot; validate=&quot;@Global.isRequired()&quot; placeholder=&quot;Please select time&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Organizer&quot; required label-position=&quot;top&quot;&gt;
+            &lt;jk-col span=&quot;12&quot;&gt;
+                &lt;jk-field&gt;
+                    &lt;jk-select
+                        name=&quot;organization&quot;
+                        validate=&quot;@Global.isRequired()&quot;
+                        placeholder=&quot;Please select the organization&quot;
+                        data=&quot;@([
+                            {
+                                label: 'Northern Region',
+                                value: '01'
+                            },
+                            {
+                                label: 'Southern Region',
+                                value: '02'
+                            }
+                        ])&quot;
+                    /&gt;
+                &lt;/jk-field&gt;
+            &lt;/jk-col&gt;
+            &lt;jk-col span=&quot;12&quot;&gt;
+                &lt;jk-field&gt;
+                    &lt;jk-select
+                        name=&quot;userName&quot;
+                        validate=&quot;@Global.isRequired()&quot;
+                        placeholder=&quot;Please select the user&quot;
+                        data=&quot;@([
+                            { label: 'Zhang San', value: '01' },
+                            { label: 'Li Si', value: '02' }
+                        ])&quot;&gt;&lt;/jk-select&gt;
+                &lt;/jk-field&gt;
+            &lt;/jk-col&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Promotion&quot;&gt;
+            &lt;jk-switch name=&quot;promotion&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Participants Count&quot;&gt;
+            &lt;jk-number name=&quot;userCount&quot; show-controls validate=&quot;@Global.isRequired()&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Event Nature&quot; required&gt;
+            &lt;jk-checkbox-group
+                name=&quot;type&quot;
+                direction=&quot;vertical&quot;
+                validate=&quot;@Global.isRequired('Please select the event nature')&quot;&gt;
+                &lt;jk-checkbox value=&quot;1&quot; label=&quot;Food/Restaurant&quot;&gt;&lt;/jk-checkbox&gt;
+                &lt;jk-checkbox value=&quot;2&quot; label=&quot;Offline event&quot;&gt;&lt;/jk-checkbox&gt;
+                &lt;jk-checkbox value=&quot;3&quot; label=&quot;Self-driving tour&quot;&gt;&lt;/jk-checkbox&gt;
+                &lt;jk-checkbox value=&quot;4&quot; label=&quot;Press conference&quot;&gt;&lt;/jk-checkbox&gt;
+                &lt;jk-checkbox value=&quot;5&quot; label=&quot;Group tour&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;/jk-checkbox-group&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Funding Source&quot; required&gt;
+            &lt;jk-radio-group
+                name=&quot;source&quot;
+                direction=&quot;vertical&quot;
+                validate=&quot;@Global.isRequired('Please select the funding source')&quot;&gt;
+                &lt;jk-radio value=&quot;1&quot;&gt;Sponsored&lt;/jk-radio&gt;
+                &lt;jk-radio value=&quot;2&quot;&gt;Free offline venue&lt;/jk-radio&gt;
+                &lt;jk-radio value=&quot;3&quot;&gt;Cost sharing&lt;/jk-radio&gt;
+            &lt;/jk-radio-group&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Event Rules&quot; required&gt;
+            &lt;jk-textarea
+                name=&quot;note&quot;
+                validate=&quot;@Global.isRequired()&quot;
+                placeholder=&quot;Please enter the event rules&quot;
+                rows=&quot;2&quot;&gt;&lt;/jk-textarea&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field&gt;
+            &lt;jk-button type=&quot;primary&quot; fullWidth nativeType=&quot;submit&quot;&gt;Submit&lt;/jk-button&gt;
+        &lt;/jk-field&gt;
+    &lt;/jk-form&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    async handleFormSubmit(e: VNode.Event) {
+        console.log(&quot;Verification succeeded&quot;, e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>
+                Configuring
+                <code>required</code>
+                in
+                <code>form-item</code>
+                only controls the display of the
+                <strong>asterisk</strong>
+                for visual indication and does not perform any validation.
+            </p>
+        </blockquote>
+        <h3>Built-in Validation Rules</h3>
+        <p>
+            Commonly used validation rules are provided internally and can be configured using
+            <code>validate</code>
+            .
+        </p>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Rule</th>
+                    <th>Description</th>
+                    <th>Value Explanation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <code>Global.isRequired(msg)</code>
+                    </td>
+                    <td>Non-empty validation</td>
+                    <td>
+                        Custom error message can be set; if not set, the
+                        <code>placeholder</code>
+                        text will be used as the error hint
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>Global.isInt(msg)</code>
+                    </td>
+                    <td>Positive integer</td>
+                    <td>Error hint</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>Global.isNumber(msg)</code>
+                    </td>
+                    <td>Numeric validation</td>
+                    <td>Error hint</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>Global.isPhone(msg)</code>
+                    </td>
+                    <td>Phone number format</td>
+                    <td>Error hint</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>Global.isEmail(msg)</code>
+                    </td>
+                    <td>Email format</td>
+                    <td>Error hint</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>Global.isMatched(regex,msg)</code>
+                    </td>
+                    <td>Custom regex</td>
+                    <td>
+                        {pattern:string, msg:string}, where
+                        <code>pattern</code>
+                        is required for regex rules,
+                        <code>msg</code>
+                        for error hint
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>Global.isLengthInRange(min,max,msg)</code>
+                    </td>
+                    <td>Length validation</td>
+                    <td>
+                        <code>(min, max, error_msg)</code>
+                        : Can specify min and max lengths via array
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-form ref=&quot;form&quot; labelWidth=&quot;160px&quot; @submit=&quot;handleFormSubmit&quot;&gt;
+        &lt;jk-field label=&quot;Required&quot; required&gt;
+            &lt;jk-input name=&quot;v1&quot; validate=&quot;@Global.isRequired()&quot; placeholder=&quot;Please enter the content&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Required&quot; required&gt;
+            &lt;jk-select name=&quot;v2&quot; validate=&quot;@Global.isRequired()&quot; placeholder=&quot;Please select the event area&quot;&gt;
+                &lt;jk-option label=&quot;Shandong&quot; value=&quot;shandong&quot; /&gt;
+                &lt;jk-option label=&quot;Beijing&quot; value=&quot;beijing&quot; /&gt;
+            &lt;/jk-select&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Positive Integer&quot;&gt;
+            &lt;jk-input name=&quot;v3&quot; validate=&quot;@Global.isInt()&quot; placeholder=&quot;Please enter the content&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Numeric&quot;&gt;
+            &lt;jk-input name=&quot;v4&quot; validate=&quot;@Global.isNumber()&quot; placeholder=&quot;Please enter the content&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Phone Number&quot;&gt;
+            &lt;jk-input name=&quot;v5&quot; validate=&quot;@Global.isPhone()&quot; placeholder=&quot;Please enter the content&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Email&quot;&gt;
+            &lt;jk-input name=&quot;v6&quot; validate=&quot;@Global.isEmail()&quot; placeholder=&quot;Please enter the content&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Regular Expression&quot;&gt;
+            &lt;jk-input
+                name=&quot;v7&quot;
+                validate=&quot;@Global.isMatched('^\\d+$','Please enter a number from 0 - 9')&quot;
+                placeholder=&quot;Please enter the content&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Length&quot;&gt;
+            &lt;jk-input name=&quot;v8&quot; validate=&quot;@Global.isLengthInRange(3,5)&quot; placeholder=&quot;Please enter the content&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Length&quot;&gt;
+            &lt;jk-input name=&quot;v9&quot; validate=&quot;@Global.isLengthInRange(0,5)&quot; placeholder=&quot;Please enter the content&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Length&quot;&gt;
+            &lt;jk-input
+                name=&quot;v10&quot;
+                validate=&quot;@Global.isLengthInRange(3,5,'Please enter 3 - 5 characters')&quot;
+                placeholder=&quot;Please enter the content&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field&gt;
+            &lt;jk-button type=&quot;primary&quot; nativeType=&quot;submit&quot;&gt;Submit&lt;/jk-button&gt;
+        &lt;/jk-field&gt;
+    &lt;/jk-form&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    async handleFormSubmit(e: VNode.Event) {
+        console.log(&quot;Verification succeeded&quot;, e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <p>
+            Custom validation rules can be registered globally. Below is an example of a built-in validation method for reference:
+        </p>
+        <pre><code class="language-ts">import { registerValidateAll } from &quot;@joker.front/app-ui&quot;;
+
+// Register all validation methods provided by the UI library
+registerValidateAll();
+
+registerGlobalFunction({
+    isPhone: (message?: string) =&gt; {
+        return (value: any) =&gt; {
+            if (!value) return;
+            if (value.length !== 11) {
+                return message || &quot;Please enter an 11-digit phone number&quot;;
+            }
+
+            if (/^1[3456789]\d{9}$/.test(value) === false) {
+                return message || &quot;Invalid phone number format, please re-enter&quot;;
+            }
+        };
+    }
+});
+</code></pre>
+        <pre><code class="language-html">&lt;input validate=&quot;@Global.isPhone()&quot; /&gt;
+</code></pre>
+        <p>Validation follows a specific order:</p>
+        <ol>
+            <li>
+                <code>control.beforeValidate()</code>
+            </li>
+            <li>
+                <code>control.ctrlValidate</code>
+            </li>
+            <li>
+                <code>control.props.validate</code>
+                (custom validation, supports multiple combined rules via array).
+            </li>
+        </ol>
+        <h3>Custom Validation</h3>
+        <p>
+            Custom validation rules can be configured via the
+            <code>validate</code>
+            parameter of the component. Return an error message if validation fails; an empty return indicates success. Asynchronous validation is supported.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-form ref=&quot;form&quot; @submit=&quot;handleFormSubmit&quot; label-position=&quot;top&quot;&gt;
+        &lt;jk-field label=&quot;Age&quot;&gt;
+            &lt;jk-input
+                name=&quot;age&quot;
+                status-icon
+                validate=&quot;@([Global.isRequired(), Global.isInt(), validateAge])&quot;
+                placeholder=&quot;Please enter your age&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;New Password&quot;&gt;
+            &lt;jk-input
+                name=&quot;pwd&quot;
+                ref=&quot;pwd&quot;
+                validate=&quot;@([Global.isRequired()])&quot;
+                placeholder=&quot;Please enter your new password&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Confirm Password&quot;&gt;
+            &lt;jk-input
+                name=&quot;confirmPwd&quot;
+                validate=&quot;@([Global.isRequired(), validateConfirmPwd])&quot;
+                placeholder=&quot;Please confirm your password&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field&gt;
+            &lt;jk-button type=&quot;primary&quot; nativeType=&quot;submit&quot;&gt;Submit&lt;/jk-button&gt;
+        &lt;/jk-field&gt;
+    &lt;/jk-form&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+
+export default class extends Component {
+    async validateAge(value: string) {
+        // Simulate a request to implement asynchronous validation
+        await sleep(1500);
+
+        // Custom validation is performed last, no need to consider non - empty &amp;&amp; positive integer
+        let age = parseInt(value);
+
+        if (age &lt; 22) {
+            return &quot;You are too young. Come back after you are 22.&quot;;
+        }
+
+        if (age &gt; 30) {
+            return &quot;You are mature enough and don't need to know more.&quot;;
+        }
+    }
+    validateConfirmPwd(value) {
+        let pwd = this.$getRef(&quot;pwd&quot;)?.component.value;
+
+        if (pwd !== value) {
+            return &quot;The two passwords do not match.&quot;;
+        }
+    }
+
+    async handleFormSubmit(e: VNode.Event) {
+        console.log(&quot;Verification succeeded&quot;, e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>
+                The
+                <code>status-icon</code>
+                attribute can be used in
+                <code>input</code>
+                components to display validation status.
+            </p>
+        </blockquote>
+        <h3>Sizing</h3>
+        <p>
+            The
+            <code>size</code>
+            property can be set in the
+            <code>form</code>
+            component to control the overall form item sizing. If a component already has a private
+            <code>size</code>
+            setting, it cannot be overridden.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-radio-group value=&quot;@model.ctrlSize&quot; @change=&quot;handleRadioChange&quot;&gt;
+            &lt;jk-radio-button value=&quot;large&quot;&gt;large&lt;/jk-radio-button&gt;
+            &lt;jk-radio-button value=&quot;&quot;&gt;default&lt;/jk-radio-button&gt;
+            &lt;jk-radio-button value=&quot;small&quot;&gt;small&lt;/jk-radio-button&gt;
+            &lt;jk-radio-button value=&quot;mini&quot;&gt;mini&lt;/jk-radio-button&gt;
+        &lt;/jk-radio-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;jk-form ref=&quot;form&quot; size=&quot;@model.ctrlSize&quot;&gt;
+        &lt;jk-field label=&quot;Event Name&quot;&gt;
+            &lt;jk-input name=&quot;name&quot; placeholder=&quot;Please enter the event name&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Event Area&quot;&gt;
+            &lt;jk-select name=&quot;area&quot; placeholder=&quot;Please select the event area&quot; data=&quot;@(['山东', '北京'])&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Event Time&quot;&gt;
+            &lt;jk-date name=&quot;date&quot; type=&quot;date&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Promotion&quot;&gt;
+            &lt;jk-switch name=&quot;promotion&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;UploadImg&quot; label-position=&quot;top&quot;&gt;
+            &lt;jk-upload-img name=&quot;photo&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Participants Count&quot;&gt;
+            &lt;jk-number
+                name=&quot;userCount&quot;
+                placeholder=&quot;Please set the number of participants&quot;
+                validate=&quot;@Global.isRequired()&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Event Nature&quot; label-position=&quot;top&quot;&gt;
+            &lt;jk-checkbox-group name=&quot;type&quot;&gt;
+                &lt;jk-checkbox-button value=&quot;1&quot; label=&quot;Home&quot;&gt;&lt;/jk-checkbox-button&gt;
+                &lt;jk-checkbox-button value=&quot;2&quot; label=&quot;Car&quot;&gt;&lt;/jk-checkbox-button&gt;
+                &lt;jk-checkbox-button value=&quot;3&quot; label=&quot;Phone&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;/jk-checkbox-group&gt;
+            &lt;div style=&quot;margin-top:5px&quot;&gt;
+                &lt;jk-alert show-icon title=&quot;Self-driving tours incur related costs&quot; type=&quot;info&quot;&gt;&lt;/jk-alert&gt;
+            &lt;/div&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Funding Source&quot; label-position=&quot;top&quot;&gt;
+            &lt;jk-radio-group name=&quot;source&quot;&gt;
+                &lt;jk-radio-button value=&quot;1&quot;&gt;Sponsored&lt;/jk-radio-button&gt;
+                &lt;jk-radio-button value=&quot;2&quot;&gt;Free&lt;/jk-radio-button&gt;
+                &lt;jk-radio-button value=&quot;3&quot;&gt;Costg&lt;/jk-radio-button&gt;
+            &lt;/jk-radio-group&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Event Rules&quot;&gt;
+            &lt;jk-textarea name=&quot;note&quot; placeholder=&quot;Please enter the content&quot; rows=&quot;2&quot;&gt;&lt;/jk-textarea&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field&gt;
+            &lt;jk-button type=&quot;primary&quot;&gt;Submit&lt;/jk-button&gt;
+        &lt;/jk-field&gt;
+    &lt;/jk-form&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        ctrlSize: &quot;&quot;
+    };
+    handleRadioChange(e: VNode.Event&lt;string&gt;) {
+        this.model.ctrlSize = e.data;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Submission</h3>
+        <p>
+            Form submission can be triggered by calling the
+            <code>submit</code>
+            event in the form. This process includes form validation and value retrieval. If validation passes, the
+            <code>submit</code>
+            event notifies the caller and returns the form data.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo8)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-form ref=&quot;form&quot; @submit=&quot;handleFormSubmit&quot; label-width=&quot;130px&quot;&gt;
+        &lt;jk-field label=&quot;Age&quot;&gt;
+            &lt;jk-input
+                name=&quot;age&quot;
+                status-icon
+                clearable
+                validate=&quot;@([Global.isRequired(), Global.isInt(), validateAge])&quot;
+                placeholder=&quot;Please enter your age&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;New Password&quot;&gt;
+            &lt;jk-input
+                name=&quot;pwd&quot;
+                ref=&quot;pwd&quot;
+                validate=&quot;@([Global.isRequired()])&quot;
+                placeholder=&quot;Please enter your new password&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Confirm Password&quot;&gt;
+            &lt;jk-input
+                name=&quot;confirmPwd&quot;
+                validate=&quot;@([Global.isRequired(), validateConfirmPwd])&quot;
+                placeholder=&quot;Please confirm your password&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Area&quot;&gt;
+            &lt;jk-select
+                name=&quot;area&quot;
+                validate=&quot;@([Global.isRequired()])&quot;
+                placeholder=&quot;Please select the event area&quot;
+                data=&quot;@(['Shandong', 'Beijing'])&quot;
+            /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Promotion&quot;&gt;
+            &lt;jk-switch name=&quot;promotion&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Funding Ratio&quot;&gt;
+            &lt;jk-slider name=&quot;sourcePic&quot; value=&quot;30&quot;&gt;&lt;/jk-slider&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field label=&quot;Time&quot;&gt;
+            &lt;jk-date name=&quot;date&quot; type=&quot;date&quot; validate=&quot;@([Global.isRequired()])&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field&gt;
+            &lt;jk-button type=&quot;primary&quot; nativeType=&quot;submit&quot; loading=&quot;@model.loading&quot;&gt;Submit&lt;/jk-button&gt;
+            &lt;jk-button nativeType=&quot;reset&quot;&gt;Reset&lt;/jk-button&gt;
+        &lt;/jk-field&gt;
+    &lt;/jk-form&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+import { Message } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    model = {
+        loading: false
+    };
+    async validateAge(value: string) {
+        // Simulate a request to implement asynchronous validation
+        await sleep(1500);
+
+        // Custom validation is performed last, no need to consider non - empty &amp;&amp; positive integer
+        let age = parseInt(value);
+
+        if (age &lt; 22) {
+            return &quot;You are too young. Come back after you are 22.&quot;;
+        }
+
+        if (age &gt; 30) {
+            return &quot;You are mature enough , Input 22&quot;;
+        }
+    }
+    validateConfirmPwd(value) {
+        let pwd = this.$getRef(&quot;pwd&quot;)?.component.value;
+
+        if (pwd !== value) {
+            return &quot;The two passwords do not match.&quot;;
+        }
+    }
+
+    // Trigger the submission
+    handleSubmitBtnClick(e: VNode.Event) {
+        // If e is passed in, the form will control the loading state of the button according to the triggering event
+        this.$getRef(&quot;form&quot;)?.component.submit(e);
+    }
+
+    // Form submission processing function
+    async handleFormSubmit(e: VNode.Event) {
+        this.model.loading = true;
+        // This method will only be triggered after successful validation
+        // Supports asynchronous processing
+
+        // Simulate an interface request
+        await sleep(1000);
+
+        console.log(e.data);
+
+        Message({
+            type: &quot;success&quot;,
+            message: &quot;Submission succeeded&quot;
+        });
+
+        this.model.loading = false;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>
+                During submission, the form will automatically set the submit button (must be
+                <code>jk-button</code>
+                ) to
+                <code>loading</code>
+                state during asynchronous validation. After validation, loading is lifted, and the
+                <code>submit</code>
+                event takes over. Therefore, the caller must manually handle loading during the submission process (loading during validation is automatic).
+            </p>
+        </blockquote>
+        <h3>Extending Form Controls</h3>
+        <p>
+            To create custom form controls compatible with
+            <code>Form</code>
+            , the following conditions must be met:
+        </p>
+        <ol>
+            <li>
+                Call
+                <code>registerFormCtrl(this)</code>
+                in the
+                <code>create</code>
+                method to register the control.
+            </li>
+            <li>
+                Configure the
+                <code>value</code>
+                property in the model.
+            </li>
+            <li>
+                Pass
+                <code>props.name</code>
+                (if applicable based on usage scenario).
+            </li>
+            <li>
+                Render the control inside
+                <code>jk-form</code>
+                (if applicable).
+            </li>
+        </ol>
+        <p>Optional (but recommended) enhancements:</p>
+        <ol>
+            <li>
+                Trigger
+                <code>this.$trigger(&quot;validate&quot;)</code>
+                when the value changes (not mandatory).
+            </li>
+            <li>
+                If the component includes
+                <code>ctrlValidate</code>
+                , it will run internal validation during form validation.
+            </li>
+            <li>
+                If the component includes
+                <code>beforeValidate</code>
+                , it will execute pre-validation preparations.
+            </li>
+        </ol>
+        <h3>Form Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>Custom CSS class</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>inline</td>
+                    <td>Inline form mode</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>label-position</td>
+                    <td>
+                        Label alignment. If set to
+                        <code>left</code>
+                        or
+                        <code>right</code>
+                        ,
+                        <code>label-width</code>
+                        must be set.
+                    </td>
+                    <td>string</td>
+                    <td>right / left / top</td>
+                    <td>right</td>
+                </tr>
+                <tr>
+                    <td>label-width</td>
+                    <td>
+                        Label width (e.g., '50px'). Direct child
+                        <code>form-item</code>
+                        elements inherit this.
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>80px</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Controls the size of form components</td>
+                    <td>string</td>
+                    <td>medium / small / mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>showErrorMessage</td>
+                    <td>Custom error message display</td>
+                    <td>Function</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>clearErrorMessage</td>
+                    <td>Custom error message clearing</td>
+                    <td>Function</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Form Methods</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>validate</td>
+                    <td>Validates the entire form. Takes a callback function as a parameter (returns a Promise).</td>
+                    <td>
+                        Function(string / string[]). If no parameter is passed, validates all controls. Can validate specific controls by name.
+                    </td>
+                </tr>
+                <tr>
+                    <td>reset</td>
+                    <td>
+                        Resets the entire form, reverting all fields to initial values and clearing validation results.
+                    </td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>getData</td>
+                    <td>
+                        Retrieves form data (note: this does
+                        <strong>not</strong>
+                        perform validation).
+                    </td>
+                    <td>
+                        Function(string / string[]). If no parameter is passed, retrieves all control values. Can fetch specific controls by name.
+                    </td>
+                </tr>
+                <tr>
+                    <td>submit</td>
+                    <td>Triggers form submission.</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Form Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>before-submit</td>
+                    <td>Pre-submission trigger</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>submit</td>
+                    <td>Form submission trigger</td>
+                    <td>Form data</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Form-Item Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>Custom CSS class</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>label</td>
+                    <td>Label text</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>label-width</td>
+                    <td>Width of the form item label (e.g., '50px')</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>80px</td>
+                </tr>
+                <tr>
+                    <td>required</td>
+                    <td>
+                        Whether the field is required (displays an
+                        <strong>asterisk</strong>
+                        but ignores validation logic)
+                    </td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>inline</td>
+                    <td>Whether to use inline layout</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Form-Item Slots</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Slot</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>—</td>
+                    <td>Content of the Form Item</td>
+                </tr>
+                <tr>
+                    <td>label</td>
+                    <td>Content of the label</td>
+                </tr>
+                <tr>
+                    <td>error</td>
+                    <td>Error message for validation</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo8 from "../../components/form/demo8.joker";
+import DEMO_JOKER_demo7 from "../../components/form/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/form/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/form/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/form/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/form/demo3.joker";
+import DEMO_JOKER_demo1 from "../../components/form/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo8,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

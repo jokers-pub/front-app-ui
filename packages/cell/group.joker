@@ -1,0 +1,41 @@
+<template>
+    @if(props.title) {
+        <div class="jk-cell-group-title">
+            @props.title
+        </div>
+    }
+    <div class="@(['jk-cell-group', props.inset && 'is-inset'])">
+        @RenderSection()
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { componentName } from "../utils";
+
+export default class extends Component<{
+    title: string;
+    inset: boolean;
+    size: "large" | "small" | "mini";
+}> {
+    name = componentName("cell-group");
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-cell-group-title {
+    padding: 16px;
+    color: var(--jk-color-text-secondary);
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.jk-cell-group {
+    background: var(--jk-background-color-default);
+
+    &.is-inset {
+        margin: 0 16px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+}
+</style>

@@ -1,0 +1,32 @@
+<template>
+    <DemoRow>
+        <jk-radio-group value="@model.labelAlign" @change="handleChange">
+            <jk-radio-button value="">Left</jk-radio-button>
+            <jk-radio-button value="top">Top</jk-radio-button>
+            <jk-radio-button value="right">Right</jk-radio-button>
+        </jk-radio-group>
+    </DemoRow>
+    <jk-cell-group>
+        <jk-cell
+            title="Cell title"
+            title-align="@model.labelAlign"
+            value="Content"
+            arrow
+            description="Description"
+            size="large"
+        />
+        <jk-cell title-align="@model.labelAlign" value="Content" arrow size="large" />
+    </jk-cell-group>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        labelAlign: ""
+    };
+    handleChange(e: VNode.Event<string>) {
+        this.model.labelAlign = e.data;
+    }
+}
+</script>

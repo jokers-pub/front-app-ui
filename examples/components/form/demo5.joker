@@ -1,0 +1,57 @@
+<template>
+    <jk-form ref="form" labelWidth="160px" @submit="handleFormSubmit">
+        <jk-field label="Required" required>
+            <jk-input name="v1" validate="@Global.isRequired()" placeholder="Please enter the content" />
+        </jk-field>
+        <jk-field label="Required" required>
+            <jk-select name="v2" validate="@Global.isRequired()" placeholder="Please select the event area">
+                <jk-option label="Shandong" value="shandong" />
+                <jk-option label="Beijing" value="beijing" />
+            </jk-select>
+        </jk-field>
+        <jk-field label="Positive Integer">
+            <jk-input name="v3" validate="@Global.isInt()" placeholder="Please enter the content" />
+        </jk-field>
+        <jk-field label="Numeric">
+            <jk-input name="v4" validate="@Global.isNumber()" placeholder="Please enter the content" />
+        </jk-field>
+        <jk-field label="Phone Number">
+            <jk-input name="v5" validate="@Global.isPhone()" placeholder="Please enter the content" />
+        </jk-field>
+        <jk-field label="Email">
+            <jk-input name="v6" validate="@Global.isEmail()" placeholder="Please enter the content" />
+        </jk-field>
+        <jk-field label="Regular Expression">
+            <jk-input
+                name="v7"
+                validate="@Global.isMatched('^\\d+$','Please enter a number from 0 - 9')"
+                placeholder="Please enter the content"
+            />
+        </jk-field>
+        <jk-field label="Length">
+            <jk-input name="v8" validate="@Global.isLengthInRange(3,5)" placeholder="Please enter the content" />
+        </jk-field>
+        <jk-field label="Length">
+            <jk-input name="v9" validate="@Global.isLengthInRange(0,5)" placeholder="Please enter the content" />
+        </jk-field>
+        <jk-field label="Length">
+            <jk-input
+                name="v10"
+                validate="@Global.isLengthInRange(3,5,'Please enter 3 - 5 characters')"
+                placeholder="Please enter the content"
+            />
+        </jk-field>
+        <jk-field>
+            <jk-button type="primary" nativeType="submit">Submit</jk-button>
+        </jk-field>
+    </jk-form>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+
+export default class extends Component {
+    async handleFormSubmit(e: VNode.Event) {
+        console.log("Verification succeeded", e.data);
+    }
+}
+</script>

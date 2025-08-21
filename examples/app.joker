@@ -1,0 +1,41 @@
+<template>
+    <div class="container">
+        <TopBar></TopBar>
+        <div class="middle">
+            <router-view @updated="routerViewUpdated"></router-view>
+        </div>
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import TopBar from "./common/components/topbar.joker";
+import { hideLoading } from "./common/loading";
+
+export default class extends Component {
+    components = {
+        TopBar
+    };
+
+    routerViewUpdated(e: VNode.Event<{ isLeaf: boolean }>) {
+        if (e.data.isLeaf) {
+            hideLoading();
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.container {
+    height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+
+    flex-direction: column;
+    .middle {
+        flex: 1;
+        overflow: auto;
+        position: relative;
+    }
+}
+</style>

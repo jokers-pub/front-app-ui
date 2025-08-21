@@ -1,0 +1,192 @@
+<template>
+    <JokerDrawer ref="drawer" direction="bottom" showHeader="@false" size="auto">
+        <div class="jk-share-sheet">
+            <div class="header">
+                <div class="title">
+                    @if($sections.title) {
+                        @RenderSection("title")
+                    }
+                    else if(props.title) {
+                        @props.title
+                    }
+                </div>
+                @if($sections.description || props.description) {
+                    <div class="description">
+                        @if($sections.description) {
+                            @RenderSection("description")
+                        }
+                        else if(props.description) {
+                            @props.description
+                        }
+                    </div>
+                }
+            </div>
+            <div class="list-container">
+                <JokerScrollbar>
+                    <div class="list">
+                        @for(let item of props.options) {
+                            <div class="item @(item.disabled?'is-disabled':'')" @click="handleClick(item)">
+                                <div class="icon @(getHasColor(item.icon)?item.icon:'')">
+                                    @if(checkIsUrl(item.icon)) {
+                                        <img src="@item.icon" />
+                                    }
+                                    else {
+                                        <i class="@getIcon(item.icon)" />
+                                    }
+                                </div>
+                                <p>
+                                    @item.label
+                                </p>
+                            </div>
+                        }
+                    </div>
+                </JokerScrollbar>
+            </div>
+            <div class="cancel-container">
+                <div class="btn" @click="handleCancelClick">
+                    @props.cancelText
+                </div>
+            </div>
+        </div>
+    </JokerDrawer>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { getValueByLang } from "../utils/lang";
+import JokerDrawer from "../drawer/index.joker";
+import JokerScrollbar from "../scrollbar/index.joker";
+
+export default class extends Component<{
+    title: string;
+    options: Array<any>;
+    cancelText: string;
+}> {
+    components = {
+        JokerDrawer,
+        JokerScrollbar
+    };
+    propsOption = {
+        cancelText: getValueByLang("cancel")
+    };
+
+    getIcon(icon: string) {
+        if (["wechat", "weibo", "qq", "link", "qrcode", "poster"].includes(icon)) {
+            return `jk-icon-${icon === "poster" ? "picture-outline" : icon}`;
+        }
+
+        return icon;
+    }
+
+    getHasColor(icon: string) {
+        return ["wechat", "weibo", "qq"].includes(icon);
+    }
+    checkIsUrl(icon: string) {
+        if (icon.includes("/")) return true;
+    }
+    open() {
+        this.$getRef("drawer")?.component.open();
+    }
+    close() {
+        this.$getRef("drawer")?.component.close();
+    }
+    handleCancelClick() {
+        this.close();
+        this.$trigger("cancel");
+    }
+    handleClick(e: VNode.Event, item: any) {
+        if (item.disabled) return;
+        this.close();
+        this.$trigger("select", item);
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-share-sheet {
+    .header {
+        padding: 12px 16px;
+        text-align: center;
+        .title {
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--jk-color-text-regular);
+        }
+        .description {
+            font-size: 12px;
+            margin-top: 8px;
+            line-height: 20px;
+            text-align: center;
+            color: var(--jk-color-text-placeholder);
+        }
+    }
+
+    .list {
+        padding: 16px 8px;
+        display: flex;
+
+        .item {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+            .icon,
+            img {
+                height: 48px;
+                width: 48px;
+                border-radius: 100%;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                margin: 0 16px;
+                color: var(--jk-color-text-regular);
+                font-size: 30px;
+                background: var(--jk-background-color-base);
+
+                &.wechat {
+                    color: #fff;
+                    background-color: #0bc15f;
+                }
+                &.weibo {
+                    color: #fff;
+                    background-color: #ee575e;
+                }
+                &.qq {
+                    color: #fff;
+                    background-color: #38b9fa;
+                }
+            }
+            p {
+                margin: 8px 0 0 0;
+                padding: 0 4px;
+                line-height: 20px;
+                font-size: 12px;
+            }
+
+            &.is-disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .cancel-container {
+        background: var(--jk-background-color-base);
+        padding-top: 10px;
+        .btn {
+            background: #fff;
+            font-size: 16px;
+            padding: 16px;
+            line-height: 22px;
+            text-align: center;
+            color: var(--jk-color-text-regular);
+            cursor: pointer;
+            &:active {
+                background: var(--jk-background-color-base);
+            }
+        }
+    }
+}
+</style>

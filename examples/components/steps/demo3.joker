@@ -1,0 +1,7 @@
+<template>
+    <jk-steps active="1">
+        <jk-step title="Step 1" description="This is a very long, long."></jk-step>
+        <jk-step title="Step 2"></jk-step>
+        <jk-step title="Step 3" description="This one isn't that long."></jk-step>
+    </jk-steps>
+</template>

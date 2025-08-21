@@ -1,0 +1,51 @@
+<template>
+    <DemoRow>
+        <jk-link type="primary" @click="open">Please enter your email</jk-link>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Message, MessageBox, Loading } from "../../../src";
+
+export default class extends Component {
+    open() {
+        MessageBox.prompt("Please enter your email", "Confirm your email", {
+            validate(val) {
+                if (!val) return "Please enter an email";
+
+                if (
+                    /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/.test(
+                        val
+                    ) === false
+                ) {
+                    return "The email address is incorrect";
+                }
+            },
+            beforeClose(action, com, close) {
+                if (action === "confirm") {
+                    let value = com.inputValue;
+
+                    let loading = Loading({
+                        text: "Submitting data"
+                    });
+
+                    Message("Submitting data: " + value);
+
+                    setTimeout(() => {
+                        loading.close();
+                        close();
+                    }, 3000);
+                } else {
+                    close();
+                }
+            },
+            callback: (action) => {
+                Message({
+                    type: "info",
+                    message: `The pop-up window is closed. The trigger timing is: ${action}`
+                });
+            }
+        });
+    }
+}
+</script>

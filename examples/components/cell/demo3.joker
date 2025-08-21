@@ -1,0 +1,24 @@
+<template>
+    <jk-cell-group title="Large Size" size="large">
+        <jk-cell title="Cell title" value="Content" />
+        <jk-cell title="Cell title" value="Content" description="Description" />
+    </jk-cell-group>
+    <jk-cell-group title="Default Size">
+        <jk-cell title="Cell title" value="Content" />
+        <jk-cell title="Cell title" value="Content" description="Description" />
+    </jk-cell-group>
+    <jk-cell-group title="Small Size" size="small">
+        <jk-cell title="Cell title" value="Content" />
+        <jk-cell title="Cell title" value="Content" description="Description" />
+    </jk-cell-group>
+    <jk-cell-group title="Mini Size" size="mini">
+        <jk-cell title="Cell title" value="Content" />
+        <jk-cell title="Cell title" value="Content" description="Description" />
+    </jk-cell-group>
+    <jk-cell-group title="Diff Size">
+        <jk-cell title="Cell title" value="Content" arrow description="Description" size="large" />
+        <jk-cell title="Cell title" value="Content" arrow description="Description" />
+        <jk-cell title="Cell title" value="Content" arrow description="Description" size="small" />
+        <jk-cell title="Cell title" value="Content" arrow description="Description" size="mini" />
+    </jk-cell-group>
+</template>

@@ -1,0 +1,5 @@
+<template>
+    <jk-field>
+        <jk-password placeholder="Please enter content" prefix-icon="jk-icon-lock" />
+    </jk-field>
+</template>

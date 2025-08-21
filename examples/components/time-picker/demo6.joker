@@ -1,0 +1,14 @@
+<template>
+    <jk-field>
+        <jk-date type="time-select" placeholder="Select time" size="large" />
+    </jk-field>
+    <jk-field>
+        <jk-date type="time-select" placeholder="Select time" />
+    </jk-field>
+    <jk-field>
+        <jk-date type="time-select" placeholder="Select time" size="small" />
+    </jk-field>
+    <jk-field>
+        <jk-date type="time-select" placeholder="Select time" size="mini" />
+    </jk-field>
+</template>

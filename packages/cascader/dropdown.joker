@@ -1,0 +1,177 @@
+<template>
+    <JokerDrawer ref="drawer" direction="bottom" @close="handleClose" title="@props.title" size="@props.size">
+        <jk-skeleton rows="6" animated loading="@model.loading">
+            @if(model.menus.length) {
+                <JokerTabs full-height shrink sticky animated value="@model.tabIndex" @change="handleTabIndexChange">
+                    @for(let (index,menu) in model.menus) {
+                        <JokerTabPanel label="@(menu.loading ? props.loadingText : getTitle(index))" name="@index">
+                            <jk-skeleton rows="6" animated loading="@(menu.loading)">
+                                <JokerMenu
+                                    nodes="@menu.nodes"
+                                    parentNode="@(model.activePath[index - 1])"
+                                    emptyText="@props.noDataText"></JokerMenu>
+                            </jk-skeleton>
+                        </JokerTabPanel>
+                    }
+                </JokerTabs>
+            }
+            else {
+                @if(cascader.$sections.empty) {
+                    @RenderSection(cascader.$sections.empty)
+                }
+                else {
+                    <JokerEmpty description="@props.emptyText" />
+                }
+            }
+        </jk-skeleton>
+    </JokerDrawer>
+</template>
+<script>
+import { Component, VNode, observer } from "@joker.front/core";
+import { componentName } from "../utils";
+import JokerDrawer from "../drawer/index.joker";
+import JokerMenu from "./menu.joker";
+import JokerTabs from "../tabs/index.joker";
+import JokerTabPanel from "../tabs/panel.joker";
+import JokerScrollbar from "../scrollbar/index.joker";
+import JokerEmpty from "../empty/index.joker";
+
+import { Node } from "./store";
+import { getValueByLang } from "../utils/lang";
+export default class extends Component<{
+    size: string;
+    emptyText: string;
+    loadingText: string;
+}> {
+    placeholder = getValueByLang("selectPlaceholder");
+    name = componentName("cascader-dropdown");
+    model = {
+        activePath: [] as Node[],
+        menus: undefined,
+        tabIndex: 0,
+        loading: false
+    };
+    cascader: any;
+    components = {
+        JokerDrawer,
+        JokerMenu,
+        JokerTabs,
+        JokerTabPanel,
+        JokerScrollbar,
+        JokerEmpty
+    };
+    getTitle(index: number) {
+        return this.model.activePath[index]?.label || this.placeholder;
+    }
+    created() {
+        this.cascader = this.$root?.closest((n) => {
+            return n instanceof VNode.Component && n.component.name === componentName("cascader");
+        })?.component;
+    }
+
+    hasOpen = false;
+    open() {
+        if (this.hasOpen) return;
+
+        if (!this.cascader.store.nodes.length && this.cascader.props.load) {
+            this.model.loading = true;
+            this.cascader.lazyLoad(undefined, () => {
+                this.model.menus = [{ loading: false, nodes: this.cascader.store.nodes }];
+
+                this.model.loading = false;
+            });
+        } else {
+            this.model.menus ??= [{ loading: false, nodes: this.cascader.store.nodes }];
+        }
+        this.$getRef("drawer")?.component.open();
+    }
+    handleClose() {
+        this.hasOpen = false;
+    }
+    reset() {
+        this.model.menus = undefined;
+        this.model.activePath = [];
+        this.model.tabIndex = 0;
+    }
+    checkChange(node: Node) {
+        this.cascader.store?.getFlattedNodes(true, false).forEach((n) => {
+            n.checked = false;
+        });
+
+        node.doChecked(true);
+
+        this.handleExpand(node);
+
+        this.$getRef("drawer")?.component.close();
+
+        this.cascader.refreshSelectedNode();
+    }
+
+    syncActivePath() {
+        if (this.model.activePath.length) {
+            let nodes = this.model.activePath
+                .map((node) => this.cascader.store?.getNodeByValue(node.value))
+                .filter(Boolean);
+
+            //@ts-ignore
+            this.expandNodes(nodes);
+        } else {
+            let checkedValue = this.getCheckedValue();
+            if (checkedValue.length) {
+                let value = checkedValue[0];
+
+                let checkedNode = this.cascader.store?.getNodeByValue(value);
+                if (checkedNode) {
+                    this.expandNodes(checkedNode.pathNodes.slice(0, -1));
+                }
+            } else {
+                this.model.activePath = [];
+                this.model.menus = [{ loading: false, nodes: this.cascader.store.nodes }];
+                this.model.tabIndex = 0;
+            }
+        }
+    }
+
+    expandNodes(nodes: Node[]) {
+        nodes.forEach((n) => this.handleExpand(n));
+    }
+
+    async handleExpand(node: Node) {
+        let path = this.model.activePath.slice(0, node.level - 1);
+
+        this.model.menus.length = node.level;
+
+        if (!node.isLeaf) {
+            path.push(node);
+
+            if (this.cascader.props.load && !node.loaded) {
+                let menu = observer({ loading: true, nodes: node.children });
+
+                this.model.menus.push(menu);
+
+                this.cascader.lazyLoad(node, () => {
+                    menu.loading = false;
+                });
+            } else {
+                this.model.menus.push({ loading: false, nodes: node.children });
+            }
+
+            this.$nextUpdatedRender(() => {
+                this.model.tabIndex = this.model.menus.length - 1;
+            });
+        }
+
+        this.model.activePath = path;
+    }
+    getCheckedValue() {
+        let checkedValue = this.cascader?.component.value;
+
+        return checkedValue === undefined ? [] : [checkedValue];
+    }
+    handleTabIndexChange(e: VNode.Event<any>) {
+        this.model.tabIndex = e.data.name;
+    }
+}
+</script>
+
+

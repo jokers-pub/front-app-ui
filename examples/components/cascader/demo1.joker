@@ -1,0 +1,18 @@
+<template>
+    <jk-field>
+        <jk-cascader options="@options" value="@model.value" @change="handleChange"></jk-cascader>
+    </jk-field>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { mock } from "./mock";
+export default class extends Component {
+    options = mock();
+    model = {
+        value: ""
+    };
+    handleChange(e: VNode.Event) {
+        this.model.value = e.data!;
+    }
+}
+</script>

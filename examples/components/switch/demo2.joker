@@ -1,0 +1,9 @@
+<template>
+    <jk-field>
+        <jk-switch value="@true" disabled></jk-switch>
+    </jk-field>
+    <jk-field>
+        <jk-switch disabled activeColor="#13ce66" inactiveColor="#ff4949"></jk-switch>
+    </jk-field>
+</template>
+x

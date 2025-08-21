@@ -1,0 +1,27 @@
+<template>
+    <jk-button fullWidth type="primary" @click="handleClick">Click Me</jk-button>
+    <jk-action-sheet
+        ref="actionSheet"
+        @select="handleSelect"
+        options="@([
+            { label: '选项1', value: '1', icon: 'jk-icon-user' },
+            { label: '选项2', value: '2', icon: 'jk-icon-phone-outline' },
+            { label: '选项3', value: '3', icon: 'jk-icon-success' },
+            { label: '选项4', value: '4', icon: 'jk-icon-picture' }
+        ])"
+    />
+</template>
+<script>
+import { VNode } from "@joker.front/core";
+import { Component } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef("actionSheet")?.component.open();
+    }
+    handleSelect(e: VNode.Event<{ label: string; value: string }>) {
+        Toast(e.data.label);
+    }
+}
+</script>

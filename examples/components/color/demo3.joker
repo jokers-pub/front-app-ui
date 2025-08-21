@@ -1,0 +1,61 @@
+<template>
+    <DemoRow>
+        @for(let name in fontColors) {
+            <div class="demo-container" style="background-color:var(--jk-color-text-@(name));">
+                <p>
+                    @fontColors[name]
+                </p>
+                <p>
+                    --jk-color-text-@name
+                </p>
+            </div>
+        }
+    </DemoRow>
+    <DemoRow>
+        @for(let name in borderColors) {
+            <div class="demo-container border" style="background-color:var(--jk-border-color-@(name));">
+                <p>
+                    @borderColors[name]
+                </p>
+                <p>
+                    --jk-border-color-@name
+                </p>
+            </div>
+        }
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+export default class extends Component {
+    fontColors = {
+        primary: "Primary text",
+        regular: "Regular text",
+        secondary: "Secondary text",
+        placeholder: "Placeholder text"
+    };
+    borderColors = {
+        base: "Level 1 border",
+        light: "Level 2 border",
+        lighter: "Level 3 border",
+        "extra-light": "Level 4 border"
+    };
+}
+</script>
+
+<style lang="scss" scoped>
+.demo-container {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+
+    p {
+        color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    &.border p {
+        color: #000;
+    }
+}
+</style>

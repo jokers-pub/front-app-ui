@@ -1,0 +1,29 @@
+<template>
+    <DemoRow>
+        <jk-button fullWidth type="primary" @click="handleTopClick">Top</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-button fullWidth type="primary" @click="handleBottomClick">Bottom</jk-button>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleTopClick() {
+        Toast({
+            message: "Hello World",
+            position: "top"
+        });
+    }
+
+    handleBottomClick() {
+        Toast({
+            message: "Hello World",
+            position: "bottom"
+        });
+    }
+}
+</script>
+

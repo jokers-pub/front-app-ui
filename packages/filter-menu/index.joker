@@ -1,0 +1,76 @@
+<template>
+    <div
+        ref="container"
+        class="@(['jk-filter-menu', props.shrink && 'is-shrink', props.class, model.active && 'is-active'])">
+        @if(props.shrink) {
+            <ScrollBar ref="titleScrollbar" class="jk-filter-menu-wrapper" viewClass="jk-filter-menu-list">
+                @RenderSection()
+            </ScrollBar>
+        }
+        else {
+            @RenderSection()
+        }
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { componentName } from "../utils";
+import ScrollBar from "../scrollbar/index.joker";
+
+export default class extends Component<{
+    disabled: boolean;
+    shrink: boolean;
+    class: string;
+}> {
+    name = componentName("filter-menu");
+    model = {
+        active: false
+    };
+    components = {
+        ScrollBar
+    };
+    container: any;
+
+    setActive(active: boolean) {
+        this.model.active = active;
+        if (this.model.active) {
+            this.$trigger("open");
+        } else {
+            this.$trigger("close");
+        }
+    }
+    mounted() {
+        this.container = this.$getRef("container")?.output;
+    }
+}
+</script>
+
+<style scoped lang="scss">
+@use "../../theme/var.scss";
+.jk-filter-menu {
+    display: flex;
+    background: var(--jk-background-color-default);
+    box-shadow: 0 2px 12px rgba(100, 101, 102, 0.12);
+    height: 48px;
+    flex-direction: row;
+    position: relative;
+    &.is-active {
+        z-index: 2;
+    }
+    &.is-shrink {
+        :deep(.jk-filter-menu-wrapper) {
+            padding: 0 10px;
+            .jk-filter-menu-list {
+                display: flex;
+                height: 48px;
+                flex-direction: row;
+                position: relative;
+
+                .jk-filter-item {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
+</style>

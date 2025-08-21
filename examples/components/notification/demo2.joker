@@ -1,0 +1,46 @@
+<template>
+    <jk-cell>
+        <jk-button fullWidth type="success" @click="open1">Success</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth type="warning" @click="open2">Warning</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth type="info" @click="open3">Info</jk-button>
+    </jk-cell>
+    <jk-cell>
+        <jk-button fullWidth type="danger" @click="open4">Error</jk-button>
+    </jk-cell>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Notification } from "../../../src";
+export default class extends Component {
+    open1() {
+        Notification({
+            type: "success",
+            title: "Prompt",
+            message: "I'm a prompt"
+        });
+    }
+    open2() {
+        Notification({
+            type: "warning",
+            title: "Prompt",
+            message: "I'm a prompt"
+        });
+    }
+    open3() {
+        Notification.info({
+            title: "Prompt",
+            message: "I'm a prompt"
+        });
+    }
+    open4() {
+        Notification.error({
+            title: "Prompt",
+            message: "I'm a prompt"
+        });
+    }
+}
+</script>

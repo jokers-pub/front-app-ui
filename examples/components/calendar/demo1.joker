@@ -1,0 +1,27 @@
+<template>
+    <DemoRow>
+        <jk-calendar title="日历" showSwitchButton @pick="handlePick" />
+    </DemoRow>
+    <DemoRow>
+        <div class="demo">
+            <jk-calendar title="日历" @pick="handlePick" />
+        </div>
+    </DemoRow>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handlePick(e: VNode.Event<Date>) {
+        Toast(`${e.data.getFullYear()} - ${e.data.getMonth() + 1} - ${e.data.getDate()}`);
+    }
+}
+</script>
+<style scoped lang="scss">
+.demo {
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+</style>

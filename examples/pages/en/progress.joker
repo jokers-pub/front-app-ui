@@ -1,0 +1,379 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Progress Bar</h2>
+        <p>Used to display operation progress and inform users of current status and expectations.</p>
+        <h3>Linear Progress Bar</h3>
+        <p>
+            The Progress component requires the
+            <code>percentage</code>
+            property, which represents the percentage of the progress bar. It must be a value between 0 and 100. The text content of the progress bar can be customized via the
+            <code>format</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div&gt;
+        &lt;DemoRow&gt;
+            &lt;jk-progress percentage=&quot;@model.percentage1&quot;&gt;&lt;/jk-progress&gt;
+        &lt;/DemoRow&gt;
+        &lt;DemoRow&gt;
+            &lt;jk-progress percentage=&quot;@model.percentage2&quot; format=&quot;@format&quot;&gt;&lt;/jk-progress&gt;
+        &lt;/DemoRow&gt;
+        &lt;DemoRow&gt;
+            &lt;jk-progress percentage=&quot;@model.percentage2&quot; status=&quot;success&quot;&gt;&lt;/jk-progress&gt;
+        &lt;/DemoRow&gt;
+        &lt;DemoRow&gt;
+            &lt;jk-progress percentage=&quot;@model.percentage2&quot; status=&quot;warning&quot;&gt;&lt;/jk-progress&gt;
+        &lt;/DemoRow&gt;
+        &lt;jk-progress percentage=&quot;@model.percentage1&quot; status=&quot;exception&quot;&gt;&lt;/jk-progress&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        percentage1: 50,
+        percentage2: 100
+    };
+    format(percentage: number) {
+        return percentage === 100 ? &quot;Full&quot; : percentage + &quot;%&quot;;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Internal Percentage Display</h3>
+        <p>The percentage does not occupy additional space, making it suitable for scenarios like file uploads.</p>
+        <p>
+            The Progress component allows adjusting the height of the progress bar via the
+            <code>stroke-width</code>
+            property and placing the description text inside the bar using the
+            <code>text-inside</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div&gt;
+        &lt;DemoRow&gt;&lt;jk-progress textInside strokeWidth=&quot;@model.strokeWidth1&quot; percentage=&quot;@model.percentage1&quot;&gt;&lt;/jk-progress&gt;&lt;/DemoRow&gt;
+        &lt;DemoRow&gt;&lt;jk-progress textInside strokeWidth=&quot;@model.strokeWidth2&quot; percentage=&quot;@model.percentage2&quot; status=&quot;success&quot;&gt;&lt;/jk-progress&gt;&lt;/DemoRow&gt;
+        &lt;DemoRow&gt;&lt;jk-progress textInside strokeWidth=&quot;@model.strokeWidth3&quot; percentage=&quot;@model.percentage3&quot; status=&quot;warning&quot;&gt;&lt;/jk-progress&gt;&lt;/DemoRow&gt;
+        &lt;jk-progress textInside strokeWidth=&quot;@model.strokeWidth4&quot; percentage=&quot;@model.percentage4&quot; status=&quot;exception&quot;&gt;&lt;/jk-progress&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        percentage1: 70,
+        percentage2: 100,
+        percentage3: 80,
+        percentage4: 50,
+        strokeWidth1: 26,
+        strokeWidth2: 24,
+        strokeWidth3: 22,
+        strokeWidth4: 20
+    };
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Custom Color</h3>
+        <p>
+            The progress bar color can be set via the
+            <code>color</code>
+            property, which accepts color strings, functions, or arrays.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;&lt;jk-progress percentage=&quot;@model.percentage&quot; color=&quot;@model.customColor&quot;&gt;&lt;/jk-progress&gt;&lt;/DemoRow&gt;
+    &lt;DemoRow&gt;&lt;jk-progress percentage=&quot;@model.percentage&quot; color=&quot;@customColorMethod&quot;&gt;&lt;/jk-progress&gt;&lt;/DemoRow&gt;
+    &lt;DemoRow&gt;&lt;jk-progress percentage=&quot;@model.percentage&quot; color=&quot;@model.customColors&quot;&gt;&lt;/jk-progress&gt;&lt;/DemoRow&gt;
+    &lt;jk-button-group&gt;
+        &lt;jk-button icon=&quot;jk-icon-minus&quot; @click=&quot;decrease&quot;&gt;&lt;/jk-button&gt;
+        &lt;jk-button icon=&quot;jk-icon-plus&quot; @click=&quot;increase&quot;&gt;&lt;/jk-button&gt;
+    &lt;/jk-button-group&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        percentage: 20,
+        customColor: '#409eff',
+        customColors: [
+          {color: '#f56c6c', percentage: 20},
+          {color: '#e6a23c', percentage: 40},
+          {color: '#5cb87a', percentage: 60},
+          {color: '#1989fa', percentage: 80},
+          {color: '#6f7ad3', percentage: 100}
+        ]
+    };
+
+    customColorMethod(percentage: number) {
+        if (percentage &lt; 30) {
+          return '#909399';
+        } else if (percentage &lt; 70) {
+          return '#e6a23c';
+        } else {
+          return '#67c23a';
+        }
+    }
+    increase() {
+        this.model.percentage += 10;
+        if (this.model.percentage &gt; 100) {
+          this.model.percentage = 100;
+        }
+    }
+    decrease() {
+        this.model.percentage -= 10;
+        if (this.model.percentage &lt; 0) {
+          this.model.percentage = 0;
+        }
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Circular Progress Bar</h3>
+        <p>
+            The Progress component supports circular progress bars by setting the
+            <code>type</code>
+            property. For circular progress bars, the size can be adjusted using the
+            <code>width</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div&gt;
+        &lt;jk-progress type=&quot;circle&quot; percentage=&quot;@model.percentage1&quot;&gt;&lt;/jk-progress&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;jk-progress type=&quot;circle&quot; percentage=&quot;@model.percentage2&quot;&gt;&lt;/jk-progress&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;jk-progress type=&quot;circle&quot; percentage=&quot;@model.percentage3&quot; status=&quot;success&quot;&gt;&lt;/jk-progress&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;jk-progress type=&quot;circle&quot; percentage=&quot;@model.percentage4&quot; status=&quot;warning&quot;&gt;&lt;/jk-progress&gt;
+    &lt;/div&gt;
+    &lt;jk-progress type=&quot;circle&quot; percentage=&quot;@model.percentage5&quot; status=&quot;exception&quot;&gt;&lt;/jk-progress&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        percentage1: 0,
+        percentage2: 25,
+        percentage3: 100,
+        percentage4: 70,
+        percentage5: 50
+    };
+}
+&lt;/script&gt;
+&lt;style lang=&quot;scss&quot; scoped&gt;
+div {
+    display: inline-block;
+    margin-right: 20px;
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Dashboard-style Progress Bar</h3>
+        <p>
+            A dashboard-style progress bar can be enabled via the
+            <code>type</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-progress type=&quot;dashboard&quot; percentage=&quot;@model.percentage&quot; color=&quot;@model.colors&quot;&gt;&lt;/jk-progress&gt;
+    &lt;div&gt;
+        &lt;jk-button-group&gt;
+            &lt;jk-button icon=&quot;jk-icon-minus&quot; @click=&quot;decrease&quot;&gt;&lt;/jk-button&gt;
+            &lt;jk-button icon=&quot;jk-icon-plus&quot; @click=&quot;increase&quot;&gt;&lt;/jk-button&gt;
+        &lt;/jk-button-group&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        percentage: 10,
+        colors: [
+          {color: '#f56c6c', percentage: 20},
+          {color: '#e6a23c', percentage: 40},
+          {color: '#5cb87a', percentage: 60},
+          {color: '#1989fa', percentage: 80},
+          {color: '#6f7ad3', percentage: 100}
+        ]
+    };
+
+    increase() {
+        this.model.percentage += 10;
+        if (this.model.percentage &gt; 100) {
+          this.model.percentage = 100;
+        }
+    }
+
+    decrease() {
+      this.model.percentage -= 10;
+      if (this.model.percentage &lt; 0) {
+        this.model.percentage = 0;
+      }
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Accepted Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>percentage</td>
+                    <td>Percentage (required)</td>
+                    <td>number</td>
+                    <td>0-100</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>Type of progress bar</td>
+                    <td>string</td>
+                    <td>line/circle/dashboard</td>
+                    <td>line</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class name for styling</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>strokeWidth</td>
+                    <td>Width of the progress bar in px</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td>textInside</td>
+                    <td>
+                        Display text inside the progress bar (only for
+                        <code>type=line</code>
+                        )
+                    </td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>status</td>
+                    <td>Current status of the progress bar</td>
+                    <td>string</td>
+                    <td>success/exception/warning</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>color</td>
+                    <td>
+                        Background color of the progress bar (overrides
+                        <code>status</code>
+                        color)
+                    </td>
+                    <td>string/function/array</td>
+                    <td>—</td>
+                    <td>''</td>
+                </tr>
+                <tr>
+                    <td>width</td>
+                    <td>
+                        Canvas width for circular/dashboard progress bars (
+                        <code>type=circle/dashboard</code>
+                        )
+                    </td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>126</td>
+                </tr>
+                <tr>
+                    <td>showText</td>
+                    <td>Whether to display progress text</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>strokeLinecap</td>
+                    <td>Shape of ends for circle/dashboard types</td>
+                    <td>string</td>
+                    <td>butt/round/square</td>
+                    <td>round</td>
+                </tr>
+                <tr>
+                    <td>format</td>
+                    <td>Custom text formatter function</td>
+                    <td>function(percentage)</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>defineBackColor</td>
+                    <td>Background color of the progress track (supports HEX format)</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>textColor</td>
+                    <td>Text color of the progress bar (supports HEX format)</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo5 from "../../components/progress/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/progress/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/progress/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/progress/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/progress/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

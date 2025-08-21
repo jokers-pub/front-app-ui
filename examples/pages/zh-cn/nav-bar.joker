@@ -1,0 +1,296 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h1>NavBar 导航栏</h1>
+        <p>为页面提供导航功能，常用于页面顶部。</p>
+        <h3>基本用法</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-nav-bar title=&quot;标题&quot; /&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>两侧文本图标</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-nav-bar title=&quot;标题&quot; left-icon=&quot;jk-icon-arrow-left&quot; right-icon=&quot;jk-icon-search&quot; /&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-nav-bar title=&quot;标题&quot; left-text=&quot;返回&quot; right-text=&quot;搜索&quot; /&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-nav-bar
+            title=&quot;标题&quot;
+            left-text=&quot;返回&quot;
+            left-icon=&quot;jk-icon-arrow-left&quot;
+            right-text=&quot;搜索&quot;
+            right-icon=&quot;jk-icon-search&quot;
+        /&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>使用自定义区块</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-nav-bar&gt;
+        XX银行
+        @section(&quot;left&quot;) {
+            &lt;i class=&quot;jk-icon-user&quot; /&gt;
+            &lt;span style=&quot;margin-left:5px&quot;&gt;用户中心&lt;/span&gt;
+        }
+        @section(&quot;right&quot;) {
+            推荐理财
+        }
+    &lt;/jk-nav-bar&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>禁用左右按钮</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-nav-bar
+            title=&quot;标题&quot;
+            left-text=&quot;返回&quot;
+            left-icon=&quot;jk-icon-arrow-left&quot;
+            right-text=&quot;搜索&quot;
+            right-icon=&quot;jk-icon-search&quot;
+            right-disabled
+        /&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-nav-bar
+            title=&quot;标题&quot;
+            left-text=&quot;返回&quot;
+            left-icon=&quot;jk-icon-arrow-left&quot;
+            right-text=&quot;搜索&quot;
+            right-icon=&quot;jk-icon-search&quot;
+            left-disabled
+        /&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>点击事件</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-nav-bar
+            title=&quot;标题&quot;
+            left-text=&quot;返回&quot;
+            left-icon=&quot;jk-icon-arrow-left&quot;
+            right-text=&quot;搜索&quot;
+            right-icon=&quot;jk-icon-search&quot;
+            @left-click=&quot;handleLeftClick&quot;
+            @right-click=&quot;handleRightClick&quot;
+        /&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handleLeftClick() {
+        Toast(&quot;点击了左侧&quot;);
+    }
+    handleRightClick() {
+        Toast(&quot;点击了右侧&quot;);
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <code>class</code>
+                    </td>
+                    <td>自定义类名，用于补充导航栏的样式</td>
+                    <td>
+                        <code>any</code>
+                    </td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>title</code>
+                    </td>
+                    <td>导航栏中间标题文本</td>
+                    <td>
+                        <code>string</code>
+                    </td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>leftText</code>
+                    </td>
+                    <td>导航栏左侧按钮的文本内容</td>
+                    <td>
+                        <code>string</code>
+                    </td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>leftIcon</code>
+                    </td>
+                    <td>导航栏左侧按钮的图标类名（需配合项目图标库使用）</td>
+                    <td>
+                        <code>string</code>
+                    </td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>leftDisabled</code>
+                    </td>
+                    <td>是否禁用左侧按钮（禁用后按钮不可点击，通常会有置灰样式）</td>
+                    <td>
+                        <code>boolean</code>
+                    </td>
+                    <td>
+                        <code>true</code>
+                        /
+                        <code>false</code>
+                    </td>
+                    <td>
+                        <code>false</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>rightText</code>
+                    </td>
+                    <td>导航栏右侧按钮的文本内容</td>
+                    <td>
+                        <code>string</code>
+                    </td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>rightIcon</code>
+                    </td>
+                    <td>导航栏右侧按钮的图标类名（需配合项目图标库使用）</td>
+                    <td>
+                        <code>string</code>
+                    </td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>rightDisabled</code>
+                    </td>
+                    <td>是否禁用右侧按钮（禁用后按钮不可点击，通常会有置灰样式）</td>
+                    <td>
+                        <code>boolean</code>
+                    </td>
+                    <td>
+                        <code>true</code>
+                        /
+                        <code>false</code>
+                    </td>
+                    <td>
+                        <code>false</code>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名称</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>标题自定义渲染</td>
+                </tr>
+                <tr>
+                    <td>left</td>
+                    <td>左侧菜单自定义渲染</td>
+                </tr>
+                <tr>
+                    <td>right</td>
+                    <td>右侧菜单自定义渲染</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>left-click</td>
+                    <td>左侧菜单点击事件</td>
+                </tr>
+                <tr>
+                    <td>right-click</td>
+                    <td>右侧菜单点击事件</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo5 from "../../components/nav-bar/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/nav-bar/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/nav-bar/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/nav-bar/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/nav-bar/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

@@ -1,0 +1,16 @@
+<template>
+    <jk-button fullWidth @click="open">Offset warning</jk-button>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Notification } from "../../../src";
+export default class extends Component {
+    open() {
+        Notification({
+            offset: 100,
+            title: "Prompt",
+            message: "I'm a prompt"
+        });
+    }
+}
+</script>

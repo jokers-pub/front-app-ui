@@ -1,0 +1,211 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Loading</h2>
+        <p>Displays animation effects during data loading.</p>
+        <h3>Area Display</h3>
+        <p>
+            You can specify the host element for loading display by configuring the
+            <code>target</code>
+            property.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div ref=&quot;target&quot; style=&quot;background:var(--jk-color-primary);width:200px;height:200px;&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Loading } from &quot;../../../src/index&quot;;
+export default class extends Component {
+    mounted() {
+        Loading({
+            target: this.$getRef(&quot;target&quot;)?.output
+        });
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Fullscreen Display</h3>
+        <p>
+            Enable fullscreen Loading by setting
+            <code>fullscreen</code>
+            or specifying
+            <code>target</code>
+            as
+            <strong>body</strong>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button @click=&quot;showLoading()&quot;&gt;Full-screen loading&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Loading } from &quot;../../../src/index&quot;;
+export default class extends Component {
+    showLoading() {
+        let $loading = Loading({
+            fullscreen: true
+        });
+
+        setTimeout(() =&gt; {
+            $loading.close();
+        }, 2000);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>
+                Note: Only one fullscreen Loading can exist at a time. If triggered repeatedly, the previous incomplete Loading operation component will be returned.
+            </p>
+        </blockquote>
+        <p>
+            It is important to note that fullscreen Loading called as a service is a singleton: if another fullscreen Loading is called before the previous one is closed, it will not create a new Loading instance; instead, it will return the existing fullscreen Loading instance:
+        </p>
+        <pre><code class="language-js">let loading1 = Loading({ fullscreen: true });  
+let loading2 = Loading({ fullscreen: true });  
+console.log(loading1 === loading2); // true  
+</code></pre>
+        <p>
+            At this point, calling the
+            <code>close</code>
+            method of any of them will close the fullscreen Loading.
+        </p>
+        <h3>Customization</h3>
+        <p>Customizable loading text, icon, and background color.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div ref=&quot;target&quot; class=&quot;container&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Loading } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    mounted() {
+        Loading({
+            target: this.$getRef(&quot;target&quot;)?.output,
+            customClass: &quot;custom&quot;,
+            spinner: &quot;jk-icon-loading&quot;,
+            text: &quot;Customize the Loading text.&quot;
+        });
+    }
+}
+&lt;/script&gt;
+
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.container {
+    background: var(--jk-color-primary);
+    height: 200px;
+
+    :deep(.custom) {
+        background: rgba(0, 0, 0, 0.6);
+    }
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Options</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>target</td>
+                    <td>
+                        The DOM node that Loading needs to cover. Can be a DOM object or a string. If a string is passed, it will be used as input for
+                        <code>document.querySelector</code>
+                        to retrieve the corresponding DOM node.
+                    </td>
+                    <td>Element / string / VNode.Node; supports VNode nodes</td>
+                    <td>—</td>
+                    <td>document.body</td>
+                </tr>
+                <tr>
+                    <td>fullscreen</td>
+                    <td>Whether to display in fullscreen mode</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>text</td>
+                    <td>Loading text displayed below the loading icon</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>spinner</td>
+                    <td>Custom loading icon class name</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>customClass</td>
+                    <td>Custom class name for Loading</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Methods</h3>
+        <p>
+            Calling
+            <code>Loading</code>
+            will return the current Loading instance. To manually close the instance, you can call its
+            <code>close</code>
+            method.
+        </p>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Method Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>close</td>
+                    <td>Closes the current Loading</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo3 from "../../components/loading/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/loading/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/loading/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

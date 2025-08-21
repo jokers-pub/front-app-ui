@@ -1,0 +1,32 @@
+<template>
+    <jk-filter-menu>
+        <jk-filter-item
+            options="@([
+                { label: '全部商品', value: '' },
+                { label: '新款商品', value: '1' },
+                { label: '活动商品', value: '2' }
+            ])"
+        />
+        <jk-filter-item title="筛选" ref="item2">
+            <jk-cell title="包邮">
+                <jk-switch />
+            </jk-cell>
+            <jk-cell title="促销">
+                <jk-switch />
+            </jk-cell>
+            <jk-cell>
+                <jk-button type="primary" fullWidth @click="handleClick">确定</jk-button>
+            </jk-cell>
+        </jk-filter-item>
+    </jk-filter-menu>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef("item2")?.component.close();
+    }
+}
+</script>
+

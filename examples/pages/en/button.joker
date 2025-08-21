@@ -1,0 +1,423 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Button</h2>
+        <p>Commonly used action buttons.</p>
+        <h3>Basic Usage</h3>
+        <p>Basic button functionality.</p>
+        <p>
+            Use the
+            <code>type</code>
+            ,
+            <code>plain</code>
+            ,
+            <code>round</code>
+            , and
+            <code>circle</code>
+            attributes to define the Button's style.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button&gt;Default Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;primary&quot;&gt;Primary Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;success&quot;&gt;Success Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;info&quot;&gt;Info Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;warning&quot;&gt;Warning Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;danger&quot;&gt;Danger Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button plain&gt;Plain Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;primary&quot; plain&gt;Primary Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;success&quot; plain&gt;Success Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;info&quot; plain&gt;Info Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;warning&quot; plain&gt;Warning Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;danger&quot; plain&gt;Danger Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button round&gt;Round Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;primary&quot; round&gt;Primary Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;success&quot; round&gt;Success Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;info&quot; round&gt;Info Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;warning&quot; round&gt;Warning Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;danger&quot; round&gt;Danger Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button icon=&quot;jk-icon-search&quot; circle&gt;&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-edit&quot; circle&gt;&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;success&quot; icon=&quot;jk-icon-check&quot; circle&gt;&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;info&quot; icon=&quot;jk-icon-message&quot; circle&gt;&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;warning&quot; icon=&quot;jk-icon-star-off&quot; circle&gt;&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;danger&quot; icon=&quot;jk-icon-delete&quot; circle&gt;&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Disabled State</h3>
+        <p>Disabled state of the button.</p>
+        <p>
+            You can use the
+            <code>disabled</code>
+            attribute to define whether the button is available. It accepts a
+            <code>Boolean</code>
+            value.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button disabled&gt;Default Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;primary&quot; disabled&gt;Primary Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;success&quot; disabled&gt;Success Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;info&quot; disabled&gt;Info Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;warning&quot; disabled&gt;Warning Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;danger&quot; disabled&gt;Danger Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button plain disabled&gt;Plain Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;primary&quot; plain disabled&gt;Primary Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;success&quot; plain disabled&gt;Success Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;info&quot; plain disabled&gt;Info Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;warning&quot; plain disabled&gt;Warning Button&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;danger&quot; plain disabled&gt;Danger Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Text Button</h3>
+        <p>
+            A button without borders and background color. Attribute:
+            <code>link</code>
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button link&gt;Text Button&lt;/jk-button&gt;
+        &lt;jk-button link disabled&gt;Text Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button link type=&quot;success&quot;&gt;Text Button&lt;/jk-button&gt;
+        &lt;jk-button link type=&quot;success&quot; disabled&gt;Text Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button link type=&quot;warning&quot;&gt;Text Button&lt;/jk-button&gt;
+        &lt;jk-button link type=&quot;warning&quot; disabled&gt;Text Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button link type=&quot;danger&quot;&gt;Text Button&lt;/jk-button&gt;
+        &lt;jk-button link type=&quot;danger&quot; disabled&gt;Text Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button link type=&quot;info&quot;&gt;Text Button&lt;/jk-button&gt;
+        &lt;jk-button link type=&quot;info&quot; disabled&gt;Text Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Icon Button</h3>
+        <p>Buttons with icons can enhance recognition (with text) or save space (without text).</p>
+        <p>
+            To set an icon, simply specify the
+            <code>icon</code>
+            attribute. For the list of available icons, refer to Joker-UI's icon component. To place the icon on the right of the text, use the
+            <code>i</code>
+            tag for custom icons.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-edit&quot;&gt;&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-share&quot;&gt;&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-delete&quot;&gt;&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-search&quot;&gt;Search&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;primary&quot;&gt;
+            Upload
+            &lt;i class=&quot;jk-icon-upload jk-icon--right&quot;&gt;&lt;/i&gt;
+        &lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Button Group</h3>
+        <p>Appears as a group of buttons, commonly used for multiple similar actions.</p>
+        <p>
+            Use the
+            <code>&lt;jk-button-group&gt;</code>
+            tag to nest your buttons.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button-group&gt;
+            &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-arrow-left&quot;&gt;Previous Page&lt;/jk-button&gt;
+            &lt;jk-button type=&quot;primary&quot;&gt;
+                Next Page
+                &lt;i class=&quot;jk-icon-arrow-right&quot;&gt;&lt;/i&gt;
+            &lt;/jk-button&gt;
+        &lt;/jk-button-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button-group&gt;
+            &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-edit&quot;&gt;&lt;/jk-button&gt;
+            &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-share&quot;&gt;&lt;/jk-button&gt;
+            &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-delete&quot;&gt;&lt;/jk-button&gt;
+        &lt;/jk-button-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button-group full-width&gt;
+            &lt;jk-button type=&quot;primary&quot; icon=&quot;jk-icon-arrow-left&quot;&gt;Previous Page&lt;/jk-button&gt;
+            &lt;jk-button type=&quot;primary&quot;&gt;
+                Next Page
+                &lt;i class=&quot;jk-icon-arrow-right&quot;&gt;&lt;/i&gt;
+            &lt;/jk-button&gt;
+        &lt;/jk-button-group&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Loading</h3>
+        <p>Perform data loading after clicking the button and display the loading state on the button.</p>
+        <p>
+            To set the loading state, simply set the
+            <code>loading</code>
+            attribute to
+            <code>true</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;primary&quot; loading&gt;Loading&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;success&quot; loading&gt;Loading&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;warning&quot; loading&gt;Loading&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button type=&quot;danger&quot; loading&gt;Loading&lt;/jk-button&gt;
+        &lt;jk-button type=&quot;info&quot; loading&gt;Loading&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Different Sizes</h3>
+        <p>
+            The Button component provides three sizes in addition to the default value, allowing you to choose the appropriate button size for different scenarios.
+        </p>
+        <p>
+            Sizes include:
+            <code>medium</code>
+            ,
+            <code>small</code>
+            , and
+            <code>mini</code>
+            . Configure them by setting the
+            <code>size</code>
+            attribute.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button&gt;Default Button&lt;/jk-button&gt;
+        &lt;jk-button size=&quot;medium&quot;&gt;Medium-sized Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button size=&quot;small&quot;&gt;Small Button&lt;/jk-button&gt;
+        &lt;jk-button size=&quot;mini&quot;&gt;Extra-small Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button round&gt;Default Button&lt;/jk-button&gt;
+        &lt;jk-button size=&quot;medium&quot; round&gt;Medium-sized Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button size=&quot;small&quot; round&gt;Small Button&lt;/jk-button&gt;
+        &lt;jk-button size=&quot;mini&quot; round&gt;Extra-small Button&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot;&gt;Full Width&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth size=&quot;mini&quot; type=&quot;danger&quot; round&gt;Full Width&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Valid Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>size</td>
+                    <td>Size</td>
+                    <td>string</td>
+                    <td>medium / small / mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>Type</td>
+                    <td>string</td>
+                    <td>primary / success / warning / danger / info</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>plain</td>
+                    <td>Whether to use plain style</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class name</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>full-width</td>
+                    <td>Whether to set width to 100%</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>link</td>
+                    <td>Whether to display as text</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>round</td>
+                    <td>Whether to use round corners</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>circle</td>
+                    <td>Whether to use circular shape</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>loading</td>
+                    <td>Whether to show loading state</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Whether to disable the button</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>Icon class name</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>autofocus</td>
+                    <td>Whether to focus by default</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>native-type</td>
+                    <td>Native type attribute</td>
+                    <td>string</td>
+                    <td>button / submit / reset</td>
+                    <td>button</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>Triggered on button click</td>
+                    <td>VNode.Event</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo7 from "../../components/button/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/button/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/button/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/button/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/button/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/button/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/button/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

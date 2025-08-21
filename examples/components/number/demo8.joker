@@ -1,0 +1,44 @@
+<template>
+    <jk-field>
+        <jk-number placeholder="Please enter content" size="large" />
+    </jk-field>
+    <jk-field>
+        <jk-number placeholder="Please enter content" />
+    </jk-field>
+    <jk-field>
+        <jk-number size="small" placeholder="Please enter content" />
+    </jk-field>
+    <jk-field>
+        <jk-number size="mini" placeholder="Please enter content" />
+    </jk-field>
+    <jk-field>
+        <jk-number hiddenControls placeholder="Please enter content">
+            @section("prepend") {
+                Font size
+            }
+            @section("append") {
+                px
+            }
+        </jk-number>
+    </jk-field>
+    <jk-field>
+        <jk-number hiddenControls size="small" placeholder="Please enter content">
+            @section("prepend") {
+                Font size
+            }
+            @section("append") {
+                px
+            }
+        </jk-number>
+    </jk-field>
+    <jk-field>
+        <jk-number hiddenControls size="mini" placeholder="Please enter content">
+            @section("prepend") {
+                Font size
+            }
+            @section("append") {
+                px
+            }
+        </jk-number>
+    </jk-field>
+</template>

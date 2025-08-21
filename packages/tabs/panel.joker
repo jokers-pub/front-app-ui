@@ -1,0 +1,126 @@
+<template>
+    @if(model.show) {
+        <div class="@(['jk-tabs-content', tabs.props.animated && 'animated', model.style])">
+            @RenderSection()
+        </div>
+    }
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { componentName } from "../utils";
+import { guid } from "@joker.front/shared";
+
+export default class extends Component<{
+    name: string;
+    label: string;
+}> {
+    propsOption = {
+        name: guid()
+    };
+    model = {
+        style: "",
+        show: false
+    };
+
+    tabs: any;
+    animatedTimeOut?: any;
+    created() {
+        this.tabs = this.$root.closest(
+            (n) => n instanceof VNode.Component && n.component.name === componentName("tabs")
+        )?.component;
+
+        this.$watch(
+            () => this.tabs?.model.showName,
+            async (nv, ov) => {
+                if (this.tabs?.props.animated) {
+                    //首次无动画 && 关联标签
+                    if (ov !== undefined && (nv === this.props.name || ov === this.props.name)) {
+                        let newIndex = this.tabs.model.tabs.findIndex((n) => n.name === nv);
+                        let oldIndex = this.tabs.model.tabs.findIndex((n) => n.name === ov);
+
+                        if (nv === this.props.name) {
+                            //新页
+                            this.model.style = newIndex - oldIndex > 0 ? "in-right" : "in-left";
+
+                            this.model.show = true;
+                            await this.$nextUpdatedRender();
+                            requestAnimationFrame(() => {
+                                if (this.tabs?.model.showName === this.props.name) {
+                                    this.model.style += " active";
+                                    window.clearTimeout(this.animatedTimeOut);
+                                    this.animatedTimeOut = setTimeout(() => {
+                                        this.model.style = "";
+                                    }, 300);
+                                } else {
+                                    this.model.style = "";
+                                }
+                            });
+                        }
+                        if (ov === this.props.name) {
+                            this.model.style = newIndex - oldIndex > 0 ? "out-left" : "out-right";
+                            window.clearTimeout(this.animatedTimeOut);
+                            this.animatedTimeOut = setTimeout(() => {
+                                this.model.show = false;
+                                this.$nextUpdatedRender(() => {
+                                    this.model.style = "";
+                                });
+                            }, 300);
+                        }
+
+                        return;
+                    }
+                }
+                this.model.show = nv === this.props.name;
+            }
+        );
+    }
+
+    mounted() {
+        this.tabs?.registerTab(this.props.name, this);
+    }
+
+    beforeDestroy() {
+        this.tabs?.unRegisterTab(this.props.name);
+    }
+}
+</script>
+<style scoped lang="scss">
+.jk-tabs-content {
+    &.animated {
+        transition: transform 0.3s ease;
+
+        // 从左侧进入的动画
+        &.in-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            transform: translateX(-100%);
+            &.active {
+                transform: translateX(0);
+            }
+        }
+
+        // 从右侧进入的动画
+        &.in-right {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            transform: translateX(100%);
+
+            &.active {
+                transform: translateX(0);
+            }
+        }
+
+        &.out-left {
+            transform: translateX(-100%);
+        }
+
+        &.out-right {
+            transform: translateX(100%);
+        }
+    }
+}
+</style>

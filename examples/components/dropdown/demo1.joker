@@ -1,0 +1,15 @@
+<template>
+    <DemoRow>
+        <jk-dropdown>
+            <a href="javascript:void(0)">
+                Trigger by click
+                <i class="jk-icon-arrow-down" />
+                <jk-dropdown-menu>
+                    <jk-dropdown-item>Menu 1</jk-dropdown-item>
+                    <jk-dropdown-item>Menu 2</jk-dropdown-item>
+                    <jk-dropdown-item>Menu 3</jk-dropdown-item>
+                </jk-dropdown-menu>
+            </a>
+        </jk-dropdown>
+    </DemoRow>
+</template>

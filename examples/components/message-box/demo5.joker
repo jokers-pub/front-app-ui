@@ -1,0 +1,30 @@
+<template>
+    <DemoRow>
+        <jk-link type="primary" @click="open">Open multiple windows simultaneously</jk-link>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { MessageBox } from "../../../src";
+
+export default class extends Component {
+    open() {
+        MessageBox.alert("I'm prompt box 1", "Friendly reminder");
+        MessageBox.alert("I'm prompt box 2", "Friendly reminder");
+        MessageBox.alert("I'm prompt box 3", "Friendly reminder");
+        MessageBox.confirm(
+            "I'm the middle confirmation box. There are still two pop-ups left. Do you want to execute closeAll to close all pop-ups?",
+            "Friendly reminder",
+            {
+                callback(action) {
+                    if (action === "confirm") {
+                        MessageBox.closeAll();
+                    }
+                }
+            }
+        );
+        MessageBox.alert("I'm prompt box 4", "Friendly reminder");
+        MessageBox.alert("I'm prompt box 5", "Friendly reminder");
+    }
+}
+</script>

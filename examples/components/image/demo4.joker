@@ -1,0 +1,37 @@
+<template>
+    <div class="demo-image">
+        @for(let url of model.urls) {
+            <jk-cell>
+                <jk-image src="@url" lazy preview />
+            </jk-cell>
+        }
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        urls: [
+            "https://img.freepik.com/free-photo/futuristic-cyberpunk-city-skyline-with-neon-lights_23-2149315228.jpg", // 赛博朋克霓虹都市全景
+            "https://img.freepik.com/free-photo/abstract-glowing-blue-digital-network-connections_23-2149286543.jpg", // 科技感数字网络光效
+            "https://img.freepik.com/free-photo/dramatic-sci-fi-landscape-with-floating-islands-and-purple-sky_23-2149314897.jpg", // 科幻悬浮岛紫色天空
+            "https://img.freepik.com/free-photo/neon-lit-gaming-setup-with-mechanical-keyboard-and-headphones_23-2149315017.jpg", // 潮流电竞设备特写
+            "https://img.freepik.com/free-photo/futuristic-flying-car-hovering-over-a-neon-city-street_23-2149315102.jpg", // 未来飞行汽车霓虹街景
+            "https://img.freepik.com/free-photo/abstract-3d-render-of-glowing-geometric-shapes-in-space_23-2149298765.jpg", // 太空感发光几何图形
+            "https://img.freepik.com/free-photo/rainy-urban-street-with-reflective-wet-pavement-and-neon-signs_23-2149314988.jpg", // 雨夜霓虹街道反光
+            "https://img.freepik.com/free-photo/holographic-display-showing-futuristic-data-visualization_23-2149286611.jpg", // 全息投影数据可视化
+            "https://img.freepik.com/free-photo/dark-tech-background-with-glowing-circuit-lines-and-particles_23-2149298833.jpg", // 暗黑科技电路粒子背景
+            "https://img.freepik.com/free-photo/sci-fi-character-in-a-glowing-exoskeleton-suit_23-2149315189.jpg" // 科幻外骨骼发光角色
+        ]
+    };
+}
+</script>
+
+<style lang="scss" scoped>
+.demo-image {
+    height: 400px;
+    overflow-y: auto;
+}
+</style>

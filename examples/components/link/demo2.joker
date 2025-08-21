@@ -1,0 +1,19 @@
+<template>
+    <div class="demo-container">
+        <jk-link disabled>Default Link</jk-link>
+        <jk-link type="primary" disabled>Primary Link</jk-link>
+        <jk-link type="success" disabled>Success Link</jk-link>
+        <jk-link type="warning" disabled>Warning Link</jk-link>
+        <jk-link type="danger" disabled>Danger Link</jk-link>
+        <jk-link type="info" disabled>Info Link</jk-link>
+    </div>
+</template>
+
+<style scoped lang="scss">
+.demo-container {
+    :deep(.jk-link) {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+}
+</style>

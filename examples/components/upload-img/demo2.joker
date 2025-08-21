@@ -1,0 +1,5 @@
+<template>
+    <jk-cell>
+        <jk-upload-img max-file-count="2" />
+    </jk-cell>
+</template>

@@ -1,0 +1,768 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Calendar 日历</h2>
+        <p>日历组件用于选择日期或日期区间。</p>
+        <h3>默认展示</h3>
+        <p>
+            使用
+            <code>jk-calendar</code>
+            组件实现日历的展示。
+        </p>
+        <p>
+            <code>showSwitchButton</code>
+            开启后则只能通过切换按钮来切换年月，关闭此属性后，支持通过滑动方式切换年月。
+        </p>
+        <p>
+            请注意当不启用
+            <code>showSwitchButton</code>
+            参数时需要配置面板高度，默认为100%高度。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-calendar title=&quot;日历&quot; showSwitchButton @pick=&quot;handlePick&quot; /&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;div class=&quot;demo&quot;&gt;
+            &lt;jk-calendar title=&quot;日历&quot; @pick=&quot;handlePick&quot; /&gt;
+        &lt;/div&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handlePick(e: VNode.Event&lt;Date&gt;) {
+        Toast(`${e.data.getFullYear()} - ${e.data.getMonth() + 1} - ${e.data.getDate()}`);
+    }
+}
+&lt;/script&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo {
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+&lt;/style&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>区间选择</h3>
+        <p>
+            启用
+            <code>range</code>
+            可以选择日期区间
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-calendar title=&quot;日历&quot; showSwitchButton range @pick=&quot;handlePick&quot; /&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;div class=&quot;demo&quot;&gt;
+            &lt;jk-calendar title=&quot;日历&quot; range @pick=&quot;handlePick&quot; /&gt;
+        &lt;/div&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handlePick(e: VNode.Event&lt;[Date, Date]&gt;) {
+        let startDate = `${e.data[0].getFullYear()}/${e.data[0].getMonth() + 1}/${e.data[0].getDate()}`;
+
+        let endDate = `${e.data[1].getFullYear()}/${e.data[1].getMonth() + 1}/${e.data[1].getDate()}`;
+        Toast(`${startDate} - ${endDate}`);
+    }
+}
+&lt;/script&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo {
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+&lt;/style&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>限制选择范围</h3>
+        <p>
+            设置
+            <code>minDate</code>
+            、
+            <code>maxDate</code>
+            可设置可选时间范围
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-calendar title=&quot;日历&quot; showSwitchButton minDate=&quot;@(new Date(2025, 8, 10))&quot; range @pick=&quot;handlePick&quot; /&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;div class=&quot;demo&quot;&gt;
+            &lt;jk-calendar
+                title=&quot;日历&quot;
+                minDate=&quot;@(new Date(2025, 8, 10))&quot;
+                maxDate=&quot;@(new Date(2025, 10, 10))&quot;
+                range
+                @pick=&quot;handlePick&quot;
+            /&gt;
+        &lt;/div&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+
+export default class extends Component {
+    handlePick(e: VNode.Event&lt;[Date, Date]&gt;) {
+        let startDate = `${e.data[0].getFullYear()}/${e.data[0].getMonth() + 1}/${e.data[0].getDate()}`;
+
+        let endDate = `${e.data[1].getFullYear()}/${e.data[1].getMonth() + 1}/${e.data[1].getDate()}`;
+        Toast(`${startDate} - ${endDate}`);
+    }
+}
+&lt;/script&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo {
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+&lt;/style&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>自定义单元格</h3>
+        <p>
+            通过
+            <code>formatter</code>
+            可以对单元格信息进行修改
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;div class=&quot;demo&quot;&gt;
+            &lt;jk-calendar
+                title=&quot;日历&quot;
+                minDate=&quot;@(new Date(2025, 8, 10))&quot;
+                maxDate=&quot;@(new Date(2025, 10, 10))&quot;
+                range
+                value=&quot;@([new Date(2025, 9, 12), new Date(2025, 9, 15)])&quot;
+                @pick=&quot;handlePick&quot;
+                formatter=&quot;@formatter&quot;
+            /&gt;
+        &lt;/div&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+import { CalendarCellDataType } from &quot;../../../packages/calendar/type&quot;;
+
+export default class extends Component {
+    handlePick(e: VNode.Event&lt;[Date, Date]&gt;) {
+        let startDate = `${e.data[0].getFullYear()}/${e.data[0].getMonth() + 1}/${e.data[0].getDate()}`;
+
+        let endDate = `${e.data[1].getFullYear()}/${e.data[1].getMonth() + 1}/${e.data[1].getDate()}`;
+        Toast(`${startDate} - ${endDate}`);
+    }
+    formatter(cell: CalendarCellDataType) {
+        if (cell.start) {
+            cell.tip = &quot;入店&quot;;
+        }
+
+        if (cell.end) {
+            cell.tip = &quot;离店&quot;;
+        }
+
+        if (cell.type === &quot;normal&quot; &amp;&amp; cell.date.getMonth() + 1 === 10 &amp;&amp; cell.date.getDate() === 1) {
+            cell.topTip = &quot;庆祝&quot;;
+            cell.text = &quot;国庆节&quot;;
+            cell.tip = &quot;放假喽&quot;;
+            cell.customClass = &quot;custom-class&quot;;
+        }
+    }
+}
+&lt;/script&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+.demo {
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+
+    :deep(.custom-class) {
+        background: red;
+        color: #fff;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+}
+&lt;/style&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>日期选择面板</h3>
+        <p>
+            使用
+            <code>jk-calendar-picker</code>
+            来展示日期
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref1')&quot;&gt;Click Me&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref2')&quot;&gt;Range Picker&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref3')&quot;&gt;With Confirm&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref4')&quot;&gt;With Switch Button&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-button fullWidth type=&quot;primary&quot; @click=&quot;handleOpen('ref5')&quot;&gt;With Validate&lt;/jk-button&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref1&quot; @pick=&quot;handlePick&quot; /&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref2&quot; range @pick=&quot;handleRangePick&quot; /&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref3&quot; range @pick=&quot;handleRangePick&quot; show-confirm /&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref4&quot; range @pick=&quot;handleRangePick&quot; show-confirm show-switch-button /&gt;
+    &lt;jk-calendar-picker title=&quot;日历&quot; ref=&quot;ref5&quot; range @pick=&quot;handleRangePick&quot; validate=&quot;@validateRange&quot; /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { Toast } from &quot;../../../packages/toast&quot;;
+import dayjs from &quot;dayjs&quot;;
+
+export default class extends Component {
+    handleOpen(e: VNode.Event, ref: string) {
+        this.$getRef(ref)?.component.open();
+    }
+    handlePick(e: VNode.Event&lt;Date&gt;) {
+        Toast(`${e.data.getFullYear()} - ${e.data.getMonth() + 1} - ${e.data.getDate()}`);
+    }
+    handleRangePick(e: VNode.Event&lt;[Date, Date]&gt;) {
+        let startDate = `${e.data[0].getFullYear()}/${e.data[0].getMonth() + 1}/${e.data[0].getDate()}`;
+
+        let endDate = `${e.data[1].getFullYear()}/${e.data[1].getMonth() + 1}/${e.data[1].getDate()}`;
+        Toast(`${startDate} - ${endDate}`);
+    }
+    validateRange(dates: [Date, Date]) {
+        let diff = dayjs(dates[1]).diff(dayjs(dates[0]), &quot;day&quot;);
+
+        if (diff &gt; 3) {
+            Toast(&quot;最多选择3天&quot;);
+
+            return false;
+        }
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>表单项</h3>
+        <p>
+            <code>jk-date</code>
+            组件并配置
+            <code>type=''calendar</code>
+            进行日期选择表单选择。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-date type=&quot;calendar&quot; /&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-date type=&quot;calendar&quot; range showConfirm format=&quot;MM/DD&quot; value=&quot;@(['2025-08-07', '2025-08-12'])&quot; /&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Calendar Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>title</td>
+                    <td>日历标题</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>当前选中的日期，区间选择时为日期数组</td>
+                    <td>Date / [Date, Date]</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>defaultValue</td>
+                    <td>日历默认展示的年月</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>minDate</td>
+                    <td>可选的最小日期</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>maxDate</td>
+                    <td>可选的最大日期</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showWeekNumber</td>
+                    <td>是否显示周数</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>showSwitchButton</td>
+                    <td>是否显示年月切换按钮，显示后则不能通过上下滚动切换年月</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>formatter</td>
+                    <td>日历单元格格式化函数，可通过该函数修改日期单元格的渲染信息</td>
+                    <td>(data: CalendarCellDataType) =&gt; void</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>readonly</td>
+                    <td>是否为只读状态，只读状态下无法选择日期</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>range</td>
+                    <td>是否开启日期区间选择模式</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>CalendarCellDataType 类型定义</h3>
+        <pre><code class="language-typescript">export type CalendarCellDataType = {
+    date: Date; // 单元格对应的日期
+    type: &quot;normal&quot; | &quot;prev-month&quot; | &quot;next-month&quot; | &quot;today&quot; | &quot;placeholder&quot;; // 单元格类型
+    text?: any; // 单元格显示的文本内容
+    disabled?: boolean; // 单元格是否禁用（禁用后无法选择）
+    customClass?: string; // 单元格自定义样式类名
+    inRange?: boolean; // 单元格是否在选中的日期区间内（仅区间选择模式生效）
+    start?: boolean; // 单元格是否为区间选择的开始日期（仅区间选择模式生效）
+    end?: boolean; // 单元格是否为区间选择的结束日期（仅区间选择模式生效）
+    tip?: string; // 单元格下方提示文本
+    topTip?: string; // 单元格上方提示文本
+};
+</code></pre>
+        <h3>Calendar Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>pick</td>
+                    <td>选中日期后触发</td>
+                    <td>Date/[Date,Date]</td>
+                </tr>
+                <tr>
+                    <td>change</td>
+                    <td>选中日期后触发，区别于pick，在区间选择时当只选择开始日期时也会触发change</td>
+                    <td>Date/[Date,Date]</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Calendar Picker Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>title</td>
+                    <td>日历选择面板标题</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>当前选中的日期，区间选择时为日期数组</td>
+                    <td>Date / [Date, Date]</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>defaultValue</td>
+                    <td>日历选择面板默认展示的年月</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>minDate</td>
+                    <td>可选的最小日期</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>maxDate</td>
+                    <td>可选的最大日期</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showWeekNumber</td>
+                    <td>是否显示周数</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>showSwitchButton</td>
+                    <td>是否显示年月切换按钮，显示后则不能通过上下滚动切换年月（可选参数）</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>
+                        日历选择面板尺寸。&lt;br&gt;优先级：手动传递值 &gt; 自动判断；&lt;br&gt;自动判断规则：开启
+                        <code>showSwitchButton</code>
+                        时为
+                        <code>auto</code>
+                        ，关闭/未设置
+                        <code>showSwitchButton</code>
+                        时为
+                        <code>60%</code>
+                    </td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>
+                        自动判断（
+                        <code>auto</code>
+                        /
+                        <code>60%</code>
+                        ）
+                    </td>
+                </tr>
+                <tr>
+                    <td>formatter</td>
+                    <td>日历单元格格式化函数，可通过该函数修改日期单元格的渲染信息</td>
+                    <td>(data: CalendarCellDataType) =&gt; void</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>range</td>
+                    <td>是否开启日期区间选择模式</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showConfirm</td>
+                    <td>是否显示确认按钮</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>confirmText</td>
+                    <td>确认按钮文本</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;确认&quot;</td>
+                </tr>
+                <tr>
+                    <td>validate</td>
+                    <td>
+                        确认前的验证函数，点击确认后、面板关闭前执行。返回
+                        <code>true</code>
+                        则继续确认流程，返回
+                        <code>false</code>
+                        则取消确认并保持面板打开
+                    </td>
+                    <td>(value: Date / [Date, Date]) =&gt; boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Calendar Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>pick</td>
+                    <td>选中日期后触发</td>
+                    <td>Date/[Date,Date]</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Date Calendar Attribute</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>绑定值</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>类型</td>
+                    <td>calendar</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>自定义 class 样式</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>禁用</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>clearable</td>
+                    <td>是否显示清除按钮</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>输入框尺寸</td>
+                    <td>string</td>
+                    <td>large / small / mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td>非范围选择时的占位内容</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>format</td>
+                    <td>展示值的格式</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>HH:mm:ss</td>
+                </tr>
+                <tr>
+                    <td>value-format</td>
+                    <td>可选，绑定值的格式</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>HH:mm:ss</td>
+                </tr>
+                <tr>
+                    <td>default-value</td>
+                    <td>可选，选择器打开时默认显示的时间</td>
+                    <td>string</td>
+                    <td>符合 format 格式</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>prefix-icon</td>
+                    <td>自定义头部图标的类名</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>jk-icon-time</td>
+                </tr>
+                <tr>
+                    <td>panel-size</td>
+                    <td>Picker面板尺寸</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>pick-validate</td>
+                    <td>
+                        参考 Calendar中的
+                        <code>validate</code>
+                        参数
+                    </td>
+                    <td>Function</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>cellFormatter</td>
+                    <td>
+                        参考 Calendar中的
+                        <code>formatter</code>
+                        参数
+                    </td>
+                    <td>Function</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>range</td>
+                    <td>是否开启日期区间选择模式</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showConfirm</td>
+                    <td>是否显示确认按钮</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>confirmText</td>
+                    <td>确认按钮文本</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;确认&quot;</td>
+                </tr>
+                <tr>
+                    <td>minDate</td>
+                    <td>可选的最小日期</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>maxDate</td>
+                    <td>可选的最大日期</td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showWeekNumber</td>
+                    <td>是否显示周数</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>showSwitchButton</td>
+                    <td>是否显示年月切换按钮，显示后则不能通过上下滚动切换年月（可选参数）</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Date Calendar Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>选中日期后触发</td>
+                    <td>string / [string,string]</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo6 from "../../components/calendar/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/calendar/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/calendar/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/calendar/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/calendar/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/calendar/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

@@ -1,0 +1,36 @@
+<template>
+    <jk-table data="@model.tableData" select multiple height="250" ref="table">
+        <jk-table-column type="selection" key="checked" />
+        <jk-table-column label="Date" key="date" width="180" />
+        <jk-table-column label="Name" key="name" width="180" />
+        <jk-table-column label="Address" key="address" />
+        <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+    </jk-table>
+    <jk-button @click="handleLoadClick">Load data</jk-button>
+    <jk-button @click="handleClick">Select all</jk-button>
+</template>
+<script>
+import { Component, combinedReply } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        tableData: undefined
+    };
+    handleLoadClick() {
+        combinedReply(() => {
+            this.model.tableData = [];
+            for (let i = 0; i < 200; i++) {
+                this.model.tableData.push(
+                    { name: "Zhang San", date: "2023-11-21", address: "Jinan, Shandong Province", money: 1000 },
+                    { name: "Li Si", date: "2023-11-21", address: "Jinan, Shandong Province", money: 10 },
+                    { name: "Li Mei", date: "2023-11-21", address: "Jinan, Shandong Province", money: 300 },
+                    { name: "Wang Wu", date: "2023-11-21", address: "Jinan, Shandong Province", money: 11.9 }
+                );
+            }
+        });
+    }
+    handleClick() {
+        this.$getRef("table")?.component.selectAll();
+    }
+}
+</script>

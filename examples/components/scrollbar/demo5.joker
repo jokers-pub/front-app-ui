@@ -1,0 +1,41 @@
+<template>
+    <div style="height:200px">
+        <jk-scrollbar
+            pulldown="@({
+                enable: true,
+                load: pulldownLoad
+            })">
+            @for(let i = 0; i < 20; i++) {
+                <p class="scrollbar-demo-item">
+                    @i
+                </p>
+            }
+        </jk-scrollbar>
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { sleep } from "@joker.front/shared";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    async pulldownLoad() {
+        await sleep(2000);
+
+        Toast("加载成功");
+    }
+}
+</script>
+<style lang="scss" scoped>
+.scrollbar-demo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 4px;
+    background: #ecf5ff;
+    color: #409eff;
+}
+</style>

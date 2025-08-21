@@ -1,0 +1,34 @@
+<template>
+    <jk-button plain @click="open1">Success</jk-button>
+    <jk-button plain @click="open2">Warning</jk-button>
+    <jk-button plain @click="open3">Message</jk-button>
+    <jk-button plain @click="open4">Error</jk-button>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { Message } from "../../../src";
+
+export default class extends Component {
+    open1() {
+        Message({
+            type: "success",
+            message: "I'm a success prompt"
+        });
+    }
+    open2() {
+        Message({
+            type: "warning",
+            message: "I'm a warning prompt"
+        });
+    }
+    open3() {
+        Message({
+            type: "info",
+            message: "I'm an information prompt"
+        });
+    }
+    open4() {
+        Message.error("I'm an error prompt");
+    }
+}
+</script>

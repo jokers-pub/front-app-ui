@@ -1,0 +1,36 @@
+<template>
+    <jk-tabs sticky>
+        <jk-tab-panel label="Home">
+            @for(let i = 0; i < 2; i++) {
+                <div class="demo-content">Home</div>
+            }
+        </jk-tab-panel>
+        <jk-tab-panel label="Issues">
+            @for(let i = 0; i < 2; i++) {
+                <div class="demo-content">Issues</div>
+            }
+        </jk-tab-panel>
+        <jk-tab-panel label="Repository">
+            @for(let i = 0; i < 2; i++) {
+                <div class="demo-content">Repository</div>
+            }
+        </jk-tab-panel>
+        <jk-tab-panel label="Settings">
+            @for(let i = 0; i < 2; i++) {
+                <div class="demo-content">Settings</div>
+            }
+        </jk-tab-panel>
+    </jk-tabs>
+</template>
+
+<style scoped>
+.demo-content {
+    font-size: 24px;
+    height: 300px;
+    font-weight: bold;
+    padding: 20px 10px;
+    text-align: center;
+    line-height: 300px;
+    color: var(--jk-color-text-secondary);
+}
+</style>

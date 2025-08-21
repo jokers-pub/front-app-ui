@@ -1,0 +1,284 @@
+<template>
+    <JokerDrawer ref="drawer" direction="bottom" @close="handleClose" showHeader="@false">
+        <JokerPicker
+            value="@(columnsValue)"
+            columns="@model.columns"
+            title="@props.title"
+            @change="handleChange"
+            @confirm="handleConfirm"
+            @cancel="handleCancel"
+        />
+    </JokerDrawer>
+</template>
+<script>
+import { VNode } from "@joker.front/core";
+import { PickerPanel } from "./base";
+import {
+    DEFAULT_FORMATS,
+    getDateFromYearAndWeek,
+    getISOWeeksInYear,
+    getWeekNumber,
+    parseAsFormatAndType
+} from "../../utils/date";
+
+import JokerDrawer from "../../drawer/index.joker";
+import JokerPicker from "../../picker/index.joker";
+import dayjs from "dayjs";
+
+type FilterFunction = (date: { year?: number; month?: number; day?: number; week?: number }) => boolean;
+export default class extends PickerPanel<{
+    type: "date" | "month" | "week" | "year";
+    value: string;
+    defaultValue: string;
+    title: string;
+    format: string;
+    filter: FilterFunction;
+    labelFormat: (value: number, type: "year" | "month" | "day" | "week") => string;
+}> {
+    propsOption = {
+        type: "date"
+    };
+    model = {
+        date: undefined as Date,
+        value: {} as { year?: number; month?: number; day?: number; week?: number },
+        columnsValue: [],
+        columns: [],
+        format: ""
+    };
+    components = {
+        JokerDrawer,
+        JokerPicker
+    };
+    created() {
+        this.$syncProp("format", (value) => {
+            if (value) return value;
+
+            return DEFAULT_FORMATS[this.props.type];
+        });
+        this.$watch(
+            () => [this.props.value, this.props.defaultValue],
+            () => {
+                this.initModelDate();
+            }
+        );
+    }
+    open() {
+        if (this.showDrawer) return;
+        this.showDrawer = true;
+        this.initModelDate();
+        this.initColumns();
+
+        this.$getRef("drawer")?.component.open();
+    }
+
+    get columnsValue() {
+        switch (this.props.type) {
+            case "year":
+                return [this.model.value.year];
+            case "date":
+                return [this.model.value.year, this.model.value.month, this.model.value.day];
+            case "month":
+                return [this.model.value.year, this.model.value.month];
+            case "week":
+                return [this.model.value.year, this.model.value.week];
+        }
+    }
+    initModelDate() {
+        if (this.props.value) {
+            this.model.date = parseAsFormatAndType(this.props.value, this.model.format, this.props.type!);
+        } else if (this.props.defaultValue) {
+            this.model.date = parseAsFormatAndType(this.props.defaultValue, this.model.format, this.props.type!);
+        } else {
+            this.model.date = new Date();
+        }
+
+        this.model.value.year = this.model.date.getFullYear();
+        this.model.value.month = this.model.date.getMonth() + 1;
+        this.model.value.day = this.model.date.getDate();
+        this.model.value.week = getWeekNumber(this.model.date);
+    }
+
+    initColumns() {
+        let result = [];
+
+        let showYear = false;
+        let showMonth = false;
+        let showDay = false;
+        let showWeek = false;
+
+        switch (this.props.type) {
+            case "year":
+                showYear = true;
+                break;
+            case "date":
+                showYear = showMonth = showDay = true;
+                break;
+            case "month":
+                showYear = showMonth = true;
+                break;
+            case "week":
+                showYear = showWeek = true;
+                break;
+        }
+
+        if (showYear) {
+            result.push(this.getYear());
+        }
+        if (showMonth) {
+            result.push(this.getMonth());
+        }
+
+        if (showDay) {
+            result.push(this.getDay());
+        }
+
+        if (showWeek) {
+            result.push(this.getWeeks());
+        }
+
+        this.model.columns = result;
+    }
+
+    defaultFilter: FilterFunction = (data) => {
+        // 获取当前年份作为基准
+        let currentYear = new Date().getFullYear();
+        // 校验数据中是否包含年份信息
+        if (data.year) {
+            // 判断年份是否在 [当前年份-10, 当前年份+10] 区间内（包含边界）
+            return data.year >= currentYear - 10 && data.year <= currentYear + 10;
+        }
+
+        return true;
+    };
+    getYear() {
+        let result = [];
+        let disabled: FilterFunction = this.props.filter ?? this.defaultFilter;
+        let currentYear = new Date().getFullYear();
+        for (let i = 1900; i <= currentYear + 100; i++) {
+            if (disabled({ year: i })) {
+                result.push({ label: this.props.labelFormat?.(i, "year") ?? i, value: i });
+            }
+        }
+
+        return result;
+    }
+
+    getMonth() {
+        let result = [];
+        let disabled: FilterFunction = this.props.filter ?? this.defaultFilter;
+        let year = this.model.value.year;
+        if (year) {
+            for (let i = 1; i <= 12; i++) {
+                if (disabled({ year, month: i })) {
+                    result.push({
+                        label: this.props.labelFormat?.(i, "month") ?? i.toString().padStart(2, "0"),
+                        value: i
+                    });
+                }
+            }
+        }
+
+        return result;
+    }
+
+    getDay() {
+        let result = [];
+        let disabled: FilterFunction = this.props.filter ?? this.defaultFilter;
+        let year = this.model.value.year;
+        let month = this.model.value.month;
+
+        if (year && month) {
+            const daysInMonth = dayjs(`${year}-${month}`).daysInMonth();
+
+            // 循环生成当月的所有日期
+            for (let i = 1; i <= daysInMonth; i++) {
+                if (disabled({ year, month, day: i })) {
+                    result.push({
+                        label: this.props.labelFormat?.(i, "day") ?? i.toString().padStart(2, "0"),
+                        value: i
+                    });
+                }
+            }
+        }
+        return result;
+    }
+
+    getWeeks() {
+        let result = [];
+        let disabled: FilterFunction = this.props.filter ?? this.defaultFilter;
+        let year = this.model.value.year;
+
+        if (year) {
+            const allWeek = getISOWeeksInYear(year);
+
+            // 循环生成当月的所有日期
+            for (let i = 1; i <= allWeek; i++) {
+                if (disabled({ year: year, week: i })) {
+                    result.push({
+                        label: this.props.labelFormat?.(i, "week") ?? i,
+                        value: i
+                    });
+                }
+            }
+        }
+        return result;
+    }
+    handleChange(e: VNode.Event<{ value: number[] }>) {
+        if (this.props.type === "date" || this.props.type === "month") {
+            let changeDay = false;
+            let datas = e.data.value;
+            if (datas[0] !== undefined && datas[0] !== this.model.value.year) {
+                this.model.value.year = datas[0];
+
+                this.model.columns[1] = this.getMonth();
+                changeDay = true;
+            }
+
+            if (
+                this.props.type === "date" &&
+                (changeDay || (datas[1] !== undefined && datas[1] !== this.model.value.month))
+            ) {
+                this.model.value.month = datas[1];
+
+                this.model.columns[2] = this.getDay();
+            }
+
+            this.model.value.month = datas[1] ?? this.model.value.month;
+            if (this.props.type === "date") {
+                this.model.value.day = datas[2] ?? this.model.value.day;
+            }
+        } else if (this.props.type === "week") {
+            let datas = e.data.value;
+            if (datas[0] !== undefined && datas[0] !== this.model.value.year) {
+                this.model.value.year = datas[0];
+
+                this.model.columns[1] = this.getWeeks();
+            }
+
+            this.model.value.week = datas[1] ?? this.model.value.week;
+        }
+    }
+    handleConfirm(e: VNode.Event<number[]>) {
+        this.$getRef("drawer")?.component.close();
+        let value = "";
+        switch (this.props.type) {
+            case "year":
+                value = dayjs(new Date(e.data[0], 1, 1)).format(this.model.format);
+                break;
+            case "date":
+                value = dayjs(new Date(e.data[0], e.data[1] - 1, e.data[2])).format(this.model.format);
+                break;
+            case "month":
+                value = dayjs(new Date(e.data[0], e.data[1] - 1, 1)).format(this.model.format);
+                break;
+            case "week":
+                value = dayjs(getDateFromYearAndWeek(e.data[0], e.data[1])).format(this.model.format);
+                break;
+        }
+        this.$trigger("pick", value);
+    }
+    handleCancel() {
+        this.$getRef("drawer")?.component.close();
+    }
+}
+</script>

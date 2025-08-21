@@ -1,0 +1,13 @@
+<template>
+    <jk-dropdown split-button disabled>
+        More Menus
+        <jk-dropdown-menu>
+            <jk-dropdown-item icon="jk-icon-circle-plus-outline">Create a New Project</jk-dropdown-item>
+            <jk-dropdown-item icon="jk-icon-remove-outline">Delete</jk-dropdown-item>
+            <jk-dropdown-item disabled icon="jk-icon-edit">Edit</jk-dropdown-item>
+            <jk-dropdown-item divided></jk-dropdown-item>
+            <jk-dropdown-item icon="jk-icon-share">Share the Project</jk-dropdown-item>
+            <jk-dropdown-item icon="jk-icon-document-copy">Copy the Project</jk-dropdown-item>
+        </jk-dropdown-menu>
+    </jk-dropdown>
+</template>

@@ -1,0 +1,113 @@
+<template>
+    <div
+        class="@(['jk-grid-item', border && 'is-border', props.class])"
+        style="@({ flexBasis: width })"
+        @click="handleClick">
+        <div class="content">
+            <Jokerbadge isDot="@props.dot" value="@props.badge">
+                @if($sections.default) {
+                    @RenderSection()
+                }
+                else {
+                    @if($sections.icon) {
+                        @RenderSection("icon")
+                    }
+                    else if(props.icon) {
+                        <i class="@props.icon" />
+                    }
+                    @if($sections.title) {
+                        @RenderSection("title")
+                    }
+                    else if(props.title) {
+                        <p>
+                            @props.title
+                        </p>
+                    }
+                }
+            </Jokerbadge>
+        </div>
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { componentName } from "../utils";
+import Jokerbadge from "../badge/index.joker";
+
+export default class extends Component<{
+    class: any;
+    icon: string;
+    title: string;
+    badge: string;
+    dot: boolean;
+}> {
+    grid: any;
+    components = {
+        Jokerbadge
+    };
+    created() {
+        this.grid = this.$root.closest(
+            (n) => n instanceof VNode.Component && n.component.name === componentName("grid")
+        )?.component;
+    }
+
+    get width() {
+        return this.grid?.model.itemWidth;
+    }
+    get border() {
+        return this.grid?.props.border;
+    }
+
+    handleClick() {
+        this.$trigger("click");
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-grid-item {
+    box-sizing: border-box;
+    position: relative;
+
+    .content {
+        box-sizing: border-box;
+        height: 100%;
+        padding: 16px 8px;
+        background: var(--jk-background-color-default);
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        i {
+            font-size: 28px;
+            color: var(--jk-color-text-regular);
+        }
+
+        p {
+            margin: 8px 0 0 0;
+            line-height: 1.5;
+            word-break: break-all;
+            font-size: 12px;
+            color: var(--jk-color-text-regular);
+        }
+    }
+    &.is-border {
+        &::after {
+            content: "";
+            z-index: 0;
+            display: block;
+            border: solid 1px var(--jk-border-color-lighter);
+            border-width: 0 1px 1px 0;
+            position: absolute;
+            box-sizing: border-box;
+            transform: scale(0.5);
+            pointer-events: none;
+            top: calc(-50% + 2px) !important;
+            right: calc(-50% + 2px) !important;
+            bottom: calc(-50% + 2px) !important;
+            left: calc(-50% + 2px) !important;
+        }
+    }
+}
+</style>

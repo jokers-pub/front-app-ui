@@ -1,0 +1,407 @@
+<template>
+    @if(props.showTitle) {
+        <div class="jk-calendar-table-title">
+            @dateTitle
+        </div>
+    }
+    <div class="jk-calendar-table-mark">
+        @(month + 1)
+    </div>
+    @for(let row of model.rows) {
+        <div class="jk-calendar-row">
+            @if(!this.props.inContainer || this.props.load) {
+                @for(let cell of row) {
+                    <div class="cell @getCellClass(cell)" @click="handleClick(cell)">
+                        @if(cell.topTip) {
+                            <span class="top-tip">@(cell.topTip)</span>
+                        }
+                        @if(cell.text) {
+                            <span class="text">@cell.text</span>
+                        }
+                        @if(cell.start || cell.end || cell.tip) {
+                            <span class="tip">@(getCellTip(cell))</span>
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { addDate, clearTime, getDayCountOfMonth, getStartDateOfMonth } from "../utils/date";
+import { getValueByLang } from "../utils/lang";
+import { CalendarCellDataType } from "./type";
+
+export default class extends Component<{
+    date: Date;
+    value: any;
+    inContainer: boolean;
+    load: boolean;
+    minDate?: Date;
+    maxDate?: Date;
+    readonly: boolean;
+    formatter: (data: CalendarCellDataType) => void;
+    isRange: boolean;
+}> {
+    model = {
+        rows: [] as Array<CalendarCellDataType>[]
+    };
+
+    get year() {
+        return this.props.date!.getFullYear();
+    }
+
+    get month() {
+        return this.props.date!.getMonth();
+    }
+    get dateTitle() {
+        return `${this.year} ${getValueByLang("year")} ${this.month + 1} ${getValueByLang("month")}`;
+    }
+    get startDate() {
+        return getStartDateOfMonth(this.year, this.month);
+    }
+
+    created() {
+        this.$watch(
+            () => [this.props.date],
+            () => {
+                this.calcRows();
+            }
+        );
+
+        if (this.props.isRange) {
+            this.$watch(
+                () => {
+                    if (this.props.value) {
+                        return [this.props.value[0], this.props.value[1]];
+                    }
+                },
+                () => {
+                    this.markRange();
+                }
+            );
+        }
+
+        this.calcRows();
+    }
+    getCellTip(cell: CalendarCellDataType) {
+        if (cell.tip !== undefined) return cell.tip;
+
+        if (this.props.isRange) {
+            if (cell.start) {
+                return getValueByLang("start");
+            }
+
+            if (cell.end) {
+                return getValueByLang("end");
+            }
+        }
+    }
+    markRange() {
+        let minDate = this.props.value[0] && clearTime(this.props.value[0]);
+        let maxDate = (this.props.value[1] && clearTime(this.props.value[1])) || minDate;
+
+        if (minDate && maxDate) {
+            [minDate, maxDate] = [Math.min(minDate, maxDate), Math.max(minDate, maxDate)];
+        }
+
+        let rows = this.model.rows;
+        for (let i = 0, k = rows.length; i < k; i++) {
+            let row = rows[i];
+            for (let j = 0, l = row.length; j < l; j++) {
+                let cell = row[j];
+                let time = clearTime(cell.date!);
+
+                // 计算新的范围相关值
+                const newIsRange = !!(minDate && time >= minDate && maxDate && time <= maxDate);
+                const newStart = !!(minDate && time === minDate);
+                const newEnd = !!(maxDate && time === maxDate);
+
+                // 检查是否有任何值发生变化
+                const hasChanged = cell.inRange !== newIsRange || cell.start !== newStart || cell.end !== newEnd;
+
+                // 只有当值发生变化时才更新并执行formatter
+                if (hasChanged) {
+                    cell.inRange = newIsRange;
+                    cell.start = newStart;
+                    cell.end = newEnd;
+                    this.props.formatter?.(cell);
+                }
+            }
+        }
+    }
+
+    calcRows() {
+        let year = this.year;
+        let month = this.month;
+        let date = new Date(year, month, 1);
+
+        let dateCountOfMonth = getDayCountOfMonth(year, month);
+        let dateCountOfLastMonth = getDayCountOfMonth(year, month === 0 ? 11 : month - 1);
+        let day = date.getDay();
+        let startDate = this.startDate;
+        let rows: Array<any[]> = [];
+        let now = clearTime(new Date());
+        let count = 1;
+
+        day = day === 0 ? 7 : day;
+
+        for (let i = 0; i < 6; i++) {
+            let row: CalendarCellDataType[] = [];
+
+            for (let j = 0; j < 7; j++) {
+                let cellDate = addDate(startDate, i * 7 + j, "d");
+                let date = clearTime(cellDate);
+
+                let cell: CalendarCellDataType = {
+                    date: new Date(date),
+                    type: "normal",
+                    text: 0,
+                    disabled: false,
+                    customClass: "",
+                    inRange: false,
+                    start: false,
+                    end: false
+                };
+
+                if (this.props.isRange) {
+                    let minDate = this.props.value?.[0];
+                    let maxDate = this.props.value?.[1];
+                    cell.inRange = minDate && date >= clearTime(minDate) && maxDate && date <= clearTime(maxDate);
+
+                    cell.start = !!(minDate && date === clearTime(minDate));
+                    cell.end = !!(maxDate && date === clearTime(maxDate));
+                }
+
+                if (this.props.minDate) {
+                    cell.disabled = date < clearTime(this.props.minDate);
+                }
+                if (!cell.disabled && this.props.maxDate) {
+                    cell.disabled = date > clearTime(this.props.maxDate);
+                }
+
+                if (date === now) {
+                    cell.type = "today";
+                }
+
+                if (i === 0 || i === 1) {
+                    if (j + i * 7 >= day) {
+                        cell.text = count++;
+                    } else {
+                        if (this.props.inContainer) {
+                            cell.type = "placeholder";
+                        } else {
+                            const dayOfWeek = i * 7 + j;
+                            const daysBeforeFirstDay = day - 1;
+                            const offset = daysBeforeFirstDay - dayOfWeek;
+                            cell.text = dateCountOfLastMonth - offset;
+                            cell.type = "prev-month";
+                        }
+                    }
+                } else {
+                    if (count <= dateCountOfMonth) {
+                        cell.text = count++;
+                    } else {
+                        if (this.props.inContainer) {
+                            cell.type = "placeholder";
+                        } else {
+                            cell.text = count++ - dateCountOfMonth;
+                            cell.type = "next-month";
+                        }
+                    }
+                }
+
+                this.props.formatter?.(cell);
+                row.push(cell);
+            }
+
+            if (this.props.inContainer) {
+                //全是占位符则不处理
+                if (!row.some((n) => n.type !== "placeholder")) continue;
+            }
+
+            rows.push(row);
+        }
+
+        this.model.rows = rows;
+    }
+
+    getCellClass(cell: CalendarCellDataType) {
+        let classes: string[] = [];
+
+        if (!cell.disabled && (cell.type === "normal" || cell.type === "today")) {
+            classes.push("available");
+
+            if (cell.type === "today") {
+                classes.push("today");
+            }
+        } else {
+            classes.push(cell.type);
+        }
+
+        if (
+            this.props.value &&
+            (cell.type === "normal" || cell.type === "today") &&
+            this.cellMatchesDate(cell, this.props.value)
+        ) {
+            classes.push("selected");
+        }
+
+        if (cell.inRange && (cell.type === "normal" || cell.type === "today")) {
+            classes.push("in-range");
+
+            if (cell.start) {
+                classes.push("start-date");
+            }
+
+            if (cell.end) {
+                classes.push("end-date");
+            }
+        }
+
+        if (cell.disabled) {
+            classes.push("is-disabled");
+        }
+
+        if (cell.customClass) {
+            classes.push(cell.customClass);
+        }
+
+        return classes.join(" ");
+    }
+
+    handleClick(e: VNode.Event, cell: CalendarCellDataType) {
+        if (this.props.readonly || cell.disabled || cell.type === "placeholder") return;
+
+        let newDate = cell.date!;
+        if (this.props.isRange) {
+            if (this.props.value?.filter(Boolean).length === 2) {
+                this.$trigger("pick", [newDate, undefined]);
+            } else {
+                let minDate = this.props.value?.[0];
+                //开始选择时，minDate必有值
+                if (newDate >= minDate) {
+                    this.$trigger("pick", [minDate, newDate]);
+                } else {
+                    this.$trigger("pick", [newDate, minDate]);
+                }
+            }
+        } else {
+            this.$trigger("pick", newDate);
+        }
+    }
+
+    private cellMatchesDate(cell: CalendarCellDataType, date: Date | [Date, Date]) {
+        if (Array.isArray(date)) {
+            return (
+                cell.date?.getTime() === clearTime(date[0]) || (date[1] && cell.date?.getTime() === clearTime(date[1]))
+            );
+        } else {
+            return cell.date?.getTime() === clearTime(date);
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-calendar-row {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    div.cell {
+        flex: 1;
+        height: 100%;
+        text-align: center;
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+
+        margin-bottom: 4px;
+        cursor: pointer;
+        span.text {
+            flex: 1;
+            height: 54px;
+            display: block;
+            line-height: 54px;
+            border-radius: 4px;
+        }
+        span.top-tip {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 6px;
+            font-size: 10px;
+            line-height: 14px;
+            text-align: center;
+        }
+        span.tip {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 6px;
+            font-size: 10px;
+            line-height: 14px;
+            text-align: center;
+        }
+
+        &.next-month,
+        &.prev-month {
+            color: var(--jk-color-text-placeholder);
+        }
+
+        &.today {
+            span.text {
+                color: var(--jk-color-primary);
+                font-weight: bold;
+            }
+
+            &.start-date span.text,
+            &.end-date span.text {
+                color: #fff;
+            }
+        }
+
+        &.in-range {
+            background-color: var(--jk-border-color-extra-light);
+        }
+
+        &.selected:not(.is-disabled) {
+            color: #fff;
+            span.text {
+                background-color: var(--jk-color-primary);
+            }
+        }
+
+        &.start-date,
+        &.end-date {
+            color: #fff;
+            border-radius: 4px;
+            background-color: var(--jk-color-primary);
+        }
+
+        &.is-disabled {
+            cursor: not-allowed;
+            color: var(--jk-color-text-placeholder);
+        }
+    }
+}
+.jk-calendar-table-mark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 1;
+    color: var(--jk-color-text-placeholder);
+    opacity: 0.1;
+    font-size: 160px;
+    pointer-events: none;
+}
+.jk-calendar-table-title {
+    height: 44px;
+    font-weight: 600;
+    line-height: 44px;
+    text-align: center;
+}
+</style>

@@ -1,0 +1,333 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Pagination</h2>
+        <p>Used to split large datasets into paginated views.</p>
+        <h3>Basic Usage</h3>
+        <p>
+            Set the
+            <code>layout</code>
+            property to specify the elements to be displayed, separated by commas. The layout elements will be displayed in order.
+        </p>
+        <ul>
+            <li>
+                <code>prev</code>
+                indicates the previous page
+            </li>
+            <li>
+                <code>next</code>
+                indicates the next page
+            </li>
+            <li>
+                <code>pager</code>
+                represents the page number list
+            </li>
+            <li>
+                <code>total</code>
+                shows total item count
+            </li>
+        </ul>
+        <blockquote>
+            <p>
+                Additionally, a special layout symbol
+                <code>-&gt;</code>
+                is provided. Elements after
+                <code>-&gt;</code>
+                will be right-aligned.
+            </p>
+        </blockquote>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination total=&quot;50&quot; /&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination total=&quot;1000&quot; /&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination total=&quot;1000&quot; currentPage=&quot;25&quot; disabled /&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Set Maximum Page Button Count</h3>
+        <p>
+            By default, when the total page count exceeds 7, the Pagination component will collapse excess page buttons. The
+            <code>pager-count</code>
+            property can be used to set the maximum number of page buttons.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination total=&quot;1000&quot; currentPage=&quot;10&quot; pagerCount=&quot;3&quot; pageSize=&quot;20&quot; /&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Display Total Item Count</h3>
+        <p>
+            Add
+            <code>total</code>
+            to the layout configuration to display the total number of items.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination total=&quot;1000&quot; pageSize=&quot;20&quot; layout=&quot;@(['total', '-&gt;', 'prev', 'pager', 'next'])&quot; /&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Hide When Only One Page</h3>
+        <p>
+            Configure
+            <code>hide-on-single-page</code>
+            to hide pagination when there's only one page.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-switch value=&quot;@hideOnSinglePage&quot; @change=&quot;handleChange&quot; /&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination hideOnSinglePage=&quot;@model.hideOnSinglePage&quot; total=&quot;5&quot; pageSize=&quot;10&quot; /&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+
+
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        hideOnSinglePage: false
+    };
+
+    handleChange(e: VNode.Event&lt;boolean&gt;) {
+        this.model.hideOnSinglePage = e.data;
+    }
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Small Pagination</h3>
+        <p>
+            Use the
+            <code>small</code>
+            property to display a compact pagination style.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination total=&quot;1000&quot; pageSize=&quot;20&quot; small disabled layout=&quot;@(['total', 'prev', 'pager', 'next'])&quot; /&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Pagination with Background Color</h3>
+        <p>
+            Set
+            <code>background</code>
+            to display pagination with background colors following the primary color scheme.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo8)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination total=&quot;1000&quot; pageSize=&quot;20&quot; background layout=&quot;@(['total', 'prev', 'pager', 'next'])&quot; /&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination total=&quot;1000&quot; pageSize=&quot;20&quot; disabled background layout=&quot;@(['total', 'prev', 'pager', 'next'])&quot; /&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination total=&quot;1000&quot; pageSize=&quot;20&quot; small background layout=&quot;@(['total', 'prev', 'pager', 'next'])&quot; /&gt;
+    &lt;/jk-cell&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-pagination
+            total=&quot;1000&quot;
+            pageSize=&quot;20&quot;
+            small
+            disabled
+            background
+            layout=&quot;@(['total', 'prev', 'pager', 'next'])&quot;
+        /&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Accepted Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>small</td>
+                    <td>Whether to use small pagination style</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom class name</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>background</td>
+                    <td>Whether buttons have background color</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>page-size</td>
+                    <td>Number of items per page</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>total</td>
+                    <td>Total item count</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>page-count</td>
+                    <td>
+                        Total page count. Either total or page-count can be used to display pages; Use total if you need page-sizes functionality
+                    </td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>pager-count</td>
+                    <td>Number of visible page buttons, will collapse when total pages exceed this value</td>
+                    <td>number</td>
+                    <td>odd number ≥5 and ≤21</td>
+                    <td>7</td>
+                </tr>
+                <tr>
+                    <td>current-page</td>
+                    <td>Current page number</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>layout</td>
+                    <td>Component layout, element names separated by commas</td>
+                    <td>string[]</td>
+                    <td>
+                        <code>sizes</code>
+                        ,
+                        <code>prev</code>
+                        ,
+                        <code>pager</code>
+                        ,
+                        <code>next</code>
+                    </td>
+                    <td>'prev, pager, next'</td>
+                </tr>
+                <tr>
+                    <td>page-sizes</td>
+                    <td>Options for items per page selector</td>
+                    <td>number[]</td>
+                    <td>—</td>
+                    <td>[10, 20, 30, 40, 50, 100]</td>
+                </tr>
+                <tr>
+                    <td>prev-text</td>
+                    <td>Custom text to replace prev icon</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>next-text</td>
+                    <td>Custom text to replace next icon</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Whether pagination is disabled</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>hide-on-single-page</td>
+                    <td>Whether to hide when there's only one page</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>size-change</td>
+                    <td>Triggers when page-size changes</td>
+                    <td>new page size</td>
+                </tr>
+                <tr>
+                    <td>change</td>
+                    <td>Triggers when current-page changes</td>
+                    <td>new page number</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo8 from "../../components/pagination/demo8.joker";
+import DEMO_JOKER_demo7 from "../../components/pagination/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/pagination/demo6.joker";
+import DEMO_JOKER_demo3 from "../../components/pagination/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/pagination/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/pagination/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo8,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

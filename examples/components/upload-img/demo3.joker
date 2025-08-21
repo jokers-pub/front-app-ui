@@ -1,0 +1,5 @@
+<template>
+    <jk-cell>
+        <jk-upload-img mimeType="@(['image/png'])" />
+    </jk-cell>
+</template>

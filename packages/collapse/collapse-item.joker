@@ -1,0 +1,113 @@
+<template>
+    <JokerCell title="@props.title" @click="handleClick">
+        @if($sections.title) {
+            @section("title") {
+                @RenderSection("title")
+            }
+        }
+        @section("rightIcon") {
+            <i class="@arrowClassName"></i>
+        }
+    </JokerCell>
+    @if(model.isActive || !props.lazy) {
+        <div class="jk-collapse-item-content @(model.isActive && 'active')">
+            <div class="outside">
+                <div class="inside">
+                    @RenderSection()
+                </div>
+            </div>
+        </div>
+    }
+</template>
+<script>
+import { VNode, Component } from "@joker.front/core";
+import { guid } from "@joker.front/shared";
+import { componentName } from "../utils";
+import JokerCell from "../cell/index.joker";
+
+export default class extends Component<{
+    name: string;
+    title: string;
+    lazy: boolean;
+}> {
+    name = componentName("collapse-item");
+
+    components = {
+        JokerCell
+    };
+    propsOption = {
+        name: guid()
+    };
+
+    model = {
+        isActive: false
+    };
+
+    mounted() {
+        this.initIsActive();
+    }
+
+    initIsActive() {
+        this.collapse?.model.activeNames.forEach((item) => {
+            if (item && item === this.props.name) {
+                this.model.isActive = true;
+            }
+        });
+    }
+
+    handleClick(e: VNode.Node) {
+        this.collapse?.refreshChildren(this);
+    }
+
+    setIsActive(isActive) {
+        this.model.isActive = isActive;
+    }
+
+    get collapse() {
+        return this.$rootVNode?.closest((n) => {
+            return n instanceof VNode.Component && n.component.name === componentName("collapse");
+        })?.component;
+    }
+
+    get arrowClassName() {
+        return this.model.isActive ? "jk-icon-arrow-right transition-top" : "jk-icon-arrow-right transition-down";
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+i.jk-icon-arrow-right {
+    transition: transform 0.3s;
+}
+i.transition-down {
+    transform: rotate(90deg);
+}
+i.transition-top {
+    transform: rotate(-90deg);
+}
+
+.jk-collapse-item-content {
+    color: var(--jk-color-text-regular);
+    font-size: 14px;
+    background: var(--jk-background-color-default);
+    /* 使用grid布局实现高度动画 */
+    display: grid;
+    /* 默认高度为0，不显示内容 */
+    grid-template-rows: 0fr;
+    /* 隐藏溢出内容 */
+    overflow: hidden;
+    /* 添加过渡动画效果 */
+    transition: grid-template-rows 0.3s ease;
+
+    &.active {
+        grid-template-rows: 1fr;
+    }
+
+    > div.outside {
+        min-height: 0;
+        > .inside {
+            padding: 12px 16px;
+        }
+    }
+}
+</style>

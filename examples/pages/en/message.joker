@@ -1,0 +1,382 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Message Prompt</h2>
+        <p>
+            Commonly used for feedback prompts after active operations. The key difference from Notification is that the latter is more often used for passive system-level alerts.
+        </p>
+        <h3>Basic Usage</h3>
+        <p>
+            Appears from the top and automatically disappears after 3 seconds. The configuration is very similar to Notification, so some options won't be explained in detail here. A list of options is provided at the end, which can be understood by referring to Notification's documentation.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button @click=&quot;open&quot;&gt;Open the prompt&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Message } from &quot;../../../src&quot;;
+export default class extends Component {
+    open() {
+        Message(&quot;This is a prompt&quot;);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Different States</h3>
+        <p>
+            Used to display feedback for operations with &quot;success, warning, message, error&quot; classifications. When more custom properties are needed, Message can also accept an object as a parameter. For example, setting the
+            <code>type</code>
+            field can define different states, with the default being
+            <code>info</code>
+            . In this case, the main content is passed via the
+            <code>message</code>
+            value.
+        </p>
+        <blockquote>
+            <p>
+                Currently, Message provides 4 commonly used invocation methods, including
+                <code>info</code>
+                ,
+                <code>success</code>
+                ,
+                <code>warning</code>
+                , and
+                <code>error</code>
+                .
+            </p>
+        </blockquote>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button plain @click=&quot;open1&quot;&gt;Success&lt;/jk-button&gt;
+    &lt;jk-button plain @click=&quot;open2&quot;&gt;Warning&lt;/jk-button&gt;
+    &lt;jk-button plain @click=&quot;open3&quot;&gt;Message&lt;/jk-button&gt;
+    &lt;jk-button plain @click=&quot;open4&quot;&gt;Error&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Message } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open1() {
+        Message({
+            type: &quot;success&quot;,
+            message: &quot;I'm a success prompt&quot;
+        });
+    }
+    open2() {
+        Message({
+            type: &quot;warning&quot;,
+            message: &quot;I'm a warning prompt&quot;
+        });
+    }
+    open3() {
+        Message({
+            type: &quot;info&quot;,
+            message: &quot;I'm an information prompt&quot;
+        });
+    }
+    open4() {
+        Message.error(&quot;I'm an error prompt&quot;);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Closable</h3>
+        <p>
+            A close button can be added. By default, Message cannot be manually closed. If a manually closable Message is needed, use the
+            <code>showClose</code>
+            field. Additionally, like Notification, Message has a controllable
+            <code>duration</code>
+            . Setting it to
+            <code>0</code>
+            means it won't close automatically; the default is 3000 milliseconds.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button plain @click=&quot;open1&quot;&gt;Success&lt;/jk-button&gt;
+    &lt;jk-button plain @click=&quot;open2&quot;&gt;Warning&lt;/jk-button&gt;
+    &lt;jk-button plain @click=&quot;open3&quot;&gt;Message&lt;/jk-button&gt;
+    &lt;jk-button plain @click=&quot;open4&quot;&gt;Error&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Message } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open1() {
+        Message({
+            type: &quot;success&quot;,
+            closable: true,
+            message: &quot;I'm a success prompt&quot;
+        });
+    }
+    open2() {
+        Message({
+            type: &quot;warning&quot;,
+            closable: true,
+            message: &quot;I'm a warning prompt&quot;
+        });
+    }
+    open3() {
+        Message({
+            type: &quot;info&quot;,
+            closable: true,
+            message: &quot;I'm an information prompt&quot;
+        });
+    }
+    open4() {
+        Message({
+            type: &quot;error&quot;,
+            closable: true,
+            duration: 5000,
+            message: &quot;I'm an error prompt&quot;
+        });
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Centered Text</h3>
+        <p>
+            Use the
+            <code>center</code>
+            property to horizontally center the text.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button @click=&quot;open&quot;&gt;Open the prompt&lt;/jk-button&gt;
+    &lt;jk-button @click=&quot;open1&quot;&gt;Open multiple times in the same sequence, only show one&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Message } from &quot;../../../src&quot;;
+export default class extends Component {
+    open() {
+        Message({
+            center: true,
+            message: &quot;This is a prompt&quot;
+        });
+    }
+
+    open1() {
+        for (let i = 0; i &lt; 10; i++) {
+            Message({
+                id: &quot;test&quot;,
+                center: true,
+                message: &quot;This is a prompt&quot;
+            });
+        }
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Using HTML Fragments</h3>
+        <p>
+            Set the
+            <code>useHtml</code>
+            property to
+            <code>true</code>
+            , and
+            <code>message</code>
+            will be treated as an HTML fragment.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">```html
+&lt;template&gt;
+    &lt;jk-button @click=&quot;open&quot;&gt;Open the prompt&lt;/jk-button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { Message } from &quot;../../../src&quot;;
+export default class extends Component {
+    open() {
+        Message({
+            type: &quot;success&quot;,
+            message: 'Successfully transferred &lt;i style=&quot;color:red&quot;&gt;2,500&lt;/i&gt; yuan to you',
+            useHtml: true
+        });
+    }
+}
+&lt;/script&gt;
+</code></pre>
+            <pre><code></code></pre>
+        </DemoContainer>
+        <div class="warning">
+            <p>
+                Although the
+                <code>message</code>
+                property supports passing HTML fragments, dynamically rendering arbitrary HTML on a website is highly dangerous as it can easily lead to
+                <a href="https://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">XSS attacks</a>
+                . Therefore, when
+                <code>useHtml</code>
+                is enabled, ensure the content of
+                <code>message</code>
+                is trusted.
+                <strong>Never</strong>
+                assign user-submitted content to the
+                <code>message</code>
+                property.
+            </p>
+        </div>
+        <blockquote>
+            <p>
+                Message provides the
+                <code>closeAll</code>
+                method, which can be used to clear all messages during specific business scenarios.
+            </p>
+        </blockquote>
+        <h3>Options</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Accepted Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>message</td>
+                    <td>Message text</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>Theme</td>
+                    <td>string</td>
+                    <td>success/warning/info/error</td>
+                    <td>info</td>
+                </tr>
+                <tr>
+                    <td>iconClass</td>
+                    <td>
+                        Custom icon class name, overrides
+                        <code>type</code>
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>useHtml</td>
+                    <td>
+                        Whether to treat
+                        <code>message</code>
+                        as HTML fragment
+                    </td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>customClass</td>
+                    <td>Custom class name</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>duration</td>
+                    <td>Display duration in ms. 0 means no auto-close</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>3000</td>
+                </tr>
+                <tr>
+                    <td>closable</td>
+                    <td>Whether to show a close button</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>center</td>
+                    <td>Whether to center the text</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>offset</td>
+                    <td>Offset from the top of the window</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>20</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Methods</h3>
+        <p>
+            Calling
+            <code>Message</code>
+            returns the current Message instance. To manually close it, call its
+            <code>close</code>
+            method.
+        </p>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>close</td>
+                    <td>Closes the current Message</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>close</td>
+                    <td>Triggered when Message is closed</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo5 from "../../components/message/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/message/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/message/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/message/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/message/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

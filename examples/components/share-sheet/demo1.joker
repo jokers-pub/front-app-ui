@@ -1,0 +1,29 @@
+<template>
+    <jk-button @click="handleClick" fullWidth type="primary">Click Me</jk-button>
+    <jk-share-sheet
+        ref="shareSheet"
+        title="立即分享"
+        @select="handleSelect"
+        options="@([
+            { label: '微信', icon: 'wechat' },
+            { label: '微博', icon: 'weibo' },
+            { label: 'QQ', icon: 'qq' },
+            { label: '复制链接', icon: 'link' },
+            { label: '分享海报', icon: 'poster' },
+            { label: '二维码', icon: 'qrcode' }
+        ])"
+    />
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleClick() {
+        this.$getRef("shareSheet")?.component.open();
+    }
+    handleSelect(e: VNode.Event<{ label: string }>) {
+        Toast(e.data.label);
+    }
+}
+</script>

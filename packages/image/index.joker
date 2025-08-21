@@ -1,0 +1,254 @@
+<template>
+    <div class="@(['jk-image', props.class])" style="@props.style" ref="imageCon">
+        @if(model.loading) {
+            <div class="placeholder">
+                @RenderSection("placeholder")
+            </div>
+        }
+        else if(model.error) {
+            <div class="error">
+                @if($sections.error) {
+                    @RenderSection("error")
+                }
+                else {
+                    @props.errMsg
+                }
+            </div>
+        }
+        else {
+            <img class="inner" src="@props.src" @click="handleClick" style="@imageStyle" />
+        }
+    </div>
+    @if(props.preview && model.showViewer) {
+        <JokerImageViewer index="@props.previewIndex" list="@previewList" @close="handleCloseViewer" />
+    }
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import JokerImageViewer from "./image-viewer.joker";
+
+import { isSupportObjectFit } from "../utils/index";
+import { getValueByLang } from "../utils/lang";
+
+let ObjectFit = {
+    NONE: "none",
+    CONTAIN: "contain",
+    COVER: "cover",
+    FILL: "fill",
+    SCALE_DOWN: "scale-down"
+};
+
+export default class extends Component<{
+    errMsg: string;
+    src: string;
+    class: string;
+    style: string;
+    fit: string;
+    lazy: boolean;
+    preview: boolean;
+    previewList: Array<any>;
+    previewIndex: number;
+}> {
+    propsOption = {
+        errMsg: getValueByLang("imgLoadError")
+    };
+
+    model = {
+        loading: true,
+        error: false,
+        show: !this.props.lazy,
+        imageWidth: 0,
+        imageHeight: 0,
+        showViewer: false
+    };
+
+    prevOverflow = "";
+    _scrollContainer?: HTMLElement;
+    _lazyLoadHandler?: any;
+
+    components = {
+        JokerImageViewer
+    };
+
+    mounted() {
+        this.$watch(
+            () => [this.model.show, this.props.src],
+            () => {
+                this.loadImage();
+            }
+        );
+        if (this.props.lazy) {
+            this.addLazyLoadListener();
+        } else {
+            this.loadImage();
+        }
+    }
+
+    beforeDestroy() {
+        this.props.lazy && this.removeLazyLoadListener();
+    }
+    get previewList() {
+        if (this.props.previewList) return this.props.previewList;
+
+        return [this.props.src];
+    }
+    get imageStyle() {
+        let { fit } = this.props;
+        if (fit) {
+            return isSupportObjectFit() ? { "object-fit": fit } : this.getImageStyle(fit);
+        }
+        return {};
+    }
+
+    get alignCenter() {
+        return !isSupportObjectFit() && this.props.fit !== ObjectFit.FILL;
+    }
+
+    get preview() {
+        if (!this.props.preview) return false;
+
+        let { previewList } = this.props;
+        return Array.isArray(previewList) && previewList.length > 0;
+    }
+
+    getImageStyle(fit: string) {
+        let { imageWidth, imageHeight } = this.model;
+        let { clientWidth: containerWidth, clientHeight: containerHeight } = this.$getRef("imageCon").output;
+
+        if (!imageWidth || !imageHeight || !containerWidth || !containerHeight) return {};
+
+        let imageAspectRatio = imageWidth / imageHeight;
+        let containerAspectRatio = containerWidth / containerHeight;
+
+        if (fit === ObjectFit.SCALE_DOWN) {
+            let isSmaller = imageWidth < containerWidth && imageHeight < containerHeight;
+            fit = isSmaller ? ObjectFit.NONE : ObjectFit.CONTAIN;
+        }
+
+        switch (fit) {
+            case ObjectFit.NONE:
+                return { width: "auto", height: "auto" };
+            case ObjectFit.CONTAIN:
+                return imageAspectRatio < containerAspectRatio ? { width: "auto" } : { height: "auto" };
+            case ObjectFit.COVER:
+                return imageAspectRatio < containerAspectRatio ? { height: "auto" } : { width: "auto" };
+            default:
+                return {};
+        }
+    }
+
+    loadImage() {
+        //懒加载图片不展示时不进行加载
+        if (!this.model.show) return false;
+        //重置状态
+        this.model.loading = true;
+        this.model.error = false;
+        if (this.props.src) {
+            let img = new Image();
+            img.onload = () => this.handleLoad(img);
+            img.onerror = this.handleError;
+            img.src = this.props.src;
+        }
+    }
+
+    handleLoad(img: HTMLImageElement) {
+        this.model.imageWidth = img.width;
+        this.model.imageHeight = img.height;
+        this.model.loading = false;
+        this.model.error = false;
+        this.$trigger("load");
+    }
+
+    handleError(e) {
+        this.model.loading = false;
+        this.model.error = true;
+        this.$trigger("error");
+    }
+
+    observer: any;
+    addLazyLoadListener() {
+        let container = this.$getRef("imageCon").output;
+
+        // 检查是否已经有观察者实例
+        if (this.observer) {
+            this.observer.disconnect();
+        }
+
+        // 创建IntersectionObserver实例
+        this.observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    // 当元素进入视口
+                    if (entry.isIntersecting) {
+                        this.model.show = true;
+                        this.loadImage(); // 加载图片
+                        this.observer.unobserve(container); // 停止观察
+                    }
+                });
+            },
+            {
+                // 配置选项：提前50px开始加载
+                rootMargin: "50px 0px",
+                // 可见比例达到1%即触发
+                threshold: 0.01
+            }
+        );
+
+        // 开始观察图片容器
+        this.observer.observe(container);
+    }
+    removeLazyLoadListener() {
+        let container = this.$getRef("imageCon").output;
+        // 停止观察并清理资源
+
+        if (this.observer) {
+            if (container) {
+                this.observer.unobserve(container);
+            }
+            this.observer.disconnect();
+            this.observer = null;
+        }
+    }
+    handleClick() {
+        if (!this.props.preview) return;
+        if (this.props.src && !this.model.loading && !this.model.error && this.model.show) {
+            this.model.showViewer = true;
+        }
+    }
+    handleCloseViewer() {
+        this.model.showViewer = false;
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-image {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+
+    .error,
+    .inner,
+    .placeholder {
+        width: 100%;
+        height: 100%;
+    }
+    .error,
+    .placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        color: #c0c4cc;
+        vertical-align: middle;
+        background: #f5f7fa;
+    }
+
+    img {
+        overflow-clip-margin: content-box;
+        overflow: clip;
+    }
+}
+</style>

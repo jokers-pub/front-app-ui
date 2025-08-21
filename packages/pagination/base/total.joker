@@ -1,0 +1,28 @@
+<template>
+    @if(props.total !== undefined) {
+        <p class="jk-pagination-total">
+            @text
+        </p>
+    }
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { PropsType } from "./types";
+import { getValueByLang } from "../../utils/lang";
+
+export default class extends Component<PropsType> {
+    get text() {
+        return getValueByLang("pagerTsotal").replace("{total}", this.props.total);
+    }
+}
+</script>
+
+<style scoped>
+.jk-pagination-total {
+    font-size: 12px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: var(--jk-color-text-regular);
+}
+</style>

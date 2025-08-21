@@ -1,0 +1,23 @@
+<template>
+    <jk-button @click="handleOpen">Pop up</jk-button>
+    <jk-drawer ref="drawer" size="50%" title="I'm the title">
+        I'm the content.
+        <div>
+            <jk-button @click="handleOpenNext">Pop up another one</jk-button>
+        </div>
+        <jk-drawer ref="drawer2" title="I'm the second one">I'm the second content</jk-drawer>
+    </jk-drawer>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    handleOpenNext() {
+        this.$getRef("drawer2")?.component.open();
+    }
+
+    handleOpen() {
+        this.$getRef("drawer")?.component.open();
+    }
+}
+</script>

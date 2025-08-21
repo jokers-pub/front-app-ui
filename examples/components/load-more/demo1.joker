@@ -1,0 +1,30 @@
+<template>
+    <div style="height:400px">
+        <jk-scrollbar>
+            @for(let i of model.datas) {
+                <jk-cell title="@(i)" />
+            }
+            <jk-load-more load="@load" />
+        </jk-scrollbar>
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import { sleep } from "@joker.front/shared";
+
+export default class extends Component {
+    model = {
+        datas: []
+    };
+
+    async load() {
+        await sleep(2000);
+
+        for (let i = 0; i < 10; i++) {
+            this.model.datas.push(i.toString());
+        }
+    }
+}
+</script>
+

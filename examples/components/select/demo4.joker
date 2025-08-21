@@ -1,0 +1,20 @@
+<template>
+    <jk-field>
+        <jk-select load="@loadData" />
+    </jk-field>
+    <jk-field>
+        <jk-select load="@loadData" value="Cherry" />
+    </jk-field>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+import { sleep } from "@joker.front/shared";
+
+export default class extends Component {
+    async loadData() {
+        await sleep(2000);
+
+        return ["Apple", "Banana", "Cherry", "Date"];
+    }
+}
+</script>

@@ -1,0 +1,274 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Grid 宫格</h2>
+        <p>宫格可以在水平方向上把页面分隔成等宽度的区块，用于展示内容或进行页面导航。</p>
+        <h3>基础用法</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-grid&gt;
+            @for(let i = 0; i &lt; 8; i++) {
+                &lt;jk-grid-item title=&quot;菜单&quot; icon=&quot;jk-icon-picture-outline&quot; /&gt;
+            }
+        &lt;/jk-grid&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>自定义列数</h3>
+        <p>
+            通过配置
+            <code>column-num</code>
+            来设置一行列数
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-grid column-num=&quot;3&quot;&gt;
+            @for(let i = 0; i &lt; 8; i++) {
+                &lt;jk-grid-item title=&quot;菜单&quot; icon=&quot;jk-icon-picture-outline&quot; /&gt;
+            }
+        &lt;/jk-grid&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>自定义内容</h3>
+        <p>
+            组件提供了
+            <code>default</code>
+            、
+            <code>title</code>
+            、
+            <code>icon</code>
+            区块，其中
+            <strong>default</strong>
+            区块可以实现单元格所有内容自定义。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell&gt;
+        &lt;jk-grid column-num=&quot;3&quot; border=&quot;@false&quot;&gt;
+            &lt;jk-grid-item&gt;
+                &lt;jk-image
+                    style=&quot;width: 100%&quot;
+                    src=&quot;https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360&quot;
+                /&gt;
+            &lt;/jk-grid-item&gt;
+            &lt;jk-grid-item&gt;
+                &lt;jk-image
+                    style=&quot;width: 100%&quot;
+                    src=&quot;https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360&quot;
+                /&gt;
+            &lt;/jk-grid-item&gt;
+            &lt;jk-grid-item&gt;
+                &lt;jk-image
+                    style=&quot;width: 100%&quot;
+                    src=&quot;https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360&quot;
+                /&gt;
+            &lt;/jk-grid-item&gt;
+        &lt;/jk-grid&gt;
+    &lt;/jk-cell&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>设置间隙</h3>
+        <p>
+            可通过
+            <code>gutter</code>
+            属性来设置宫格之间的间隙。设置该属性后不建议用展示
+            <code>border</code>
+            。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-grid gutter=&quot;10&quot; border=&quot;@false&quot;&gt;
+        @for(let i = 0; i &lt; 8; i++) {
+            &lt;jk-grid-item title=&quot;菜单&quot; icon=&quot;jk-icon-picture-outline&quot; /&gt;
+        }
+    &lt;/jk-grid&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>微标提示</h3>
+        <p>
+            可设置
+            <code>badge</code>
+            和
+            <code>dot</code>
+            属性来配置微标，具体使用规则可参考
+            <strong>Badge</strong>
+            组件规范。
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-grid gutter=&quot;10&quot; border=&quot;@false&quot;&gt;
+        @for(let i = 0; i &lt; 8; i++) {
+            &lt;jk-grid-item title=&quot;菜单&quot; icon=&quot;jk-icon-picture-outline&quot; badge=&quot;12+&quot; /&gt;
+        }
+    &lt;/jk-grid&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Grid Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>自定义类名，用于额外样式控制</td>
+                    <td>any</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>column-num</td>
+                    <td>设置宫格一行的列数</td>
+                    <td>number</td>
+                    <td>正整数</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>border</td>
+                    <td>是否显示宫格边框</td>
+                    <td>boolean</td>
+                    <td>true / false</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>gutter</td>
+                    <td>设置宫格之间的间隙（单位：px），设置后建议不展示 border</td>
+                    <td>number</td>
+                    <td>非负整数</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Grid Item Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>class</td>
+                    <td>自定义单元格类名，用于额外样式控制</td>
+                    <td>any</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>单元格内展示的图标（通常为图标类名或图标路径）</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>单元格内展示的标题文本</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>badge</td>
+                    <td>单元格右上角微标显示的具体数值</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>dot</td>
+                    <td>是否在单元格右上角展示点状微标（优先级低于 badge，若同时设置 badge 则优先显示 badge）</td>
+                    <td>boolean</td>
+                    <td>true / false</td>
+                    <td>false</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>项点击事件</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>自定义全部内容</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>自定义标题</td>
+                </tr>
+                <tr>
+                    <td>icon</td>
+                    <td>自定义图标</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo5 from "../../components/grid/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/grid/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/grid/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/grid/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/grid/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

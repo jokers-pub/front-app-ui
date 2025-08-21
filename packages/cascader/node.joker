@@ -1,0 +1,154 @@
+<template>
+    <li
+        role="menuitem"
+        id="@props.node.id"
+        tabindex="@(props.node.disabled ? null : -1)"
+        aria-expanded="@inActivePath"
+        class="@({
+            'jk-cascader-node': true,
+            'in-active-path': inActivePath,
+            'is-active': isChecked,
+            'is-disabled': props.node.disabled,
+            'is-custom': $sections.default
+        })"
+        @click="handleClick">
+        @if(isChecked || inActivePath) {
+            <i class="prefix jk-icon-check"></i>
+        }
+        <span class="label">
+            @if($sections.default) {
+                @RenderSection("default", props.node)
+            }
+            else {
+                @props.node.label
+            }
+        </span>
+        @if(props.node.loading) {
+            <i class="postfix jk-icon-loading"></i>
+        }
+    </li>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import JokerCheckBox from "../checkbox/checkbox.joker";
+
+import { Node } from "./store";
+import { componentName } from "../utils";
+export default class extends Component<{
+    node: Node;
+    expandTrigger: string;
+}> {
+    dropdown: any;
+    cascader: any;
+
+    get isChecked() {
+        return this.props.node?.checked;
+    }
+
+    components = {
+        JokerCheckBox
+    };
+
+    get inActivePath() {
+        return this.isInPath(this.dropdown.model.activePath);
+    }
+
+    isInPath(pathNodes: Array<Node>): boolean {
+        let selectedNode = pathNodes[this.props.node!.level - 1];
+        if (!selectedNode) return false;
+        return selectedNode.id === this.props.node?.id;
+    }
+    created() {
+        //@ts-ignore
+        this.cascader = this.$root.closest((n) => {
+            return n instanceof VNode.Component && n.component.name === componentName("cascader");
+        })?.component;
+        this.dropdown = this.$root?.closest((n) => {
+            return n instanceof VNode.Component && n.component.name === componentName("cascader-dropdown");
+        })?.component;
+
+        let section = this.cascader.$sections.node;
+        this.$sections.default = section;
+    }
+
+    checkedChange() {
+        this.dropdown.checkChange(this.props.node);
+    }
+
+    multiCheckChange(checked: boolean) {
+        this.props.node?.doChecked(checked);
+
+        this.cascader.refreshSelectedNode();
+    }
+
+    expand() {
+        if (this.props.node?.disabled || this.props.node?.loading) return;
+
+        this.dropdown.handleExpand(this.props.node);
+    }
+
+    handleClick() {
+        if (this.props.node?.disabled) return;
+
+        if (this.props.node?.isLeaf) {
+            this.checkedChange();
+        } else {
+            this.expand();
+        }
+    }
+
+    handleCheckboxChange(e: VNode.Event<boolean>) {
+        this.multiCheckChange(e.data!);
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.jk-cascader-node {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px 40px 10px 16px;
+    font-size: 14px;
+    line-height: 20px;
+    outline: none;
+
+    &.in-active-path,
+    &.is-active {
+        color: var(--jk-color-primary);
+        font-weight: bold;
+    }
+
+    &:not(.is-disabled) {
+        cursor: pointer;
+        &:hover,
+        &:focus {
+            background: var(--jk-background-color-base);
+        }
+    }
+
+    &.is-disabled {
+        cursor: not-allowed;
+        color: var(--jk-color-text-placeholder);
+    }
+
+    .prefix {
+        position: absolute;
+        right: 20px;
+        font-size: 18px;
+    }
+
+    .label {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .postfix {
+        position: absolute;
+        right: 20px;
+        font-size: 18px;
+    }
+}
+</style>

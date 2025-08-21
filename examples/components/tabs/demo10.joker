@@ -1,0 +1,57 @@
+<template>
+    <div class="container">
+        @if(model.tabs > 0) {
+            <jk-tabs animated value="@model.selectName">
+                @for(let i = 0; i < model.tabs; i++) {
+                    <jk-tab-panel label="Home@(i)" name="@i">
+                        <div class="demo-content">
+                            Home@(i)
+                        </div>
+                    </jk-tab-panel>
+                }
+            </jk-tabs>
+        }
+    </div>
+    <jk-button-group fullWidth>
+        <jk-button type="danger" @click="handleRemove">Remove</jk-button>
+        <jk-button type="primary" @click="handleAdd">Add</jk-button>
+    </jk-button-group>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        tabs: 2,
+        selectName: 0
+    };
+    handleRemove() {
+        if (this.model.tabs < 0) return;
+        this.model.tabs = this.model.tabs - 1;
+    }
+
+    handleAdd() {
+        this.model.tabs = this.model.tabs + 1;
+
+        this.$nextUpdatedRender(() => {
+            this.model.selectName = this.model.tabs - 1;
+        });
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.container {
+    height: 500px;
+    background: #fff;
+}
+.demo-content {
+    font-size: 24px;
+    height: 300px;
+    font-weight: bold;
+    padding: 20px 10px;
+    text-align: center;
+    line-height: 300px;
+}
+</style>

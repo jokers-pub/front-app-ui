@@ -1,0 +1,150 @@
+<template>
+    <div class="@(['jk-field', props.class, props.required && 'is-required'])">
+        <JokerCell title="@props.label" size="@size" title-align="@labelPosition">
+            @section("title") {
+                @if($sections.label) {
+                    <!-- 避免label联动 -->
+                    <div class="label" style="@labelStyle">
+                        @RenderSection("label")
+                    </div>
+                }
+                else if(props.label || props.tip) {
+                    <label style="@labelStyle">
+                        @props.label
+                        @if(props.tip) {
+                            <jk-tooltip content="@props.tip" size="mini" placement="top">
+                                <i class="tip jk-icon-info" />
+                            </jk-tooltip>
+                        }
+                    </label>
+                }
+            }
+            @section("default") {
+                @RenderSection()
+                @if(model.errorMessage) {
+                    @if($sections.error) {
+                        @RenderSection("error", model.errorMessage)
+                    }
+                    else {
+                        <div class="error">
+                            @model.errorMessage
+                        </div>
+                    }
+                }
+            }
+        </JokerCell>
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { componentName } from "../utils";
+import JokerCell from "../cell/index.joker";
+
+export default class extends Component<{
+    label: string;
+    labelWidth: string;
+    labelPosition: string;
+    required: boolean;
+    class: string;
+    tip: string;
+}> {
+    model = {
+        errorMessage: undefined as string | undefined
+    };
+
+    components = {
+        JokerCell
+    };
+
+    name = componentName("field");
+
+    get form() {
+        let form = this.$rootVNode.closest(
+            (m) => m instanceof VNode.Component && m.component.name === componentName("form")
+        )?.component;
+
+        return form;
+    }
+
+    get labelPosition() {
+        return this.props.labelPosition || this.form?.props.labelPosition;
+    }
+
+    get labelStyle() {
+        if (this.form?.props.labelPosition === "top") return {};
+
+        let labelWidth = this.props.labelWidth || this.form?.props.labelWidth;
+
+        return {
+            width: labelWidth
+        };
+    }
+
+    get size() {
+        return this.form?.props.size || "";
+    }
+
+    clearErrorMessage() {
+        this.model.errorMessage = undefined;
+    }
+
+    showErrorMessage(message: string) {
+        this.model.errorMessage = message;
+    }
+}
+</script>
+
+<style scoped lang="scss">
+@use "../../theme/mixins.scss";
+
+.jk-field {
+    position: relative;
+    :deep(> .jk-cell > .title) {
+        flex: none;
+    }
+    label,
+    .label {
+        vertical-align: middle;
+        float: left;
+        width: 6.2em;
+        padding: 0 6px 0 0;
+        box-sizing: border-box;
+
+        .tip {
+            margin-left: 5px;
+        }
+    }
+
+    .error {
+        color: var(--jk-color-danger);
+        font-size: 12px;
+    }
+
+    &.is-required {
+        label,
+        .label {
+            &::before {
+                content: "*";
+                color: var(--jk-color-danger);
+                margin-right: 4px;
+            }
+        }
+    }
+
+    &::after {
+        box-sizing: border-box;
+        content: " ";
+        pointer-events: none;
+        right: 16px;
+        bottom: 0;
+        left: 16px;
+        border-bottom: 1px solid var(--jk-border-color-lighter);
+        position: absolute;
+        transform: scaleY(0.5);
+    }
+
+    &:last-child::after {
+        display: none;
+    }
+}
+</style>

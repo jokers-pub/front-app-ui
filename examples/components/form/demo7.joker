@@ -1,0 +1,69 @@
+<template>
+    <DemoRow>
+        <jk-radio-group value="@model.ctrlSize" @change="handleRadioChange">
+            <jk-radio-button value="large">large</jk-radio-button>
+            <jk-radio-button value="">default</jk-radio-button>
+            <jk-radio-button value="small">small</jk-radio-button>
+            <jk-radio-button value="mini">mini</jk-radio-button>
+        </jk-radio-group>
+    </DemoRow>
+    <jk-form ref="form" size="@model.ctrlSize">
+        <jk-field label="Event Name">
+            <jk-input name="name" placeholder="Please enter the event name" />
+        </jk-field>
+        <jk-field label="Event Area">
+            <jk-select name="area" placeholder="Please select the event area" data="@(['山东', '北京'])" />
+        </jk-field>
+        <jk-field label="Event Time">
+            <jk-date name="date" type="date" />
+        </jk-field>
+        <jk-field label="Promotion">
+            <jk-switch name="promotion" />
+        </jk-field>
+        <jk-field label="UploadImg" label-position="top">
+            <jk-upload-img name="photo" />
+        </jk-field>
+        <jk-field label="Participants Count">
+            <jk-number
+                name="userCount"
+                placeholder="Please set the number of participants"
+                validate="@Global.isRequired()"
+            />
+        </jk-field>
+        <jk-field label="Event Nature" label-position="top">
+            <jk-checkbox-group name="type">
+                <jk-checkbox-button value="1" label="Home"></jk-checkbox-button>
+                <jk-checkbox-button value="2" label="Car"></jk-checkbox-button>
+                <jk-checkbox-button value="3" label="Phone"></jk-checkbox-button>
+            </jk-checkbox-group>
+            <div style="margin-top:5px">
+                <jk-alert show-icon title="Self-driving tours incur related costs" type="info"></jk-alert>
+            </div>
+        </jk-field>
+        <jk-field label="Funding Source" label-position="top">
+            <jk-radio-group name="source">
+                <jk-radio-button value="1">Sponsored</jk-radio-button>
+                <jk-radio-button value="2">Free</jk-radio-button>
+                <jk-radio-button value="3">Costg</jk-radio-button>
+            </jk-radio-group>
+        </jk-field>
+        <jk-field label="Event Rules">
+            <jk-textarea name="note" placeholder="Please enter the content" rows="2"></jk-textarea>
+        </jk-field>
+        <jk-field>
+            <jk-button type="primary">Submit</jk-button>
+        </jk-field>
+    </jk-form>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        ctrlSize: ""
+    };
+    handleRadioChange(e: VNode.Event<string>) {
+        this.model.ctrlSize = e.data;
+    }
+}
+</script>

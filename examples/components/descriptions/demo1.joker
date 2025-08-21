@@ -1,0 +1,18 @@
+<template>
+    <jk-descriptions title="User Information">
+        <jk-descriptions-item label="Username">Zhang San</jk-descriptions-item>
+        <jk-descriptions-item label="Phone Number">18888888888</jk-descriptions-item>
+        <jk-descriptions-item label="Residence">Jinan City</jk-descriptions-item>
+        <jk-descriptions-item label="Remarks">
+            @if(false) {
+                <jk-tag size="small">Freelancer</jk-tag>
+            }
+            else {
+                <jk-tag size="small">Company Employee</jk-tag>
+            }
+        </jk-descriptions-item>
+        <jk-descriptions-item label="Contact Address">
+            No. 1188, Wuzhong Avenue, Wuzhong District, Suzhou City, Jiangsu Province
+        </jk-descriptions-item>
+    </jk-descriptions>
+</template>

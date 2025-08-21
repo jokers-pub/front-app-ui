@@ -1,0 +1,187 @@
+<template>
+    <div class="@(['jk-tree', props.class])" ref="tree" role="tree">
+        @if(model.root.children) {
+            @if(model.root.children.length) {
+                @for(let child of model.root.children) {
+                    <JokerTreeNode node="@child">
+                        @if($sections.default) {
+                            @section("default", node) {
+                                @RenderSection("default", node)
+                            }
+                        }
+                    </JokerTreeNode>
+                }
+            }
+            else {
+                <jk-empty description="@props.emptyText" size="@props.emptySize" />
+            }
+        }
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { TreeStore, TreeStoreOption } from "./store";
+import { NodeData, TreeNode } from "./store/node";
+import JokerTreeNode from "./tree-node.joker";
+import { componentName } from "../utils";
+
+export default class extends Component<
+    TreeStoreOption & {
+        emptyText: string;
+        emptySize: string;
+        indent: number;
+        class: string;
+        iconClass: string;
+        showCheckbox: boolean;
+        expandOnClickNode: boolean;
+    }
+> {
+    name = componentName("tree");
+    propsOption = {
+        expandOnClickNode: true,
+        isLeafKey: "isLeaf",
+        childrenKey: "children",
+        disabledKey: "disabled",
+        expandKey: "expand",
+        labelKey: "label",
+        virtualKey: "isVirtualNode",
+        indent: 18
+    };
+    model = {
+        root: undefined as TreeNode | undefined
+    };
+
+    components = {
+        JokerTreeNode
+    };
+
+    store!: TreeStore;
+
+    created() {
+        this.$watch(
+            () => this.props.data,
+            () => {
+                //@ts-ignore
+                this.store = new TreeStore(this.props);
+
+                this.model.root = this.store.root;
+            }
+        );
+        //@ts-ignore
+        this.store = new TreeStore(this.props);
+
+        this.model.root = this.store.root;
+    }
+
+    reload() {
+        //@ts-ignore
+        this.store = new TreeStore(this.props);
+
+        this.model.root = this.store.root;
+    }
+
+    setCurrentNode(nodeOrKey?: TreeNode | string | number) {
+        let node: TreeNode | undefined;
+        if (typeof nodeOrKey === "string" || typeof nodeOrKey === "number") {
+            node = this.store.getNodeByKey(nodeOrKey);
+        } else {
+            node = nodeOrKey;
+        }
+
+        this.store.setCurrentNode(node);
+    }
+
+    getNode(filter: (node: TreeNode) => boolean | void) {
+        return this.store.getNode(filter);
+    }
+
+    getAllNodeData() {
+        let result = [];
+
+        let appendNode = (n: TreeNode) => {
+            result.push(n.nodeData);
+        };
+
+        this.store.root.children.forEach((n) => {
+            appendNode(n);
+        });
+
+        return result;
+    }
+
+    getCurrentNode() {
+        return this.store.currentNode;
+    }
+
+    collapseNode(node: TreeNode) {
+        this.$trigger("node-collapse", node);
+        node.collapse();
+    }
+
+    expandNode(node: TreeNode) {
+        this.$trigger("node-expand", node);
+        node.expand();
+    }
+
+    checkNode(node: TreeNode, checked: boolean) {
+        node.setChecked(checked, true);
+
+        this.$trigger("check", node);
+    }
+
+    getCheckedNodes(leafOnly = false, includeHalfChecked = false) {
+        return this.store.getCheckedNodes(leafOnly, includeHalfChecked);
+    }
+
+    getCheckedKeys(leafOnly = false, includeHalfChecked = false) {
+        return this.store.getCheckedKeys(leafOnly, includeHalfChecked);
+    }
+
+    setCheckedKeys(keys: string[] = []) {
+        this.store.setChecked(keys);
+    }
+
+    getNodeByKey(key: string) {
+        return this.store.getNodeByKey(key);
+    }
+
+    appendNode(nodeData: NodeData | TreeNode) {
+        this.store.appendNode(nodeData);
+    }
+
+    removeNode(nodeOrKey: TreeNode | string | number) {
+        if (typeof nodeOrKey === "string" || typeof nodeOrKey === "number") {
+            let removeNode = this.store.getNodeByKey(nodeOrKey);
+
+            removeNode?.remove();
+        } else {
+            this.store.removeNode(nodeOrKey);
+        }
+    }
+
+    checkedAll() {
+        this.store.root.children.forEach((n) => {
+            n.setChecked(true, true);
+        });
+    }
+
+    clearChecked() {
+        this.store.root.children.forEach((n) => {
+            n.setChecked(false, true);
+        });
+    }
+
+    filter(val: any) {
+        this.store.filter(val);
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-tree {
+    position: relative;
+    cursor: default;
+
+    color: var(--jk-color-text-regular);
+}
+</style>

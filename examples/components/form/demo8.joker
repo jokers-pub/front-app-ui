@@ -1,0 +1,107 @@
+<template>
+    <jk-form ref="form" @submit="handleFormSubmit" label-width="130px">
+        <jk-field label="Age">
+            <jk-input
+                name="age"
+                status-icon
+                clearable
+                validate="@([Global.isRequired(), Global.isInt(), validateAge])"
+                placeholder="Please enter your age"
+            />
+        </jk-field>
+        <jk-field label="New Password">
+            <jk-input
+                name="pwd"
+                ref="pwd"
+                validate="@([Global.isRequired()])"
+                placeholder="Please enter your new password"
+            />
+        </jk-field>
+        <jk-field label="Confirm Password">
+            <jk-input
+                name="confirmPwd"
+                validate="@([Global.isRequired(), validateConfirmPwd])"
+                placeholder="Please confirm your password"
+            />
+        </jk-field>
+        <jk-field label="Area">
+            <jk-select
+                name="area"
+                validate="@([Global.isRequired()])"
+                placeholder="Please select the event area"
+                data="@(['Shandong', 'Beijing'])"
+            />
+        </jk-field>
+        <jk-field label="Promotion">
+            <jk-switch name="promotion" />
+        </jk-field>
+        <jk-field label="Funding Ratio">
+            <jk-slider name="sourcePic" value="30"></jk-slider>
+        </jk-field>
+        <jk-field label="Time">
+            <jk-date name="date" type="date" validate="@([Global.isRequired()])" />
+        </jk-field>
+        <jk-field>
+            <jk-button type="primary" nativeType="submit" loading="@model.loading">Submit</jk-button>
+            <jk-button nativeType="reset">Reset</jk-button>
+        </jk-field>
+    </jk-form>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { sleep } from "@joker.front/shared";
+import { Message } from "../../../src";
+
+export default class extends Component {
+    model = {
+        loading: false
+    };
+    async validateAge(value: string) {
+        // Simulate a request to implement asynchronous validation
+        await sleep(1500);
+
+        // Custom validation is performed last, no need to consider non - empty && positive integer
+        let age = parseInt(value);
+
+        if (age < 22) {
+            return "You are too young. Come back after you are 22.";
+        }
+
+        if (age > 30) {
+            return "You are mature enough , Input 22";
+        }
+    }
+    validateConfirmPwd(value) {
+        let pwd = this.$getRef("pwd")?.component.value;
+
+        if (pwd !== value) {
+            return "The two passwords do not match.";
+        }
+    }
+
+    // Trigger the submission
+    handleSubmitBtnClick(e: VNode.Event) {
+        // If e is passed in, the form will control the loading state of the button according to the triggering event
+        this.$getRef("form")?.component.submit(e);
+    }
+
+    // Form submission processing function
+    async handleFormSubmit(e: VNode.Event) {
+        this.model.loading = true;
+        // This method will only be triggered after successful validation
+        // Supports asynchronous processing
+
+        // Simulate an interface request
+        await sleep(1000);
+
+        console.log(e.data);
+
+        Message({
+            type: "success",
+            message: "Submission succeeded"
+        });
+
+        this.model.loading = false;
+    }
+}
+</script>

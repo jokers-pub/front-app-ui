@@ -1,0 +1,17 @@
+<template>
+    <jk-checkbox-group value="@model.checkedCities" min="1" max="2" direction="vertical">
+        @for(let cityItem of model.cities) {
+            <jk-checkbox value="@cityItem" label="@cityItem"></jk-checkbox>
+        }
+    </jk-checkbox-group>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        cities: ["Shanghai", "Beijing", "Guangzhou", "Shenzhen"],
+        checkedCities: ["Shanghai", "Beijing"]
+    };
+}
+</script>

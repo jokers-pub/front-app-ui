@@ -1,0 +1,14 @@
+<template>
+    <jk-field>
+        <jk-select options="@([])" empty-text="no data" />
+    </jk-field>
+    <jk-field>
+        <jk-select options="@([])">
+            @section("empty") {
+                <jk-empty size="small">
+                    <jk-button>去添加</jk-button>
+                </jk-empty>
+            }
+        </jk-select>
+    </jk-field>
+</template>

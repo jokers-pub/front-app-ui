@@ -1,0 +1,50 @@
+<template>
+    <jk-picker
+        title="选择地区"
+        columns="@([
+            {
+                label: '山东',
+                value: '山东',
+                children: [
+                    { label: '济南', value: '济南' },
+                    { label: '青岛', value: '青岛' },
+                    { label: '烟台', value: '烟台' },
+                    { label: '潍坊', value: '潍坊' },
+                    { label: '淄博', value: '淄博' }
+                ]
+            },
+            {
+                label: '浙江',
+                value: '浙江',
+                children: [
+                    { label: '杭州', value: '杭州' },
+                    { label: '宁波', value: '宁波' },
+                    { label: '温州', value: '温州' },
+                    { label: '绍兴', value: '绍兴' },
+                    { label: '嘉兴', value: '嘉兴' }
+                ]
+            }
+        ])"
+        value="@(['山东', '烟台'])"
+        @confirm="handleConfirm"
+        @cancel="handleCancel"
+        @change="handleChange"
+    />
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleConfirm(e: VNode.Event<string[]>) {
+        Toast(`confirm:${e.data.join("-")}`);
+    }
+    handleCancel(e: VNode.Event<string[]>) {
+        Toast(`cancel:${e.data.join("-")}`);
+    }
+    handleChange(e: VNode.Event<string[]>) {
+        Toast(`change:${e.data.join("-")}`);
+    }
+}
+</script>
+

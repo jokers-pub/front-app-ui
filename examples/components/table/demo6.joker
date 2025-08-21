@@ -1,0 +1,151 @@
+<template>
+    <DemoRow>
+        <jk-table data="@model.tableData" max-height="250">
+            <jk-table-column label="Date" key="date" width="100" fixed="left" />
+            <jk-table-column label="Name" key="name" width="120" />
+            <jk-table-column label="Province" key="province" width="120" />
+            <jk-table-column label="City" key="city" width="120" />
+            <jk-table-column label="Zip Code" key="zip" width="120" />
+            <jk-table-column label="Address" key="address" width="300" />
+            <jk-table-column label="Balance" key="money" headerAlign="right" fixed="right" align="right" width="80" />
+        </jk-table>
+    </DemoRow>
+    <DemoRow>
+        <jk-button @click="loadAll">Load All</jk-button>
+        <jk-button @click="loadPart">Load Part</jk-button>
+        <jk-button @click="clearData">Clear All Data</jk-button>
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+let demoData = [
+    {
+        name: "Zhang San",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 1000
+    },
+    {
+        name: "Li Si",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address:
+            "Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province, Jinan, Shandong Province",
+        money: 10
+    },
+    {
+        name: "Li Mei",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 300
+    },
+    {
+        name: "Wang Wu",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 11.9
+    },
+    {
+        name: "Zhang San",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 1000
+    },
+    {
+        name: "Li Si",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 10
+    },
+    {
+        name: "Li Mei",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 300
+    },
+    {
+        name: "Wang Wu",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 11.9
+    },
+    {
+        name: "Zhang San",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 1000
+    },
+    {
+        name: "Li Si",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 10
+    },
+    {
+        name: "Li Mei",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 300
+    },
+    {
+        name: "Wang Wu",
+        date: "2023-11-21",
+        province: "Shandong Province",
+        city: "Jinan",
+        zip: "251900",
+        address: "Jinan, Shandong Province",
+        money: 11.9
+    }
+];
+export default class extends Component {
+    model = {
+        tableData: [] as any
+    };
+
+    mounted() {
+        this.loadAll();
+    }
+
+    loadAll() {
+        this.model.tableData = demoData.slice(0);
+    }
+    loadPart() {
+        this.model.tableData = demoData.slice(0, 3);
+    }
+    clearData() {
+        this.model.tableData.length = 0;
+    }
+}
+</script>

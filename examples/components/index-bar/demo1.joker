@@ -1,0 +1,27 @@
+<template>
+    <div class="demo-container">
+        <jk-index-bar>
+            @for(let item of ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']) {
+                <jk-index-panel index="@item">
+                    @for(let i = 0; i < 4; i++) {
+                        <jk-cell title="单元格内容" />
+                    }
+                </jk-index-panel>
+            }
+        </jk-index-bar>
+    </div>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {};
+}
+</script>
+
+<style lang="scss" scoped>
+.demo-container {
+    height: 500px;
+    overflow: auto;
+}
+</style>

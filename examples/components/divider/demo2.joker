@@ -1,0 +1,18 @@
+<template>
+    <jk-cell>
+        <p>What you need is not a brand - new start, but action to lead to a brand - new ending.</p>
+        <jk-divider content-position="left">Well done!</jk-divider>
+        <p>Enjoy your youth to the fullest. You'll never be younger than you are right now.</p>
+        <jk-divider>
+            <i class="jk-icon-star-on"></i>
+        </jk-divider>
+        <p>Fortunately, I love to smile, so life isn't that bad.</p>
+        <jk-divider content-position="right">Nice!</jk-divider>
+        <p>The person who can instantly change your mood must be very important to you, right?</p>
+    </jk-cell>
+</template>
+<style scoped lang="scss">
+p {
+    line-height: 30px;
+}
+</style>

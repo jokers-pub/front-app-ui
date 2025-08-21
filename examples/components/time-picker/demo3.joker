@@ -1,0 +1,48 @@
+<template>
+    <jk-field>
+        <jk-button fullWidth type="primary" @click="handleClick('picker1')">Default 19:30:25</jk-button>
+    </jk-field>
+    <jk-field>
+        <jk-button fullWidth type="primary" @click="handleClick('picker2')">Selectable Range</jk-button>
+    </jk-field>
+    <jk-time-picker ref="picker1" default-value="19:30:25" @pick="handlePick" />
+    <jk-time-picker
+        ref="picker2"
+        format="HH:mm"
+        selectable-range="@([['08:30', '11:30'], '14:00 - 18:00'])"
+        @pick="handlePick"
+        labelFormat="@labelFormat"
+    />
+    <jk-field>
+        <jk-date type="time" default-value="19:30:25" placeholder="Select time" />
+    </jk-field>
+    <jk-field>
+        <jk-date
+            type="time"
+            format="HH时mm分"
+            value-format="HH:mm"
+            selectable-range="@([['08:30', '11:30'], '14:00 - 18:00'])"
+            placeholder="Select time"
+        />
+    </jk-field>
+</template>
+
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { Toast } from "../../../packages/toast";
+
+export default class extends Component {
+    handleClick(e: VNode.Event, ref: string) {
+        this.$getRef(ref)?.component.open();
+    }
+
+    handlePick(e: VNode.Event<{ hours: number; minutes: number; seconds: number }>) {
+        Toast(`${e.data.hours}:${e.data.minutes}:${e.data.seconds}`);
+    }
+    labelFormat(value: number, type: string) {
+        if (type === "hours") {
+            return value + " 时";
+        }
+    }
+}
+</script>

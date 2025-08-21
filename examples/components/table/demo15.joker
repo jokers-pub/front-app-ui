@@ -1,0 +1,39 @@
+<template>
+    <jk-table data="@tableData" defaultExpandAll>
+        <jk-table-column type="expand">
+            @section("expand", data) {
+                <ul class="expand-ul">
+                    <li>
+                        Name: @data.row.name
+                    </li>
+                    <li>
+                        Date: @data.row.date
+                    </li>
+                    <li>
+                        Balance: @data.row.money
+                        Yuan
+                    </li>
+                    <li>
+                        Address: @data.row.address
+                    </li>
+                </ul>
+            }
+        </jk-table-column>
+        <jk-table-column label="Date" key="date" width="180" />
+        <jk-table-column label="Name" key="name" width="180" />
+        <jk-table-column label="Address" key="address" />
+        <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+    </jk-table>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    tableData = [
+        { name: "Zhang San", date: "2023-11-21", address: "Jinan, Shandong Province", money: 1000 },
+        { name: "Li Si", date: "2023-11-21", address: "Jinan, Shandong Province", money: 10 },
+        { name: "Li Mei", date: "2023-11-21", address: "Jinan, Shandong Province", money: 300 },
+        { name: "Wang Wu", date: "2023-11-21", address: "Jinan, Shandong Province", money: 11.9 }
+    ];
+}
+</script>

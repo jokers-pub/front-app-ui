@@ -1,0 +1,338 @@
+<template>
+    <header>
+        <div class="topbar">
+            <h1 @click="handleGoHome">
+                <img src="https://static.jokers.pub/joker.png" />
+                Joker
+            </h1>
+            <div id="docsearch"></div>
+            <ul class="menu">
+                @for(let menu of menus) {
+                    <li class="@getClassName(menu.path) @menu.class">
+                        <a href="@menu.path" @click="go(menu.path)" target="@menu.target">@menu.title</a>
+                    </li>
+                }
+            </ul>
+            <a class="lang" href="@(langSwtichPath)">@(lang === "zh-CN" ? "English" : "中文")</a>
+            <a href="https://github.com/jokers-pub/front-ui" target="_blank" class="out-link">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                    class="vt-social-link-icon">
+                    <path
+                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+                </svg>
+            </a>
+            <a href="https://x.com/jokers_pub" target="_blank" class="out-link">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                    class="vt-social-link-icon">
+                    <path
+                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                </svg>
+            </a>
+            <div class="mini-nav-btn @(model.navIsOpen?'is-open':'')" @click="openNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-fix @(model.navIsOpen?'is-open':'')">
+                @for(let menu of menus) {
+                    <li>
+                        <a href="@menu.path" @click="go(menu.path)" target="@menu.target">@menu.title</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </header>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { router } from "@joker.front/router";
+import docsearch from "@docsearch/js";
+import { MENUS_EN, MENUS_ZH_CN } from "../datas/menu";
+import "@docsearch/css";
+import { getLang } from "../utils";
+import { getNavData } from "../datas/nav";
+let description = "";
+
+export default class extends Component {
+    model = {
+        navIsOpen: false,
+        currentPath: ""
+    };
+    menus = getNavData();
+
+    currentPath = router.route.value.fullPath;
+    getClassName(path: string) {
+        if (path.startsWith("http")) return "";
+        let currentRoute = router.route.value;
+
+        if (currentRoute.fullPath.substring(1).split("/")[0] === "" && (path === "/index" || path === "/cn/index"))
+            return "active";
+
+        if (path.startsWith("/cn")) {
+            return path.substring(1).split("/").filter(Boolean)[1] === currentRoute.fullPath.substring(1).split("/")[1]
+                ? "active"
+                : "";
+        } else {
+            return path.substring(1).split("/").filter(Boolean)[0] === currentRoute.fullPath.substring(1).split("/")[0]
+                ? "active"
+                : "";
+        }
+    }
+    go(e: VNode.Event, path: string) {
+        this.model.navIsOpen = false;
+        if (path.startsWith("http")) return;
+        router.push(path);
+        e.preventDefault();
+    }
+    metaDescription: HTMLMetaElement | null = null;
+    created() {
+        // 获取 description 元标签
+        this.metaDescription = document.querySelector('meta[name="description"]');
+
+        // 检查是否存在该标签，如果存在则获取其 content 属性值
+        if (this.metaDescription && !description) {
+            description = this.metaDescription.getAttribute("content") || "";
+        }
+        this.$watch(
+            () => router.route.value,
+            () => {
+                this.setTitle();
+                this.model.currentPath = router.route.value.fullPath;
+            }
+        );
+
+        this.setTitle();
+        this.model.currentPath = router.route.value.fullPath;
+    }
+
+    mounted() {
+        docsearch({
+            container: "#docsearch",
+            appId: "U6KJ6739FP",
+            indexName: this.lang === "zh-CN" ? "joker_ui" : "joker_ui_en",
+            apiKey: "aa7e584e01dfa193ec388bd99e005283",
+            insights: true
+        });
+    }
+    lang = getLang();
+    setTitle() {
+        let menus = this.lang === "zh-CN" ? MENUS_ZH_CN : MENUS_EN;
+        let defaultTitle =
+            this.lang === "zh-CN"
+                ? "Joker UI 网站快速搭建组件库"
+                : "Joker UI Component Library for Rapid Website Building";
+        this.metaDescription?.setAttribute("content", description);
+        for (let group of menus) {
+            for (let item of group.children) {
+                if (item.path === (this.lang === "zh-CN" ? "/cn" : "") + router.route.value.path) {
+                    document.title = `${group.title} - ${item.title} ${defaultTitle}`;
+                    if (item.description) {
+                        this.metaDescription?.setAttribute("content", item.description + " | " + description);
+                    }
+                    return;
+                }
+            }
+        }
+
+        document.title = defaultTitle;
+    }
+    get langSwtichPath() {
+        let path = this.model.currentPath;
+
+        if (path.startsWith("/cn")) {
+            path = path.substring(3);
+        }
+
+        return (this.lang === "zh-CN" ? "https://ui.jokers.pub" : "https://ui.jokers.pub/cn") + path;
+    }
+    handleGoHome() {
+        router.push(this.lang === "zh-CN" ? "/cn" : "/");
+    }
+    openNav() {
+        this.model.navIsOpen = !this.model.navIsOpen;
+
+        if (this.model.navIsOpen) {
+            window.document.body.classList.add("jk-overflow-hidden");
+        } else {
+            window.document.body.classList.remove("jk-overflow-hidden");
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+header {
+    border-bottom: 1px solid #dcdfe6;
+
+    .topbar {
+        height: 55px;
+        line-height: 55px;
+        font-size: 24px;
+        box-sizing: border-box;
+        padding: 0 25px;
+        display: flex;
+        align-items: center;
+
+        h1 {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            font-size: 26px;
+            font-weight: normal;
+            cursor: pointer;
+            font-family: "Lucida Console", "Courier New", monospace;
+            img {
+                width: 30px;
+                height: 30px;
+                margin-right: 8px;
+            }
+        }
+
+        > ul {
+            flex: 1;
+            display: flex;
+            justify-content: end;
+
+            li {
+                list-style: none;
+                font-size: 13px;
+                font-weight: 500;
+
+                box-sizing: content-box;
+                cursor: pointer;
+                a {
+                    padding: 0 12px;
+                    display: inline-block;
+                    height: 100%;
+                    color: #1f2f3d;
+                    text-decoration: none;
+                    &:hover {
+                        color: var(--jk-color-primary);
+                    }
+                }
+
+                &.active {
+                    border-bottom: solid 2px var(--jk-color-primary);
+                }
+
+                &.line {
+                    margin-left: 10px;
+                    padding-left: 10px;
+                    border-left: solid 1px #efefef;
+                }
+            }
+        }
+
+        .out-link {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            line-height: 1;
+            margin-left: 15px;
+            opacity: 0.5;
+            &:hover {
+                opacity: 1;
+            }
+        }
+        a.lang {
+            font-size: 14px;
+            margin-left: 10px;
+            text-decoration: none;
+            color: #1f2f3d;
+
+            &:hover {
+                color: var(--jk-color-primary);
+            }
+        }
+
+        .mini-nav-btn {
+            width: 22px;
+            display: none;
+            margin-left: 10px;
+            cursor: pointer;
+            span {
+                height: 2px;
+                display: block;
+                background: var(--jk-color-text-regular);
+                transition: 0.3s ease-in-out;
+                &:first-child {
+                    transform: translateY(-4px);
+                }
+                &:last-child {
+                    transform: translateY(4px);
+                }
+            }
+
+            &.is-open {
+                span {
+                    &:nth-child(2) {
+                        display: none;
+                    }
+                    &:first-child {
+                        transform: translateY(-1px) rotate(45deg);
+                    }
+
+                    &:last-child {
+                        transform: translateY(-3px) rotate(-45deg);
+                    }
+                }
+            }
+        }
+        .nav-fix {
+            display: none;
+            position: fixed;
+            top: 63px;
+            left: 0;
+            right: 0;
+            padding: 0;
+            margin: 0;
+            bottom: 0;
+            background: #fff;
+            z-index: 2;
+
+            color: #484951;
+
+            li {
+                border-bottom: solid 1px #dcdfe6;
+                position: relative;
+                a {
+                    display: inline-block;
+
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+                &:after {
+                    content: ">";
+                    display: inline-block;
+                    position: absolute;
+                    top: 0px;
+                    right: 20px;
+                }
+            }
+
+            &.is-open {
+                display: block;
+            }
+        }
+        @media (max-width: 1130px) {
+            h1 {
+                flex: 1;
+            }
+            ul {
+                display: none;
+            }
+            .mini-nav-btn {
+                display: block;
+            }
+        }
+    }
+}
+</style>

@@ -1,0 +1,8 @@
+<template>
+    <jk-tooltip content="Default theme" placement="top">
+        <jk-button>Default theme</jk-button>
+    </jk-tooltip>
+    <jk-tooltip content="Default theme" placement="top" disabled>
+        <jk-button>Disabled</jk-button>
+    </jk-tooltip>
+</template>

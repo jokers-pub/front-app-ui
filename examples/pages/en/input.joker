@@ -1,0 +1,475 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Input Component</h2>
+        <p>Accepts text input via mouse or keyboard</p>
+        <h3>Basic Usage</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-input placeholder=&quot;Please enter the content&quot; @input=&quot;handleInput&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;p&gt;
+        @model.val
+    &lt;/p&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        val: &quot;&quot;
+    };
+    handleInput(e: VNode.Event) {
+        this.model.val = e.data!;
+    }
+}
+&lt;/script&gt;
+&lt;style scoped lang=&quot;scss&quot;&gt;
+p {
+    padding: 10px 0;
+    line-height: 1.2;
+}
+&lt;/style&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Disabled State</h3>
+        <p>
+            Disable the input component using the
+            <code>disabled</code>
+            property
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-input placeholder=&quot;Please enter the content&quot; disabled /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Clearable</h3>
+        <p>
+            Use the
+            <code>clearable</code>
+            property to create an input with clear functionality
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-input placeholder=&quot;Please enter the content&quot; clearable /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Input with Icons</h3>
+        <p>Input with icon indicators</p>
+        <p>
+            Display icons at the beginning or end of input using the
+            <code>prefix-icon</code>
+            and
+            <code>suffix-icon</code>
+            properties. Icons can also be placed via the
+            <code>section</code>
+            slot.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-cell-group title=&quot;属性方式&quot;&gt;
+        &lt;jk-field&gt;
+            &lt;jk-input placeholder=&quot;Please select a date&quot; suffix-icon=&quot;jk-icon-date&quot; /&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field&gt;
+            &lt;jk-input placeholder=&quot;Please enter the content&quot; prefix-icon=&quot;jk-icon-search&quot; /&gt;
+        &lt;/jk-field&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Section方式&quot;&gt;
+        &lt;jk-field&gt;
+            &lt;jk-input placeholder=&quot;Please select a date&quot;&gt;
+                @section(&quot;suffix&quot;) {
+                    &lt;i class=&quot;jk-icon-date&quot; /&gt;
+                }
+            &lt;/jk-input&gt;
+        &lt;/jk-field&gt;
+        &lt;jk-field&gt;
+            &lt;jk-input placeholder=&quot;Please enter the content&quot;&gt;
+                @section(&quot;prefix&quot;) {
+                    &lt;i class=&quot;jk-icon-search&quot; /&gt;
+                }
+            &lt;/jk-input&gt;
+        &lt;/jk-field&gt;
+    &lt;/jk-cell-group&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Composite Input</h3>
+        <p>Add prefix or suffix elements, typically labels or buttons</p>
+        <p>
+            Use the
+            <code>section</code>
+            slot to prepend or append content to the input.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-input placeholder=&quot;Please enter the content&quot;&gt;
+            @section(&quot;prepend&quot;) {
+                https://
+            }
+        &lt;/jk-input&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-input placeholder=&quot;Please enter the content&quot;&gt;
+            @section(&quot;append&quot;) {
+                .com
+            }
+        &lt;/jk-input&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Sizes</h3>
+        <p>
+            Set input size via the
+            <code>size</code>
+            property. Options include medium, small and mini in addition to the default size.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-input placeholder=&quot;Please enter the content&quot; size=&quot;large&quot; suffix-icon=&quot;jk-icon-date&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-input placeholder=&quot;Please enter the content&quot; suffix-icon=&quot;jk-icon-date&quot; /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-input placeholder=&quot;Please enter the content&quot; size=&quot;small&quot; suffix-icon=&quot;jk-icon-date&quot; autofocus /&gt;
+    &lt;/jk-field&gt;
+    &lt;jk-field&gt;
+        &lt;jk-input placeholder=&quot;Please enter the content&quot; size=&quot;mini&quot; suffix-icon=&quot;jk-icon-date&quot; /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Input Length Limits</h3>
+        <p>
+            <code>maxlength</code>
+            and
+            <code>minlength</code>
+            are native attributes that limit input length, where length is calculated via JavaScript string length counting. For text/textarea inputs, enable the word count display using
+            <code>show-word-limit</code>
+            when restricting max length with
+            <code>maxlength</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field&gt;
+        &lt;jk-input placeholder=&quot;Please enter&quot; maxlength=&quot;10&quot; show-word-limit /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Align</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo8)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-field label=&quot;Title&quot;&gt;
+        &lt;jk-input placeholder=&quot;Please enter&quot; align=&quot;left&quot; /&gt;
+    &lt;/jk-field&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Input Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>type</td>
+                    <td>Input type</td>
+                    <td>string</td>
+                    <td>
+                        text,
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types"
+                            target="_blank">
+                            native input types
+                        </a>
+                    </td>
+                    <td>text</td>
+                </tr>
+                <tr>
+                    <td>value</td>
+                    <td>Binding value</td>
+                    <td>string/number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom CSS class</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>maxlength</td>
+                    <td>Native attribute, max input length</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>minlength</td>
+                    <td>Native attribute, min input length</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>show-word-limit</td>
+                    <td>Show word count</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td>Input placeholder</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>clearable</td>
+                    <td>Clearable</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Disabled</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Input size</td>
+                    <td>string</td>
+                    <td>large/small/mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>prefix-icon</td>
+                    <td>Prefix icon</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>suffix-icon</td>
+                    <td>Suffix icon</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>autocomplete</td>
+                    <td>Native autocomplete</td>
+                    <td>string</td>
+                    <td>on/off</td>
+                    <td>off</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>Native name</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>readonly</td>
+                    <td>Readonly</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>autofocus</td>
+                    <td>Autofocus</td>
+                    <td>boolean</td>
+                    <td>true/false</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>label</td>
+                    <td>Associated label text</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>tabindex</td>
+                    <td>Tab index</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>status-icon</td>
+                    <td>Show validation icon</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>align</td>
+                    <td>text align</td>
+                    <td>right/left</td>
+                    <td>-</td>
+                    <td>right</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Input Slots</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>prefix</td>
+                    <td>Content prepended to input</td>
+                </tr>
+                <tr>
+                    <td>suffix</td>
+                    <td>Content appended to input</td>
+                </tr>
+                <tr>
+                    <td>prepend</td>
+                    <td>Content placed before input</td>
+                </tr>
+                <tr>
+                    <td>append</td>
+                    <td>Content placed after input</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Input Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>blur</td>
+                    <td>Triggers when input loses focus</td>
+                    <td>VNode.Event</td>
+                </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>Triggers when input gets focus</td>
+                    <td>VNode.Event</td>
+                </tr>
+                <tr>
+                    <td>change</td>
+                    <td>Only triggers when input loses focus or user presses enter</td>
+                    <td>VNode.Event</td>
+                </tr>
+                <tr>
+                    <td>input</td>
+                    <td>Triggers when input value changes</td>
+                    <td>VNode.Event</td>
+                </tr>
+                <tr>
+                    <td>clear</td>
+                    <td>
+                        Triggers when clear button (via
+                        <code>clearable</code>
+                        ) is clicked
+                    </td>
+                    <td>VNode.Event</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Input Methods</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Params</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>focus</td>
+                    <td>Focus the input</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>blur</td>
+                    <td>Blur the input</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>Select input text</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo8 from "../../components/input/demo8.joker";
+import DEMO_JOKER_demo7 from "../../components/input/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/input/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/input/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/input/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/input/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/input/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/input/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo8,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

@@ -1,0 +1,74 @@
+<template>
+    <DemoRow>
+        <jk-table
+            ref="table1"
+            data="@model.tableData"
+            select
+            multiple
+            @selected-change="handleSelectedChange('table2')">
+            <jk-table-column label="Date" key="date" width="100" fixed="left" />
+            <jk-table-column label="Name" key="name" width="180" />
+            <jk-table-column label="Address" key="address" />
+            <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+        </jk-table>
+    </DemoRow>
+    <DemoRow>
+        <jk-table
+            ref="table2"
+            data="@model.tableData"
+            select
+            multiple
+            @selected-change="handleSelectedChange('table1')">
+            <jk-table-column type="selection" disabledMethod="@disabledMethod" fixed="left" />
+            <jk-table-column label="Date" key="date" width="100" fixed="left" />
+            <jk-table-column label="Name" key="name" width="180" />
+            <jk-table-column label="Address" key="address" />
+            <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+        </jk-table>
+    </DemoRow>
+    <DemoRow>
+        <jk-button @click="clear">Clear</jk-button>
+        <jk-button @click="selectAll">Select All</jk-button>
+    </DemoRow>
+    <DemoRow>
+        <jk-table data="@model.tableData" select multiple>
+            <jk-table-column type="selection" key="checked" fixed="left" />
+            <jk-table-column label="Date" key="date" width="100" fixed="left" />
+            <jk-table-column label="Name" key="name" width="180" />
+            <jk-table-column label="Address" key="address" />
+            <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+        </jk-table>
+    </DemoRow>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        tableData: [
+            { name: "Zhang San", date: "2023-11-01", address: "Jinan, Shandong Province", money: 1000 },
+            { name: "Li Si", date: "2023-11-02", address: "Jinan, Shandong Province", money: 10 },
+            { name: "Li Mei", date: "2023-11-03", address: "Jinan, Shandong Province", money: 300, checked: true },
+            { name: "Wang Wu", date: "2023-11-04", address: "Jinan, Shandong Province", money: 11.9 }
+        ]
+    };
+
+    disabledMethod(row: any) {
+        return row.name === "Li Mei";
+    }
+
+    selectAll() {
+        this.$getRef("table1")?.component.selectAll();
+        this.$getRef("table2")?.component.selectAll();
+    }
+
+    clear() {
+        this.$getRef("table1")?.component.clearSelectedRow();
+        this.$getRef("table2")?.component.clearSelectedRow();
+    }
+
+    handleSelectedChange(e: VNode.Event<any>, syncTableName: string) {
+        this.$getRef(syncTableName)?.component.setSelectedRow(e.data);
+    }
+}
+</script>

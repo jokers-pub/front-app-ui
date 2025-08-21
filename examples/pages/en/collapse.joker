@@ -1,0 +1,317 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Collapse Panel</h2>
+        <p>Expand/Collapse content display</p>
+        <h3>Basic Usage</h3>
+        <p>Basic functionality of a collapsible panel.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-collapse @change=&quot;collapseChange&quot;&gt;
+        &lt;jk-collapse-item title=&quot;Consistency&quot;&gt;
+            &lt;div&gt;Visual consistency: Components should follow the same visual and interaction style guidelines.&lt;/div&gt;
+            &lt;div&gt;Naming consistency: The naming of components and their APIs should be clear and consistent.&lt;/div&gt;
+        &lt;/jk-collapse-item&gt;
+        &lt;jk-collapse-item title=&quot;Reusability&quot;&gt;
+            &lt;div&gt;
+                Independence: Components should be self - contained and not rely on specific external implementations.
+            &lt;/div&gt;
+            &lt;div&gt;
+                Parameterization: Components should allow customization of their behavior and appearance through parameters or attributes.
+            &lt;/div&gt;
+        &lt;/jk-collapse-item&gt;
+        &lt;jk-collapse-item title=&quot;Maintainability&quot;&gt;
+            &lt;div&gt;
+                Clear documentation: Each component should have detailed documentation explaining its purpose, interfaces, and usage examples.
+            &lt;/div&gt;
+            &lt;div&gt;Clean code: Component code should be readable, with a clear structure and comments.&lt;/div&gt;
+        &lt;/jk-collapse-item&gt;
+        &lt;jk-collapse-item title=&quot;Accessibility&quot;&gt;
+            &lt;div&gt;
+                Compliance with standards: Follow WAI - ARIA guidelines to ensure that components are friendly to assistive technologies (such as screen readers).
+            &lt;/div&gt;
+            &lt;div&gt;Keyboard accessibility: Components should be operable via the keyboard.&lt;/div&gt;
+        &lt;/jk-collapse-item&gt;
+    &lt;/jk-collapse&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    collapseChange(event) {
+        console.log(&quot;Expanded items: &quot;, event.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Accordion Mode</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div&gt;
+        &lt;jk-collapse accordion&gt;
+            &lt;jk-collapse-item title=&quot;Consistency&quot; name=&quot;1&quot;&gt;
+                &lt;div&gt;
+                    Visual consistency: Components should follow the same visual and interaction style guidelines.
+                &lt;/div&gt;
+                &lt;div&gt;Naming consistency: The naming of components and their APIs should be clear and consistent.&lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+            &lt;jk-collapse-item title=&quot;Reusability&quot; name=&quot;2&quot;&gt;
+                &lt;div&gt;
+                    Independence: Components should be self - contained and not rely on specific external implementations.
+                &lt;/div&gt;
+                &lt;div&gt;
+                    Parameterization: Components should allow customization of their behavior and appearance through parameters or attributes.
+                &lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+            &lt;jk-collapse-item title=&quot;Maintainability&quot; name=&quot;3&quot;&gt;
+                &lt;div&gt;
+                    Clear documentation: Each component should have detailed documentation explaining its purpose, interfaces, and usage examples.
+                &lt;/div&gt;
+                &lt;div&gt;Clean code: Component code should be readable, with a clear structure and comments.&lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+            &lt;jk-collapse-item title=&quot;Accessibility&quot; name=&quot;4&quot;&gt;
+                &lt;div&gt;
+                    Compliance with standards: Follow WAI - ARIA guidelines to ensure that components are friendly to assistive technologies (such as screen readers).
+                &lt;/div&gt;
+                &lt;div&gt;Keyboard accessibility: Components should be operable via the keyboard.&lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+        &lt;/jk-collapse&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {};
+}
+&lt;/script&gt;
+
+</code></pre>
+        </DemoContainer>
+        <h3>Custom Title</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div&gt;
+        &lt;jk-collapse value=&quot;@model.value&quot; accordion&gt;
+            &lt;jk-collapse-item name=&quot;1&quot;&gt;
+                @section(&quot;title&quot;) {
+                    &lt;span&gt;Consistency&lt;/span&gt;
+                    &lt;jk-icon name=&quot;question&quot; /&gt;
+                }
+                &lt;div&gt;
+                    Visual consistency: Components should follow the same visual and interaction style guidelines.
+                &lt;/div&gt;
+                &lt;div&gt;Naming consistency: The naming of components and their APIs should be clear and consistent.&lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+            &lt;jk-collapse-item name=&quot;2&quot;&gt;
+                @section(&quot;title&quot;) {
+                    &lt;span&gt;Reusability&lt;/span&gt;
+                    &lt;jk-icon name=&quot;bell&quot; /&gt;
+                }
+                &lt;div&gt;
+                    Independence: Components should be self - contained and not rely on specific external implementations.
+                &lt;/div&gt;
+                &lt;div&gt;
+                    Parameterization: Components should allow customization of their behavior and appearance through parameters or attributes.
+                &lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+            &lt;jk-collapse-item title=&quot;Maintainability&quot; name=&quot;3&quot;&gt;
+                &lt;div&gt;
+                    Clear documentation: Each component should have detailed documentation explaining its purpose, interfaces, and usage examples.
+                &lt;/div&gt;
+                &lt;div&gt;Clean code: Component code should be readable, with a clear structure and comments.&lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+            &lt;jk-collapse-item title=&quot;Accessibility&quot; name=&quot;4&quot;&gt;
+                &lt;div&gt;
+                    Compliance with standards: Follow WAI - ARIA guidelines to ensure that components are friendly to assistive technologies (such as screen readers).
+                &lt;/div&gt;
+                &lt;div&gt;Keyboard accessibility: Components should be operable via the keyboard.&lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+        &lt;/jk-collapse&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        value: &quot;1&quot;
+    };
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Lazy Loading</h3>
+        <p>
+            Enable lazy loading with the
+            <code>lazy</code>
+            property. In lazy loading mode, animation effects are disabled as the actual content height cannot be determined upfront.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div&gt;
+        &lt;jk-collapse accordion&gt;
+            &lt;jk-collapse-item name=&quot;1&quot; lazy&gt;
+                @section(&quot;title&quot;) {
+                    &lt;span&gt;Consistency&lt;/span&gt;
+                    &lt;jk-icon name=&quot;question&quot; /&gt;
+                }
+                &lt;div&gt;
+                    Visual consistency: Components should follow the same visual and interaction style guidelines.
+                &lt;/div&gt;
+                &lt;div&gt;Naming consistency: The naming of components and their APIs should be clear and consistent.&lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+            &lt;jk-collapse-item name=&quot;2&quot; lazy&gt;
+                @section(&quot;title&quot;) {
+                    &lt;span&gt;Reusability&lt;/span&gt;
+                    &lt;jk-icon name=&quot;bell&quot; /&gt;
+                }
+                &lt;div&gt;
+                    Independence: Components should be self - contained and not rely on specific external implementations.
+                &lt;/div&gt;
+                &lt;div&gt;
+                    Parameterization: Components should allow customization of their behavior and appearance through parameters or attributes.
+                &lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+            &lt;jk-collapse-item title=&quot;Maintainability&quot; name=&quot;3&quot; lazy&gt;
+                &lt;div&gt;
+                    Clear documentation: Each component should have detailed documentation explaining its purpose, interfaces, and usage examples.
+                &lt;/div&gt;
+                &lt;div&gt;Clean code: Component code should be readable, with a clear structure and comments.&lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+            &lt;jk-collapse-item title=&quot;Accessibility&quot; name=&quot;4&quot; lazy&gt;
+                &lt;div&gt;
+                    Compliance with standards: Follow WAI - ARIA guidelines to ensure that components are friendly to assistive technologies (such as screen readers).
+                &lt;/div&gt;
+                &lt;div&gt;Keyboard accessibility: Components should be operable via the keyboard.&lt;/div&gt;
+            &lt;/jk-collapse-item&gt;
+        &lt;/jk-collapse&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>Currently active panel (string in accordion mode, otherwise Array)</td>
+                    <td>string / Array</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>accordion</td>
+                    <td>Whether accordion mode is enabled</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>false</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Callback Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>
+                        Triggered when the active panel changes (returns active panel's
+                        <code>name</code>
+                        ; type is string in accordion mode, otherwise Array)
+                    </td>
+                    <td>name value of the active panel</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Item Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>name</td>
+                    <td>Unique identifier</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>Panel title</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>accordion</td>
+                    <td>Whether accordion mode is enabled</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>lazy</td>
+                    <td>Lazy loading mode (content loads only when expanded)</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>false</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo4 from "../../components/collapse/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/collapse/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/collapse/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/collapse/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

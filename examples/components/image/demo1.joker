@@ -1,0 +1,20 @@
+<template>
+    @for(let fit of model.fits) {
+        <jk-cell-group title="@fit">
+            <jk-cell>
+                <jk-image style="width: 100px; height: 100px" src="@model.url" fit="@fit"></jk-image>
+            </jk-cell>
+        </jk-cell-group>
+    }
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        fits: ["fill", "contain", "cover", "none", "scale-down"],
+        url: "https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360"
+    };
+}
+</script>

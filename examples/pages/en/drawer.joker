@@ -1,0 +1,208 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Drawer Component</h2>
+        <p>
+            The Drawer component provides nearly identical APIs to
+            <code>Dialog</code>
+            , but delivers a distinct user interface experience.
+        </p>
+        <h3>Basic Usage</h3>
+        <p>Displays a sidebar that can slide in from multiple directions.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-radio-group @change=&quot;handleRadioChange&quot; value=&quot;@model.direction&quot; direction=&quot;vertical&quot;&gt;
+            &lt;jk-radio value=&quot;left&quot;&gt;Left to right&lt;/jk-radio&gt;
+            &lt;jk-radio value=&quot;top&quot;&gt;Top to bottom&lt;/jk-radio&gt;
+            &lt;jk-radio value=&quot;right&quot;&gt;Right to left&lt;/jk-radio&gt;
+            &lt;jk-radio value=&quot;bottom&quot;&gt;Bottom to top&lt;/jk-radio&gt;
+        &lt;/jk-radio-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;jk-button @click=&quot;handleOpen&quot;&gt;Pop up&lt;/jk-button&gt;
+    &lt;jk-drawer ref=&quot;drawer&quot; direction=&quot;@model.direction&quot; title=&quot;I'm the title&quot;&gt;I'm the content.&lt;/jk-drawer&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { VNode } from &quot;@joker.front/core&quot;;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        direction: &quot;left&quot;
+    };
+
+    handleRadioChange(e: VNode.Event&lt;string&gt;) {
+        this.model.direction = e.data;
+    }
+
+    handleOpen() {
+        this.$getRef(&quot;drawer&quot;)?.component.open();
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Multi-level Nesting</h3>
+        <p>
+            Supports multi-level nesting with automatic
+            <code>z-index</code>
+            management within the component.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-button @click=&quot;handleOpen&quot;&gt;Pop up&lt;/jk-button&gt;
+    &lt;jk-drawer ref=&quot;drawer&quot; size=&quot;50%&quot; title=&quot;I'm the title&quot;&gt;
+        I'm the content.
+        &lt;div&gt;
+            &lt;jk-button @click=&quot;handleOpenNext&quot;&gt;Pop up another one&lt;/jk-button&gt;
+        &lt;/div&gt;
+        &lt;jk-drawer ref=&quot;drawer2&quot; title=&quot;I'm the second one&quot;&gt;I'm the second content&lt;/jk-drawer&gt;
+    &lt;/jk-drawer&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    handleOpenNext() {
+        this.$getRef(&quot;drawer2&quot;)?.component.open();
+    }
+
+    handleOpen() {
+        this.$getRef(&quot;drawer&quot;)?.component.open();
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Allowed Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>direction</td>
+                    <td>Slide-in direction</td>
+                    <td>string</td>
+                    <td>left/top/right/bottom</td>
+                    <td>right</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Dimensions when expanded</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>30%</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>Title text</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>showHeader</td>
+                    <td>Whether to show the header toolbar</td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>true</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Slots</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Slot</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>Main content area</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>Title area</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Methods</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                    <th>Returns</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>open</td>
+                    <td>Opens drawer</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>close</td>
+                    <td>Closes drawer</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>open</td>
+                    <td>Triggered upon opening</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>close</td>
+                    <td>Triggered upon closing</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo2 from "../../components/drawer/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/drawer/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

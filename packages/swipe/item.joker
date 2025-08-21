@@ -1,0 +1,146 @@
+<template>
+    <div
+        style="@(model.ready ? 'display: block' : 'display: none')"
+        class="@([
+            'jk-carousel-item',
+            {
+                'is-active': model.active,
+                'is-in-stage': model.isStage,
+                'is-animating': model.animating
+            }
+        ])"
+        style="@itemStyle">
+        @RenderSection()
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { autoprefixer, componentName } from "../utils";
+
+let CARD_SCALE = 0.83;
+
+export default class extends Component {
+    name = componentName("carousel-item");
+    model = {
+        translate: 0,
+        scale: 1,
+        active: false,
+        ready: false,
+        inStage: false,
+        animating: false
+    };
+
+    mounted() {
+        this.group && this.group.component?.updateItems();
+    }
+
+    destroyed() {
+        this.group && this.group.component.updateItems();
+    }
+
+    get group(): VNode.Component | undefined {
+        return this.$rootVNode?.closest((n) => {
+            return n instanceof VNode.Component && n.component?.name === componentName("carousel");
+        });
+    }
+
+    get parentDirection(): string | undefined {
+        return this.group && this.group.component?.props.direction;
+    }
+
+    get itemStyle() {
+        let translateType = this.parentDirection === "vertical" ? "translateY" : "translateX";
+        let value = translateType + "(" + this.model.translate + "px) scale(" + this.model.scale + ")";
+        let style = {
+            transform: value
+        };
+        return autoprefixer(style) + ";transform: " + value;
+    }
+
+    processIndex(index: number, activeIndex: number, length: number): number {
+        if (activeIndex === 0 && index === length - 1) {
+            return -1;
+        } else if (activeIndex === length - 1 && index === 0) {
+            return length;
+        } else if (index < activeIndex - 1 && activeIndex - index >= length / 2) {
+            return length + 1;
+        } else if (index > activeIndex + 1 && index - activeIndex >= length / 2) {
+            return -2;
+        }
+        return index;
+    }
+
+    calcCardTranslate(index: number, activeIndex: number): number {
+        let parentWidth = this.group && this.group.component.$getRef("carousel")!.output.offsetWidth;
+        if (this.model.inStage) {
+            return (parentWidth * ((2 - CARD_SCALE) * (index - activeIndex) + 1)) / 4;
+        } else if (index < activeIndex) {
+            return (-(1 + CARD_SCALE) * parentWidth) / 4;
+        } else {
+            return ((3 + CARD_SCALE) * parentWidth) / 4;
+        }
+    }
+
+    calcTranslate(index: number, activeIndex: number, isVertical: boolean): number {
+        let distance =
+            this.group && this.group.component.$getRef("carousel")!.output[isVertical ? "offsetHeight" : "offsetWidth"];
+        return distance * (index - activeIndex);
+    }
+
+    translateItem(index: number, activeIndex: number, oldIndex: number): void {
+        let parentDirection = this.parentDirection;
+        let length = this.group && this.group.component.model.items.length;
+        if (oldIndex !== undefined) {
+            this.model.animating = index === activeIndex || index === oldIndex;
+        }
+        if (index !== activeIndex && length > 2 && this.group && this.group.component.props.loop) {
+            index = this.processIndex(index, activeIndex, length);
+        }
+
+        this.model.active = index === activeIndex;
+        let isVertical = parentDirection === "vertical";
+        this.model.translate = this.calcTranslate(index, activeIndex, isVertical);
+        this.model.scale = 1;
+
+        if (this.model.active) {
+            this.model.ready = true;
+        }
+    }
+
+    move(index: number, activeIndex: number, delta: number): void {
+        let parentDirection = this.parentDirection;
+        let length = this.group && this.group.component.model.items.length;
+
+        this.model.animating = false;
+
+        if (index !== activeIndex && length > 2 && this.group && this.group.component.props.loop) {
+            index = this.processIndex(index, activeIndex, length);
+        }
+
+        let isVertical = parentDirection === "vertical";
+        this.model.translate = this.calcTranslate(index, activeIndex, isVertical) + delta;
+
+        this.model.ready = true;
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.jk-carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    overflow: hidden;
+    z-index: 0;
+    &.is-active {
+        z-index: 2;
+    }
+
+    &.is-animating {
+        transition: transform 0.4s ease-in-out;
+    }
+}
+</style>

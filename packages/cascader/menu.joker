@@ -1,0 +1,58 @@
+<template>
+    <div class="jk-cascader-menu" ref="container">
+        @if(props.nodes.length) {
+            @for(let node of props.nodes) {
+                <JokerNode node="@node"></JokerNode>
+            }
+        }
+        else {
+            @if(cascader.$sections.empty) {
+                @RenderSection(cascader.$sections.empty, props.parentNode)
+            }
+            else {
+                <JokerEmpty description="@props.emptyText" />
+            }
+        }
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { componentName } from "../utils";
+import JokerScrollbar from "../scrollbar/index.joker";
+import JokerNode from "./node.joker";
+import JokerEmpty from "../empty/index.joker";
+
+export default class extends Component<{
+    nodes: Array<any>;
+    emptyText: string;
+    parentNode: any;
+}> {
+    components = {
+        JokerScrollbar,
+        JokerNode,
+        JokerEmpty
+    };
+    cascader: any;
+    created() {
+        this.cascader = this.$root?.closest((n) => {
+            return n instanceof VNode.Component && n.component.name === componentName("cascader");
+        }).component;
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.jk-cascader-menu {
+    box-sizing: border-box;
+    color: var(--jk-color-text-regular);
+
+    .empty-text {
+        padding: 0 30px 0 20px;
+        height: 34px;
+        line-height: 34px;
+        outline: none;
+        text-align: center;
+        color: var(--jk-color-text-placeholder);
+    }
+}
+</style>

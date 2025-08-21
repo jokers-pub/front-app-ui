@@ -1,0 +1,14 @@
+<template>
+    <jk-field label="Large">
+        <jk-password placeholder="Please enter" size="large" showSwitchBtn />
+    </jk-field>
+    <jk-field label="Default">
+        <jk-password placeholder="Please enter" showSwitchBtn />
+    </jk-field>
+    <jk-field label="Small">
+        <jk-password placeholder="Please enter" size="small" showSwitchBtn />
+    </jk-field>
+    <jk-field label="mini">
+        <jk-password placeholder="Please enter" size="mini" showSwitchBtn />
+    </jk-field>
+</template>

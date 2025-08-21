@@ -1,0 +1,40 @@
+<template>
+    <jk-cell-group title="Default">
+        <jk-cell>
+            <jk-image src="@model.src" style="width: 300px;height:200px;"></jk-image>
+        </jk-cell>
+    </jk-cell-group>
+    <jk-cell-group title="Custom">
+        <jk-cell>
+            <jk-image src="@model.src" style="width: 300px;height:200px;" lazy>
+                @section("placeholder") {
+                    Loading
+                    <span class="dot">...</span>
+                }
+            </jk-image>
+        </jk-cell>
+    </jk-cell-group>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {
+        src: "https://img.freepik.com/free-photo/dark-car-highway-evening-drive-summer-scenery_169016-68014.jpg??w=360"
+    };
+}
+</script>
+<style lang="scss" scoped>
+.demo-image__placeholder {
+    display: flex;
+    .block {
+        padding: 30px 0;
+        text-align: center;
+        border-right: 1px solid #eff2f6;
+        flex: 1;
+        box-sizing: border-box;
+        vertical-align: top;
+    }
+}
+</style>

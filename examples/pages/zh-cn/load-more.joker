@@ -1,0 +1,205 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>LoadMore 加载更多</h2>
+        <p>当滚动到底部时，或者控件进入视口后触发加载事件，可实现加载更多。</p>
+        <h3>基础用法</h3>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div style=&quot;height:400px&quot;&gt;
+        &lt;jk-scrollbar&gt;
+            @for(let i of model.datas) {
+                &lt;jk-cell title=&quot;@(i)&quot; /&gt;
+            }
+            &lt;jk-load-more load=&quot;@load&quot; /&gt;
+        &lt;/jk-scrollbar&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+
+export default class extends Component {
+    model = {
+        datas: []
+    };
+
+    async load() {
+        await sleep(2000);
+
+        for (let i = 0; i &lt; 10; i++) {
+            this.model.datas.push(i.toString());
+        }
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <h3>懒加载</h3>
+        <p>当不足一页时，可点击加载更多实现继续加载。</p>
+        <blockquote>
+            <p>此场景适合在超长屏幕，或者首页数据过少时使用。</p>
+        </blockquote>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;div style=&quot;height:400px&quot;&gt;
+        &lt;jk-scrollbar&gt;
+            @for(let i of model.datas) {
+                &lt;jk-cell title=&quot;@(i)&quot; /&gt;
+            }
+            &lt;jk-load-more load=&quot;@load&quot; /&gt;
+        &lt;/jk-scrollbar&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+import { sleep } from &quot;@joker.front/shared&quot;;
+
+export default class extends Component {
+    model = {
+        datas: []
+    };
+
+    async load() {
+        await sleep(2000);
+
+        for (let i = 0; i &lt; 5; i++) {
+            this.model.datas.push(i.toString());
+        }
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <div class="warning">
+            <p>
+                若首次渲染时由于内容过短显示了该控件，可能会造成重复触发加载逻辑，建议统一使用该控件来进行首次资源加载。
+            </p>
+        </div>
+        <h3>Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>说明</th>
+                    <th>类型</th>
+                    <th>可选值</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>class</strong>
+                    </td>
+                    <td>自定义类名，用于覆盖组件默认样式</td>
+                    <td>any</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>text</strong>
+                    </td>
+                    <td>默认加载状态的提示文本（非加载中、非无数据时显示）</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;加载更多&quot;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>noData</strong>
+                    </td>
+                    <td>
+                        是否处于“没有更多数据”状态，为
+                        <code>true</code>
+                        时会显示
+                        <code>noDataText</code>
+                        并禁用加载事件
+                    </td>
+                    <td>boolean</td>
+                    <td>true / false</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>loadingText</strong>
+                    </td>
+                    <td>“加载中”状态的提示文本（触发加载逻辑后显示）</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;加载中...&quot;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>noDataText</strong>
+                    </td>
+                    <td>
+                        “没有更多数据”状态的提示文本（
+                        <code>noData</code>
+                        为
+                        <code>true</code>
+                        时显示）
+                    </td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>&quot;没有更多了&quot;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>load</strong>
+                    </td>
+                    <td>触发加载时执行的回调函数，支持异步操作（如接口请求）</td>
+                    <td>() =&gt; any</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Sections</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>描述</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>自定义标题内容</td>
+                    <td>state状态 ''|'loading'|'nodata'</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo2 from "../../components/load-more/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/load-more/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

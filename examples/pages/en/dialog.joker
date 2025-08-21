@@ -1,0 +1,218 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Dialog</h2>
+        <p>
+            Displays a dialog box while preserving the current page state, providing relevant information and operations to the user.
+        </p>
+        <h3>Basic Usage</h3>
+        <p>The Dialog component pops up a dialog box, suitable for scenarios requiring greater customizability.</p>
+        <p>
+            The
+            <code>open</code>
+            /
+            <code>close</code>
+            methods of the component are used to control the visibility of the dialog. A Dialog consists of two parts:
+            <code>body</code>
+            and
+            <code>footer</code>
+            . The
+            <code>footer</code>
+            must be a named
+            <code>section</code>
+            with the slot name
+            <code>footer</code>
+            . The
+            <code>title</code>
+            attribute defines the title and is optional, defaulting to an empty string. This example also demonstrates the usage of
+            <code>before-close</code>
+            .
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth @click=&quot;open&quot;&gt;Click to open Dialog&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth @click=&quot;open1&quot;&gt;Full-screen window&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button fullWidth @click=&quot;open2&quot;&gt;Window with extremely long content&lt;/jk-button&gt;
+    &lt;/DemoRow&gt;
+    &lt;jk-dialog ref=&quot;dialog&quot; title=&quot;Basic display&quot; before-close=&quot;@dialogBeforeClose&quot;&gt;
+        &lt;jk-form label-position=&quot;top&quot;&gt;
+            &lt;jk-cell-group title=&quot;User Info&quot;&gt;
+                &lt;jk-field label=&quot;UserName&quot;&gt;
+                    &lt;jk-input placeholder=&quot;Pleasse Input&quot; /&gt;
+                &lt;/jk-field&gt;
+                &lt;jk-field label=&quot;UserName&quot;&gt;
+                    &lt;jk-input placeholder=&quot;Pleasse Input&quot; /&gt;
+                &lt;/jk-field&gt;
+                &lt;jk-field label=&quot;UserName&quot;&gt;
+                    &lt;jk-input placeholder=&quot;Pleasse Input&quot; /&gt;
+                &lt;/jk-field&gt;
+            &lt;/jk-cell-group&gt;
+        &lt;/jk-form&gt;
+        @section(&quot;footer&quot;) {
+            &lt;jk-button @click=&quot;handleDialogCancelClick&quot;&gt;Cancel&lt;/jk-button&gt;
+            &lt;jk-button type=&quot;primary&quot; @click=&quot;handleDialogConfirmClick&quot;&gt;OK&lt;/jk-button&gt;
+        }
+    &lt;/jk-dialog&gt;
+    &lt;jk-dialog ref=&quot;dialog1&quot; fullscreen title=&quot;Full-screen display&quot;&gt;&lt;/jk-dialog&gt;
+    &lt;jk-dialog ref=&quot;dialog2&quot; title=&quot;Window with extremely long content&quot;&gt;
+        &lt;ul&gt;
+            @for(let i = 0; i &lt; 100; i++) {
+                &lt;li&gt;
+                    I'm line @(i).
+                &lt;/li&gt;
+            }
+        &lt;/ul&gt;
+    &lt;/jk-dialog&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+import { MessageBox } from &quot;../../../src&quot;;
+
+export default class extends Component {
+    open() {
+        this.$getRef(&quot;dialog&quot;)?.component.open();
+    }
+    open1() {
+        this.$getRef(&quot;dialog1&quot;)?.component.open();
+    }
+    open2() {
+        this.$getRef(&quot;dialog2&quot;)?.component.open();
+    }
+    dialogBeforeClose(close: Function) {
+        MessageBox.confirm(&quot;Are you sure you want to close?&quot;, {
+            title: &quot;Prompt&quot;,
+            callback(action) {
+                if (action === &quot;confirm&quot;) {
+                    close();
+                }
+            }
+        });
+    }
+    handleDialogCancelClick() {
+        this.$getRef(&quot;dialog&quot;)?.component.close();
+    }
+
+    handleDialogConfirmClick() {
+        this.$getRef(&quot;dialog&quot;)?.component.close();
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>
+                The
+                <code>before-close</code>
+                callback only takes effect when the user closes the Dialog by clicking the close icon or the modal overlay.
+            </p>
+        </blockquote>
+        <h3>Nested Dialogs</h3>
+        <p>
+            To nest one Dialog inside another, it is necessary to set the
+            <code>append-to</code>
+            property to
+            <code>body</code>
+            .
+        </p>
+        <p>
+            Normally, we do not recommend using nested Dialogs. If multiple Dialogs need to be displayed on the page simultaneously, they should be placed at the same level. For scenarios where nested Dialogs are unavoidable, the
+            <code>append-to</code>
+            attribute is provided.
+            <strong>
+                Refer to the core documentation for details on
+                <code>append-to</code>
+                .
+            </strong>
+            When the inner Dialog’s
+            <code>append-to</code>
+            property is set to
+            <code>body</code>
+            , it will be inserted into the
+            <code>body</code>
+            element, ensuring the correct layering relationship between nested Dialogs and the modal overlay.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button @click=&quot;open&quot; fullWidth&gt;Open Window&lt;/jk-button&gt;
+        &lt;jk-dialog ref=&quot;dialog&quot; title=&quot;Level 1 Window&quot;&gt;
+            &lt;p&gt;I'm the content of the outer level 1 window.&lt;/p&gt;
+            &lt;jk-dialog ref=&quot;dialog2&quot; title=&quot;Level 2 Nested Window&quot; width=&quot;80%&quot;&gt;
+                &lt;p&gt;I'm the content inside the dialog (by default, all windows use append-to=&amp;quot;body&amp;quot;).&lt;/p&gt;
+            &lt;/jk-dialog&gt;
+            @section(&quot;footer&quot;) {
+                &lt;jk-button-group fullWidth&gt;
+                    &lt;jk-button type=&quot;primary&quot; @click=&quot;openChildren1&quot;&gt;Open Parallel&lt;/jk-button&gt;
+                    &lt;jk-button type=&quot;warning&quot; @click=&quot;openChildren2&quot;&gt;Open Nested&lt;/jk-button&gt;
+                &lt;/jk-button-group&gt;
+            }
+        &lt;/jk-dialog&gt;
+        &lt;jk-dialog ref=&quot;dialog1&quot; title=&quot;Level 2 Parallel Window&quot; width=&quot;80%&quot;&gt;
+            &lt;p&gt;I'm the content inside the dialog (parallel window, it's recommended to use it like this).&lt;/p&gt;
+        &lt;/jk-dialog&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    open() {
+        this.$getRef(&quot;dialog&quot;)?.component.open();
+    }
+    openChildren1() {
+        this.$getRef(&quot;dialog1&quot;)?.component.open();
+    }
+    openChildren2() {
+        this.$getRef(&quot;dialog2&quot;)?.component.open();
+    }
+}
+&lt;/script&gt;
+
+
+</code></pre>
+        </DemoContainer>
+        <blockquote>
+            <p>
+                The
+                <code>append-to</code>
+                attribute only affects the DOM output structure and has no impact on the VNode data structure. It will still be created according to the development-time data hierarchy and follow parent-child component destruction mechanisms, requiring minimal manual intervention.
+            </p>
+        </blockquote>
+        <div class="warning">
+            <p>
+                The content of Dialog is lazily rendered. Before being opened for the first time, the default slots passed will not be rendered to the DOM. Therefore, if DOM operations are required, or if components need to be accessed via
+                <code>ref</code>
+                , perform these actions within the
+                <code>open</code>
+                event callback.
+            </p>
+        </div>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo2 from "../../components/dialog/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/dialog/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

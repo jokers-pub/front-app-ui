@@ -1,0 +1,6 @@
+<template>
+    <jk-cell-group>
+        <jk-cell title="Cell title" value="Content" icon="jk-icon-s-user" />
+        <jk-cell title="Cell title" value="Content" icon="jk-icon-star-on" description="Description" />
+    </jk-cell-group>
+</template>

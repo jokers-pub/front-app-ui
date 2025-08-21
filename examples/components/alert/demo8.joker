@@ -1,0 +1,33 @@
+<template>
+    <DemoRow>
+        <jk-alert
+            icon="jk-icon-s-bell"
+            title="无论我们能活多久，我们能够享受的只有无法分割的此刻，此外别无其他。"
+            scrollable
+        />
+    </DemoRow>
+    <DemoRow>
+        <jk-alert
+            icon="jk-icon-s-bell"
+            title="无论我们能活多久，我们能够享受的只有无法分割的此刻，此外别无其他。"
+            scrollable
+        />
+    </DemoRow>
+    <DemoRow>
+        <jk-alert
+            icon="jk-icon-s-bell"
+            title="无论我们能活多久，我们能够享受的只有无法分割的此刻，此外别无其他。"
+            scrollable
+        />
+    </DemoRow>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    model = {};
+}
+</script>
+
+<style lang="scss" scoped>
+</style>

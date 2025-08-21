@@ -1,0 +1,578 @@
+<template>
+    <div ref="container" class="joker-demo-container">
+        <h2>Checkbox (Multi-selection Checkbox)</h2>
+        <p>A group of options for multiple selections</p>
+        <h3>Basic Usage</h3>
+        <p>
+            Can be used alone to toggle between two states. The content within the tag serves as the description after the Checkbox button.
+        </p>
+        <p>
+            In the
+            <code>jk-checkbox</code>
+            component, define the
+            <code>value</code>
+            binding variable. For a single Checkbox, the default bound variable value will be a
+            <code>Boolean</code>
+            , where
+            <code>true</code>
+            indicates the checked state.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo1)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox value=&quot;@model.value1&quot; @change=&quot;handleChange1&quot;&gt;Option 1&lt;/jk-checkbox&gt;
+        &lt;jk-checkbox value=&quot;@model.value2&quot; @change=&quot;handleChange2&quot;&gt;Option 2&lt;/jk-checkbox&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+export default class extends Component {
+    model = {
+        value1: true,
+        value2: false
+    };
+    handleChange1(e: VNode.Event) {
+        console.log(e.data);
+    }
+    handleChange2(e: VNode.Event) {
+        console.log(e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Disabled State</h3>
+        <p>The disabled state for checkboxes.</p>
+        <p>
+            Simply set the
+            <code>disabled</code>
+            property on the
+            <code>jk-checkbox</code>
+            component. It accepts a
+            <code>Boolean</code>
+            , where
+            <code>true</code>
+            means disabled.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo2)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-checkbox disabled value&gt;Option 1&lt;/jk-checkbox&gt;
+    &lt;jk-checkbox disabled value=&quot;@false&quot;&gt;Option 2&lt;/jk-checkbox&gt;
+&lt;/template&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Checkbox Group</h3>
+        <p>
+            Suitable for scenarios where multiple checkboxes are bound to the same array, indicating the selected items in the group by whether they are checked.
+        </p>
+        <p>
+            The
+            <code>jk-checkbox-group</code>
+            component can manage multiple Checkboxes as a group. Just bind an
+            <code>Array</code>
+            -type variable to the
+            <code>value</code>
+            property of the Group. The
+            <code>label</code>
+            property of each
+            <code>jk-checkbox</code>
+            corresponds to the value of that checkbox. If there is no content inside the tag, this property also serves as the description after the Checkbox button. The
+            <code>label</code>
+            should match the elements in the array—if the specified value exists, the checkbox will be checked; otherwise, it will be unchecked.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo3)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-checkbox-group value=&quot;@model.checkList&quot; @change=&quot;handleCheckboxChange&quot; direction=&quot;vertical&quot;&gt;
+        &lt;jk-checkbox value=&quot;1&quot; label=&quot;Checkbox A&quot;&gt;&lt;/jk-checkbox&gt;
+        &lt;jk-checkbox value=&quot;2&quot; label=&quot;Checkbox B&quot;&gt;&lt;/jk-checkbox&gt;
+        &lt;jk-checkbox value=&quot;3&quot; label=&quot;Checkbox C&quot;&gt;&lt;/jk-checkbox&gt;
+        &lt;jk-checkbox value=&quot;4&quot; label=&quot;Disabled&quot; disabled&gt;&lt;/jk-checkbox&gt;
+        &lt;jk-checkbox value=&quot;5&quot; label=&quot;Selected and Disabled&quot; disabled&gt;&lt;/jk-checkbox&gt;
+    &lt;/jk-checkbox-group&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+export default class extends Component {
+    model = {
+        checkList: [&quot;5&quot;, &quot;1&quot;]
+    };
+    handleCheckboxChange(e: VNode.Event&lt;string&gt;) {
+        console.log(e.data);
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Indeterminate State</h3>
+        <p>
+            The
+            <code>indeterminate</code>
+            property represents an indeterminate state for the Checkbox, typically used to implement &quot;select all&quot; functionality.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo4)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox indeterminate=&quot;@model.indeterminate&quot; value=&quot;@model.checkAll&quot; @change=&quot;handleCheckAllChange&quot;&gt;
+            Select All
+        &lt;/jk-checkbox&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities&quot; @change=&quot;handleGroupChange&quot; direction=&quot;vertical&quot;&gt;
+            @for(let cityItem of model.cities) {
+                &lt;jk-checkbox value=&quot;@cityItem&quot; label=&quot;@cityItem&quot;&gt;&lt;/jk-checkbox&gt;
+            }
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Component, VNode } from &quot;@joker.front/core&quot;;
+export default class extends Component {
+    model = {
+        cities: [&quot;Shanghai&quot;, &quot;Beijing&quot;, &quot;Guangzhou&quot;, &quot;Shenzhen&quot;],
+        checkedCities: [&quot;Shanghai&quot;, &quot;Beijing&quot;],
+        checkAll: false,
+        indeterminate: true
+    };
+    handleCheckAllChange(e: VNode.Event) {
+        this.model.checkedCities = e.data ? Object.assign([], this.model.cities) : [];
+        this.model.indeterminate = false;
+    }
+    handleGroupChange(e: VNode.Event) {
+        let checklength = this.model.checkedCities.length;
+        let citieslength = this.model.cities.length;
+        this.model.indeterminate = checklength &gt; 0 &amp;&amp; checklength &lt; citieslength;
+        this.model.checkAll = checklength === citieslength;
+    }
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Limiting the Number of Selectable Items</h3>
+        <p>
+            Using the
+            <code>min</code>
+            and
+            <code>max</code>
+            properties can restrict the number of items that can be checked.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo5)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;jk-checkbox-group value=&quot;@model.checkedCities&quot; min=&quot;1&quot; max=&quot;2&quot; direction=&quot;vertical&quot;&gt;
+        @for(let cityItem of model.cities) {
+            &lt;jk-checkbox value=&quot;@cityItem&quot; label=&quot;@cityItem&quot;&gt;&lt;/jk-checkbox&gt;
+        }
+    &lt;/jk-checkbox-group&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        cities: [&quot;Shanghai&quot;, &quot;Beijing&quot;, &quot;Guangzhou&quot;, &quot;Shenzhen&quot;],
+        checkedCities: [&quot;Shanghai&quot;, &quot;Beijing&quot;]
+    };
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Button Style</h3>
+        <p>Checkbox groups with button styling.</p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo6)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities1&quot; size=&quot;large&quot;&gt;
+            &lt;jk-checkbox-button value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox-button&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities2&quot;&gt;
+            &lt;jk-checkbox-button value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox-button&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities3&quot; size=&quot;small&quot;&gt;
+            &lt;jk-checkbox-button value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button value=&quot;Guangzhou&quot; label=&quot;Guangzhou&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button disabled value=&quot;Shenzhen&quot; label=&quot;Shenzhen&quot;&gt;&lt;/jk-checkbox-button&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities4&quot; size=&quot;mini&quot;&gt;
+            &lt;jk-checkbox-button value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button disabled value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button value=&quot;Guangzhou&quot; label=&quot;Guangzhou&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button value=&quot;Shenzhen&quot; label=&quot;Shenzhen&quot;&gt;&lt;/jk-checkbox-button&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities5&quot; size=&quot;mini&quot; disabled&gt;
+            &lt;jk-checkbox-button value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button value=&quot;Guangzhou&quot; label=&quot;Guangzhou&quot;&gt;&lt;/jk-checkbox-button&gt;
+            &lt;jk-checkbox-button value=&quot;Shenzhen&quot; label=&quot;Shenzhen&quot;&gt;&lt;/jk-checkbox-button&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        checkedCities1: [&quot;Shanghai&quot;, &quot;Beijing&quot;],
+        checkedCities2: [&quot;Shanghai&quot;, &quot;Beijing&quot;],
+        checkedCities3: [&quot;Shanghai&quot;, &quot;Beijing&quot;],
+        checkedCities4: [&quot;Shanghai&quot;, &quot;Beijing&quot;],
+        checkedCities5: [&quot;Shanghai&quot;, &quot;Beijing&quot;]
+    };
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>With Borders</h3>
+        <p>
+            Setting the
+            <code>border</code>
+            property renders a checkbox with a border. The
+            <code>size</code>
+            property of
+            <code>jk-checkbox</code>
+            only takes effect when
+            <code>border</code>
+            is set.
+        </p>
+        <DemoContainer component="@(components.DEMO_JOKER_demo7)">
+            <pre><code class="language-html">&lt;template&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities1&quot; size=&quot;large&quot; direction=&quot;vertical&quot;&gt;
+            &lt;jk-checkbox border value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Guangzhou&quot; label=&quot;Guangzhou&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Shenzhen&quot; label=&quot;Shenzhen&quot;&gt;&lt;/jk-checkbox&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities2&quot; direction=&quot;vertical&quot;&gt;
+            &lt;jk-checkbox border value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Guangzhou&quot; label=&quot;Guangzhou&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Shenzhen&quot; label=&quot;Shenzhen&quot;&gt;&lt;/jk-checkbox&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities3&quot; size=&quot;small&quot; direction=&quot;vertical&quot;&gt;
+            &lt;jk-checkbox border value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Guangzhou&quot; label=&quot;Guangzhou&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border disabled value=&quot;Shenzhen&quot; label=&quot;Shenzhen&quot;&gt;&lt;/jk-checkbox&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities4&quot; size=&quot;mini&quot; direction=&quot;vertical&quot;&gt;
+            &lt;jk-checkbox border value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border disabled value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Guangzhou&quot; label=&quot;Guangzhou&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Shenzhen&quot; label=&quot;Shenzhen&quot;&gt;&lt;/jk-checkbox&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-checkbox-group value=&quot;@model.checkedCities5&quot; size=&quot;mini&quot; disabled direction=&quot;vertical&quot;&gt;
+            &lt;jk-checkbox border value=&quot;Shanghai&quot; label=&quot;Shanghai&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Beijing&quot; label=&quot;Beijing&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Guangzhou&quot; label=&quot;Guangzhou&quot;&gt;&lt;/jk-checkbox&gt;
+            &lt;jk-checkbox border value=&quot;Shenzhen&quot; label=&quot;Shenzhen&quot;&gt;&lt;/jk-checkbox&gt;
+        &lt;/jk-checkbox-group&gt;
+    &lt;/DemoRow&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { Component } from &quot;@joker.front/core&quot;;
+
+export default class extends Component {
+    model = {
+        checkedCities1: [&quot;Beijing&quot;],
+        checkedCities2: [&quot;Beijing&quot;],
+        checkedCities3: [&quot;Beijing&quot;],
+        checkedCities4: [&quot;Beijing&quot;],
+        checkedCities5: [&quot;Beijing&quot;]
+    };
+}
+&lt;/script&gt;
+</code></pre>
+        </DemoContainer>
+        <h3>Checkbox Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Optional Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>Bound value</td>
+                    <td>string / number / boolean</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>label</td>
+                    <td>The value of the Checkbox</td>
+                    <td>string / number / boolean</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>Custom CSS class</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Whether disabled</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>border</td>
+                    <td>Whether to display border</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>
+                        Size of Checkbox (only effective when
+                        <code>border</code>
+                        is
+                        <code>true</code>
+                        )
+                    </td>
+                    <td>string</td>
+                    <td>large / small / mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>
+                        Native
+                        <code>name</code>
+                        attribute
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>indeterminate</td>
+                    <td>Sets indeterminate state (controls styling only)</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Checkbox Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Callback Parameter</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Triggered when the selection state changes</td>
+                    <td>Updated value</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Checkbox-button Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Optional Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>Bound value</td>
+                    <td>string / number / boolean</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>label</td>
+                    <td>
+                        Value when checked (only effective in
+                        <code>checkbox-group</code>
+                        )
+                    </td>
+                    <td>string / number / boolean</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Whether disabled</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>
+                        Native
+                        <code>name</code>
+                        attribute
+                    </td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Checkbox-button Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Callback Parameter</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Triggered when the selection state changes</td>
+                    <td>Updated value</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Checkbox-group Attributes</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Optional Values</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>Bound value</td>
+                    <td>array</td>
+                    <td>—</td>
+                    <td>[]</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Size of the checkbox group (only effective for button-style or bordered Checkbox)</td>
+                    <td>string</td>
+                    <td>large / small / mini</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>Whether disabled</td>
+                    <td>boolean</td>
+                    <td>—</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>min</td>
+                    <td>Minimum number of checkboxes that can be checked</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>max</td>
+                    <td>Maximum number of checkboxes that can be checked</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>direction</td>
+                    <td>Layout Direction</td>
+                    <td>vertical / horizontal</td>
+                    <td>—</td>
+                    <td>horizontal</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Checkbox-group Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Callback Parameter</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Triggered when the selection state changes</td>
+                    <td>Updated value</td>
+                </tr>
+            </tbody>
+        </table>
+        <BottomNav />
+    </div>
+</template>
+
+<script>
+import { Component } from "@joker.front/core";
+import hljs from "highlight.js/lib/common";
+import BottomNav from "../../common/components/bottom-nav.joker";
+import DEMO_JOKER_demo7 from "../../components/checkbox/demo7.joker";
+import DEMO_JOKER_demo6 from "../../components/checkbox/demo6.joker";
+import DEMO_JOKER_demo5 from "../../components/checkbox/demo5.joker";
+import DEMO_JOKER_demo4 from "../../components/checkbox/demo4.joker";
+import DEMO_JOKER_demo3 from "../../components/checkbox/demo3.joker";
+import DEMO_JOKER_demo2 from "../../components/checkbox/demo2.joker";
+import DEMO_JOKER_demo1 from "../../components/checkbox/demo1.joker";
+export default class extends Component {
+    components = {
+        BottomNav,
+        DEMO_JOKER_demo7,
+        DEMO_JOKER_demo6,
+        DEMO_JOKER_demo5,
+        DEMO_JOKER_demo4,
+        DEMO_JOKER_demo3,
+        DEMO_JOKER_demo2,
+        DEMO_JOKER_demo1
+    };
+    mounted() {
+        let container = this.$getRef("container")?.output!;
+        container.querySelectorAll("pre code").forEach((el: HTMLElement) => {
+            hljs.highlightElement(el);
+        });
+    }
+}
+
+</script>

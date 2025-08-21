@@ -1,0 +1,52 @@
+<template>
+    <jk-cell>
+        <jk-timeline>
+            @for(let (index, activity) in activities) {
+                <jk-timeline-item
+                    key="@index"
+                    icon="@activity.icon"
+                    type="@activity.type"
+                    color="@activity.color"
+                    size="@activity.size"
+                    timestamp="@activity.timestamp">
+                    @activity.content
+                </jk-timeline-item>
+            }
+        </jk-timeline>
+    </jk-cell>
+</template>
+<script>
+import { Component } from "@joker.front/core";
+
+export default class extends Component {
+    activities = [
+        {
+            content: "Support the use of icons",
+            timestamp: "2018-04-12 20:46",
+            size: "large",
+            type: "primary",
+            icon: "jk-icon-more"
+        },
+        {
+            content: "Support custom colors",
+            timestamp: "2018-04-03 20:46",
+            color: "#0bbd87"
+        },
+        {
+            content: "Support custom sizes",
+            timestamp: "2018-04-03 20:46",
+            size: "large"
+        },
+        {
+            content: "Nodes with default styles",
+            timestamp: "2018-04-03 20:46",
+            size: "small"
+        },
+        {
+            content: "Nodes with default styles",
+            timestamp: "2018-04-03 20:46",
+            size: "mini"
+        }
+    ];
+}
+</script>

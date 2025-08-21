@@ -1,0 +1,286 @@
+<template>
+    <div class="picker" ref="target">
+        <div class="header">
+            <div class="left" @click="handleCancel">
+                @props.cancelText
+            </div>
+            <div class="title">
+                @props.title
+            </div>
+            <div class="right" @click="handleConfirm">
+                @props.confirmText
+            </div>
+        </div>
+        <div class="container" style="height:@(props.visibleItemCount * DEFAULT_ITEM_HEIGHT)px">
+            @if(!props.loading) {
+                @if(model.columns.length) {
+                    @for(let (index,item) in model.columns) {
+                        <ListPanel
+                            list="@item"
+                            links="@model.links"
+                            value="@getItemValue(index)"
+                            @loadChild="handleLoadChild(index + 1)"
+                            @change="handleChange(index)"
+                        />
+                    }
+                    <div class="mask"></div>
+                }
+                else {
+                    <div class="empty-container">
+                        @if($sections.empty) {
+                            @RenderSection("empty")
+                        }
+                        else {
+                            <JokerEmpty description="@props.emptyText" size="medium" />
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</template>
+<script>
+import { Component, VNode } from "@joker.front/core";
+import { getValueByLang } from "../utils/lang";
+import { isObject } from "@joker.front/shared";
+import ListPanel from "./list.joker";
+import { componentName } from "../utils";
+import { Loading } from "../loading";
+import JokerEmpty from "../empty/index.joker";
+import { Toast } from "../toast";
+export default class extends Component<{
+    title: string;
+    cancelText?: string;
+    confirmText?: string;
+    columns: Array<any>;
+    value?: any;
+    loading?: boolean;
+    loadingText?: string;
+    labelKey?: string;
+    valueKey?: string;
+    childrenKey?: string;
+    emptyText?: string;
+}> {
+    name = componentName("picker");
+
+    propsOption = {
+        title: "",
+        cancelText: getValueByLang("cancel"),
+        confirmText: getValueByLang("confirm"),
+        labelKey: "label",
+        valueKey: "value",
+        childrenKey: "children"
+    };
+    model = {
+        columns: [] as any[],
+        links: false,
+        value: [] as any
+    };
+    components = {
+        ListPanel,
+        JokerEmpty
+    };
+
+    handleChange(e: VNode.Event<any>, index: number) {
+        let oldValue = this.model.value[index];
+
+        this.model.value[index] = e.data;
+
+        if (oldValue === undefined || oldValue !== e.data) {
+            this.$trigger("change", { index, value: this.getValue() });
+        }
+    }
+    getItemValue(index: number) {
+        if (this.model.value) {
+            let values = Array.isArray(this.model.value) ? this.model.value : [this.model.value];
+
+            return values[index];
+        }
+
+        return undefined;
+    }
+    created() {
+        this.$syncProp("value", (value) => {
+            let values = Array.isArray(value) ? value : [value];
+            return values;
+        });
+        this.$watch(() => [...this.props.columns], this.initColumns);
+        this.initColumns();
+    }
+    loadingHandle?: ReturnType<typeof Loading>;
+    mounted() {
+        this.$watch(
+            () => this.props.loading,
+            (val) => {
+                if (val) {
+                    this.loadingHandle ??= Loading({
+                        target: this.$getRef("target")?.output,
+                        text: this.props.loadingText
+                    });
+                } else {
+                    this.loadingHandle?.close();
+                    this.loadingHandle = undefined;
+                }
+            }
+        );
+        if (this.props.loading) {
+            this.loadingHandle = Loading({
+                target: this.$getRef("target")?.output,
+                text: this.props.loadingText
+            });
+        }
+    }
+    initColumns() {
+        let result = [];
+        if (this.props.columns && this.props.columns?.length) {
+            let first = this.props.columns[0];
+
+            if (typeof first === "string" || typeof first === "number") {
+                result = [
+                    this.props.columns.map((n) => {
+                        return {
+                            label: n,
+                            value: n
+                        };
+                    })
+                ];
+
+                this.model.links = false;
+            } else if (Array.isArray(first)) {
+                //多列非联动
+                this.model.links = false;
+                //[[1,2,3],[1,2,3]]
+                for (let items of this.props.columns) {
+                    let columnItemData = [];
+
+                    for (let item of items) {
+                        if (typeof item === "string" || typeof item == "number") {
+                            columnItemData.push({ [this.props.labelKey]: item, [this.props.valueKey]: item });
+                        } else if (isObject(item)) {
+                            columnItemData.push(item);
+                        }
+                    }
+
+                    result.push(columnItemData);
+                }
+            } else if (isObject(first)) {
+                this.model.links = true;
+                let findDeep = 1;
+
+                let item = first;
+                while (item && this.props.childrenKey in item) {
+                    findDeep++;
+                    item = item[this.props.childrenKey][0];
+                }
+
+                result.push(this.props.columns);
+
+                for (let i = 0; i < findDeep - 1; i++) {
+                    result.push([]);
+                }
+            }
+        }
+
+        //设置 value 数组长度，保证其具备响应式
+        for (let index in result) {
+            this.model.value[index] ??= undefined;
+        }
+
+        this.model.value.length = result.length;
+
+        this.model.columns = result;
+    }
+
+    handleLoadChild(e: VNode.Event, index: number) {
+        if (index > this.model.columns.length - 1) return;
+
+        let list = e.data;
+
+        this.model.columns[index] = list;
+    }
+
+    getValue() {
+        let result = [];
+
+        for (let index in this.model.columns) {
+            let column = this.model.columns[index];
+
+            if (column.length) {
+                result[index] = this.model.value[index] ?? column[0]?.value;
+            } else {
+                result[index] = undefined;
+            }
+        }
+
+        return result;
+    }
+    handleCancel() {
+        this.$trigger("cancel", this.getValue());
+    }
+    handleConfirm() {
+        let value = this.getValue();
+        if (value.some((n) => n === undefined)) {
+            //空列无法选择
+            return;
+        }
+        this.$trigger("confirm", this.getValue());
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.picker {
+    background: var(--jk-background-color-default);
+
+    .header {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        justify-content: space-between;
+        height: 44px;
+        .left,
+        .right {
+            padding: 0 14px;
+            cursor: pointer;
+            font-size: 14px;
+
+            &.left {
+                color: var(--jk-color-text-secondary);
+            }
+
+            &.right {
+                color: var(--jk-color-primary);
+            }
+        }
+
+        .title {
+            font-weight: 500;
+        }
+    }
+    .container {
+        height: 264px;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        .mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),
+                linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+            background-size: 100% 110px;
+            background-repeat: no-repeat;
+            background-position: top, bottom;
+            transform: translateZ(0);
+            pointer-events: none;
+        }
+    }
+}
+.empty-container {
+    flex: 1;
+}
+</style>
