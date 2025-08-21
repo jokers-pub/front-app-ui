@@ -62,8 +62,8 @@ pnpm will handle the dependency installation process and ensure that the library
 In the entry JavaScript file of the project (such as main.js or app.js):
 
 ```js
-import "@joker.front/ui";
-import "@joker.front/ui/index.css";
+import "@joker.front/app-ui";
+import "@joker.front/app-ui/index.css";
 ```
 
 ### Visual Development Tools
