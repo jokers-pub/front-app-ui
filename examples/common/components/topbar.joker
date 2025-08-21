@@ -127,8 +127,8 @@ export default class extends Component {
         let menus = this.lang === "zh-CN" ? MENUS_ZH_CN : MENUS_EN;
         let defaultTitle =
             this.lang === "zh-CN"
-                ? "Joker UI 网站快速搭建组件库"
-                : "Joker UI Component Library for Rapid Website Building";
+                ? "Joker APP UI 网站快速搭建组件库"
+                : "Joker APP UI Component Library for Rapid Website Building";
         this.metaDescription?.setAttribute("content", description);
         for (let group of menus) {
             for (let item of group.children) {
