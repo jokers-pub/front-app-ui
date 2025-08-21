@@ -126,7 +126,7 @@ export default class extends FormCtrl<{
     }
 
     initOptions() {
-        this.store = new Store(this.props.options, {
+        this.store = new Store(this.props.options || [], {
             valueKey: this.props.valueKey!,
             labelKey: this.props.labelKey!,
             childrenKey: this.props.childrenKey!,
