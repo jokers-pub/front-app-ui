@@ -1,11 +1,11 @@
-## Joker UI ![NPM Version](https://img.shields.io/npm/v/%40joker.front%2Fui)
+## Joker UI ![NPM Version](https://img.shields.io/npm/v/%40joker.front%2Fapp-ui)
 
 <p align="center"><a href="https://jokers.pub" target="_blank" rel="noopener noreferrer"><img width="100" src="https://static.jokers.pub/joker.png" alt="Vue logo"></a></p>
 
 <p align="center">
-    <img alt="NPM Version" src="https://img.shields.io/npm/v/%40joker.front%2Fui">
-    <img alt="NPM Downloads" src="https://img.shields.io/npm/d18m/%40joker.front%2Fui">
-    <img alt="NPM License" src="https://img.shields.io/npm/l/%40joker.front%2Fui">
+    <img alt="NPM Version" src="https://img.shields.io/npm/v/%40joker.front%2Fapp-ui">
+    <img alt="NPM Downloads" src="https://img.shields.io/npm/d18m/%40joker.front%2Fapp-ui">
+    <img alt="NPM License" src="https://img.shields.io/npm/l/%40joker.front%2Fapp-ui">
 </p>
 
 ### Introduction
@@ -42,7 +42,7 @@ Joker UI is a UI component library that is meticulously crafted for front-end de
 Execute the following command in the terminal:
 
 ```bash
-npm install @joker.front/ui
+npm install @joker.front/app-ui
 ```
 
 This command will automatically download and install the Joker UI library and its related dependencies from the npm repository into the node_modules directory of the project.
@@ -50,7 +50,7 @@ This command will automatically download and install the Joker UI library and it
 If you use the pnpm package manager, run the following command:
 
 ```bash
-pnpm add @joker.front/ui
+pnpm add @joker.front/app-ui
 ```
 
 pnpm will handle the dependency installation process and ensure that the library files are correctly added to the project structure.
@@ -72,9 +72,9 @@ Currently, the UI library has been successfully migrated in the Joker Intelligen
 
 ![Joker Visual Coding IDE](https://static.jokers.pub/home/component.png)
 
-[Repository Address](https://viscode.jokers.pub/#/repository/fcaf7ad3-c7d5-45fb-9ec9-7ffd29fb44f4)
+[Repository Address](https://viscode.jokers.pub/repository/5fbc7298-bcf5-441f-b0cc-8a725b2e3f5c)
 
-[Joker Visual Dev Platform Component Issue Feedback](https://viscode.jokers.pub/index.html#/.repository/fcaf7ad3-c7d5-45fb-9ec9-7ffd29fb44f4/issues)
+[Joker Visual Dev Platform Component Issue Feedback](https://viscode.jokers.pub/repository/5fbc7298-bcf5-441f-b0cc-8a725b2e3f5c/issues)
 
 ### Community Interaction
 
