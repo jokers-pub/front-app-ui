@@ -4,12 +4,12 @@
             <img src="https://static.jokers.pub/joker.png" />
         </div>
         <div class="top">
-            <p>Joker UI</p>
+            <p>Joker APP UI</p>
             <p>
                 @(lang === "zh-CN" ? "领先的快速网站搭建工具" : "The Leading Fast-website Building Tool")
             </p>
             <p>
-                @(lang === "zh-CN" ? "Joker UI组件库是一个精心设计和编码的项目，旨在为开发者提供一系列高效、易用且美观的用户界面组件" : "The Joker UI component library is a meticulously designed and coded project, aiming to provide developers with a series of efficient, easy-to-use, and aesthetically pleasing user interface components")
+                @(lang === "zh-CN" ? "Joker APP UI组件库是一个精心设计和编码的项目，旨在为开发者提供一系列高效、易用且美观的用户界面组件" : "The Joker APP UI component library is a meticulously designed and coded project, aiming to provide developers with a series of efficient, easy-to-use, and aesthetically pleasing user interface components")
             </p>
             <div class="nav-btns">
                 <a href="@(lang === "zh-CN"?"":"/en")/component/start">
