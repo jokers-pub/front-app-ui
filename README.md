@@ -35,7 +35,7 @@ Joker UI is a UI component library that is meticulously crafted for front-end de
 
 ### Documentation
 
-[Help Documentation](https://ui.jokers.pub)
+[Help Documentation](https://app-ui.jokers.pub)
 
 #### npm Installation
 
@@ -82,12 +82,12 @@ Welcome to join our active community forum. Here, you can exchange experiences, 
 
 ### Documentation
 
-[Help Documentation](https://ui.jokers.pub)
+[Help Documentation](https://app-ui.jokers.pub)
 
 ### Related Projects
 
 [Official Website](https://front.jokers.pub)
 
-[Official UI Library](https://ui.jokers.pub)
+[Official UI Library](https://app-ui.jokers.pub)
 
 [Joker Visual Coding IDE](https://viscode.jokers.pub)

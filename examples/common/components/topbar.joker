@@ -73,11 +73,11 @@ export default class extends Component {
         if (path.startsWith("http")) return "";
         let currentRoute = router.route.value;
 
-        if (currentRoute.fullPath.substring(1).split("/")[0] === "" && (path === "/index" || path === "/cn/index"))
+        if (currentRoute.fullPath.substring(1).split("/")[0] === "" && (path === "/index" || path === "/en/index"))
             return "active";
 
-        if (path.startsWith("/cn")) {
-            return path.substring(1).split("/").filter(Boolean)[1] === currentRoute.fullPath.substring(1).split("/")[1]
+        if (currentRoute.fullPath.startsWith("/en")) {
+            return path.substring(1).split("/").filter(Boolean)[0] === currentRoute.fullPath.substring(1).split("/")[1]
                 ? "active"
                 : "";
         } else {
@@ -117,7 +117,7 @@ export default class extends Component {
         docsearch({
             container: "#docsearch",
             appId: "U6KJ6739FP",
-            indexName: this.lang === "zh-CN" ? "joker_ui" : "joker_ui_en",
+            indexName: this.lang === "zh-CN" ? "joker_app_ui" : "joker_app_ui_en",
             apiKey: "aa7e584e01dfa193ec388bd99e005283",
             insights: true
         });
@@ -132,7 +132,7 @@ export default class extends Component {
         this.metaDescription?.setAttribute("content", description);
         for (let group of menus) {
             for (let item of group.children) {
-                if (item.path === (this.lang === "zh-CN" ? "/cn" : "") + router.route.value.path) {
+                if (item.path === (this.lang === "zh-CN" ? "/en" : "") + router.route.value.path) {
                     document.title = `${group.title} - ${item.title} ${defaultTitle}`;
                     if (item.description) {
                         this.metaDescription?.setAttribute("content", item.description + " | " + description);
@@ -147,14 +147,14 @@ export default class extends Component {
     get langSwtichPath() {
         let path = this.model.currentPath;
 
-        if (path.startsWith("/cn")) {
+        if (path.startsWith("/en")) {
             path = path.substring(3);
         }
 
-        return (this.lang === "zh-CN" ? "https://ui.jokers.pub" : "https://ui.jokers.pub/cn") + path;
+        return (this.lang === "zh-CN" ? "https://app-ui.jokers.pub/en" : "https://app-ui.jokers.pub") + path;
     }
     handleGoHome() {
-        router.push(this.lang === "zh-CN" ? "/cn" : "/");
+        router.push(this.lang === "zh-CN" ? "/" : "/en");
     }
     openNav() {
         this.model.navIsOpen = !this.model.navIsOpen;

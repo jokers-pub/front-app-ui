@@ -17,9 +17,9 @@ registerGlobalComponent({
 
 registerValidateAll();
 let lang = getLang();
-new Router({
+let router = new Router({
     history: import.meta.define.routerType === "html5" ? new WebHistory() : undefined,
-    base: lang === "zh-CN" ? "/cn" : "",
+    base: lang === "zh-CN" ? "" : "/en",
     routes: [
         {
             path: "/",
@@ -38,4 +38,8 @@ new Router({
 });
 
 setLang(lang);
+
+router.errorCallbacks.add(() => {
+    router.push("/");
+});
 new App().$mount(document.getElementById("app"));
