@@ -1,6 +1,7 @@
 const typescript = require("rollup-plugin-typescript2");
 const path = require("node:path");
 const externalGlobals = require("rollup-plugin-external-globals");
+
 module.exports = {
     publicDir: "./public",
     base: "./",
