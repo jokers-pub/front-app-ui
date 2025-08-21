@@ -1,7 +1,7 @@
 {
-    "name": "@joker.front/ui",
+    "name": "@joker.front/app-ui",
     "version": "1.0.315",
-    "description": "Joker-UI | Official native UI component library for Joker Framework. Minimalist design with full-scene components, responsive layout & dynamic interactions. Access dev docs, API references & real-world case studies on official site.",
+    "description": "Joker-APP-UI | Official native UI component library for Joker Framework. Minimalist design with full-scene components, responsive layout & dynamic interactions. Access dev docs, API references & real-world case studies on official site.",
     "author": "Zohar",
     "license": "MIT",
     "main": "dist/index.umd.js",
@@ -17,13 +17,14 @@
         "./package.json": "./package.json",
         "./index.css": "./dist/index.css"
     },
-    "homepage": "https://ui.jokers.pub",
+    "homepage": "https://app-ui.jokers.pub",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/jokers-pub/front-ui.git"
+        "url": "git+https://github.com/jokers-pub/front-app-ui.git"
     },
     "keywords": [
         "joker",
+        "app",
         "ui",
         "joker-ui"
     ],
@@ -55,7 +56,7 @@
         "@joker.front/cli": "^1.1.157",
         "@joker.front/core": "^1.3.85",
         "@joker.front/prettier-plugin": "^1.1.33",
-        "@joker.front/router": "^1.0.44",
+        "@joker.front/router": "^1.0.49",
         "@joker.front/shared": "^1.5.32",
         "@types/markdown-it": "^12.2.3",
         "@types/node": "^22.13.1",
