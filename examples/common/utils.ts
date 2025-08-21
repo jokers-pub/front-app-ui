@@ -1,5 +1,5 @@
 export function getLang(): "zh-CN" | "en" {
-    let lang: any = "zh-CN";
+    let lang: any = "";
 
     return lang || (location.pathname.startsWith("/en") ? "en" : "zh-CN");
 }
