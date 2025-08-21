@@ -39,7 +39,7 @@ let router = new Router({
 
 setLang(lang);
 
-router.errorCallbacks.add(() => {
-    router.push("/");
-});
+// router.errorCallbacks.add(() => {
+//     router.push("/");
+// });
 new App().$mount(document.getElementById("app"));
