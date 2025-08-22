@@ -4,8 +4,6 @@
         autofocus="@props.autofocus"
         type="@props.nativeType"
         @click="handleClick"
-        @mouseenter="handleMouseEnter"
-        @mouseleave="handleMouseLeave"
         class="@([
             'jk-button',
             props.type || '',
@@ -65,12 +63,6 @@ export default class extends Component<{
     };
     handleClick(e: VNode.Event) {
         this.$trigger("click", undefined, e);
-    }
-    handleMouseEnter(e: VNode.Event) {
-        this.$trigger("mouseenter", undefined, e);
-    }
-    handleMouseLeave(e: VNode.Event) {
-        this.$trigger("mouseleave", undefined, e);
     }
 }
 </script>

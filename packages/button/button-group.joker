@@ -1,5 +1,5 @@
 <template>
-    <div class="@(['jk-button-group', props.fullWidth && 'is-fullwidth'])">
+    <div class="@(['jk-button-group', props.fullWidth && 'is-fullwidth', props.class])">
         @RenderSection()
     </div>
 </template>
