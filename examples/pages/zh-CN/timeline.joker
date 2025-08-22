@@ -115,6 +115,33 @@ export default class extends Component {
             content: &quot;Nodes with default styles&quot;,
             timestamp: &quot;2018-04-03 20:46&quot;,
             size: &quot;mini&quot;
+        },
+        {
+            content: &quot;Support the use of icons&quot;,
+
+            size: &quot;large&quot;,
+            type: &quot;primary&quot;,
+            icon: &quot;jk-icon-more&quot;
+        },
+        {
+            content: &quot;Support custom colors&quot;,
+
+            color: &quot;#0bbd87&quot;
+        },
+        {
+            content: &quot;Support custom sizes&quot;,
+
+            size: &quot;large&quot;
+        },
+        {
+            content: &quot;Nodes with default styles&quot;,
+
+            size: &quot;small&quot;
+        },
+        {
+            content: &quot;Nodes with default styles&quot;,
+
+            size: &quot;mini&quot;
         }
     ];
 }

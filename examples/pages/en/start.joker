@@ -13,9 +13,9 @@
             .
         </p>
         <h3>Installation and Usage</h3>
-        <pre><code class="language-ts">import App from &quot;./app.joker&quot;;  
-import &quot;@joker.front/ui&quot;;  
-import &quot;@joker.front/ui/index.css&quot;;  
+        <pre><code class="language-ts">import App from &quot;./app.joker&quot;;
+import &quot;@joker.front/app-ui&quot;;
+import &quot;@joker.front/app-ui/index.css&quot;;
 </code></pre>
         <p>
             The above code completes the import of Joker UI. Note that the style file needs to be imported separately.
@@ -27,10 +27,10 @@ import &quot;@joker.front/ui/index.css&quot;;
             to manage the UI library’s theme. Internally, we define a rich set of configurations related to colors and more. You can customize the UI style by modifying these CSS variables.
         </p>
         <p>For example:</p>
-        <pre><code class="language-css">:root {  
-    --jk-color-primary: red;  
-    --jk-button-font-color: red;  
-}  
+        <pre><code class="language-css">:root {
+    --jk-color-primary: red;
+    --jk-button-font-color: red;
+}
 </code></pre>
         <h3>Visual Development Tools</h3>
         <p>
@@ -46,7 +46,7 @@ import &quot;@joker.front/ui/index.css&quot;;
             />
         </p>
         <p>
-            <a href="https://viscode.jokers.pub/repository/fcaf7ad3-c7d5-45fb-9ec9-7ffd29fb44f4" target="_blank">
+            <a href="https://viscode.jokers.pub/repository/5fbc7298-bcf5-441f-b0cc-8a725b2e3f5c" target="_blank">
                 Component Library Link
             </a>
         </p>

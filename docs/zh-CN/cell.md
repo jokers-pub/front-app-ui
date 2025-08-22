@@ -68,6 +68,7 @@
 | title | 单元格组的标题，用于对一组单元格进行分类说明                   | string                       | -      | -      |
 | inset | 卡片模式                                                       | boolean                      | -      | false  |
 | size  | 单元格组内单元格的尺寸大小，会统一影响组内所有单元格的显示比例 | "large" \| "small" \| "mini" | -      | -      |
+| class | 自定义样式                                                     | any                          | -      | -      |
 
 ### Cell Events
 
