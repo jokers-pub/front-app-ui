@@ -24,4 +24,11 @@
             </jk-button>
         </jk-button-group>
     </DemoRow>
+    <DemoRow>
+        <jk-button-group>
+            <jk-button type="danger" round icon="jk-icon-edit">Buy Now</jk-button>
+            <jk-button icon="jk-icon-share" round type="success">Button</jk-button>
+            <jk-button type="warning" round icon="jk-icon-delete">Add Favorites</jk-button>
+        </jk-button-group>
+    </DemoRow>
 </template>
