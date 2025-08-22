@@ -12,7 +12,7 @@
 
 用来显示「成功、警告、消息、错误」类的操作反馈。当需要自定义更多属性时，Message 也可以接收一个对象为参数。比如，设置`type`字段可以定义不同的状态，默认为`info`。此时正文内容以`message`的值传入。
 
-> 目前 Message，提供了常用的 4 种跳用方法，包括`info`,`success`,`warning`,`error`
+> 目前 Message，提供了常用的 4 种调用方法，包括`info`,`success`,`warning`,`error`
 
 !!!demo2!!!
 
