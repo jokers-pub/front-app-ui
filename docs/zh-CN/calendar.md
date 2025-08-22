@@ -38,7 +38,7 @@
 
 ### 表单项
 
-`jk-date`组件并配置`type=''calendar`进行日期选择表单选择。
+`jk-date`组件并配置`type='calendar'`进行日期选择表单选择。
 
 !!!demo6!!!
 

@@ -118,7 +118,7 @@
 ### 自定义列模板
 
 自定义列的显示内容，可组合其他组件使用。
-通过 `RenderSection` 可以获取到 value, row, rowIndex, columnIndex,column, 和 store（table 数据管理）的数据，用法参考 demo。
+通过 `RenderSection` 可以获取到 value, row, rowIndex, columnIndex, column 和 store（table 数据管理）的数据，用法参考 demo。
 
 其中`td`区域代表表格内容单元格渲染，`th`区域代表表头渲染。
 
