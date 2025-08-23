@@ -1,6 +1,13 @@
 <template>
     <JokerDrawer ref="drawer" direction="bottom" @close="handleClose" title="@props.title" size="@props.size">
-        <jk-skeleton rows="6" animated loading="@model.loading">
+        <jk-skeleton count="4" animated loading>
+            @section("template") {
+                <div class="skeleton-container">
+                    <jk-skeleton-item variant="h2" />
+                    <jk-skeleton-item variant="h2" style="width:80%" />
+                    <jk-skeleton-item variant="h2" style="width:60%" />
+                </div>
+            }
             @if(model.menus.length) {
                 <JokerTabs full-height shrink sticky animated value="@model.tabIndex" @change="handleTabIndexChange">
                     @for(let (index,menu) in model.menus) {
@@ -175,3 +182,12 @@ export default class extends Component<{
 </script>
 
 
+<style scoped lang="scss">
+.skeleton-container {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    padding: 0 15px;
+    margin-bottom: 10px;
+}
+</style>
