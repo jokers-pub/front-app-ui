@@ -1,4 +1,4 @@
-## Form 
+## Form
 
 A component for collecting, validating, and submitting form data.
 
@@ -28,15 +28,15 @@ The Form component provides validation functionality. Built-in validation method
 
 Commonly used validation rules are provided internally and can be configured using `validate`.
 
-| Rule                                  | Description          | Value Explanation                                                                                |
-| ------------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------ |
+| Rule                                  | Description          | Value Explanation                                                                                  |
+| ------------------------------------- | -------------------- | -------------------------------------------------------------------------------------------------- |
 | `Global.isRequired(msg)`              | Non-empty validation | Custom error message can be set; if not set, the `placeholder` text will be used as the error hint |
-| `Global.isInt(msg)`                   | Positive integer     | Error hint                                                                                       |
-| `Global.isNumber(msg)`                | Numeric validation   | Error hint                                                                                       |
-| `Global.isPhone(msg)`                 | Phone number format  | Error hint                                                                                       |
-| `Global.isEmail(msg)`                 | Email format         | Error hint                                                                                       |
-| `Global.isMatched(regex,msg)`         | Custom regex         | {pattern:string, msg:string}, where `pattern` is required for regex rules, `msg` for error hint   |
-| `Global.isLengthInRange(min,max,msg)` | Length validation    | `(min, max, error_msg)`: Can specify min and max lengths via array                               |
+| `Global.isInt(msg)`                   | Positive integer     | Error hint                                                                                         |
+| `Global.isNumber(msg)`                | Numeric validation   | Error hint                                                                                         |
+| `Global.isPhone(msg)`                 | Phone number format  | Error hint                                                                                         |
+| `Global.isEmail(msg)`                 | Email format         | Error hint                                                                                         |
+| `Global.isMatched(regex,msg)`         | Custom regex         | {pattern:string, msg:string}, where `pattern` is required for regex rules, `msg` for error hint    |
+| `Global.isLengthInRange(min,max,msg)` | Length validation    | `(min, max, error_msg)`: Can specify min and max lengths via array                                 |
 
 !!!demo5!!!
 
@@ -68,9 +68,10 @@ registerGlobalFunction({
 <input validate="@Global.isPhone()" />
 ```
 
-Validation follows a specific order:  
-1. `control.beforeValidate()`  
-2. `control.ctrlValidate`  
+Validation follows a specific order:
+
+1. `control.beforeValidate()`
+2. `control.ctrlValidate`
 3. `control.props.validate` (custom validation, supports multiple combined rules via array).
 
 ### Custom Validation
@@ -97,59 +98,61 @@ Form submission can be triggered by calling the `submit` event in the form. This
 
 ### Extending Form Controls
 
-To create custom form controls compatible with `Form`, the following conditions must be met:  
-1. Call `registerFormCtrl(this)` in the `create` method to register the control.  
-2. Configure the `value` property in the model.  
-3. Pass `props.name` (if applicable based on usage scenario).  
+To create custom form controls compatible with `Form`, the following conditions must be met:
+
+1. Call `registerFormCtrl(this)` in the `create` method to register the control.
+2. Configure the `value` property in the model.
+3. Pass `props.name` (if applicable based on usage scenario).
 4. Render the control inside `jk-form` (if applicable).
 
-Optional (but recommended) enhancements:  
-1. Trigger `this.$trigger("validate")` when the value changes (not mandatory).  
-2. If the component includes `ctrlValidate`, it will run internal validation during form validation.  
+Optional (but recommended) enhancements:
+
+1. Trigger `this.$trigger("validate")` when the value changes (not mandatory).
+2. If the component includes `ctrlValidate`, it will run internal validation during form validation.
 3. If the component includes `beforeValidate`, it will execute pre-validation preparations.
 
 ### Form Attributes
 
-| Attribute           | Description                                                                 | Type     | Options               | Default |
-| ------------------- | --------------------------------------------------------------------------- | -------- | --------------------- | ------- |
-| class               | Custom CSS class                                                            | string   | —                     | —       |
-| inline              | Inline form mode                                                            | boolean  | —                     | false   |
-| label-position      | Label alignment. If set to `left` or `right`, `label-width` must be set.    | string   | right / left / top    | right   |
-| label-width         | Label width (e.g., '50px'). Direct child `form-item` elements inherit this. | string   | —                     | 80px    |
-| size                | Controls the size of form components                                        | string   | medium / small / mini | —       |
-| showErrorMessage    | Custom error message display                                                | Function | —                     | —       |
-| clearErrorMessage   | Custom error message clearing                                               | Function | —                     | —       |
+| Attribute         | Description                                                                 | Type     | Options               | Default |
+| ----------------- | --------------------------------------------------------------------------- | -------- | --------------------- | ------- |
+| class             | Custom CSS class                                                            | string   | —                     | —       |
+| inline            | Inline form mode                                                            | boolean  | —                     | false   |
+| label-position    | Label alignment. If set to `left` or `right`, `label-width` must be set.    | string   | right / left / top    | right   |
+| label-width       | Label width (e.g., '50px'). Direct child `form-item` elements inherit this. | string   | —                     | 80px    |
+| size              | Controls the size of form components                                        | string   | medium / small / mini | —       |
+| showErrorMessage  | Custom error message display                                                | Function | —                     | —       |
+| clearErrorMessage | Custom error message clearing                                               | Function | —                     | —       |
 
 ### Form Methods
 
-| Method    | Description                                                                                        | Parameters                                                                                                                   |
-| --------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| validate  | Validates the entire form. Takes a callback function as a parameter (returns a Promise).           | Function(string / string[]). If no parameter is passed, validates all controls. Can validate specific controls by name.     |
-| reset     | Resets the entire form, reverting all fields to initial values and clearing validation results.    | —                                                                                                                           |
-| getData   | Retrieves form data (note: this does **not** perform validation).                                  | Function(string / string[]). If no parameter is passed, retrieves all control values. Can fetch specific controls by name.  |
-| submit    | Triggers form submission.                                                                          | —                                                                                                                           |
+| Method   | Description                                                                                     | Parameters                                                                                                                 |
+| -------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| validate | Validates the entire form. Takes a callback function as a parameter (returns a Promise).        | Function(string / string[]). If no parameter is passed, validates all controls. Can validate specific controls by name.    |
+| reset    | Resets the entire form, reverting all fields to initial values and clearing validation results. | —                                                                                                                          |
+| getData  | Retrieves form data (note: this does **not** perform validation).                               | Function(string / string[]). If no parameter is passed, retrieves all control values. Can fetch specific controls by name. |
+| submit   | Triggers form submission.                                                                       | —                                                                                                                          |
 
 ### Form Events
 
-| Event          | Description                   | Parameters    |
-| -------------- | ----------------------------- | ------------- |
-| before-submit  | Pre-submission trigger        | —             |
-| submit         | Form submission trigger       | Form data     |
+| Event         | Description             | Parameters |
+| ------------- | ----------------------- | ---------- |
+| before-submit | Pre-submission trigger  | —          |
+| submit        | Form submission trigger | Form data  |
 
-### Form-Item Attributes
+### Field Attributes
 
-| Attribute      | Description                                                         | Type    | Options | Default |
-| -------------- | ------------------------------------------------------------------- | ------- | ------- | ------- |
-| class          | Custom CSS class                                                    | string  | —       | —       |
-| label          | Label text                                                          | string  | —       | —       |
-| label-width    | Width of the form item label (e.g., '50px')                         | string  | —       | 80px    |
-| required       | Whether the field is required (displays an **asterisk** but ignores validation logic) | boolean | —       | false   |
-| inline         | Whether to use inline layout                                        | boolean | —       | false   |
+| Attribute   | Description                                                                           | Type    | Options | Default |
+| ----------- | ------------------------------------------------------------------------------------- | ------- | ------- | ------- |
+| class       | Custom CSS class                                                                      | string  | —       | —       |
+| label       | Label text                                                                            | string  | —       | —       |
+| label-width | Width of the form item label (e.g., '50px')                                           | string  | —       | 80px    |
+| required    | Whether the field is required (displays an **asterisk** but ignores validation logic) | boolean | —       | false   |
+| inline      | Whether to use inline layout                                                          | boolean | —       | false   |
 
-### Form-Item Slots
+### Field Sections
 
-| Slot   | Description                   |
-| ------ | ----------------------------- |
-| —      | Content of the Form Item      |
-| label  | Content of the label          |
-| error  | Error message for validation  |
+| Slot  | Description                  |
+| ----- | ---------------------------- |
+| —     | Content of the Form Item     |
+| label | Content of the label         |
+| error | Error message for validation |

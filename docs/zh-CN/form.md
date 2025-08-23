@@ -139,7 +139,7 @@ registerGlobalFunction({
 | before-submit | 触发表单提交前   | -        |
 | submit        | 触发表单提交操作 | 表单数据 |
 
-### Form-Item Attributes
+### Field Attributes
 
 | 参数        | 说明                                                         | 类型    | 可选值 | 默认值 |
 | ----------- | ------------------------------------------------------------ | ------- | ------ | ------ |
@@ -149,7 +149,7 @@ registerGlobalFunction({
 | required    | 是否必填（用于控制是否显示**星号**，不会参与校验规则的制定） | boolean | —      | false  |
 | inline      | 是否采用 inline 布局                                         | boolean | —      | false  |
 
-### Form-Item Sections
+### Field Sections
 
 | name  | 说明             |
 | ----- | ---------------- |
