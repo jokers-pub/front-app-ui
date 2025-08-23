@@ -2,10 +2,10 @@
     <div ref="container" class="joker-demo-container">
         <h2>Table</h2>
         <p>
-            Used to display multiple sets of structurally similar data, allowing operations like sorting, filtering, comparison, or other custom actions.
+            Used to display multiple sets of structurally similar data, enabling operations like sorting, filtering, comparison, or other custom actions.
         </p>
         <h3>Basic Table</h3>
-        <p>Basic table display usage.</p>
+        <p>The fundamental usage of table display.</p>
         <DemoContainer component="@(components.DEMO_JOKER_demo1)">
             <pre><code class="language-html">&lt;template&gt;
     &lt;jk-table data=&quot;@tableData&quot;&gt;
@@ -30,15 +30,15 @@ export default class extends Component {
 </code></pre>
         </DemoContainer>
         <h3>Striped Table</h3>
-        <p>Tables with zebra striping make it easier to distinguish between rows.</p>
+        <p>Using striped tables makes it easier to differentiate between rows.</p>
         <p>
             The
             <code>stripe</code>
-            attribute enables striped tables. It accepts a
+            property creates a striped table. It accepts a
             <code>Boolean</code>
-            value, defaulting to
+            , defaulting to
             <code>false</code>
-            . Set to
+            . Set it to
             <code>true</code>
             to enable.
         </p>
@@ -67,11 +67,11 @@ export default class extends Component {
         </DemoContainer>
         <h3>Bordered Table</h3>
         <p>
-            By default, the Table component does not have vertical borders. If needed, use the
+            By default, the Table component has no vertical borders. If needed, use the
             <code>border</code>
-            attribute, which accepts a
+            property, which accepts a
             <code>Boolean</code>
-            value. Set to
+            —set to
             <code>true</code>
             to enable.
         </p>
@@ -99,13 +99,13 @@ export default class extends Component {
 </code></pre>
         </DemoContainer>
         <h3>Fixed Header</h3>
-        <p>When vertical content is extensive, you can choose to fix the table header.</p>
+        <p>When vertical content is extensive, a fixed header can be employed.</p>
         <p>
             Simply define the
             <code>height</code>
-            attribute in the
+            property in the
             <code>jk-table</code>
-            element to fix the table header without requiring additional code.
+            element to implement a fixed-header table without additional code.
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo4)">
             <pre><code class="language-html">&lt;template&gt;
@@ -139,17 +139,17 @@ export default class extends Component {
 </code></pre>
         </DemoContainer>
         <h3>Fixed Column</h3>
-        <p>When horizontal content is extensive, you can choose to fix columns.</p>
+        <p>For extensive horizontal content, columns can be fixed.</p>
         <p>
-            Use the
+            Fixed columns require the
             <code>fixed</code>
-            attribute to fix columns. It accepts a
+            property, which accepts a
             <code>Boolean</code>
-            value or
+            or
             <code>left</code>
             /
             <code>right</code>
-            to specify left or right fixation.
+            to indicate left or right fixation.
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo5)">
             <pre><code class="language-html">&lt;template&gt;
@@ -283,11 +283,11 @@ export default class extends Component {
 </code></pre>
         </DemoContainer>
         <h3>Fluid Height</h3>
-        <p>When data volume changes dynamically, set a maximum height for the Table.</p>
+        <p>When data dynamically changes, set a maximum height for the Table.</p>
         <p>
             Use the
             <code>max-height</code>
-            attribute to define the table's maximum height. If the table's required height exceeds this, a scrollbar will appear.
+            property to specify the maximum height. If the table’s required height exceeds this, a scrollbar appears.
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo6)">
             <pre><code class="language-html">&lt;template&gt;
@@ -448,9 +448,9 @@ export default class extends Component {
         <p>
             Nest
             <code>jk-table-column</code>
-            within
+            within another
             <code>jk-table-column</code>
-            to achieve multi-level headers.
+            to implement multi-level headers.
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo7)">
             <pre><code class="language-html">&lt;template&gt;
@@ -544,50 +544,52 @@ export default class extends Component {
         </DemoContainer>
         <h3>Row Selection</h3>
         <p>
-            Enable row selection via the
+            Enable row selection with the
             <code>select</code>
-            attribute. Set to
+            property. Setting
+            <code>select</code>
+            to
             <strong>true</strong>
-            for single-select mode, and configure the
+            activates single-selection mode, while
             <code>mutiple</code>
-            attribute for multi-select mode.
+            enables multi-selection.
         </p>
         <p>
             Add an
             <code>jk-table-column</code>
             component with
-            <code>type=&quot;selection&quot;</code>
-            to display the selection helper column.
+            <code>type</code>
+            set to
+            <strong>selection</strong>
+            to display an auxiliary selection column.
             <strong>Note</strong>
-            : If enabled, clicking a row won't trigger selection.
+            : If enabled, clicking the row no longer triggers selection.
         </p>
         <p>
             Use the
             <code>selected-change</code>
-            event to observe selection state changes. Both single and multi-select return an array of row data.
+            event to monitor selection changes. Both single and multi-selection return an array of row data.
         </p>
-        <p>Methods for controlling selected rows:</p>
+        <p>Additional methods for controlling selected rows:</p>
         <ul>
             <li>
                 <code>getSelectedRow</code>
-                : Get selected row(s) (single row in single-select mode, multiple rows in multi-select mode).
+                — Retrieves selected rows (single row in single-selection mode, multiple rows in multi-selection mode).
             </li>
             <li>
                 <code>setSelectedRow</code>
-                : Select rows. Pass single or multiple rows (
-                <strong>Note</strong>
-                : In single-select mode, only the first row is selected if multiple are passed).
+                — Selects rows (can pass single or multiple rows; single-selection mode only selects the first row if multiple are provided).
             </li>
             <li>
                 <code>clearSelectedRow</code>
-                : Clear selected rows.
+                — Clears selected rows.
             </li>
             <li>
                 <code>selectAll</code>
-                : In multi-select mode, selects all non-disabled data.
+                — In multi-selection mode, selects all non-disabled data.
             </li>
         </ul>
-        <p>Single-select example:</p>
+        <p>Single-selection example:</p>
         <DemoContainer component="@(components.DEMO_JOKER_demo8)">
             <pre><code class="language-html">&lt;template&gt;
     &lt;DemoRow&gt;
@@ -633,7 +635,7 @@ export default class extends Component {
 &lt;/script&gt;
 </code></pre>
         </DemoContainer>
-        <p>Multi-select example:</p>
+        <p>Multi-selection example:</p>
         <DemoContainer component="@(components.DEMO_JOKER_demo9)">
             <pre><code class="language-html">&lt;template&gt;
     &lt;DemoRow&gt;
@@ -712,34 +714,32 @@ export default class extends Component {
 </code></pre>
         </DemoContainer>
         <h3>Sorting</h3>
-        <p>Sort tables to quickly find or compare data.</p>
+        <p>Tables can be sorted for quick data lookup or comparison.</p>
         <p>
             Set the
             <code>sortable</code>
-            attribute on a column to enable sorting by that column (accepts
-            <code>Boolean</code>
-            , defaults to
+            property on a column to enable sorting (default
             <code>false</code>
-            ).
-            <br />
-            Configure default sorting via the Table's
+            ). Use
             <code>default-sort</code>
-            attribute. Use
+            on the Table to set default sorting columns and order. Custom sorting rules can be defined via
             <code>sort-method</code>
-            for custom sorting logic.
+            .
             <code>default-sort-order</code>
             defaults to
             <strong>ascending</strong>
-            ; set to
+            but can be set to
             <strong>descending</strong>
-            to reverse.
+            .
         </p>
         <p>
             For backend sorting, set
-            <code>sortable=&quot;custom&quot;</code>
-            , then listen to the
+            <code>sortable</code>
+            to
+            <code>custom</code>
+            and listen to
             <code>sort-change</code>
-            event on the Table to fetch sorted data.
+            on the Table, which provides the current sort field and order.
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo10)">
             <pre><code class="language-html">&lt;template&gt;
@@ -764,7 +764,7 @@ export default class extends Component {
 &lt;/script&gt;
 </code></pre>
         </DemoContainer>
-        <p>Custom sorting (simulated server-side sorting):</p>
+        <p>Custom sorting (simulating server-side sorting):</p>
         <DemoContainer component="@(components.DEMO_JOKER_demo11)">
             <pre><code class="language-html">&lt;template&gt;
     &lt;jk-table data=&quot;@tableData.value&quot; ref=&quot;table&quot; @sort-change=&quot;handleSortChange&quot;&gt;
@@ -861,32 +861,34 @@ export default class extends Component {
 </code></pre>
         </DemoContainer>
         <h3>Filtering</h3>
-        <p>Filter tables to quickly locate desired data.</p>
+        <p>Tables can be filtered to quickly locate desired data.</p>
         <p>
-            Enable column filtering via
+            Set
             <code>filter</code>
             and
             <code>filter-method</code>
-            attributes.
+            on a column to enable filtering.
             <code>filter</code>
-            is an array; if omitted, it defaults to all unique values in the column.
+            is an array—if omitted, it displays all available values for the column.
             <code>filter-method</code>
-            determines visibility by accepting three params:
-            <code>row data</code>
+            determines what data is shown, receiving
+            <code>current row data</code>
             ,
-            <code>filter value</code>
+            <code>filter condition</code>
             , and
-            <code>column</code>
-            .
+            <code>filter column</code>
+            as arguments.
         </p>
         <p>
             <code>filter</code>
-            can be configured as:
+            can be configured as an array of
+            <strong>string[]</strong>
+            or with text translations, e.g.:
         </p>
-        <pre><code class="language-js">[
-    { value: &quot;1&quot;, text: &quot;Male&quot; },
-    { value: &quot;0&quot;, text: &quot;Female&quot; }
-];
+        <pre><code class="language-js">[  
+    { value: &quot;1&quot;, text: &quot;Male&quot; },  
+    { value: &quot;0&quot;, text: &quot;Female&quot; }  
+];  
 </code></pre>
         <DemoContainer component="@(components.DEMO_JOKER_demo12)">
             <pre><code class="language-html">&lt;template&gt;
@@ -933,13 +935,13 @@ export default class extends Component {
         </DemoContainer>
         <h3>Index Column</h3>
         <p>
-            Display index columns by setting
-            <code>type=&quot;index&quot;</code>
-            on
+            Configure
             <code>jk-table-column</code>
-            and configuring the starting index via the
+            with
+            <code>type=&quot;index&quot;</code>
+            to display an index column. Use the
             <code>index</code>
-            attribute (default: 1).
+            property to set the starting index (default: 1).
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo13)">
             <pre><code class="language-html">&lt;template&gt;
@@ -976,7 +978,7 @@ export default class extends Component {
         </DemoContainer>
         <h3>Custom Column Template</h3>
         <p>
-            Customize column content by combining other components.
+            Customize column display by combining other components.
             <br />
             Use
             <code>RenderSection</code>
@@ -992,13 +994,14 @@ export default class extends Component {
             <code>column</code>
             , and
             <code>store</code>
-            (table state management). See demo.
+            (table data management). Refer to the demo for usage.
         </p>
         <p>
-            <code>td</code>
-            area renders cell content;
-            <code>th</code>
-            area renders headers.
+            The
+            <strong>td</strong>
+            section renders table cell content, while
+            <strong>th</strong>
+            renders headers.
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo14)">
             <pre><code class="language-html">&lt;template&gt;
@@ -1076,20 +1079,20 @@ export default class extends Component {
 &lt;/script&gt;
 </code></pre>
         </DemoContainer>
-        <h3>Expandable Rows</h3>
+        <h3>Expandable Row</h3>
         <p>
-            Use expandable rows when row content is extensive without horizontal scrolling.
+            For rows with extensive content and no horizontal scroll, expandable rows can be used.
             <br />
             Set
             <code>type=&quot;expand&quot;</code>
             and
-            <code>section('expand',data)</code>
-            to enable. The template in
+            <code>section('expand', data)</code>
+            to enable.
             <code>jk-table-column</code>
-            becomes the expanded content, where
+            templates render expanded content, where
             <code>data</code>
             includes
-            <code>current row</code>
+            <code>current row data</code>
             ,
             <code>row index</code>
             , and
@@ -1140,17 +1143,19 @@ export default class extends Component {
         </DemoContainer>
         <h3>Tree Table</h3>
         <p>
-            Display hierarchical data. Rows with
+            Supports hierarchical data display. Rows with a
             <code>children</code>
-            fields are treated as tree data. Specify
+            field are treated as tree data.
             <code>row-key</code>
-            when rendering. Supports async child loading via
-            <code>lazy=true</code>
-            and
+            is required when rendering trees. Supports asynchronous child node loading via
+            <code>lazy</code>
+            (set to
+            <code>true</code>
+            ) and
             <code>load</code>
             function. Use
             <code>isLeafKey</code>
-            to mark leaf nodes.
+            to specify leaf nodes.
         </p>
         <blockquote>
             <p>
@@ -1158,7 +1163,7 @@ export default class extends Component {
                 <code>childrenKey</code>
                 and
                 <code>isLeafKey</code>
-                for node properties.
+                to define node attributes and leaf indicators.
             </p>
         </blockquote>
         <DemoContainer component="@(components.DEMO_JOKER_demo16)">
@@ -1204,7 +1209,7 @@ export default class extends Component {
 &lt;/script&gt;
 </code></pre>
         </DemoContainer>
-        <p>Async loading:</p>
+        <p>Asynchronous loading:</p>
         <DemoContainer component="@(components.DEMO_JOKER_demo17)">
             <pre><code class="language-html">&lt;template&gt;
     &lt;jk-table data=&quot;@tableData&quot; row-key=&quot;name&quot; lazy load=&quot;@loadChildrenRow&quot;&gt;
@@ -1294,44 +1299,64 @@ export default class extends Component {
 </code></pre>
         </DemoContainer>
         <blockquote>
-            <p>Note: Sorting/filtering/indexing only applies to top-level rows in tree tables.</p>
+            <p>Note: Sorting, filtering, or index columns only apply to the top-level list, not child nodes.</p>
         </blockquote>
-        <h3>Large Dataset Sync Loading</h3>
-        <p>Loading large datasets (800+ rows).</p>
+        <h3>Size</h3>
         <DemoContainer component="@(components.DEMO_JOKER_demo19)">
             <pre><code class="language-html">&lt;template&gt;
-    &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot; ref=&quot;table&quot;&gt;
-        &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; /&gt;
-        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;180&quot; /&gt;
-        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
-        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
-        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
-    &lt;/jk-table&gt;
-    &lt;jk-button @click=&quot;handleLoadClick&quot;&gt;Load data&lt;/jk-button&gt;
-    &lt;jk-button @click=&quot;handleClick&quot;&gt;Select all&lt;/jk-button&gt;
+    &lt;jk-cell-group title=&quot;Large&quot;&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot; size=&quot;large&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;200px&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Default&quot;&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;200px&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Small&quot;&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot; size=&quot;small&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;200px&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Mini&quot;&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot; size=&quot;mini&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;200px&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/jk-cell-group&gt;
 &lt;/template&gt;
 &lt;script&gt;
-import { Component, combinedReply } from &quot;@joker.front/core&quot;;
+import { Component } from &quot;@joker.front/core&quot;;
 
 export default class extends Component {
     model = {
-        tableData: undefined
+        tableData: []
     };
-    handleLoadClick() {
-        combinedReply(() =&gt; {
-            this.model.tableData = [];
-            for (let i = 0; i &lt; 200; i++) {
-                this.model.tableData.push(
-                    { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
-                    { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
-                    { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
-                    { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
-                );
-            }
-        });
-    }
-    handleClick() {
-        this.$getRef(&quot;table&quot;)?.component.selectAll();
+    created() {
+        for (let i = 0; i &lt; 10; i++) {
+            this.model.tableData.push(
+                { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+                { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+                { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+                { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+            );
+        }
     }
 }
 &lt;/script&gt;
@@ -1351,14 +1376,14 @@ export default class extends Component {
             <tbody>
                 <tr>
                     <td>data</td>
-                    <td>Data to display</td>
+                    <td>Displayed data</td>
                     <td>array</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>class</td>
-                    <td>Custom CSS class</td>
+                    <td>Custom class</td>
                     <td>string</td>
                     <td>—</td>
                     <td>—</td>
@@ -1366,7 +1391,9 @@ export default class extends Component {
                 <tr>
                     <td>height</td>
                     <td>
-                        Table height (auto by default). Numbers are in px; strings set
+                        Table height (default: auto). If numeric, unit is
+                        <code>px</code>
+                        ; string sets
                         <code>style.height</code>
                         .
                     </td>
@@ -1376,137 +1403,189 @@ export default class extends Component {
                 </tr>
                 <tr>
                     <td>max-height</td>
-                    <td>Maximum height (px or number).</td>
+                    <td>
+                        Maximum height (numeric or
+                        <code>px</code>
+                        ).
+                    </td>
                     <td>string/number</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>stripe</td>
-                    <td>Zebra-striping</td>
+                    <td>Whether to use striped styling.</td>
                     <td>boolean</td>
                     <td>—</td>
                     <td>false</td>
                 </tr>
                 <tr>
                     <td>border</td>
-                    <td>Vertical borders</td>
+                    <td>Whether to show vertical borders.</td>
                     <td>boolean</td>
                     <td>—</td>
                     <td>false</td>
                 </tr>
                 <tr>
                     <td>show-header</td>
-                    <td>Show headers</td>
+                    <td>Whether to display headers.</td>
                     <td>boolean</td>
                     <td>—</td>
                     <td>true</td>
                 </tr>
                 <tr>
                     <td>row-class-name</td>
-                    <td>Row className callback or static string</td>
-                    <td>Function/String</td>
+                    <td>
+                        Row
+                        <code>className</code>
+                        callback (or fixed string for all rows).
+                    </td>
+                    <td>
+                        Function({row, rowIndex})/String
+                    </td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>row-style</td>
-                    <td>Row style callback or static object</td>
-                    <td>Function/Object</td>
+                    <td>
+                        Row
+                        <code>style</code>
+                        callback (or fixed object for all rows).
+                    </td>
+                    <td>
+                        Function({row, rowIndex})/Object
+                    </td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>cell-class-name</td>
-                    <td>Cell className callback or static string</td>
-                    <td>Function/String</td>
+                    <td>
+                        Cell
+                        <code>className</code>
+                        callback (or fixed string for all cells).
+                    </td>
+                    <td>
+                        Function({row, column, rowIndex, columnIndex})/String
+                    </td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>cell-style</td>
-                    <td>Cell style callback or static object</td>
-                    <td>Function/Object</td>
-                    <td>—</td>
+                    <td>
+                        Cell
+                        <code>style</code>
+                        callback (or fixed object for all cells).
+                    </td>
+                    <td>
+                        Function({row, column, rowIndex, columnIndex})/Object
+                    </td>
+                    <td>string</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>header-row-class-name</td>
-                    <td>Header row className callback or static string</td>
-                    <td>Function/String</td>
+                    <td>
+                        Header row
+                        <code>className</code>
+                        callback (or fixed string for all headers).
+                    </td>
+                    <td>
+                        Function({row, rowIndex})/String
+                    </td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>header-row-style</td>
-                    <td>Header row style callback or static object</td>
-                    <td>Function/Object</td>
+                    <td>
+                        Header row
+                        <code>style</code>
+                        callback (or fixed object for all headers).
+                    </td>
+                    <td>
+                        Function({row, rowIndex})/Object
+                    </td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>header-cell-class-name</td>
-                    <td>Header cell className callback or static string</td>
-                    <td>Function/String</td>
+                    <td>
+                        Header cell
+                        <code>className</code>
+                        callback (or fixed string for all header cells).
+                    </td>
+                    <td>
+                        Function({row, column, rowIndex, columnIndex})/String
+                    </td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>header-cell-style</td>
-                    <td>Header cell style callback or static object</td>
-                    <td>Function/Object</td>
+                    <td>
+                        Header cell
+                        <code>style</code>
+                        callback (or fixed object for all header cells).
+                    </td>
+                    <td>
+                        Function({row, column, rowIndex, columnIndex})/Object
+                    </td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>empty-text</td>
                     <td>
-                        Empty data text (override via
+                        Text displayed when data is empty (can also use
                         <code>section=&quot;empty&quot;</code>
-                        )
+                        ).
                     </td>
                     <td>String</td>
                     <td>—</td>
-                    <td>&quot;No Data&quot;</td>
+                    <td>No Data</td>
                 </tr>
                 <tr>
                     <td>default-sort</td>
-                    <td>Default sort column</td>
+                    <td>Default sorted column.</td>
                     <td>string</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>default-sort-order</td>
-                    <td>Default sort order</td>
-                    <td>&quot;ascending&quot;/&quot;descending&quot;</td>
+                    <td>Default sorting order.</td>
+                    <td>ascending/descending</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>childrenKey</td>
-                    <td>Child node key for tree data</td>
+                    <td>Tree structure: specifies child node property name.</td>
                     <td>string</td>
                     <td>—</td>
-                    <td>&quot;children&quot;</td>
+                    <td>children</td>
                 </tr>
                 <tr>
                     <td>isLeafKey</td>
-                    <td>Leaf node indicator key for tree data</td>
+                    <td>Tree structure: specifies leaf node property name.</td>
                     <td>string</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>dataChangeNotClearSelected</td>
-                    <td>Don't clear selection on data change</td>
+                    <td>Whether to clear selections after data changes.</td>
                     <td>boolean</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>defaultExpandAll</td>
-                    <td>Expand all rows by default</td>
+                    <td>Whether to expand all rows by default.</td>
                     <td>boolean</td>
                     <td>—</td>
                     <td>—</td>
@@ -1525,19 +1604,19 @@ export default class extends Component {
             <tbody>
                 <tr>
                     <td>selected-change</td>
-                    <td>Triggered when selection changes</td>
+                    <td>Triggered when selection changes.</td>
                     <td>Selected rows[]</td>
                 </tr>
                 <tr>
                     <td>sort-change</td>
-                    <td>Triggered when sorting changes</td>
+                    <td>Triggered when sorting conditions change.</td>
                     <td>
                         {column, order}
                     </td>
                 </tr>
                 <tr>
                     <td>expand-change</td>
-                    <td>Triggered when expanding/collapsing</td>
+                    <td>Triggered when expanding/collapsing a row.</td>
                     <td>row, expand</td>
                 </tr>
             </tbody>
@@ -1554,42 +1633,47 @@ export default class extends Component {
             <tbody>
                 <tr>
                     <td>clearSelectedRow</td>
-                    <td>Clears selection (multi-select)</td>
+                    <td>Clears user selections in multi-select tables.</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>selectAll</td>
-                    <td>Toggles all rows' selection</td>
+                    <td>Toggles all rows' selection state.</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>setSelectedRow</td>
-                    <td>Sets selected row (single-select)</td>
+                    <td>Sets a specific row as selected in single-select tables.</td>
                     <td>row</td>
                 </tr>
                 <tr>
                     <td>clearSort</td>
-                    <td>Resets sorting</td>
+                    <td>Clears sorting conditions (resets data).</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>clearFilter</td>
-                    <td>Clears filters (optionally by column keys)</td>
-                    <td>column.key[]</td>
+                    <td>
+                        Clears all filter conditions (or specific columns via
+                        <code>column.key</code>
+                        array).
+                    </td>
+                    <td>column.key</td>
                 </tr>
                 <tr>
                     <td>sort</td>
                     <td>
-                        Manual sort by
+                        Manual sorting (
                         <code>key</code>
-                        and
+                        : column,
                         <code>order</code>
+                        : sorting order).
                     </td>
                     <td>key: string, order: string</td>
                 </tr>
                 <tr>
                     <td>getSelectRow</td>
-                    <td>Gets selected rows</td>
+                    <td>Gets selected rows.</td>
                     <td>—</td>
                 </tr>
             </tbody>
@@ -1615,7 +1699,7 @@ export default class extends Component {
                         <code>index</code>
                         for row numbers,
                         <code>expand</code>
-                        for expand button)
+                        for expandable rows).
                     </td>
                     <td>string</td>
                     <td>selection/index/expand</td>
@@ -1624,10 +1708,11 @@ export default class extends Component {
                 <tr>
                     <td>index</td>
                     <td>
-                        Custom index when
-                        <code>type=&quot;index&quot;</code>
+                        Customize index for
+                        <code>type=index</code>
+                        (numeric or function).
                     </td>
-                    <td>number/Function(index)</td>
+                    <td>number, Function(index)</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
@@ -1636,7 +1721,7 @@ export default class extends Component {
                     <td>
                         Column key (required for
                         <code>filter-change</code>
-                        )
+                        events).
                     </td>
                     <td>string</td>
                     <td>—</td>
@@ -1644,14 +1729,14 @@ export default class extends Component {
                 </tr>
                 <tr>
                     <td>label</td>
-                    <td>Header text</td>
+                    <td>Column header text.</td>
                     <td>string</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>width</td>
-                    <td>Column width</td>
+                    <td>Column width.</td>
                     <td>string</td>
                     <td>—</td>
                     <td>—</td>
@@ -1659,53 +1744,57 @@ export default class extends Component {
                 <tr>
                     <td>fixed</td>
                     <td>
-                        Fix column (
+                        Whether column is fixed (
                         <code>true</code>
-                        = left,
-                        <code>&quot;left&quot;</code>
                         /
-                        <code>&quot;right&quot;</code>
-                        )
+                        <code>left</code>
+                        /
+                        <code>right</code>
+                        ).
                     </td>
-                    <td>string/boolean</td>
+                    <td>string, boolean</td>
                     <td>true/left/right</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>sortable</td>
                     <td>
-                        Enable sorting (
-                        <code>&quot;custom&quot;</code>
-                        for remote)
+                        Whether column is sortable (
+                        <code>custom</code>
+                        for remote sorting).
                     </td>
-                    <td>boolean/string</td>
+                    <td>boolean, string</td>
                     <td>true/false/custom</td>
                     <td>false</td>
                 </tr>
                 <tr>
                     <td>sort-method</td>
-                    <td>Custom sort function</td>
+                    <td>
+                        Custom sorting function (only if
+                        <code>sortable=true</code>
+                        ).
+                    </td>
                     <td>Function</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>align</td>
-                    <td>Content alignment</td>
-                    <td>string</td>
+                    <td>Alignment.</td>
+                    <td>String</td>
                     <td>left/center/right</td>
                     <td>left</td>
                 </tr>
                 <tr>
                     <td>header-align</td>
-                    <td>Header alignment</td>
-                    <td>string</td>
+                    <td>Header alignment (defaults to table alignment if unset).</td>
+                    <td>String</td>
                     <td>left/center/right</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>class</td>
-                    <td>Column CSS class</td>
+                    <td>Column class.</td>
                     <td>string</td>
                     <td>—</td>
                     <td>—</td>
@@ -1713,21 +1802,25 @@ export default class extends Component {
                 <tr>
                     <td>filter</td>
                     <td>
-                        Filter options (
-                        <code>
-                            {text, value}[]
-                        </code>
-                        or
-                        <code>string[]</code>
-                        )
+                        Filter options (must have
+                        <code>text</code>
+                        and
+                        <code>value</code>
+                        , filters current column).
                     </td>
-                    <td>Array</td>
+                    <td>
+                        Array&lt;{text, value}&gt; or string[]
+                    </td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>filter-method</td>
-                    <td>Filter logic (executed per row)</td>
+                    <td>
+                        Custom filter function (returns
+                        <code>true</code>
+                        to display).
+                    </td>
                     <td>Function(row, filters, col)</td>
                     <td>—</td>
                     <td>—</td>
@@ -1746,19 +1839,19 @@ export default class extends Component {
                 <tr>
                     <td>td</td>
                     <td>
-                        Custom cell content ({value, row, rowIndex, column, columnIndex, store})
+                        Custom column content ({value, row, rowIndex, column, columnIndex, store}).
                     </td>
                 </tr>
                 <tr>
                     <td>th</td>
                     <td>
-                        Custom header content ({column, columnIndex, store})
+                        Custom header content ({column, columnIndex, store}).
                     </td>
                 </tr>
                 <tr>
                     <td>expand</td>
                     <td>
-                        Expandable row content ({row, rowIndex, store})
+                        Expandable row content ({row, rowIndex, store}).
                     </td>
                 </tr>
             </tbody>

@@ -107,7 +107,7 @@
         <p>
             设置
             <code>clearable</code>
-            属性，则可将选择器清空。需要注意的是。
+            属性，则可将选择器清空。
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo3)">
             <pre><code class="language-html">&lt;template&gt;

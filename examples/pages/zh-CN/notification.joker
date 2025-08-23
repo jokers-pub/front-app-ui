@@ -263,13 +263,6 @@ export default class extends Component {
                 属性。
             </p>
         </div>
-        <blockquote>
-            <p>
-                Message 提供
-                <code>closeAll</code>
-                方法，用于在特定业务时机去清除全部 message。
-            </p>
-        </blockquote>
         <h3>Options</h3>
         <table class="mkd-table">
             <thead>

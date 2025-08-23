@@ -270,7 +270,7 @@ export default class extends Component {
         <p>
             <code>jk-date</code>
             组件并配置
-            <code>type=''calendar</code>
+            <code>type='calendar'</code>
             进行日期选择表单选择。
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo6)">

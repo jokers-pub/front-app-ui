@@ -3,7 +3,7 @@
         <h2>ColorPicker 颜色选择器</h2>
         <p>用于颜色选择，支持多种格式。</p>
         <h3>基础用法</h3>
-        <p>使用设置 value 变量进行进行默认值的展示，并通过过去 value 来实现取值</p>
+        <p>使用设置 value 变量进行默认值的展示，并通过获取 value 来实现取值</p>
         <DemoContainer component="@(components.DEMO_JOKER_demo1)">
             <pre><code class="language-html">&lt;template&gt;
     &lt;DemoRow&gt;

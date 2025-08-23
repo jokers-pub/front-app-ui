@@ -161,7 +161,7 @@ export default class extends Component {
         <p>
             通过设置
             <code>disabled</code>
-            属性实现禁用，该属性会自定更改
+            属性实现禁用，该属性会自动更改
             <code>split-button</code>
             类型下的按钮状态，若不是分割按钮模式，请自行管理设置内容禁用样式
         </p>

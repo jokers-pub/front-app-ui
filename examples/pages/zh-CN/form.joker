@@ -404,7 +404,7 @@ export default class extends Component {
 </code></pre>
         </DemoContainer>
         <p>
-            可通过通过
+            可通过
             <code>全局方法注册</code>
             来自定义校验规则。下面是一个内置的检查方法代码，可以参考
         </p>

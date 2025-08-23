@@ -18,7 +18,7 @@ Set `disabled` to true to disable the dropdown selection.
 
 Includes a clear button to reset the selector to its initial state.
 
-Set the `clearable` property to enable clearing the selector. Note that...
+Set the `clearable` property to enable clearing the selector.
 
 !!!demo3!!!
 

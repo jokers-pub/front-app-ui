@@ -203,9 +203,7 @@ export default class extends Component {
                 </tr>
                 <tr>
                     <td>page-count</td>
-                    <td>
-                        Total page count. Either total or page-count can be used to display pages; Use total if you need page-sizes functionality
-                    </td>
+                    <td>Total page count. Either total or page-count can be used to display pages;</td>
                     <td>number</td>
                     <td>—</td>
                     <td>—</td>
@@ -238,13 +236,6 @@ export default class extends Component {
                         <code>next</code>
                     </td>
                     <td>'prev, pager, next'</td>
-                </tr>
-                <tr>
-                    <td>page-sizes</td>
-                    <td>Options for items per page selector</td>
-                    <td>number[]</td>
-                    <td>—</td>
-                    <td>[10, 20, 30, 40, 50, 100]</td>
                 </tr>
                 <tr>
                     <td>prev-text</td>

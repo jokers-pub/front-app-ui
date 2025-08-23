@@ -107,7 +107,7 @@
         <p>
             Set the
             <code>clearable</code>
-            property to enable clearing the selector. Note that...
+            property to enable clearing the selector.
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo3)">
             <pre><code class="language-html">&lt;template&gt;

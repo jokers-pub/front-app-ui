@@ -103,9 +103,7 @@ export default class extends Component {
             <p>
                 当设置
                 <code>range</code>
-                或者
-                <code>show-input</code>
-                时，
+                ，
                 <code>show-input</code>
                 属性将不生效
             </p>
@@ -386,7 +384,7 @@ export default class extends Component {
             <tbody>
                 <tr>
                     <td>change</td>
-                    <td>值改变时触发（使用鼠标拖曳时，只在松开鼠标后触发）</td>
+                    <td>值改变时触发（使用鼠标拖拽时，只在松开鼠标后触发）</td>
                     <td>改变后的值</td>
                 </tr>
                 <tr>

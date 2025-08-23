@@ -970,7 +970,7 @@ export default class extends Component {
             自定义列的显示内容，可组合其他组件使用。
             通过
             <code>RenderSection</code>
-            可以获取到 value, row, rowIndex, columnIndex,column, 和 store（table 数据管理）的数据，用法参考 demo。
+            可以获取到 value, row, rowIndex, columnIndex, column 和 store（table 数据管理）的数据，用法参考 demo。
         </p>
         <p>
             其中
@@ -1270,42 +1270,62 @@ export default class extends Component {
         <blockquote>
             <p>注意，树形列表如果启用排序、筛选或索引列，只会对一级列表进行操作，不会对子集作用。</p>
         </blockquote>
-        <h3>大数据同步加载</h3>
-        <p>大数据加载（800 条）。</p>
+        <h3>尺寸</h3>
         <DemoContainer component="@(components.DEMO_JOKER_demo19)">
             <pre><code class="language-html">&lt;template&gt;
-    &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot; ref=&quot;table&quot;&gt;
-        &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; /&gt;
-        &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;180&quot; /&gt;
-        &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;180&quot; /&gt;
-        &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; /&gt;
-        &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
-    &lt;/jk-table&gt;
-    &lt;jk-button @click=&quot;handleLoadClick&quot;&gt;Load data&lt;/jk-button&gt;
-    &lt;jk-button @click=&quot;handleClick&quot;&gt;Select all&lt;/jk-button&gt;
+    &lt;jk-cell-group title=&quot;Large&quot;&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot; size=&quot;large&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;200px&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Default&quot;&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;200px&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Small&quot;&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot; size=&quot;small&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;200px&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/jk-cell-group&gt;
+    &lt;jk-cell-group title=&quot;Mini&quot;&gt;
+        &lt;jk-table data=&quot;@model.tableData&quot; select multiple height=&quot;250&quot; size=&quot;mini&quot;&gt;
+            &lt;jk-table-column type=&quot;selection&quot; key=&quot;checked&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Name&quot; key=&quot;name&quot; width=&quot;100&quot; fixed=&quot;left&quot; /&gt;
+            &lt;jk-table-column label=&quot;Date&quot; key=&quot;date&quot; width=&quot;100&quot; /&gt;
+            &lt;jk-table-column label=&quot;Address&quot; key=&quot;address&quot; width=&quot;200px&quot; /&gt;
+            &lt;jk-table-column label=&quot;Balance&quot; key=&quot;money&quot; headerAlign=&quot;right&quot; align=&quot;right&quot; /&gt;
+        &lt;/jk-table&gt;
+    &lt;/jk-cell-group&gt;
 &lt;/template&gt;
 &lt;script&gt;
-import { Component, combinedReply } from &quot;@joker.front/core&quot;;
+import { Component } from &quot;@joker.front/core&quot;;
 
 export default class extends Component {
     model = {
-        tableData: undefined
+        tableData: []
     };
-    handleLoadClick() {
-        combinedReply(() =&gt; {
-            this.model.tableData = [];
-            for (let i = 0; i &lt; 200; i++) {
-                this.model.tableData.push(
-                    { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
-                    { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
-                    { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
-                    { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
-                );
-            }
-        });
-    }
-    handleClick() {
-        this.$getRef(&quot;table&quot;)?.component.selectAll();
+    created() {
+        for (let i = 0; i &lt; 10; i++) {
+            this.model.tableData.push(
+                { name: &quot;Zhang San&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 1000 },
+                { name: &quot;Li Si&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 10 },
+                { name: &quot;Li Mei&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 300 },
+                { name: &quot;Wang Wu&quot;, date: &quot;2023-11-21&quot;, address: &quot;Jinan, Shandong Province&quot;, money: 11.9 }
+            );
+        }
     }
 }
 &lt;/script&gt;

@@ -105,8 +105,6 @@ export default class extends Component {
             <p>
                 When
                 <code>range</code>
-                or
-                <code>show-input</code>
                 is enabled, the
                 <code>show-input</code>
                 property will not take effect.

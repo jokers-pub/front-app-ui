@@ -84,7 +84,7 @@ export default class extends Component {
         <p>
             针对筛选条件过多时，可启用
             <code>shrink</code>
-            ，开启后展示不要开的选项将可以通过滚动条滑动展示。
+            ，开启后展示不开的选项将可以通过滚动条滑动展示。
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo3)">
             <pre><code class="language-html">&lt;template&gt;

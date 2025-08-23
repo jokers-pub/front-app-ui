@@ -195,6 +195,13 @@
             &lt;/jk-button&gt;
         &lt;/jk-button-group&gt;
     &lt;/DemoRow&gt;
+    &lt;DemoRow&gt;
+        &lt;jk-button-group&gt;
+            &lt;jk-button type=&quot;danger&quot; round icon=&quot;jk-icon-edit&quot;&gt;Buy Now&lt;/jk-button&gt;
+            &lt;jk-button icon=&quot;jk-icon-share&quot; round type=&quot;success&quot;&gt;Button&lt;/jk-button&gt;
+            &lt;jk-button type=&quot;warning&quot; round icon=&quot;jk-icon-delete&quot;&gt;Add Favorites&lt;/jk-button&gt;
+        &lt;/jk-button-group&gt;
+    &lt;/DemoRow&gt;
 &lt;/template&gt;
 </code></pre>
         </DemoContainer>

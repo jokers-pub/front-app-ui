@@ -33,7 +33,7 @@ export default class extends Component {
         </p>
         <blockquote>
             <p>
-                目前 Message，提供了常用的 4 种跳用方法，包括
+                目前 Message，提供了常用的 4 种调用方法，包括
                 <code>info</code>
                 ,
                 <code>success</code>

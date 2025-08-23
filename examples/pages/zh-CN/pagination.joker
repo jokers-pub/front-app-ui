@@ -127,7 +127,7 @@ export default class extends Component {
         <h3>带有背景色的分页</h3>
         <p>
             可通过配置
-            <code>backgournd</code>
+            <code>background</code>
             展示带有背景色的分页，背景色遵循主色规则
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo8)">
@@ -203,9 +203,7 @@ export default class extends Component {
                 </tr>
                 <tr>
                     <td>page-count</td>
-                    <td>
-                        总页数，total 和 page-count 设置任意一个就可以达到显示页码的功能；如果要支持 page-sizes 的更改，则需要使用 total 属性
-                    </td>
+                    <td>总页数，total 和 page-count 设置任意一个就可以达到显示页码的功能；</td>
                     <td>Number</td>
                     <td>—</td>
                     <td>—</td>
@@ -238,13 +236,6 @@ export default class extends Component {
                         <code>next</code>
                     </td>
                     <td>'prev, pager, next</td>
-                </tr>
-                <tr>
-                    <td>page-sizes</td>
-                    <td>每页显示个数选择器的选项设置</td>
-                    <td>number[]</td>
-                    <td>—</td>
-                    <td>[10, 20, 30, 40, 50, 100]</td>
                 </tr>
                 <tr>
                     <td>prev-text</td>
