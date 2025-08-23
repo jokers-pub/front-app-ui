@@ -1,6 +1,11 @@
 <template>
     <jk-field>
-        <jk-input placeholder="Please enter the content" size="large" suffix-icon="jk-icon-date" />
+        <jk-input
+            placeholder="Please enter the content"
+            size="large"
+            prefixIcon="jk-icon-date"
+            suffix-icon="jk-icon-date"
+        />
     </jk-field>
     <jk-field>
         <jk-input placeholder="Please enter the content" suffix-icon="jk-icon-date" />
