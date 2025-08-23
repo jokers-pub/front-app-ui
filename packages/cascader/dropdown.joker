@@ -188,6 +188,6 @@ export default class extends Component<{
     gap: 10px;
     flex-direction: column;
     padding: 0 15px;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 </style>
