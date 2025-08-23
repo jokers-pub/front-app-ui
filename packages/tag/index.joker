@@ -97,7 +97,7 @@ export default class extends Component<{
     white-space: nowrap;
     cursor: default;
     & + & {
-        margin-left: 10px;
+        margin-left: 5px;
     }
     > .jk-tag-close {
         cursor: pointer;
