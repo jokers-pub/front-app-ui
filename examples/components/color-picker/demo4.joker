@@ -1,7 +1,7 @@
 <template>
     <div class="demo-container">
-        <jk-color-picker value="#409EFF" readonly />
-        <jk-color-picker value="#409EFF" size="medium" disabled />
+        <jk-color-picker value="#409EFF" size="large" readonly />
+        <jk-color-picker value="#409EFF" disabled />
         <jk-color-picker value="#409EFF" size="small" readonly />
         <jk-color-picker value="#409EFF" size="mini" disabled />
     </div>

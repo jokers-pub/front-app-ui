@@ -920,7 +920,7 @@ export default class extends Component {
                 </tr>
             </tbody>
         </table>
-        <h3>Form-Item Attributes</h3>
+        <h3>Field Attributes</h3>
         <table class="mkd-table">
             <thead>
                 <tr>
@@ -973,7 +973,7 @@ export default class extends Component {
                 </tr>
             </tbody>
         </table>
-        <h3>Form-Item Slots</h3>
+        <h3>Field Sections</h3>
         <table class="mkd-table">
             <thead>
                 <tr>

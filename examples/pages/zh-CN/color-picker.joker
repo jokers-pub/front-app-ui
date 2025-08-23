@@ -48,8 +48,8 @@ export default class extends Component {
         <DemoContainer component="@(components.DEMO_JOKER_demo3)">
             <pre><code class="language-html">&lt;template&gt;
     &lt;div class=&quot;demo-container&quot;&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;large&quot; /&gt;
         &lt;jk-color-picker value=&quot;#409EFF&quot; /&gt;
-        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;medium&quot; /&gt;
         &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;small&quot; /&gt;
         &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;mini&quot; /&gt;
     &lt;/div&gt;
@@ -67,8 +67,8 @@ export default class extends Component {
         <DemoContainer component="@(components.DEMO_JOKER_demo4)">
             <pre><code class="language-html">&lt;template&gt;
     &lt;div class=&quot;demo-container&quot;&gt;
-        &lt;jk-color-picker value=&quot;#409EFF&quot; readonly /&gt;
-        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;medium&quot; disabled /&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;large&quot; readonly /&gt;
+        &lt;jk-color-picker value=&quot;#409EFF&quot; disabled /&gt;
         &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;small&quot; readonly /&gt;
         &lt;jk-color-picker value=&quot;#409EFF&quot; size=&quot;mini&quot; disabled /&gt;
     &lt;/div&gt;
@@ -119,7 +119,7 @@ export default class extends Component {
                     <td>size</td>
                     <td>尺寸</td>
                     <td>string</td>
-                    <td>medium / small / mini</td>
+                    <td>large / small / mini</td>
                     <td>—</td>
                 </tr>
                 <tr>
