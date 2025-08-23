@@ -148,7 +148,7 @@ export default class extends Component<{
             line-height: 18px;
         }
     }
-    .title,
+
     .content-container {
         flex: 1;
     }
