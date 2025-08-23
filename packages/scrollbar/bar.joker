@@ -1,6 +1,10 @@
 <template>
-    <div ref="container" class="jk-scrollbar-bar is-@bar.key @(model.showBar?'is-scolling':'')" size="@props.size">
-        <div class="thumb" ref="thumb" style="@style"></div>
+    <div
+        ref="container"
+        class="jk-scrollbar-bar is-@bar.key @(model.showBar?'is-scolling':'')"
+        size="@props.size"
+        @mousedown="handleBarMousedown">
+        <div class="thumb" ref="thumb" style="@style" @mousedown="handleThumbMousedown"></div>
     </div>
 </template>
 <script>
@@ -82,6 +86,78 @@ export default class extends Component<{
             }
         );
     }
+    cursorDown = false;
+    barData: Record<string, any> = {};
+    handleBarMousedown(e: VNode.Event) {
+        let wrapEl = this.wrap;
+
+        if (wrapEl) {
+            let target = e.event.target as HTMLElement;
+            let offset = Math.abs((<any>target.getBoundingClientRect())[this.bar.direction] - e.event[this.bar.client]);
+            let thumbHalf = this.$getRef("thumb")?.output[this.bar.offset] / 2;
+            let thumbPositionPercentage =
+                ((offset - thumbHalf) * 100) / this.$getRef("container")?.output[this.bar.offset];
+            wrapEl[this.bar.scroll] = (thumbPositionPercentage * wrapEl[this.bar.scrollSize]) / 100;
+        }
+    }
+    handleThumbMousedown(e: VNode.Event) {
+        let event = e.event as MouseEvent;
+
+        if (event.ctrlKey || event.button === 2) {
+            return;
+        }
+
+        this.startDrag(event);
+
+        this.barData[this.bar.axis] =
+            (<any>event.currentTarget)[this.bar.offset] -
+            ((<any>event)[this.bar.client] - (<any>event.currentTarget).getBoundingClientRect()[this.bar.direction]);
+    }
+
+    startDrag(e: MouseEvent) {
+        e.stopImmediatePropagation();
+
+        this.cursorDown = true;
+
+        document.addEventListener("mousemove", this.mouseMoveDocument);
+        document.addEventListener("mouseup", this.mouseUpDocumnet);
+
+        document.onselectstart = () => false;
+    }
+
+    mouseMoveDocument(e: MouseEvent) {
+        if (this.cursorDown === false) return;
+
+        let prevPage = this.barData[this.bar.axis];
+
+        if (!prevPage) return;
+
+        let offset =
+            (this.$getRef("container")?.output.getBoundingClientRect()[this.bar.direction] -
+                (<any>e)[this.bar.client]) *
+            -1;
+        let thumbClickPosition = this.$getRef("thumb")?.output[this.bar.offset] - prevPage;
+
+        let thumbPositionPercentage =
+            ((offset - thumbClickPosition) * 100) / this.$getRef("container")?.output[this.bar.offset];
+
+        let wrapEl = this.wrap;
+        wrapEl[this.bar.scroll] = (thumbPositionPercentage * wrapEl[this.bar.scrollSize]) / 100;
+    }
+    mouseUpDocumnet(e: MouseEvent) {
+        this.cursorDown = false;
+
+        this.barData[this.bar.axis] = 0;
+
+        document.removeEventListener("mousemove", this.mouseMoveDocument);
+
+        document.onselectstart = null;
+    }
+
+    beforeDestroy() {
+        document.removeEventListener("mouseup", this.mouseUpDocumnet);
+        document.removeEventListener("mousemove", this.mouseMoveDocument);
+    }
 }
 </script>
 
@@ -94,7 +170,7 @@ export default class extends Component<{
     border-radius: 4px;
     opacity: 0;
     transition: opacity 120ms ease-out;
-    pointer-events: none;
+
     &.is-horizontal {
         height: 6px;
         width: 100%;
@@ -120,6 +196,9 @@ export default class extends Component<{
         height: 0;
         border-radius: inherit;
         background-color: var(--jk-scrollbar-background-color);
+        &:hover {
+            background-color: var(--jk-scrollbar-hover-background-color);
+        }
     }
 
     &.is-scolling {

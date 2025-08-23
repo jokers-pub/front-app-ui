@@ -333,14 +333,5 @@ export default class extends TouchBase<{
             display: block !important; /* 完全隐藏 */
         }
     }
-
-    /* 移动端隐藏（宽度小于768px） */
-    @media (max-width: 767px) {
-        &:hover {
-            :deep(.jk-scrollbar-bar) {
-                opacity: 0; /* 完全隐藏 */
-            }
-        }
-    }
 }
 </style>
