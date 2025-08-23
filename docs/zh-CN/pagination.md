@@ -47,22 +47,21 @@
 
 ### Attributes
 
-| 参数                | 说明                                                                                                                  | 类型     | 可选值                           | 默认值                    |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------- | ------------------------- |
-| small               | 是否使用小型分页样式                                                                                                  | boolean  | —                                | false                     |
-| class               | 自定义 class 样式                                                                                                     | string   | -                                | -                         |
-| background          | 是否为分页按钮添加背景色                                                                                              | boolean  | —                                | false                     |
-| page-size           | 每页显示条目个数                                                                                                      | number   | —                                | 10                        |
-| total               | 总条目数                                                                                                              | number   | —                                | —                         |
-| page-count          | 总页数，total 和 page-count 设置任意一个就可以达到显示页码的功能；如果要支持 page-sizes 的更改，则需要使用 total 属性 | Number   | —                                | —                         |
-| pager-count         | 页码按钮的数量，当总页数超过该值时会折叠                                                                              | number   | 大于等于 5 且小于等于 21 的奇数  | 7                         |
-| current-page        | 当前页数                                                                                                              | number   | —                                | 1                         |
-| layout              | 组件布局，子组件名用逗号分隔                                                                                          | string[] | `sizes`, `prev`, `pager`, `next` | 'prev, pager, next        |
-| page-sizes          | 每页显示个数选择器的选项设置                                                                                          | number[] | —                                | [10, 20, 30, 40, 50, 100] |
-| prev-text           | 替代图标显示的上一页文字                                                                                              | string   | —                                | —                         |
-| next-text           | 替代图标显示的下一页文字                                                                                              | string   | —                                | —                         |
-| disabled            | 是否禁用                                                                                                              | boolean  | —                                | false                     |
-| hide-on-single-page | 只有一页时是否隐藏                                                                                                    | boolean  | —                                | -                         |
+| 参数                | 说明                                                               | 类型     | 可选值                           | 默认值             |
+| ------------------- | ------------------------------------------------------------------ | -------- | -------------------------------- | ------------------ |
+| small               | 是否使用小型分页样式                                               | boolean  | —                                | false              |
+| class               | 自定义 class 样式                                                  | string   | -                                | -                  |
+| background          | 是否为分页按钮添加背景色                                           | boolean  | —                                | false              |
+| page-size           | 每页显示条目个数                                                   | number   | —                                | 10                 |
+| total               | 总条目数                                                           | number   | —                                | —                  |
+| page-count          | 总页数，total 和 page-count 设置任意一个就可以达到显示页码的功能； | Number   | —                                | —                  |
+| pager-count         | 页码按钮的数量，当总页数超过该值时会折叠                           | number   | 大于等于 5 且小于等于 21 的奇数  | 7                  |
+| current-page        | 当前页数                                                           | number   | —                                | 1                  |
+| layout              | 组件布局，子组件名用逗号分隔                                       | string[] | `sizes`, `prev`, `pager`, `next` | 'prev, pager, next |
+| prev-text           | 替代图标显示的上一页文字                                           | string   | —                                | —                  |
+| next-text           | 替代图标显示的下一页文字                                           | string   | —                                | —                  |
+| disabled            | 是否禁用                                                           | boolean  | —                                | false              |
+| hide-on-single-page | 只有一页时是否隐藏                                                 | boolean  | —                                | -                  |
 
 ### Events
 

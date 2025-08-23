@@ -17,7 +17,6 @@
                     @prev="prev"
                     @next="next"
                     @pageChange="handlePageChange"
-                    @pageSizeChange="handlePageSizeChange"
                 />
             }
             @if(layoutRight) {
@@ -37,7 +36,6 @@
                             @prev="prev"
                             @next="next"
                             @pageChange="handlePageChange"
-                            @pageSizeChange="handlePageSizeChange"
                         />
                     }
                 </div>
@@ -155,17 +153,7 @@ export default class extends Component<{
     handlePageChange(e: VNode.Event<number>) {
         this.go(e.data);
     }
-    handlePageSizeChange(e: VNode.Event<number>) {
-        if (this.model.pageSize === e.data) return;
 
-        this.model.pageSize = e.data;
-
-        if (this.pageCount && this.model.currentPage > this.pageCount) {
-            this.go(this.pageCount);
-        }
-
-        this.$trigger("size-change", this.model.pageSize);
-    }
     //#endregion
 }
 </script>
