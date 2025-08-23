@@ -251,6 +251,8 @@ export default class extends Component<{
 .jk-progress {
     position: relative;
     line-height: 1;
+    display: flex;
+    align-items: center;
     .text {
         font-size: 14px;
         color: #606266;
@@ -335,11 +337,10 @@ export default class extends Component<{
         }
     }
     .bar {
-        padding-right: 50px;
         display: inline-block;
         vertical-align: middle;
         width: 100%;
-        margin-right: -55px;
+
         box-sizing: border-box;
         .bar-outer {
             height: 6px;
