@@ -108,7 +108,7 @@ export default class extends FormCtrl<{
     display: inline-block;
     position: relative;
     line-height: normal;
-    height: 40px;
+    height: 36px;
 
     &.is-disabled {
         .trigger {
@@ -117,8 +117,8 @@ export default class extends FormCtrl<{
     }
 
     .mask {
-        height: 38px;
-        width: 38px;
+        height: 34px;
+        width: 34px;
         border-radius: 4px;
         position: absolute;
         top: 1px;
@@ -131,8 +131,8 @@ export default class extends FormCtrl<{
     .trigger {
         display: inline-block;
         box-sizing: border-box;
-        height: 40px;
-        width: 40px;
+        height: 36px;
+        width: 36px;
         padding: 4px;
         border: solid 1px #e6e6e6;
         border-radius: 4px;
@@ -185,15 +185,15 @@ export default class extends FormCtrl<{
         }
     }
 
-    &.medium {
-        height: 36px;
+    &.large {
+        height: 40px;
         .trigger {
-            height: 36px;
-            width: 36px;
+            height: 40px;
+            width: 40px;
         }
         .mask {
-            height: 34px;
-            width: 34px;
+            height: 38px;
+            width: 38px;
         }
     }
 

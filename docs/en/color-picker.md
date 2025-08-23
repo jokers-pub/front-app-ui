@@ -1,40 +1,40 @@
-## ColorPicker  
+## ColorPicker
 
-A color picker component that supports multiple color formats.  
+A color picker component that supports multiple color formats.
 
-### Basic Usage  
+### Basic Usage
 
-Set the default color display using the `value` variable and retrieve the selected color by accessing `value`.  
+Set the default color display using the `value` variable and retrieve the selected color by accessing `value`.
 
-!!!demo1!!!  
+!!!demo1!!!
 
-### Alpha Channel Selection  
+### Alpha Channel Selection
 
-ColorPicker supports both standard colors and colors with Alpha channel (transparency). Toggle alpha channel selection using the `show-alpha` property.  
+ColorPicker supports both standard colors and colors with Alpha channel (transparency). Toggle alpha channel selection using the `show-alpha` property.
 
-!!!demo2!!!  
+!!!demo2!!!
 
-### Different Sizes  
+### Different Sizes
 
-!!!demo3!!!  
+!!!demo3!!!
 
-### Read-only/Disabled  
+### Read-only/Disabled
 
-!!!demo4!!!  
+!!!demo4!!!
 
-### Attributes  
+### Attributes
 
-| Attribute  | Description                | Type     | Options                | Default |  
-| ---------- | -------------------------- | -------- | ---------------------- | ------- |  
-| value      | Binding value              | string   | —                      | —       |  
-| disabled   | Whether disabled           | boolean  | —                      | false   |  
-| class      | Custom CSS class           | string   | -                      | -       |  
-| size       | Size                       | string   | medium / small / mini  | —       |  
-| show-alpha | Show alpha channel option  | boolean  | —                      | false   |  
-| format     | Color output format        | string   | hex / rgba             | -       |  
+| Attribute  | Description               | Type    | Options              | Default |
+| ---------- | ------------------------- | ------- | -------------------- | ------- |
+| value      | Binding value             | string  | —                    | —       |
+| disabled   | Whether disabled          | boolean | —                    | false   |
+| class      | Custom CSS class          | string  | -                    | -       |
+| size       | Size                      | string  | large / small / mini | —       |
+| show-alpha | Show alpha channel option | boolean | —                    | false   |
+| format     | Color output format       | string  | hex / rgba           | -       |
 
-### Events  
+### Events
 
-| Event Name | Description                     | Callback Parameter |  
-| ---------- | ------------------------------- | ------------------ |  
-| change     | Triggered when value changes    | Current selected value |
+| Event Name | Description                  | Callback Parameter     |
+| ---------- | ---------------------------- | ---------------------- |
+| change     | Triggered when value changes | Current selected value |
