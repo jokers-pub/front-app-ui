@@ -1,6 +1,6 @@
 <template>
     <JokerDrawer ref="drawer" direction="bottom" @close="handleClose" title="@props.title" size="@props.size">
-        <jk-skeleton count="4" animated loading>
+        <jk-skeleton count="4" animated loading="@model.loading">
             @section("template") {
                 <div class="skeleton-container">
                     <jk-skeleton-item variant="h2" />
@@ -12,7 +12,14 @@
                 <JokerTabs full-height shrink sticky animated value="@model.tabIndex" @change="handleTabIndexChange">
                     @for(let (index,menu) in model.menus) {
                         <JokerTabPanel label="@(menu.loading ? props.loadingText : getTitle(index))" name="@index">
-                            <jk-skeleton rows="6" animated loading="@(menu.loading)">
+                            <jk-skeleton count="4" animated loading="@(menu.loading)">
+                                @section("template") {
+                                    <div class="skeleton-container">
+                                        <jk-skeleton-item variant="h2" />
+                                        <jk-skeleton-item variant="h2" style="width:80%" />
+                                        <jk-skeleton-item variant="h2" style="width:60%" />
+                                    </div>
+                                }
                                 <JokerMenu
                                     nodes="@menu.nodes"
                                     parentNode="@(model.activePath[index - 1])"
