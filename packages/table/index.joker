@@ -362,5 +362,40 @@ export default class extends Component<{
         opacity: 0.3;
         box-shadow: -2px 0 5px rgba(0, 0, 0, 0.12);
     }
+
+    &.large {
+        :deep(.jk-table-header th) {
+            padding: 12px 0;
+        }
+
+        :deep(tr td) {
+            padding: 12px 0;
+        }
+    }
+
+    &.small {
+        :deep(.jk-table-header th) {
+            padding: 8px 0;
+        }
+
+        :deep(tr td) {
+            padding: 8px 0;
+        }
+    }
+
+    &.mini {
+        font-size: 12px;
+        :deep(.jk-table-header th) {
+            padding: 6px 0;
+            font-size: 12px;
+            div.cell {
+                line-height: 20px;
+            }
+        }
+
+        :deep(tr td) {
+            padding: 6px 0;
+        }
+    }
 }
 </style>

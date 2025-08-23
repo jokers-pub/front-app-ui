@@ -1,36 +1,57 @@
 <template>
-    <jk-table data="@model.tableData" select multiple height="250" ref="table">
-        <jk-table-column type="selection" key="checked" />
-        <jk-table-column label="Date" key="date" width="180" />
-        <jk-table-column label="Name" key="name" width="180" />
-        <jk-table-column label="Address" key="address" />
-        <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
-    </jk-table>
-    <jk-button @click="handleLoadClick">Load data</jk-button>
-    <jk-button @click="handleClick">Select all</jk-button>
+    <jk-cell-group title="Large">
+        <jk-table data="@model.tableData" select multiple height="250" size="large">
+            <jk-table-column type="selection" key="checked" fixed="left" />
+            <jk-table-column label="Name" key="name" width="100" fixed="left" />
+            <jk-table-column label="Date" key="date" width="100" />
+            <jk-table-column label="Address" key="address" width="200px" />
+            <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+        </jk-table>
+    </jk-cell-group>
+    <jk-cell-group title="Default">
+        <jk-table data="@model.tableData" select multiple height="250">
+            <jk-table-column type="selection" key="checked" fixed="left" />
+            <jk-table-column label="Name" key="name" width="100" fixed="left" />
+            <jk-table-column label="Date" key="date" width="100" />
+            <jk-table-column label="Address" key="address" width="200px" />
+            <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+        </jk-table>
+    </jk-cell-group>
+    <jk-cell-group title="Small">
+        <jk-table data="@model.tableData" select multiple height="250" size="small">
+            <jk-table-column type="selection" key="checked" fixed="left" />
+            <jk-table-column label="Name" key="name" width="100" fixed="left" />
+            <jk-table-column label="Date" key="date" width="100" />
+            <jk-table-column label="Address" key="address" width="200px" />
+            <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+        </jk-table>
+    </jk-cell-group>
+    <jk-cell-group title="Mini">
+        <jk-table data="@model.tableData" select multiple height="250" size="mini">
+            <jk-table-column type="selection" key="checked" fixed="left" />
+            <jk-table-column label="Name" key="name" width="100" fixed="left" />
+            <jk-table-column label="Date" key="date" width="100" />
+            <jk-table-column label="Address" key="address" width="200px" />
+            <jk-table-column label="Balance" key="money" headerAlign="right" align="right" />
+        </jk-table>
+    </jk-cell-group>
 </template>
 <script>
-import { Component, combinedReply } from "@joker.front/core";
+import { Component } from "@joker.front/core";
 
 export default class extends Component {
     model = {
-        tableData: undefined
+        tableData: []
     };
-    handleLoadClick() {
-        combinedReply(() => {
-            this.model.tableData = [];
-            for (let i = 0; i < 200; i++) {
-                this.model.tableData.push(
-                    { name: "Zhang San", date: "2023-11-21", address: "Jinan, Shandong Province", money: 1000 },
-                    { name: "Li Si", date: "2023-11-21", address: "Jinan, Shandong Province", money: 10 },
-                    { name: "Li Mei", date: "2023-11-21", address: "Jinan, Shandong Province", money: 300 },
-                    { name: "Wang Wu", date: "2023-11-21", address: "Jinan, Shandong Province", money: 11.9 }
-                );
-            }
-        });
-    }
-    handleClick() {
-        this.$getRef("table")?.component.selectAll();
+    created() {
+        for (let i = 0; i < 10; i++) {
+            this.model.tableData.push(
+                { name: "Zhang San", date: "2023-11-21", address: "Jinan, Shandong Province", money: 1000 },
+                { name: "Li Si", date: "2023-11-21", address: "Jinan, Shandong Province", money: 10 },
+                { name: "Li Mei", date: "2023-11-21", address: "Jinan, Shandong Province", money: 300 },
+                { name: "Wang Wu", date: "2023-11-21", address: "Jinan, Shandong Province", money: 11.9 }
+            );
+        }
     }
 }
 </script>

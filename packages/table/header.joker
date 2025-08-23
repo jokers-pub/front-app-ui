@@ -296,7 +296,7 @@ export default class extends Component {
         font-weight: 700;
         font-size: 14px;
         background: var(--jk-background-color-default);
-        padding: 8px 0;
+        padding: 10px 0;
         div.cell {
             display: inline-block;
             box-sizing: border-box;

@@ -252,7 +252,7 @@ tr {
     border-bottom: solid 1px var(--jk-border-color-lighter);
     td {
         text-align: left;
-        padding: 4px 0;
+        padding: 10px 0;
         box-sizing: border-box;
         vertical-align: middle;
 
