@@ -115,7 +115,7 @@ export const MENUS_ZH_CN = [
             },
             {
                 objectID: "2-18",
-                title: "UploadImage 上传图片",
+                title: "UploadImg 上传图片",
                 path: "/component/upload-img",
                 description:
                     "用于将本地的图片上传至服务器，并在上传过程中展示预览图。目前 Uploader 组件不包含将文件上传至服务器的接口逻辑，该步骤需要自行实现。"
@@ -570,7 +570,7 @@ export const MENUS_EN = [
             },
             {
                 objectID: "2-18",
-                title: "UploadImage",
+                title: "UploadImg",
                 path: "/en/component/upload-img",
                 description:
                     "Used to upload a local image  to the server and display a preview image. The Uploader component does not currently contain the interface logic for uploading files to the server, this step needs to be implemented by the user."
