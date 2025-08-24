@@ -43,3 +43,9 @@
 | mimeType     | 限制文件类型，支持通配符例如：**(image/\*)**                                                     | string / string[]                     | —      | —      |
 | beforeRead   | 文件读取前操作，可实现自定义上传                                                                 | (file: File) => any                   | —      |
 | beforeDelete | 文件删除时操作，可实现自定义服务端删除                                                           | (index: number, urlOrFile: any) =>any | —      |
+
+### Events
+
+| 事件名 | 说明       | 参数  |
+| ------ | ---------- | ----- |
+| change | 值变更时间 | value |

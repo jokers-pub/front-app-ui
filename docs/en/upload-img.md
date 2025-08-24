@@ -1,30 +1,30 @@
 ## Upload Img Component
 
-Used for uploading local images to the server while displaying previews during the upload process. Currently, the Uploader component does not include the interface logic for uploading files to the server; this step needs to be implemented separately.
+Used for uploading local images to the server while displaying previews during the upload process. Note that the Uploader component does not include the interface logic for uploading files to the server - this step needs to be implemented separately.
 
 ### Basic Usage
 
 !!!demo1!!!
 
-### Limiting File Quantity
+### File Quantity Limit
 
-Configure the maximum number of uploadable files via `maxFileCount`.
+Configure the maximum number of uploadable files via `maxFileCount`
 
 !!!demo2!!!
 
-### Restricting File Types
+### File Type Restrictions
 
-Limit uploadable file types using `mimeType` (default: `["image/png", "image/jpeg"]`).
+Restrict upload file types using `mimeType`. Default values: ["image/png", "image/jpeg"]
 
 !!!demo3!!!
 
 ### Display Size
 
-Set the component display size via the `size` configuration.
+Configure component display size via `size`
 
 !!!demo4!!!
 
-### Simulating Upload
+### Simulated Upload
 
 Implement custom upload logic using `before-read` and `before-delete`.
 
@@ -32,14 +32,20 @@ Implement custom upload logic using `before-read` and `before-delete`.
 
 ### Attributes
 
-| Parameter    | Description                                                                                                                          | Type                                   | Options | Default |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- | ------- | ------- |
-| class        | Custom styling                                                                                                                       | string                                 | —       | —       |
-| size         | Display size                                                                                                                         | large / small / mini                   | —       | —       |
-| returnType   | Data type returned as form data. If `before-read` is used for custom upload (returning a server URL), `returnType` switches to `url` | url / file                             | —       | file    |
-| disabled     | Whether the component is disabled                                                                                                    | boolean                                | —       | false   |
-| maxFileCount | Maximum number of uploadable files                                                                                                   | number                                 | —       |         |
-| maxFileSize  | Maximum file size (kb)                                                                                                               | number                                 | —       |         |
-| mimeType     | Restricted file types (supports wildcards, e.g., `image/*`)                                                                          | string / string[]                      | —       | —       |
-| beforeRead   | Pre-read file operation (for custom upload implementation)                                                                           | (file: File) => any                    | —       |         |
-| beforeDelete | Pre-delete file operation (for custom server deletion implementation)                                                                | (index: number, urlOrFile: any) => any | —       |         |
+| Parameter     | Description                                                                                             | Type                                  | Options | Default |
+|--------------|---------------------------------------------------------------------------------------------------------|---------------------------------------|---------|---------|
+| class        | Custom styles                                                                                           | string                                | —       | —       |
+| size         | Display size                                                                                            | large/small/mini                      | —       | —       |
+| returnType   | Data type returned for form submission. When using `before-read` for custom upload with server URLs, returnType changes to url | url/file                              | —       | file    |
+| disabled     | Whether disabled                                                                                        | boolean                               | —       | false   |
+| maxFileCount | Maximum upload count                                                                                    | number                                | —       |         |
+| maxFileSize  | Maximum upload file size (KB)                                                                           | number                                | —       |         |
+| mimeType     | File type restrictions, supports wildcards e.g. **(image/\*)**                                          | string / string[]                     | —       | —       |
+| beforeRead   | Pre-read file operation for implementing custom upload                                                  | (file: File) => any                   | —       |         |
+| beforeDelete | File deletion operation for implementing custom server deletion                                         | (index: number, urlOrFile: any) =>any | —       |         |
+
+### Events
+
+| Event Name | Description       | Parameters  |
+|-----------|-------------------|-------------|
+| change    | Value change event | value       |
