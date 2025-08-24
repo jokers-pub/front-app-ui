@@ -36,13 +36,13 @@
                         @props.description
                     </p>
                 }
-                @if(props.closable) {
-                    <i class="jk-alert-closebtn @(props.closeText?'is-customed':'jk-icon-close')" @click="close">
-                        @props.closeText
-                    </i>
-                }
             </div>
         </div>
+        @if(props.closable) {
+            <i class="jk-alert-closebtn @(props.closeText?'is-customed':'jk-icon-close')" @click="close">
+                @props.closeText
+            </i>
+        }
     </div>
 </template>
 <script>
@@ -177,7 +177,7 @@ export default class extends Component<{
 
 <style lang="scss" scoped>
 .jk-alert {
-    padding: 8px 16px;
+    padding: 8px 10px 8px 16px;
     line-height: 1;
     box-sizing: border-box;
     border-radius: 4px;
@@ -260,31 +260,41 @@ export default class extends Component<{
         justify-content: center;
     }
     .jk-alert-content {
-        display: table-cell;
+        flex: 1;
+        display: flex;
+        align-items: center;
         padding: 0 8px;
-        .jk-alert-title {
-            font-size: 13px;
-            line-height: 18px;
-            &.is-bold {
-                font-weight: 700;
-            }
-        }
-        .jk-alert-closebtn {
-            font-size: 12px;
-            opacity: 1;
-            position: absolute;
-            top: 12px;
-            right: 15px;
-            cursor: pointer;
-            &.is-customed {
-                font-style: normal;
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            .jk-alert-title {
                 font-size: 13px;
-                top: 9px;
+                line-height: 18px;
+                flex: 1;
+                display: flex;
+                align-items: center;
+
+                &.is-bold {
+                    font-weight: 700;
+                }
+            }
+
+            .jk-alert-description {
+                font-size: 12px;
+                margin: 5px 0 0;
             }
         }
-        .jk-alert-description {
-            font-size: 12px;
-            margin: 5px 0 0;
+    }
+    .jk-alert-closebtn {
+        font-size: 12px;
+        opacity: 1;
+        margin-left: 10px;
+        cursor: pointer;
+        &.is-customed {
+            font-style: normal;
+            font-size: 13px;
+            top: 9px;
         }
     }
     &.is-light .jk-alert-closebtn {
