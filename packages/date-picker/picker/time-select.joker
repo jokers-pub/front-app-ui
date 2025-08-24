@@ -1,5 +1,5 @@
 <template>
-    <JokerDrawer ref="drawer" direction="bottom" @close="handleClose" showHeader="@false">
+    <JokerDrawer ref="drawer" direction="bottom" size="auto" @close="handleClose" showHeader="@false">
         <JokerPicker
             columns="@items"
             title="@props.title"

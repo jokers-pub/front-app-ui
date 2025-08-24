@@ -24,13 +24,13 @@ Please note the case sensitivity. Internally, it uses `dayjs` for time calculati
 
 ### Date Picker Attribute
 
-| Parameter    | Description                | Type                                                                              | Options | Default      |
-| ------------ | -------------------------- | --------------------------------------------------------------------------------- | ------- | ------------ |
-| format       | Value formatting rule      | string                                                                            | —       | HH:mm        |
-| defauleValue | Default display value      | string                                                                            | —       | —            |
-| value        | Value                      | string                                                                            | —       | —            |
-| filter       | Option filtering           | (date: { year?: number; month?: number; day?: number; week?: number }) => boolean | —       | —            |
-| labelFormat  | Custom column text display | (value: number, type: string) => string                                           | —       | jk-icon-time |
+| Parameter    | Description                | Type                                                                              | Options | Default                    |
+| ------------ | -------------------------- | --------------------------------------------------------------------------------- | ------- | -------------------------- |
+| format       | Value formatting rule      | string                                                                            | —       | YYYY-MM-DD/YYYY-MM/YYYY-ww |
+| defauleValue | Default display value      | string                                                                            | —       | —                          |
+| value        | Value                      | string                                                                            | —       | —                          |
+| filter       | Option filtering           | (date: { year?: number; month?: number; day?: number; week?: number }) => boolean | —       | —                          |
+| labelFormat  | Custom column text display | (value: number, type: string) => string                                           | —       | jk-icon-time               |
 
 ### Time Select Events
 

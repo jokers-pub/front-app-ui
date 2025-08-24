@@ -24,13 +24,13 @@
 
 ### Date Picker Attribute
 
-| 参数         | 说明               | 类型                                                                              | 可选值 | 默认值       |
-| ------------ | ------------------ | --------------------------------------------------------------------------------- | ------ | ------------ |
-| format       | 值规则             | string                                                                            | —      | HH:mm        |
-| defauleValue | 默认展示值         | string                                                                            | —      | —            |
-| value        | 值                 | string                                                                            | —      | —            |
-| filter       | 选项过滤           | (date: { year?: number; month?: number; day?: number; week?: number }) => boolean | —      | —            |
-| labelFormat  | 自定义展示列的文本 | (value: number, type: string) => string                                           | —      | jk-icon-time |
+| 参数         | 说明               | 类型                                                                              | 可选值 | 默认值                     |
+| ------------ | ------------------ | --------------------------------------------------------------------------------- | ------ | -------------------------- |
+| format       | 值规则             | string                                                                            | —      | YYYY-MM-DD/YYYY-MM/YYYY-ww |
+| defauleValue | 默认展示值         | string                                                                            | —      | —                          |
+| value        | 值                 | string                                                                            | —      | —                          |
+| filter       | 选项过滤           | (date: { year?: number; month?: number; day?: number; week?: number }) => boolean | —      | —                          |
+| labelFormat  | 自定义展示列的文本 | (value: number, type: string) => string                                           | —      | jk-icon-time               |
 
 ### Time Select Events
 

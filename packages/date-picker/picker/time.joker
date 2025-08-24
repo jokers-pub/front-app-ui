@@ -1,5 +1,5 @@
 <template>
-    <JokerDrawer ref="drawer" direction="bottom" @close="handleClose" showHeader="@false">
+    <JokerDrawer ref="drawer" direction="bottom" size="auto" @close="handleClose" showHeader="@false">
         <JokerPicker
             value="@([model.date.hours, model.date.minutes, model.date.seconds])"
             columns="@model.columns"
@@ -28,9 +28,7 @@ export default class extends PickerPanel<{
 }> {
     getValueByLang = getValueByLang;
     propsOption = {
-        format: "HH:mm:ss",
-        minTime: "-1:-1",
-        maxTime: "100:100"
+        format: "HH:mm:ss"
     };
 
     model = {
