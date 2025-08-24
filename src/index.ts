@@ -99,7 +99,7 @@ export { Loading } from "../packages/loading/index";
 export { Message } from "../packages/message/index";
 export { MessageBox } from "../packages/message-box/index";
 export { Notification } from "../packages/notification/index";
-
+export { Toast } from "../packages/toast/index";
 export * from "../packages/tree/store/node";
 export * from "../packages/tree/store/index";
 export * from "../packages/utils/resize-event";
