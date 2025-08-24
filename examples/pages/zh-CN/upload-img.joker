@@ -178,6 +178,13 @@ export default class extends Component {
                     <td></td>
                 </tr>
                 <tr>
+                    <td>maxFileSize</td>
+                    <td>最大上传文件大小（kb）</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>mimeType</td>
                     <td>
                         限制文件类型，支持通配符例如：

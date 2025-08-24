@@ -39,6 +39,7 @@
 | returnType   | 作为表单返回的数据类型，当通过`before-read`自定义上传并返回服务端地址时，则returnType将更改为url | url/file                              | —      | file   |
 | disabled     | 是否禁用                                                                                         | boolean                               | —      | false  |
 | maxFileCount | 最大上传个数                                                                                     | number                                | —      |
+| maxFileSize  | 最大上传文件大小（kb）                                                                           | number                                | —      |
 | mimeType     | 限制文件类型，支持通配符例如：**(image/\*)**                                                     | string / string[]                     | —      | —      |
 | beforeRead   | 文件读取前操作，可实现自定义上传                                                                 | (file: File) => any                   | —      |
 | beforeDelete | 文件删除时操作，可实现自定义服务端删除                                                           | (index: number, urlOrFile: any) =>any | —      |

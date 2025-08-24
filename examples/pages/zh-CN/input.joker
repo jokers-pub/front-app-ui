@@ -133,7 +133,12 @@ p {
         <DemoContainer component="@(components.DEMO_JOKER_demo6)">
             <pre><code class="language-html">&lt;template&gt;
     &lt;jk-field&gt;
-        &lt;jk-input placeholder=&quot;Please enter the content&quot; size=&quot;large&quot; suffix-icon=&quot;jk-icon-date&quot; /&gt;
+        &lt;jk-input
+            placeholder=&quot;Please enter the content&quot;
+            size=&quot;large&quot;
+            prefixIcon=&quot;jk-icon-date&quot;
+            suffix-icon=&quot;jk-icon-date&quot;
+        /&gt;
     &lt;/jk-field&gt;
     &lt;jk-field&gt;
         &lt;jk-input placeholder=&quot;Please enter the content&quot; suffix-icon=&quot;jk-icon-date&quot; /&gt;
