@@ -12,6 +12,11 @@ export class PickerPanel<T extends Record<string, any> = {}> extends Component<T
         this.$getRef("drawer")?.component.open();
     }
 
+    close() {
+        if (this.showDrawer) {
+            this.$getRef("drawer")?.component.close();
+        }
+    }
     handleClose() {
         this.showDrawer = false;
     }
