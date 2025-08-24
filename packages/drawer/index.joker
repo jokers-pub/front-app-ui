@@ -35,7 +35,7 @@ export default class extends Component<{
     showHeader?: boolean;
 }> {
     propsOption = {
-        size: "30%",
+        size: "60%",
         showHeader: true,
         direction: {
             default: "right",
@@ -115,9 +115,9 @@ export default class extends Component<{
             display: flex;
             height: 32px;
             line-height: 32px;
-            padding: 20px 50px 0 50px;
+            padding: 20px 50px 0 10px;
             align-content: center;
-            text-align: center;
+            text-align: left;
             color: var(--jk-color-text-regular);
 
             > :first-child {
