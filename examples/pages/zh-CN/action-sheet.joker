@@ -215,7 +215,7 @@ export default class extends Component {
             <tbody>
                 <tr>
                     <td>select</td>
-                    <td>选择项后出发</td>
+                    <td>选择项后触发</td>
                     <td>数组项</td>
                 </tr>
                 <tr>
@@ -235,15 +235,11 @@ export default class extends Component {
             </thead>
             <tbody>
                 <tr>
-                    <td>-</td>
-                    <td>描述</td>
-                </tr>
-                <tr>
                     <td>description</td>
                     <td>自定义描述</td>
                 </tr>
                 <tr>
-                    <td>item</td>
+                    <td>default</td>
                     <td>选项自定义渲染，参数为数据项</td>
                 </tr>
             </tbody>

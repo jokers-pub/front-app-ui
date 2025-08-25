@@ -24,24 +24,23 @@ Configure the `description` parameter or block to display panel descriptions. Al
 
 ### Attributes
 
-| Parameter    | Description                                                                                              | Type                                                                               | Options | Default    |
-| ------------ | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------- | ---------- |
-| options      | Action sheet option list data, each configurable with label, value, disabled state, and icon             | Array&lt;{ label?: string; value?: string; disabled?: boolean; icon?: string }&gt; | —       | —          |
-| description  | Supplemental description text for the action sheet, used to explain its purpose or option details        | string                                                                             | —       | —          |
-| showCancel   | Whether to display the cancel button at the bottom of the panel                                          | boolean                                                                            | —       | false      |
-| cancelText   | Custom text for the cancel button, only effective when `showCancel` is `true`                           | string                                                                             | —       | "Cancel"   |
+| Parameter   | Description                                                                                       | Type                                                                               | Options | Default  |
+| ----------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------- | -------- |
+| options     | Action sheet option list data, each configurable with label, value, disabled state, and icon      | Array&lt;{ label?: string; value?: string; disabled?: boolean; icon?: string }&gt; | —       | —        |
+| description | Supplemental description text for the action sheet, used to explain its purpose or option details | string                                                                             | —       | —        |
+| showCancel  | Whether to display the cancel button at the bottom of the panel                                   | boolean                                                                            | —       | false    |
+| cancelText  | Custom text for the cancel button, only effective when `showCancel` is `true`                     | string                                                                             | —       | "Cancel" |
 
 ### Events
 
-| Event Name | Description                | Parameters |
-| ---------- | -------------------------- | ---------- |
-| select     | Triggered after selection  | Item data  |
+| Event Name | Description                   | Parameters |
+| ---------- | ----------------------------- | ---------- |
+| select     | Triggered after selection     | Item data  |
 | cancel     | Triggered when clicked cancel | -          |
 
 ### Sections
 
-| Name         | Description                                   |
-| ------------ | --------------------------------------------- |
-| -            | Description                                   |
-| description  | Custom description section                    |
-| item         | Custom option rendering (receives item data)  |
+| Name        | Description                                  |
+| ----------- | -------------------------------------------- |
+| description | Custom description section                   |
+| default     | Custom option rendering (receives item data) |

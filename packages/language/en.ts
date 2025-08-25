@@ -20,7 +20,7 @@ export const LANG_EN = {
     end: "End",
     loadMoreText: "Load More...",
     loadMoreLoadingText: "Loading...",
-    loadMoreNoDataText: "Finished",
+    loadMoreNoMoreText: "Finished",
     pulldown: "Pull to refresh...",
     pulldownLoading: "Loading...",
     pulldownLoosing: "Loose to refresh...",

@@ -428,8 +428,8 @@ export default class extends Component {
                     <td>—</td>
                 </tr>
                 <tr>
-                    <td>prefix-icon</td>
-                    <td>Custom header icon class</td>
+                    <td>icon</td>
+                    <td>Custom icon class</td>
                     <td>string</td>
                     <td>—</td>
                     <td>jk-icon-time</td>

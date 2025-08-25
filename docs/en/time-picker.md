@@ -83,7 +83,7 @@ Refer to `input` size attributes
 | format        | Display format                           | string                                  | —                    | HH:mm:ss     |
 | value-format  | Optional bound value format              | string                                  | —                    | HH:mm:ss     |
 | default-value | Default time displayed when picker opens | string                                  | Matches format       | —            |
-| prefix-icon   | Custom header icon class                 | string                                  | —                    | jk-icon-time |
+| icon          | Custom icon class                        | string                                  | —                    | jk-icon-time |
 | labelFormat   | Custom column display text               | (value: number, type: string) => string | —                    | jk-icon-time |
 
 ### Date Events

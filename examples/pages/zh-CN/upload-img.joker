@@ -210,6 +210,23 @@ export default class extends Component {
                 </tr>
             </tbody>
         </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>事件名</th>
+                    <th>说明</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>值变更时间</td>
+                    <td>value</td>
+                </tr>
+            </tbody>
+        </table>
         <BottomNav />
     </div>
 </template>

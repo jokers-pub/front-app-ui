@@ -20,17 +20,17 @@ If the control is displayed during initial rendering due to insufficient content
 
 ### Attributes
 
-| Parameter       | Description                                                                   | Type       | Options       | Default        |
-|-----------------|-----------------------------------------------------------------------------|------------|---------------|----------------|
-| **class**       | Custom class name for overriding default component styles                   | any        | -             | -              |
-| **text**        | Default loading state hint text (displayed when neither loading nor no-data state) | string     | -             | "Load More"    |
-| **noData**      | Whether in "no more data" state. When `true`, displays `noDataText` and disables loading events | boolean   | true / false  | false          |
-| **loadingText** | Loading state hint text (displayed when loading logic is triggered)        | string     | -             | "Loading..."   |
-| **noDataText**  | "No more data" state hint text (displayed when `noData` is `true`)         | string     | -             | "No more data" |
-| **load**        | Callback function executed when loading is triggered, supports async operations (e.g., API requests) | () => any | -             | -              |
+| Parameter       | Description                                                                                          | Type      | Options      | Default        |
+| --------------- | ---------------------------------------------------------------------------------------------------- | --------- | ------------ | -------------- |
+| **class**       | Custom class name for overriding default component styles                                            | any       | -            | -              |
+| **text**        | Default loading state hint text (displayed when neither loading nor no-data state)                   | string    | -            | "Load More"    |
+| **noMore**      | Whether in "no more data" state. When `true`, displays `noMoreText` and disables loading events      | boolean   | true / false | false          |
+| **loadingText** | Loading state hint text (displayed when loading logic is triggered)                                  | string    | -            | "Loading..."   |
+| **noMoreText**  | "No more data" state hint text (displayed when `noMore` is `true`)                                   | string    | -            | "No more data" |
+| **load**        | Callback function executed when loading is triggered, supports async operations (e.g., API requests) | () => any | -            | -              |
 
 ### Sections
 
-| Name    | Description            | Parameters                          |
-|---------|------------------------|------------------------------------|
-| default | Custom title content   | state status: ''\|'loading'\|'nodata' |
+| Name    | Description          | Parameters                            |
+| ------- | -------------------- | ------------------------------------- |
+| default | Custom title content | state status: ''\|'loading'\|'noMore' |

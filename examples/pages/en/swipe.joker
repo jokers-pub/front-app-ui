@@ -174,7 +174,7 @@ export default class extends Component {
 &lt;/style&gt;
 </code></pre>
         </DemoContainer>
-        <h3>Carousel Attributes</h3>
+        <h3>Swipe Attributes</h3>
         <table class="mkd-table">
             <thead>
                 <tr>
@@ -261,7 +261,7 @@ export default class extends Component {
                 </tr>
             </tbody>
         </table>
-        <h3>Carousel Events</h3>
+        <h3>Swipe Events</h3>
         <table class="mkd-table">
             <thead>
                 <tr>
@@ -278,7 +278,7 @@ export default class extends Component {
                 </tr>
             </tbody>
         </table>
-        <h3>Carousel Methods</h3>
+        <h3>Swipe Methods</h3>
         <table class="mkd-table">
             <thead>
                 <tr>

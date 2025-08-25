@@ -120,7 +120,7 @@ export default class extends Component {
                     <td>Value formatting rule</td>
                     <td>string</td>
                     <td>—</td>
-                    <td>HH:mm</td>
+                    <td>YYYY-MM-DD/YYYY-MM/YYYY-ww</td>
                 </tr>
                 <tr>
                     <td>defauleValue</td>
@@ -257,8 +257,8 @@ export default class extends Component {
                     <td>—</td>
                 </tr>
                 <tr>
-                    <td>prefix-icon</td>
-                    <td>Custom header icon class name</td>
+                    <td>icon</td>
+                    <td>Custom icon class name</td>
                     <td>string</td>
                     <td>—</td>
                     <td>jk-icon-time</td>

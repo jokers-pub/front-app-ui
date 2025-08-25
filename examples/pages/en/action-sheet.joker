@@ -237,15 +237,11 @@ export default class extends Component {
             </thead>
             <tbody>
                 <tr>
-                    <td>-</td>
-                    <td>Description</td>
-                </tr>
-                <tr>
                     <td>description</td>
                     <td>Custom description section</td>
                 </tr>
                 <tr>
-                    <td>item</td>
+                    <td>default</td>
                     <td>Custom option rendering (receives item data)</td>
                 </tr>
             </tbody>

@@ -83,7 +83,7 @@
 | format        | 展示值的格式                     | string                                  | -                    | HH:mm:ss     |
 | value-format  | 可选，绑定值的格式               | string                                  | -                    | HH:mm:ss     |
 | default-value | 可选，选择器打开时默认显示的时间 | string                                  | 符合 format 格式     | —            |
-| prefix-icon   | 自定义头部图标的类名             | string                                  | —                    | jk-icon-time |
+| icon          | 自定义图标的类名                 | string                                  | —                    | jk-icon-time |
 | labelFormat   | 自定义展示列的文本               | (value: number, type: string) => string | —                    | jk-icon-time |
 
 ### Date Events

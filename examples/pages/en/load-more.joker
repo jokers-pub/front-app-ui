@@ -115,13 +115,13 @@ export default class extends Component {
                 </tr>
                 <tr>
                     <td>
-                        <strong>noData</strong>
+                        <strong>noMore</strong>
                     </td>
                     <td>
                         Whether in &quot;no more data&quot; state. When
                         <code>true</code>
                         , displays
-                        <code>noDataText</code>
+                        <code>noMoreText</code>
                         and disables loading events
                     </td>
                     <td>boolean</td>
@@ -139,11 +139,11 @@ export default class extends Component {
                 </tr>
                 <tr>
                     <td>
-                        <strong>noDataText</strong>
+                        <strong>noMoreText</strong>
                     </td>
                     <td>
                         &quot;No more data&quot; state hint text (displayed when
-                        <code>noData</code>
+                        <code>noMore</code>
                         is
                         <code>true</code>
                         )
@@ -178,7 +178,7 @@ export default class extends Component {
                 <tr>
                     <td>default</td>
                     <td>Custom title content</td>
-                    <td>state status: ''|'loading'|'nodata'</td>
+                    <td>state status: ''|'loading'|'noMore'</td>
                 </tr>
             </tbody>
         </table>

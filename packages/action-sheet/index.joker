@@ -14,7 +14,7 @@
             @for(let item of props.options) {
                 <div class="@(['item', item.disabled && 'is-disabled'])" @click="handleClick(item)">
                     @if($sections.item) {
-                        @RenderSection(item)
+                        @RenderSection("default", item)
                     }
                     else {
                         @if(item.icon) {

@@ -52,7 +52,7 @@ Please note the case sensitivity. Internally, it uses `dayjs` for time calculati
 | format        | Display value format                | string                                                                            | -                    | HH:mm:ss     |
 | value-format  | Optional bound value format         | string                                                                            | -                    | HH:mm:ss     |
 | default-value | Default display time when opened    | string                                                                            | Must match `format`  | —            |
-| prefix-icon   | Custom header icon class name       | string                                                                            | —                    | jk-icon-time |
+| icon          | Custom icon class name              | string                                                                            | —                    | jk-icon-time |
 | labelFormat   | Custom column text display          | (value: number, type: string) => string                                           | —                    | jk-icon-time |
 | filter        | Option filtering                    | (date: { year?: number; month?: number; day?: number; week?: number }) => boolean | —                    | —            |
 

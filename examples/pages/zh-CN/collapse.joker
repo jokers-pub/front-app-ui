@@ -267,13 +267,6 @@ export default class extends Component {
                     <td>-</td>
                 </tr>
                 <tr>
-                    <td>accordion</td>
-                    <td>是否开启手风琴模式</td>
-                    <td>boolean</td>
-                    <td>-</td>
-                    <td>false</td>
-                </tr>
-                <tr>
                     <td>lazy</td>
                     <td>懒加载模式，当展开式才会加载内容</td>
                     <td>boolean</td>

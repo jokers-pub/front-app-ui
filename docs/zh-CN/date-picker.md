@@ -24,13 +24,14 @@
 
 ### Date Picker Attribute
 
-| 参数         | 说明               | 类型                                                                              | 可选值 | 默认值                     |
-| ------------ | ------------------ | --------------------------------------------------------------------------------- | ------ | -------------------------- |
-| format       | 值规则             | string                                                                            | —      | YYYY-MM-DD/YYYY-MM/YYYY-ww |
-| defauleValue | 默认展示值         | string                                                                            | —      | —                          |
-| value        | 值                 | string                                                                            | —      | —                          |
-| filter       | 选项过滤           | (date: { year?: number; month?: number; day?: number; week?: number }) => boolean | —      | —                          |
-| labelFormat  | 自定义展示列的文本 | (value: number, type: string) => string                                           | —      | jk-icon-time               |
+| 参数         | 说明               | 类型                                                                              | 可选值 | 默认值                          |
+| ------------ | ------------------ | --------------------------------------------------------------------------------- | ------ | ------------------------------- |
+| type         | 类型               | string                                                                            | —      | date,year,month,week            |
+| format       | 值规则             | string                                                                            | —      | YYYY/YYYY-MM-DD/YYYY-MM/YYYY-ww |
+| defauleValue | 默认展示值         | string                                                                            | —      | —                               |
+| value        | 值                 | string                                                                            | —      | —                               |
+| filter       | 选项过滤           | (date: { year?: number; month?: number; day?: number; week?: number }) => boolean | —      | —                               |
+| labelFormat  | 自定义展示列的文本 | (value: number, type: string) => string                                           | —      | jk-icon-time                    |
 
 ### Time Select Events
 
@@ -52,7 +53,7 @@
 | format        | 展示值的格式                     | string                                                                            | -                    | HH:mm:ss     |
 | value-format  | 可选，绑定值的格式               | string                                                                            | -                    | HH:mm:ss     |
 | default-value | 可选，选择器打开时默认显示的时间 | string                                                                            | 符合 format 格式     | —            |
-| prefix-icon   | 自定义头部图标的类名             | string                                                                            | —                    | jk-icon-time |
+| icon          | 自定义图标的类名                 | string                                                                            | —                    | jk-icon-time |
 | labelFormat   | 自定义展示列的文本               | (value: number, type: string) => string                                           | —                    | jk-icon-time |
 | filter        | 选项过滤                         | (date: { year?: number; month?: number; day?: number; week?: number }) => boolean | —                    | —            |
 

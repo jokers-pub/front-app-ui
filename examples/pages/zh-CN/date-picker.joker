@@ -115,11 +115,18 @@ export default class extends Component {
             </thead>
             <tbody>
                 <tr>
+                    <td>type</td>
+                    <td>类型</td>
+                    <td>string</td>
+                    <td>—</td>
+                    <td>date,year,month,week</td>
+                </tr>
+                <tr>
                     <td>format</td>
                     <td>值规则</td>
                     <td>string</td>
                     <td>—</td>
-                    <td>HH:mm</td>
+                    <td>YYYY/YYYY-MM-DD/YYYY-MM/YYYY-ww</td>
                 </tr>
                 <tr>
                     <td>defauleValue</td>
@@ -253,8 +260,8 @@ export default class extends Component {
                     <td>—</td>
                 </tr>
                 <tr>
-                    <td>prefix-icon</td>
-                    <td>自定义头部图标的类名</td>
+                    <td>icon</td>
+                    <td>自定义图标的类名</td>
                     <td>string</td>
                     <td>—</td>
                     <td>jk-icon-time</td>

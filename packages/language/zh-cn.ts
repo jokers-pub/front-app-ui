@@ -20,7 +20,7 @@ export const LANG_ZH_CN = {
     end: "结束",
     loadMoreText: "加载更多...",
     loadMoreLoadingText: "加载中...",
-    loadMoreNoDataText: "没有更多了",
+    loadMoreNoMoreText: "没有更多了",
     pulldown: "下拉即可刷新...",
     pulldownLoading: "加载中...",
     pulldownLoosing: "释放即可刷新...",

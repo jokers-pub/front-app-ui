@@ -156,6 +156,9 @@ export default class extends Component<{
 
         &.direction-top {
             border-radius: 0 0 14px 14px;
+            .header {
+                text-align: center;
+            }
         }
 
         &.direction-right {
@@ -166,6 +169,9 @@ export default class extends Component<{
         &.direction-bottom {
             bottom: 0;
             border-radius: 14px 14px 0 0;
+            .header {
+                text-align: center;
+            }
         }
     }
 

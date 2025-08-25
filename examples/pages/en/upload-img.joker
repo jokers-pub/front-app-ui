@@ -2,7 +2,7 @@
     <div ref="container" class="joker-demo-container">
         <h2>Upload Img Component</h2>
         <p>
-            Used for uploading local images to the server while displaying previews during the upload process. Currently, the Uploader component does not include the interface logic for uploading files to the server; this step needs to be implemented separately.
+            Used for uploading local images to the server while displaying previews during the upload process. Note that the Uploader component does not include the interface logic for uploading files to the server - this step needs to be implemented separately.
         </p>
         <h3>Basic Usage</h3>
         <DemoContainer component="@(components.DEMO_JOKER_demo1)">
@@ -16,11 +16,10 @@
 
 </code></pre>
         </DemoContainer>
-        <h3>Limiting File Quantity</h3>
+        <h3>File Quantity Limit</h3>
         <p>
             Configure the maximum number of uploadable files via
             <code>maxFileCount</code>
-            .
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo2)">
             <pre><code class="language-html">&lt;template&gt;
@@ -31,13 +30,11 @@
 
 </code></pre>
         </DemoContainer>
-        <h3>Restricting File Types</h3>
+        <h3>File Type Restrictions</h3>
         <p>
-            Limit uploadable file types using
+            Restrict upload file types using
             <code>mimeType</code>
-            (default:
-            <code>[&quot;image/png&quot;, &quot;image/jpeg&quot;]</code>
-            ).
+            . Default values: [&quot;image/png&quot;, &quot;image/jpeg&quot;]
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo3)">
             <pre><code class="language-html">&lt;template&gt;
@@ -50,9 +47,8 @@
         </DemoContainer>
         <h3>Display Size</h3>
         <p>
-            Set the component display size via the
+            Configure component display size via
             <code>size</code>
-            configuration.
         </p>
         <DemoContainer component="@(components.DEMO_JOKER_demo4)">
             <pre><code class="language-html">&lt;template&gt;
@@ -83,7 +79,7 @@
 
 </code></pre>
         </DemoContainer>
-        <h3>Simulating Upload</h3>
+        <h3>Simulated Upload</h3>
         <p>
             Implement custom upload logic using
             <code>before-read</code>
@@ -142,7 +138,7 @@ export default class extends Component {
             <tbody>
                 <tr>
                     <td>class</td>
-                    <td>Custom styling</td>
+                    <td>Custom styles</td>
                     <td>string</td>
                     <td>—</td>
                     <td>—</td>
@@ -150,41 +146,38 @@ export default class extends Component {
                 <tr>
                     <td>size</td>
                     <td>Display size</td>
-                    <td>large / small / mini</td>
+                    <td>large/small/mini</td>
                     <td>—</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>returnType</td>
                     <td>
-                        Data type returned as form data. If
+                        Data type returned for form submission. When using
                         <code>before-read</code>
-                        is used for custom upload (returning a server URL),
-                        <code>returnType</code>
-                        switches to
-                        <code>url</code>
+                        for custom upload with server URLs, returnType changes to url
                     </td>
-                    <td>url / file</td>
+                    <td>url/file</td>
                     <td>—</td>
                     <td>file</td>
                 </tr>
                 <tr>
                     <td>disabled</td>
-                    <td>Whether the component is disabled</td>
+                    <td>Whether disabled</td>
                     <td>boolean</td>
                     <td>—</td>
                     <td>false</td>
                 </tr>
                 <tr>
                     <td>maxFileCount</td>
-                    <td>Maximum number of uploadable files</td>
+                    <td>Maximum upload count</td>
                     <td>number</td>
                     <td>—</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>maxFileSize</td>
-                    <td>Maximum file size (kb)</td>
+                    <td>Maximum upload file size (KB)</td>
                     <td>number</td>
                     <td>—</td>
                     <td></td>
@@ -192,9 +185,8 @@ export default class extends Component {
                 <tr>
                     <td>mimeType</td>
                     <td>
-                        Restricted file types (supports wildcards, e.g.,
-                        <code>image/*</code>
-                        )
+                        File type restrictions, supports wildcards e.g.
+                        <strong>(image/*)</strong>
                     </td>
                     <td>string / string[]</td>
                     <td>—</td>
@@ -202,17 +194,34 @@ export default class extends Component {
                 </tr>
                 <tr>
                     <td>beforeRead</td>
-                    <td>Pre-read file operation (for custom upload implementation)</td>
+                    <td>Pre-read file operation for implementing custom upload</td>
                     <td>(file: File) =&gt; any</td>
                     <td>—</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>beforeDelete</td>
-                    <td>Pre-delete file operation (for custom server deletion implementation)</td>
-                    <td>(index: number, urlOrFile: any) =&gt; any</td>
+                    <td>File deletion operation for implementing custom server deletion</td>
+                    <td>(index: number, urlOrFile: any) =&gt;any</td>
                     <td>—</td>
                     <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Events</h3>
+        <table class="mkd-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Parameters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>change</td>
+                    <td>Value change event</td>
+                    <td>value</td>
                 </tr>
             </tbody>
         </table>

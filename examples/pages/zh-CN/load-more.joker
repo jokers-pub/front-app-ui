@@ -113,13 +113,13 @@ export default class extends Component {
                 </tr>
                 <tr>
                     <td>
-                        <strong>noData</strong>
+                        <strong>noMore</strong>
                     </td>
                     <td>
                         是否处于“没有更多数据”状态，为
                         <code>true</code>
                         时会显示
-                        <code>noDataText</code>
+                        <code>noMoreText</code>
                         并禁用加载事件
                     </td>
                     <td>boolean</td>
@@ -137,11 +137,11 @@ export default class extends Component {
                 </tr>
                 <tr>
                     <td>
-                        <strong>noDataText</strong>
+                        <strong>noMoreText</strong>
                     </td>
                     <td>
                         “没有更多数据”状态的提示文本（
-                        <code>noData</code>
+                        <code>noMore</code>
                         为
                         <code>true</code>
                         时显示）
@@ -174,7 +174,7 @@ export default class extends Component {
                 <tr>
                     <td>default</td>
                     <td>自定义标题内容</td>
-                    <td>state状态 ''|'loading'|'nodata'</td>
+                    <td>state状态 ''|'loading'|'noMore'</td>
                 </tr>
             </tbody>
         </table>

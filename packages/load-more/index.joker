@@ -18,26 +18,26 @@ import { getValueByLang } from "../utils/lang";
 export default class extends Component<{
     class: any;
     text: string;
-    noData: boolean;
+    noMore: boolean;
     loadingText: string;
-    noDataText: string;
+    noMoreText: string;
     load: () => any;
 }> {
     propsOption = {
         text: getValueByLang("loadMoreText"),
         loadingText: getValueByLang("loadMoreLoadingText"),
-        noDataText: getValueByLang("loadMoreNoDataText")
+        noMoreText: getValueByLang("loadMoreNoMoreText")
     };
     model = {
-        state: "" as "" | "loading" | "noData"
+        state: "" as "" | "loading" | "noMore"
     };
     observer: any;
     mounted() {
         this.$watch(
-            () => this.props.noData,
+            () => this.props.noMore,
             () => {
-                if (this.props.noData) {
-                    this.model.state === "noData";
+                if (this.props.noMore) {
+                    this.model.state === "noMore";
                 }
             }
         );
@@ -48,7 +48,7 @@ export default class extends Component<{
             (entries) => {
                 entries.forEach(async (entry) => {
                     if (entry.isIntersecting && entry.intersectionRatio > 0.8) {
-                        if (this.model.state === "loading" || this.model.state === "noData") return;
+                        if (this.model.state === "loading" || this.model.state === "noMore") return;
 
                         await this.load();
                     }
@@ -67,8 +67,8 @@ export default class extends Component<{
         switch (this.model.state) {
             case "loading":
                 return this.props.loadingText;
-            case "noData":
-                return this.props.noDataText;
+            case "noMore":
+                return this.props.noMoreText;
         }
         return this.props.text;
     }
@@ -84,7 +84,7 @@ export default class extends Component<{
     }
 
     async handleClick() {
-        if (this.model.state === "loading" || this.model.state === "noData") return;
+        if (this.model.state === "loading" || this.model.state === "noMore") return;
 
         await this.load();
     }

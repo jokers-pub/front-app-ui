@@ -44,12 +44,12 @@
                 selectableRange="@props.selectableRange"
             />
         }
-        else if(props.type === "date" || props.type === "year-month" || props.type === "month" || props.type === "year" || props.type === "week") {
+        else if(props.type === "date" || props.type === "month" || props.type === "year" || props.type === "week") {
             <JokerDatePanel
                 ref="panel"
                 format="@props.valueFormat"
                 type="@props.type"
-                disabledDate="@props.disabledDate"
+                filter="@props.filter"
                 title="@props.placeholder"
                 labelFormat="@props.labelFormat"
                 @pick="handlePick"
@@ -98,7 +98,7 @@ export default class extends FormCtrl<{
     defaultValue: string;
     valueFormat: string;
     placeholder: string;
-    prefixIcon: string;
+    icon: string;
     clearable: boolean;
     align: string;
     selectableRange: Array<string[] | string>;
@@ -109,9 +109,7 @@ export default class extends FormCtrl<{
     propsOption = {
         clearable: true,
         rangeSeparator: " - ",
-        placeholder: getValueByLang("selectPlaceholder"),
-        startPlaceholder: getValueByLang("start"),
-        endPlaceholder: getValueByLang("end")
+        placeholder: getValueByLang("selectPlaceholder")
     };
 
     components = {
@@ -133,7 +131,7 @@ export default class extends FormCtrl<{
     }
 
     get triggerClass() {
-        return this.props.prefixIcon || (this.props.type?.includes("time") ? "jk-icon-time" : "jk-icon-date");
+        return this.props.icon || (this.props.type?.includes("time") ? "jk-icon-time" : "jk-icon-date");
     }
 
     get parsedValue() {
