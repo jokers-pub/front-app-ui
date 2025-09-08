@@ -18,6 +18,8 @@ export const LANG_EN = {
     confirm: "Confirm",
     start: "Start",
     end: "End",
+    yes: "Yes",
+    no: "No",
     loadMoreText: "Load More...",
     loadMoreLoadingText: "Loading...",
     loadMoreNoMoreText: "Finished",

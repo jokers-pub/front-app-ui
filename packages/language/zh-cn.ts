@@ -18,6 +18,8 @@ export const LANG_ZH_CN = {
     confirm: "确定",
     start: "开始",
     end: "结束",
+    yes: "是",
+    no: "否",
     loadMoreText: "加载更多...",
     loadMoreLoadingText: "加载中...",
     loadMoreNoMoreText: "没有更多了",
