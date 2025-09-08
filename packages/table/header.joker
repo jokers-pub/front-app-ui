@@ -286,7 +286,7 @@ export default class extends Component {
     position: sticky;
     top: 0px;
     background-color: var(--jk-background-color-default);
-    z-index: 1;
+    z-index: 2s;
     th {
         text-align: left;
         box-sizing: border-box;
@@ -369,11 +369,13 @@ export default class extends Component {
         &.fixed-left {
             position: sticky;
             left: 0;
+            z-index: 1;
         }
 
         &.fixed-right {
             position: sticky;
             right: 0;
+            z-index: 1;
         }
 
         &.ascending div.cell .sort i.ascending {
