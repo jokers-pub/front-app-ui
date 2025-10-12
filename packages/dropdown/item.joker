@@ -44,6 +44,8 @@ export default class extends Component<{
     cursor: pointer;
     outline: none;
     color: var(--jk-color-regular);
+    margin: 0 5px;
+    border-radius: 5px;
     &:last-of-type {
         border: none;
     }
