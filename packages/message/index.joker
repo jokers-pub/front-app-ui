@@ -204,6 +204,7 @@ export default class extends Component<PropsOption> {
     &.jk-message-fade-enter-from,
     &.jk-message-fade-leave-to {
         opacity: 0;
+        transform: translateY(-50%) translateX(-50%);
     }
 }
 </style>
