@@ -146,6 +146,7 @@ export default class extends Component<{ node: TreeNode }> {
         align-items: center;
         height: 28px;
         line-height: 28px;
+        border-radius: 5px;
         cursor: pointer;
 
         > span.expand-icon {
