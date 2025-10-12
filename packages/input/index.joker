@@ -225,12 +225,11 @@ export default class extends FormCtrl<{
 
     handleBlur(e: VNode.Event) {
         this.$trigger("blur", this.value, e);
-
-        this.triggerValidate();
     }
 
     handleChange(e: VNode.Event) {
         this.$trigger("change", e.event.target.value);
+        this.triggerValidate();
     }
 
     handleInput(e: VNode.Event) {
@@ -423,7 +422,7 @@ export default class extends FormCtrl<{
         }
 
         &:hover {
-            border-color: var(--jk-border-color-hover);
+            border-color: var(--jk-color-primary);
         }
 
         &:focus {
