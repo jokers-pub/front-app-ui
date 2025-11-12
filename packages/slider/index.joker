@@ -8,19 +8,6 @@
         aria-label="@(props.label || '滑动区间' + props.min + '到' + props.max)"
         aria-orientation="@(props.vertical ? 'vertical' : 'horizontal')"
         aria-disabled="@props.disabled">
-        @if(props.showInput && !props.range && !props.vertical) {
-            <JokerInputNumber
-                value="@model.startValue"
-                ref="input"
-                @change="handleInputChange"
-                step="@props.step"
-                disabled="@props.disabled"
-                showControls="@props.showControls"
-                min="@props.min"
-                max="@props.max"
-                size="@props.inputSize"
-            />
-        }
         <div
             class="@([
                 'runway',
@@ -76,6 +63,19 @@
                 </div>
             }
         </div>
+        @if(props.showInput && !props.range && !props.vertical) {
+            <JokerInputNumber
+                value="@model.startValue"
+                ref="input"
+                @change="handleInputChange"
+                step="@props.step"
+                disabled="@props.disabled"
+                showControls="@props.showControls"
+                min="@props.min"
+                max="@props.max"
+                size="@props.inputSize"
+            />
+        }
     </div>
 </template>
 <script>
@@ -409,10 +409,11 @@ export default class extends FormCtrl<{
 @use "../../theme/mixins.scss";
 
 .jk-slider {
-    @include mixins.clearfix;
-
+    display: flex;
+    align-items: center;
+    gap: 10px;
     .runway {
-        width: 100%;
+        flex: 1;
         height: 6px;
         margin: 16px 0;
         background-color: var(--jk-border-color-light);
@@ -420,11 +421,6 @@ export default class extends FormCtrl<{
         position: relative;
         cursor: pointer;
         vertical-align: middle;
-
-        &.show-input {
-            margin-right: 160px;
-            width: auto;
-        }
 
         &.is-disabled {
             cursor: default;
@@ -452,11 +448,6 @@ export default class extends FormCtrl<{
         }
 
         .marks {
-            top: 0;
-            left: 12px;
-            width: 18px;
-            height: 100%;
-
             .mark {
                 position: absolute;
                 transform: translateX(-50%);
@@ -469,6 +460,7 @@ export default class extends FormCtrl<{
 
     &.is-vertical {
         position: relative;
+        display: block;
         .runway {
             width: 6px;
             height: 100%;
@@ -489,24 +481,6 @@ export default class extends FormCtrl<{
                 left: 15px;
                 transform: translateY(50%);
             }
-        }
-    }
-
-    :deep(.jk-number) {
-        float: right;
-        margin-top: 3px;
-        width: 130px;
-
-        &.mini {
-            margin-top: 5px;
-        }
-
-        &.medium {
-            margin-top: 0;
-        }
-
-        &.large {
-            margin-top: -2px;
         }
     }
 }
