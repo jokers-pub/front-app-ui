@@ -1,5 +1,5 @@
 <script>
-import { Component, VNode, createCodeFunction, createCommand, createElement, createText } from "@joker.front/core";
+import { VNode, createCodeFunction, createCommand, createElement } from "@joker.front/core";
 import { scrollIntoView } from "../utils/scrollbar";
 import { addResizeListener, removeResizeListener } from "../utils/resize-event";
 import { componentName } from "../utils";
