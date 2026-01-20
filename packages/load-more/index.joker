@@ -37,10 +37,13 @@ export default class extends Component<{
             () => this.props.noMore,
             () => {
                 if (this.props.noMore) {
-                    this.model.state === "noMore";
+                    this.model.state = "noMore";
                 }
             }
         );
+        if (this.props.noMore) {
+            this.model.state = "noMore";
+        }
         let container = this.$getRef("container")?.output;
 
         // 创建观察器实例，设置阈值为0.5（50%）
